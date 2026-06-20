@@ -1,7 +1,7 @@
 # Project State
 
 Last updated: 2026-06-20
-Current phase: GATE WRITTEN — awaiting D-generator-visual-review-2 sign-off before category mass-production.
+Current phase: C — GATE WRITTEN (C-categories-checkpoint). All 4 categories built and grader-passing. Awaiting human visual sign-off on allied-health, beauty-aesthetics, fitness-wellness before Phase E.
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
@@ -23,7 +23,12 @@ Schema hardening complete (2026-06-20) — commit 36d45eb:
   - clearflow-plumbing.json: regenerated clean — both sites GRADER PASS + schema PASS.
   - Gate D-generator-visual-review-2.json written.
 
-Next action: Human approves gate D-generator-visual-review-2 → mass-produce allied-health, beauty-aesthetics, fitness-wellness categories (3 category-builder subagents in parallel, each grader-gated).
+Category mass-production complete (2026-06-20) — commit 5c63eb5:
+  - 3 parallel category-builder subagents ran and passed grader independently.
+  - All 4 sites pass GRADER (4 sites checked).
+  - Gate C-categories-checkpoint.json written.
+
+Next action: Human approves gate C-categories-checkpoint → Phase E funnel infrastructure (E1-E6 in sequence).
 
 ## Phase A: Niche intelligence
 - [x] A1: meta-job-titles.md built (352 lines, AU-specific, last researched 2026-06-19)
@@ -40,9 +45,10 @@ Next action: Human approves gate D-generator-visual-review-2 → mass-produce al
 ## Phase C: Site system expansion (per category)
 Foundation (C-0) DONE: SiteProps schema (shared/types/site-props.ts); shared UI (shared/ui: helpers, icons, theme, seo, client, layout, sections) harvested from the legacy single-page trades template; page components (home, service-detail, location, service-area, faq, about) + dynamic routing (app/preview/trades/[[...slug]]).
 - [x] Trades — multi-page system + system-prompt.md + electrician example (18 pages). Grader PASS 2026-06-20 (fixed thin location/service-area pages + added 2 locations to meet 6-page floor). <<Phase C GATE WRITTEN — autopilot/state/gates/C-trades-checkpoint.json — awaiting human visual sign-off>>
-- [ ] Allied health (next; from scratch + Ahpra compliance)
-- [ ] Beauty & aesthetics (booking + gallery)
-- [ ] Fitness & wellness (timetable/booking + IG feed)
+- [x] Allied health — Restore Physio (Chatswood NSW), 22 pages, teal palette, AHPRA-compliant, MedicalBusiness JSON-LD. GRADER PASS 2026-06-20.
+- [x] Beauty & aesthetics — Studio Luma salon (Fitzroy VIC), 23 pages, rose/gold palette, gallery-forward, HairSalon JSON-LD. GRADER PASS 2026-06-20.
+- [x] Fitness & wellness — Peak Form Training (South Yarra VIC), 22 pages, charcoal/red palette, SportsActivityLocation JSON-LD. GRADER PASS 2026-06-20.
+<<C-categories-checkpoint GATE WRITTEN — autopilot/state/gates/C-categories-checkpoint.json — awaiting human visual sign-off>>
 - [ ] Professional services (DEFERRED — HOLD niche)
 - [ ] Hospitality (DEFERRED — HOLD niche)
 - [ ] Retail & boutique (DEFERRED — HOLD niche)
