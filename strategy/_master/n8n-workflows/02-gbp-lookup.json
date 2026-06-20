@@ -1,0 +1,282 @@
+{
+  "name": "02 — GBP Lookup (Outscraper)",
+  "nodes": [
+    {
+      "id": "a1b2c3d4-0002-0001-0001-000000000001",
+      "name": "Workflow Input",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "parameters": {}
+    },
+    {
+      "id": "a1b2c3d4-0002-0002-0001-000000000002",
+      "name": "Write GBP Lookup Started",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/build_progress",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $json.lead_id, step: 'gbp_lookup_started', message: 'Looking up ' + $json.business_name + ' on Google...' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0002-0003-0001-000000000003",
+      "name": "Outscraper GBP Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.outscraper.com/maps/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "X-API-KEY", "value": "={{ $vars.OUTSCRAPER_API_KEY }}" }
+          ]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ $('Workflow Input').first().json.business_name + ' ' + $('Workflow Input').first().json.suburb + ' Australia' }}"
+            },
+            { "name": "limit", "value": "3" },
+            { "name": "language", "value": "en" },
+            { "name": "region", "value": "AU" },
+            { "name": "fields", "value": "name,full_address,phone,site,description,rating,reviews,photos,subtypes,latitude,longitude,place_id" }
+          ]
+        },
+        "options": {
+          "timeout": 30000
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0002-0004-0001-000000000004",
+      "name": "Score Confidence",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300],
+      "parameters": {
+        "jsCode": "const input = $('Workflow Input').first().json;\nconst businessName = input.business_name.toLowerCase().trim();\nconst suburb = input.suburb.toLowerCase().trim();\n\nconst raw = $input.first().json;\n// Outscraper returns { data: [[result1, result2, ...]] } or { data: [] }\nconst results = (raw.data && raw.data[0]) ? raw.data[0] : [];\n\nif (!results || results.length === 0) {\n  return [{ json: { lead_id: input.lead_id, confidence: 0.0, matched: null, candidates: [], business_name: input.business_name, niche: input.niche, suburb: input.suburb } }];\n}\n\nfunction scoreMatch(result, targetName, targetSuburb) {\n  const rName = (result.name || '').toLowerCase().trim();\n  const rAddr = (result.full_address || '').toLowerCase();\n  let score = 0;\n\n  // Exact name match\n  if (rName === targetName) score += 0.6;\n  // Name contains target\n  else if (rName.includes(targetName) || targetName.includes(rName)) score += 0.4;\n  // Partial word overlap\n  else {\n    const targetWords = targetName.split(/\\s+/).filter(w => w.length > 2);\n    const matchCount = targetWords.filter(w => rName.includes(w)).length;\n    score += (matchCount / Math.max(targetWords.length, 1)) * 0.3;\n  }\n\n  // Suburb in address\n  if (rAddr.includes(targetSuburb)) score += 0.4;\n\n  return Math.min(score, 1.0);\n}\n\nconst scored = results.map(r => ({\n  result: r,\n  confidence: scoreMatch(r, businessName, suburb)\n})).sort((a, b) => b.confidence - a.confidence);\n\nconst best = scored[0];\nconst candidates = scored.slice(0, 3).map(s => ({\n  name: s.result.name,\n  address: s.result.full_address,\n  phone: s.result.phone,\n  photo: s.result.photos ? s.result.photos[0] : null,\n  place_id: s.result.place_id,\n  confidence: s.confidence\n}));\n\nreturn [{\n  json: {\n    lead_id: input.lead_id,\n    business_name: input.business_name,\n    niche: input.niche,\n    suburb: input.suburb,\n    confidence: best.confidence,\n    matched: best.confidence >= 0.7 ? best.result : null,\n    candidates\n  }\n}];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0002-0005-0001-000000000005",
+      "name": "Route by Confidence",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [1120, 300],
+      "parameters": {
+        "mode": "rules",
+        "rules": {
+          "rules": [
+            {
+              "id": "rule-high",
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.confidence }}",
+                    "rightValue": 0.7,
+                    "operator": { "type": "number", "operation": "gte" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "high_confidence"
+            },
+            {
+              "id": "rule-low",
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.confidence }}",
+                    "rightValue": 0.1,
+                    "operator": { "type": "number", "operation": "gte" }
+                  },
+                  {
+                    "leftValue": "={{ $json.confidence }}",
+                    "rightValue": 0.7,
+                    "operator": { "type": "number", "operation": "lt" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "disambiguation"
+            },
+            {
+              "id": "rule-none",
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.confidence }}",
+                    "rightValue": 0.1,
+                    "operator": { "type": "number", "operation": "lt" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "no_match"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0002-0006-0001-000000000006",
+      "name": "Update Lead GBP Found",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 160],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $json.lead_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ status: 'gbp_found', gbp_data: $json.matched, gbp_confidence: $json.confidence }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0002-0007-0001-000000000007",
+      "name": "Write GBP Found Progress",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 160],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/build_progress",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $('Score Confidence').first().json.lead_id, step: 'gbp_found', message: 'Found ' + $('Score Confidence').first().json.matched.name, payload: { address: $('Score Confidence').first().json.matched.full_address, phone: $('Score Confidence').first().json.matched.phone, photo_url: $('Score Confidence').first().json.matched.photos ? $('Score Confidence').first().json.matched.photos[0] : null } }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0002-0008-0001-000000000008",
+      "name": "Trigger Site Generation",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [1780, 160],
+      "parameters": {
+        "workflowId": "={{ $vars.WORKFLOW_ID_03_SITE_GENERATION }}",
+        "options": { "waitForSubWorkflow": false },
+        "data": {
+          "specifyData": "json",
+          "jsonData": "={{ JSON.stringify({ lead_id: $('Score Confidence').first().json.lead_id, business_name: $('Score Confidence').first().json.business_name, niche: $('Score Confidence').first().json.niche, suburb: $('Score Confidence').first().json.suburb, gbp_data: $('Score Confidence').first().json.matched }) }}"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0002-0009-0001-000000000009",
+      "name": "Write Disambiguation Progress",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 320],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/build_progress",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $json.lead_id, step: 'gbp_disambiguation', message: 'We found a few businesses. Which one is yours?', payload: { candidates: $json.candidates } }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0002-0010-0001-000000000010",
+      "name": "Write No Match Progress",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 460],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/build_progress",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $json.lead_id, step: 'gbp_not_found', message: 'We couldn\\'t find your business automatically. Tell us a bit more to continue.', payload: {} }) }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Workflow Input": {
+      "main": [[{ "node": "Write GBP Lookup Started", "type": "main", "index": 0 }]]
+    },
+    "Write GBP Lookup Started": {
+      "main": [[{ "node": "Outscraper GBP Search", "type": "main", "index": 0 }]]
+    },
+    "Outscraper GBP Search": {
+      "main": [[{ "node": "Score Confidence", "type": "main", "index": 0 }]]
+    },
+    "Score Confidence": {
+      "main": [[{ "node": "Route by Confidence", "type": "main", "index": 0 }]]
+    },
+    "Route by Confidence": {
+      "main": [
+        [{ "node": "Update Lead GBP Found", "type": "main", "index": 0 }],
+        [{ "node": "Write Disambiguation Progress", "type": "main", "index": 0 }],
+        [{ "node": "Write No Match Progress", "type": "main", "index": 0 }]
+      ]
+    },
+    "Update Lead GBP Found": {
+      "main": [[{ "node": "Write GBP Found Progress", "type": "main", "index": 0 }]]
+    },
+    "Write GBP Found Progress": {
+      "main": [[{ "node": "Trigger Site Generation", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": ["preview-factory", "phase-f"],
+  "notes": "Called asynchronously by workflow 01. Searches Outscraper, scores confidence, routes: >=0.7 auto-proceeds to generation; 0.1-0.69 emits disambiguation card via Realtime; <0.1 emits extended form prompt. The /building page listens to build_progress via Supabase Realtime. For disambiguation/no-match paths, the frontend submits the chosen business back via a separate endpoint (not in this workflow) which then calls workflow 03 directly."
+}

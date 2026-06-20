@@ -1,0 +1,247 @@
+{
+  "name": "04 — Vercel Deployment",
+  "nodes": [
+    {
+      "id": "a1b2c3d4-0004-0001-0001-000000000001",
+      "name": "Workflow Input",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "parameters": {}
+    },
+    {
+      "id": "a1b2c3d4-0004-0002-0001-000000000002",
+      "name": "Write Deploying Progress",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/build_progress",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $json.lead_id, step: 'deploying', message: 'Going live...' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0004-0003-0001-000000000003",
+      "name": "Build Deployment Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300],
+      "parameters": {
+        "jsCode": "const input = $('Workflow Input').first().json;\n\n// The Next.js multi-tenant app is already deployed on Vercel.\n// New customers are served by passing their slug to the existing deployment\n// via Vercel's deployment API — we update the environment variable SITE_PROPS_[SLUG]\n// or write the site_props to Supabase and the Next.js app reads it at request time.\n//\n// ARCHITECTURE NOTE:\n// We do NOT create a separate Vercel project per customer.\n// The single Next.js app at mysitehq.com.au reads site_props from Supabase\n// using the slug from the hostname (slug.mysitehq.com.au → sites WHERE slug=slug).\n// A Vercel deployment is only triggered when a new version of the template app is released.\n//\n// For per-customer previews, we create a Vercel deployment with NEXT_PUBLIC_SITE_SLUG env var.\n// The app's middleware routes *.mysitehq.com.au/[slug] to the correct SiteProps.\n//\n// Per-customer deployment strategy:\n// 1. Write site_props to Supabase (done in workflow 03)\n// 2. Trigger a Vercel deploy of the main app with updated SITE_DATA env var\n//    OR use Vercel's on-demand revalidation to bust the ISR cache for the new slug\n// 3. Create a Vercel alias: {slug}.mysitehq.com.au → existing deployment URL\n//\n// For the spec, we show option B: on-demand ISR revalidation + alias creation.\n// This avoids a full Vercel build per customer (which takes 2-3 minutes).\n// The app must implement: /api/revalidate?slug=[slug]&secret=[REVALIDATE_SECRET]\n\nconst deployStart = Date.now();\n\nreturn [{\n  json: {\n    lead_id: input.lead_id,\n    site_id: input.site_id,\n    slug: input.slug,\n    niche: input.niche,\n    category: input.category,\n    deploy_start: deployStart,\n    // The canonical Vercel project URL (set after Vercel project is configured)\n    vercel_project_id: process.env.VERCEL_PROJECT_ID || null\n  }\n}];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0004-0004-0001-000000000004",
+      "name": "Trigger ISR Revalidation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://mysitehq.com.au/api/revalidate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ slug: $json.slug, secret: $vars.NEXT_REVALIDATE_SECRET }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0004-0005-0001-000000000005",
+      "name": "Get Vercel Deployment ID",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.vercel.com/v6/deployments?projectId={{ $vars.VERCEL_PROJECT_ID }}&limit=1",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "=Bearer {{ $vars.VERCEL_TOKEN }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0004-0006-0001-000000000006",
+      "name": "Extract Deployment URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 300],
+      "parameters": {
+        "jsCode": "const prevInput = $('Build Deployment Payload').first().json;\nconst raw = $input.first().json;\n\n// Vercel returns { deployments: [{ uid, url, readyState, ... }] }\nconst deployments = raw.deployments || [];\nconst latest = deployments[0];\n\nif (!latest) {\n  throw new Error('No Vercel deployment found for project ' + $vars.VERCEL_PROJECT_ID);\n}\n\nconst vercelUrl = 'https://' + latest.url;\nconst deploymentId = latest.uid;\n\nreturn [{\n  json: {\n    lead_id: prevInput.lead_id,\n    site_id: prevInput.site_id,\n    slug: prevInput.slug,\n    deploy_start: prevInput.deploy_start,\n    vercel_url: vercelUrl,\n    vercel_deployment_id: deploymentId\n  }\n}];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0004-0007-0001-000000000007",
+      "name": "Create Vercel Alias",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.vercel.com/v2/deployments/{{ $json.vercel_deployment_id }}/aliases",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "=Bearer {{ $vars.VERCEL_TOKEN }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ alias: $json.slug + '.mysitehq.com.au' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0004-0008-0001-000000000008",
+      "name": "Update Site Record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 300],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/sites?site_id=eq.{{ $('Extract Deployment URL').first().json.site_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ status: 'preview', vercel_deployment_id: $('Extract Deployment URL').first().json.vercel_deployment_id, vercel_url: $('Extract Deployment URL').first().json.vercel_url, permanent_url: 'https://' + $('Extract Deployment URL').first().json.slug + '.mysitehq.com.au', expires_at: new Date(Date.now() + 3 * 60 * 60 * 1000).toISOString(), deploy_ms: Date.now() - $('Extract Deployment URL').first().json.deploy_start }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0004-0009-0001-000000000009",
+      "name": "Update Lead Status Preview",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 300],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $('Extract Deployment URL').first().json.lead_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "{\"status\": \"preview\"}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0004-0010-0001-000000000010",
+      "name": "Write Live Progress",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2220, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/build_progress",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $('Extract Deployment URL').first().json.lead_id, step: 'live', message: 'Your preview site is ready!', payload: { url: 'https://' + $('Extract Deployment URL').first().json.slug + '.mysitehq.com.au', expires_at: new Date(Date.now() + 3 * 60 * 60 * 1000).toISOString() } }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0004-0011-0001-000000000011",
+      "name": "Log Deployment Event",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2440, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/events",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $('Extract Deployment URL').first().json.lead_id, event_type: 'site.deployed', event_data: { slug: $('Extract Deployment URL').first().json.slug, vercel_url: $('Extract Deployment URL').first().json.vercel_url, permanent_url: 'https://' + $('Extract Deployment URL').first().json.slug + '.mysitehq.com.au' }, source: 'n8n' }) }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Workflow Input": {
+      "main": [[{ "node": "Write Deploying Progress", "type": "main", "index": 0 }]]
+    },
+    "Write Deploying Progress": {
+      "main": [[{ "node": "Build Deployment Payload", "type": "main", "index": 0 }]]
+    },
+    "Build Deployment Payload": {
+      "main": [[{ "node": "Trigger ISR Revalidation", "type": "main", "index": 0 }]]
+    },
+    "Trigger ISR Revalidation": {
+      "main": [[{ "node": "Get Vercel Deployment ID", "type": "main", "index": 0 }]]
+    },
+    "Get Vercel Deployment ID": {
+      "main": [[{ "node": "Extract Deployment URL", "type": "main", "index": 0 }]]
+    },
+    "Extract Deployment URL": {
+      "main": [[{ "node": "Create Vercel Alias", "type": "main", "index": 0 }]]
+    },
+    "Create Vercel Alias": {
+      "main": [[{ "node": "Update Site Record", "type": "main", "index": 0 }]]
+    },
+    "Update Site Record": {
+      "main": [[{ "node": "Update Lead Status Preview", "type": "main", "index": 0 }]]
+    },
+    "Update Lead Status Preview": {
+      "main": [[{ "node": "Write Live Progress", "type": "main", "index": 0 }]]
+    },
+    "Write Live Progress": {
+      "main": [[{ "node": "Log Deployment Event", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": ["preview-factory", "phase-f"],
+  "notes": "Multi-tenant deployment: does NOT create a new Vercel project per customer. Instead it calls /api/revalidate on the existing Next.js app (ISR cache bust), reads the latest deployment ID, and creates a per-slug alias (slug.mysitehq.com.au). The Next.js app must use the slug from hostname to load SiteProps from Supabase at request time. The wildcard DNS record *.mysitehq.com.au must point to Vercel (set up in Cloudflare). Set VERCEL_PROJECT_ID and VERCEL_TOKEN as n8n credentials/variables."
+}

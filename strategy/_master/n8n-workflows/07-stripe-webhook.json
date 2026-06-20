@@ -1,0 +1,330 @@
+{
+  "name": "07 — Stripe Webhook Handler",
+  "nodes": [
+    {
+      "id": "a1b2c3d4-0007-0001-0001-000000000001",
+      "name": "Stripe Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "parameters": {
+        "path": "stripe-webhook",
+        "httpMethod": "POST",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0007-0002-0001-000000000002",
+      "name": "Verify Stripe Signature",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300],
+      "parameters": {
+        "jsCode": "// Stripe signature verification\n// The raw body and stripe-signature header must be available.\n// n8n sends the raw body as $input.first().json.body (string) when responseMode=responseNode\n// and the headers in $input.first().json.headers\n\nconst webhookSecret = $vars.STRIPE_WEBHOOK_SECRET;\nconst rawBody = $input.first().json.rawBody || JSON.stringify($input.first().json.body);\nconst sigHeader = $input.first().json.headers['stripe-signature'];\n\nif (!sigHeader) {\n  throw new Error('Missing stripe-signature header');\n}\n\n// Parse timestamp and signatures from header\n// Format: t=TIMESTAMP,v1=SIG1,v1=SIG2\nconst parts = sigHeader.split(',');\nconst tPart = parts.find(p => p.startsWith('t='));\nconst v1Parts = parts.filter(p => p.startsWith('v1='));\n\nif (!tPart || v1Parts.length === 0) {\n  throw new Error('Invalid stripe-signature format');\n}\n\nconst timestamp = tPart.replace('t=', '');\nconst signatures = v1Parts.map(p => p.replace('v1=', ''));\n\n// Compute expected signature\n// NOTE: This uses the Web Crypto API available in n8n's code node.\n// If it is not available, install the stripe npm package via n8n settings\n// and use stripe.webhooks.constructEvent() instead.\nconst signedPayload = timestamp + '.' + rawBody;\n\n// We cannot use Node crypto directly in the sandboxed code node.\n// Use the following pattern with n8n's built-in crypto support:\nconst encoder = new TextEncoder();\nconst key = await crypto.subtle.importKey(\n  'raw',\n  encoder.encode(webhookSecret),\n  { name: 'HMAC', hash: 'SHA-256' },\n  false,\n  ['sign']\n);\nconst sigBuffer = await crypto.subtle.sign('HMAC', key, encoder.encode(signedPayload));\nconst expectedSig = Array.from(new Uint8Array(sigBuffer))\n  .map(b => b.toString(16).padStart(2, '0'))\n  .join('');\n\nconst valid = signatures.some(sig => sig === expectedSig);\n\n// Tolerance: reject if timestamp is older than 5 minutes\nconst timeDiff = Math.abs(Date.now() / 1000 - parseInt(timestamp));\nif (timeDiff > 300) {\n  throw new Error('Stripe webhook timestamp too old: ' + timeDiff + 's');\n}\n\nif (!valid) {\n  throw new Error('Stripe signature verification failed');\n}\n\nconst event = typeof $input.first().json.body === 'string'\n  ? JSON.parse($input.first().json.body)\n  : $input.first().json.body;\n\nreturn [{ json: { event_type: event.type, event_id: event.id, data: event.data } }];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0007-0003-0001-000000000003",
+      "name": "Route Stripe Event",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3,
+      "position": [680, 300],
+      "parameters": {
+        "mode": "rules",
+        "rules": {
+          "rules": [
+            {
+              "id": "rule-checkout",
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.event_type }}",
+                    "rightValue": "checkout.session.completed",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "checkout_completed"
+            },
+            {
+              "id": "rule-sub-deleted",
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.event_type }}",
+                    "rightValue": "customer.subscription.deleted",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "subscription_deleted"
+            },
+            {
+              "id": "rule-payment-failed",
+              "conditions": {
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.event_type }}",
+                    "rightValue": "invoice.payment_failed",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "payment_failed"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0007-0004-0001-000000000004",
+      "name": "Respond 200 Immediately",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 300],
+      "parameters": {
+        "options": { "responseCode": 200 },
+        "respondWith": "json",
+        "responseBody": "{\"received\": true}"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0007-0005-0001-000000000005",
+      "name": "Extract Checkout Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 160],
+      "parameters": {
+        "jsCode": "const session = $('Route Stripe Event').first().json.data.object;\n\n// Extract lead_id from metadata (set when creating the Stripe Checkout session)\nconst leadId = session.metadata && session.metadata.lead_id;\nif (!leadId) {\n  throw new Error('checkout.session.completed missing lead_id in metadata. Ensure the Stripe Checkout session is created with metadata.lead_id set.');\n}\n\nreturn [{\n  json: {\n    lead_id: leadId,\n    stripe_customer_id: session.customer,\n    stripe_subscription_id: session.subscription,\n    customer_email: session.customer_details ? session.customer_details.email : null,\n    amount_total: session.amount_total,\n    currency: session.currency,\n    session_id: session.id\n  }\n}];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0007-0006-0001-000000000006",
+      "name": "Fetch Subscription from Stripe",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 160],
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.stripe.com/v1/subscriptions/{{ $json.stripe_subscription_id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "=Bearer {{ $vars.STRIPE_SECRET_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0007-0007-0001-000000000007",
+      "name": "Update Lead Paid",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 160],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $('Extract Checkout Data').first().json.lead_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ status: 'paid', email: $('Extract Checkout Data').first().json.customer_email }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0007-0008-0001-000000000008",
+      "name": "Update Site Live",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 160],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/sites?lead_id=eq.{{ $('Extract Checkout Data').first().json.lead_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ status: 'live', published_at: new Date().toISOString() }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0007-0009-0001-000000000009",
+      "name": "Upsert Subscription Row",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 160],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/subscriptions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "resolution=merge-duplicates" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ subscription_id: $('Extract Checkout Data').first().json.stripe_subscription_id, lead_id: $('Extract Checkout Data').first().json.lead_id, stripe_customer_id: $('Extract Checkout Data').first().json.stripe_customer_id, stripe_price_id: ($('Fetch Subscription from Stripe').first().json.items && $('Fetch Subscription from Stripe').first().json.items.data && $('Fetch Subscription from Stripe').first().json.items.data[0]) ? $('Fetch Subscription from Stripe').first().json.items.data[0].price.id : null, plan_name: 'starter', niche: 'unknown', amount_cents: $('Extract Checkout Data').first().json.amount_total, interval: 'month', status: 'active', current_period_start: $('Fetch Subscription from Stripe').first().json.current_period_start ? new Date($('Fetch Subscription from Stripe').first().json.current_period_start * 1000).toISOString() : null, current_period_end: $('Fetch Subscription from Stripe').first().json.current_period_end ? new Date($('Fetch Subscription from Stripe').first().json.current_period_end * 1000).toISOString() : null, stripe_payload: $('Fetch Subscription from Stripe').first().json }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0007-0010-0001-000000000010",
+      "name": "Trigger Welcome Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [2220, 160],
+      "parameters": {
+        "workflowId": "={{ $vars.WORKFLOW_ID_08_WELCOME }}",
+        "options": { "waitForSubWorkflow": false },
+        "data": {
+          "specifyData": "json",
+          "jsonData": "={{ JSON.stringify({ lead_id: $('Extract Checkout Data').first().json.lead_id, subscription_id: $('Extract Checkout Data').first().json.stripe_subscription_id }) }}"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0007-0011-0001-000000000011",
+      "name": "Cancel Site on Sub Delete",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 340],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/subscriptions?subscription_id=eq.{{ $('Route Stripe Event').first().json.data.object.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ status: 'cancelled', cancelled_at: new Date().toISOString() }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0007-0012-0001-000000000012",
+      "name": "Send Payment Failed Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 480],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.postmarkapp.com/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/json" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "X-Postmark-Server-Token", "value": "={{ $vars.POSTMARK_SERVER_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ From: 'billing@mysitehq.com.au', To: $('Route Stripe Event').first().json.data.object.customer_email || 'unknown@unknown.com', Subject: 'Payment failed — action required', HtmlBody: '<p>Your recent payment failed. Please update your payment method to keep your site live.</p><p><a href=\"https://billing.stripe.com/p/login/\">Update payment method</a></p>', TextBody: 'Your payment failed. Update your payment details to keep your site live: https://billing.stripe.com/p/login/', MessageStream: 'outbound' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0007-0013-0001-000000000013",
+      "name": "Update Sub Past Due",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 480],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/subscriptions?subscription_id=eq.{{ $('Route Stripe Event').first().json.data.object.subscription }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "{\"status\": \"past_due\"}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Stripe Webhook": {
+      "main": [[{ "node": "Verify Stripe Signature", "type": "main", "index": 0 }]]
+    },
+    "Verify Stripe Signature": {
+      "main": [[{ "node": "Route Stripe Event", "type": "main", "index": 0 }]]
+    },
+    "Route Stripe Event": {
+      "main": [
+        [
+          { "node": "Respond 200 Immediately", "type": "main", "index": 0 },
+          { "node": "Extract Checkout Data", "type": "main", "index": 0 }
+        ],
+        [
+          { "node": "Respond 200 Immediately", "type": "main", "index": 0 },
+          { "node": "Cancel Site on Sub Delete", "type": "main", "index": 0 }
+        ],
+        [
+          { "node": "Respond 200 Immediately", "type": "main", "index": 0 },
+          { "node": "Send Payment Failed Email", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Extract Checkout Data": {
+      "main": [[{ "node": "Fetch Subscription from Stripe", "type": "main", "index": 0 }]]
+    },
+    "Fetch Subscription from Stripe": {
+      "main": [[{ "node": "Update Lead Paid", "type": "main", "index": 0 }]]
+    },
+    "Update Lead Paid": {
+      "main": [[{ "node": "Update Site Live", "type": "main", "index": 0 }]]
+    },
+    "Update Site Live": {
+      "main": [[{ "node": "Upsert Subscription Row", "type": "main", "index": 0 }]]
+    },
+    "Upsert Subscription Row": {
+      "main": [[{ "node": "Trigger Welcome Workflow", "type": "main", "index": 0 }]]
+    },
+    "Send Payment Failed Email": {
+      "main": [[{ "node": "Update Sub Past Due", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": ["preview-factory", "phase-f"],
+  "notes": "CRITICAL: The Stripe Checkout session must be created with metadata.lead_id = the Preview Factory lead_id, otherwise this workflow cannot link the payment to the lead. Stripe signature verification uses Web Crypto API in the code node. If the n8n version does not support Web Crypto, use the stripe npm package via n8n's community nodes or verify via a separate HTTP call. Set STRIPE_WEBHOOK_SECRET to the webhook signing secret from Stripe Dashboard → Webhooks."
+}

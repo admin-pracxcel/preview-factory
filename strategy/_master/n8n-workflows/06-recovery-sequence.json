@@ -1,0 +1,520 @@
+{
+  "name": "06 — Recovery Sequence (T+0 through T+7d)",
+  "nodes": [
+    {
+      "id": "a1b2c3d4-0006-0001-0001-000000000001",
+      "name": "Workflow Input",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "parameters": {}
+    },
+    {
+      "id": "a1b2c3d4-0006-0002-0001-000000000002",
+      "name": "Fetch Lead Details",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $json.lead_id }}&select=lead_id,business_name,email,phone,niche,suburb",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0003-0001-000000000003",
+      "name": "Has Email?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-email",
+              "leftValue": "={{ ($json[0] || $json).email }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0004-0001-000000000004",
+      "name": "Build Recovery Context",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 220],
+      "parameters": {
+        "jsCode": "const lead = Array.isArray($input.first().json) ? $input.first().json[0] : $input.first().json;\nconst workflowInput = $('Workflow Input').first().json;\n\nconst recoveryUrl = 'https://mysitehq.com.au/expired/' + lead.lead_id;\nconst previewUrl = workflowInput.permanent_url || ('https://' + (workflowInput.slug || lead.lead_id) + '.mysitehq.com.au');\n\nreturn [{\n  json: {\n    lead_id: lead.lead_id,\n    business_name: lead.business_name,\n    email: lead.email,\n    phone: lead.phone,\n    niche: lead.niche,\n    suburb: lead.suburb,\n    recovery_url: recoveryUrl,\n    preview_url: previewUrl\n  }\n}];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0005-0001-000000000005",
+      "name": "Send T+0 Recovery Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 220],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.postmarkapp.com/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/json" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "X-Postmark-Server-Token", "value": "={{ $vars.POSTMARK_SERVER_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ From: 'hello@mysitehq.com.au', To: $json.email, Subject: 'Your ' + $json.business_name + ' website preview has expired', HtmlBody: '<p>Hi,</p><p>Your preview site for <strong>' + $json.business_name + '</strong> expired a moment ago.</p><p>The good news: your site is still saved and ready to go live. Click the button below to recover it and start your subscription.</p><p><a href=\"' + $json.recovery_url + '\" style=\"background:#1D4ED8;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;display:inline-block;\">Recover my site</a></p><p>This link is valid for 30 days.</p><p>— Preview Factory</p>', TextBody: 'Your preview for ' + $json.business_name + ' expired. Recover it here: ' + $json.recovery_url, MessageStream: 'outbound' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0006-0001-000000000006",
+      "name": "Log T0 Attempt",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 220],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/recovery_attempts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "resolution=ignore-duplicates" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $('Build Recovery Context').first().json.lead_id, step: 't0', channel: 'email', postmark_message_id: $json.MessageID || null, status: 'sent' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0007-0001-000000000007",
+      "name": "Wait 24h",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1560, 220],
+      "parameters": {
+        "amount": 24,
+        "unit": "hours"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0008-0001-000000000008",
+      "name": "Check Still Expired T24",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 220],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $('Build Recovery Context').first().json.lead_id }}&select=status",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0009-0001-000000000009",
+      "name": "Still Expired T24?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2000, 220],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-expired-t24",
+              "leftValue": "={{ ($json[0] || $json).status }}",
+              "rightValue": "expired",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0010-0001-000000000010",
+      "name": "Send T+24h Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2220, 140],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.postmarkapp.com/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/json" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "X-Postmark-Server-Token", "value": "={{ $vars.POSTMARK_SERVER_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ From: 'hello@mysitehq.com.au', To: $('Build Recovery Context').first().json.email, Subject: 'Still thinking? Your ' + $('Build Recovery Context').first().json.business_name + ' site is saved', HtmlBody: '<p>Hi,</p><p>We saved your <strong>' + $('Build Recovery Context').first().json.business_name + '</strong> website. It\\'s ready to go live whenever you are.</p><p>Most of our customers get their first enquiry within 72 hours of going live. Your suburb — ' + $('Build Recovery Context').first().json.suburb + ' — has searches every week for your services.</p><p><a href=\"' + $('Build Recovery Context').first().json.recovery_url + '\" style=\"background:#1D4ED8;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;display:inline-block;\">Go live now</a></p><p>— Preview Factory</p>', TextBody: 'Your site is still saved. Go live: ' + $('Build Recovery Context').first().json.recovery_url, MessageStream: 'outbound' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0011-0001-000000000011",
+      "name": "Log T24 Attempt",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2440, 140],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/recovery_attempts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "resolution=ignore-duplicates" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $('Build Recovery Context').first().json.lead_id, step: 't24h', channel: 'email', status: 'sent' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0012-0001-000000000012",
+      "name": "Wait 48h",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [2660, 140],
+      "parameters": {
+        "amount": 48,
+        "unit": "hours"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0013-0001-000000000013",
+      "name": "Check Still Expired T72",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2880, 140],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $('Build Recovery Context').first().json.lead_id }}&select=status",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0014-0001-000000000014",
+      "name": "Still Expired T72?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [3100, 140],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-expired-t72",
+              "leftValue": "={{ ($json[0] || $json).status }}",
+              "rightValue": "expired",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0015-0001-000000000015",
+      "name": "Send T+72h Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3320, 60],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.postmarkapp.com/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/json" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "X-Postmark-Server-Token", "value": "={{ $vars.POSTMARK_SERVER_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ From: 'hello@mysitehq.com.au', To: $('Build Recovery Context').first().json.email, Subject: 'One last look — ' + $('Build Recovery Context').first().json.business_name, HtmlBody: '<p>Hi,</p><p>Three days ago your <strong>' + $('Build Recovery Context').first().json.business_name + '</strong> website was ready. Your competitors in ' + $('Build Recovery Context').first().json.suburb + ' are searchable today.</p><p>Your site is still saved. You can go live in under 2 minutes.</p><p><a href=\"' + $('Build Recovery Context').first().json.recovery_url + '\" style=\"background:#1D4ED8;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;display:inline-block;\">Claim my site</a></p><p>— Preview Factory</p>', TextBody: 'Your site is still saved. Claim it: ' + $('Build Recovery Context').first().json.recovery_url, MessageStream: 'outbound' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0016-0001-000000000016",
+      "name": "Log T72 Attempt",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3540, 60],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/recovery_attempts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "resolution=ignore-duplicates" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $('Build Recovery Context').first().json.lead_id, step: 't72h', channel: 'email', status: 'sent' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0017-0001-000000000017",
+      "name": "Wait 4 Days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [3760, 60],
+      "parameters": {
+        "amount": 96,
+        "unit": "hours"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0018-0001-000000000018",
+      "name": "Check Still Expired T7d",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [3980, 60],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $('Build Recovery Context').first().json.lead_id }}&select=status,phone",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0019-0001-000000000019",
+      "name": "Still Expired T7d?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [4200, 60],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-expired-t7d",
+              "leftValue": "={{ ($json[0] || $json).status }}",
+              "rightValue": "expired",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0020-0001-000000000020",
+      "name": "Send T+7d Final Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [4420, 0],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.postmarkapp.com/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/json" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "X-Postmark-Server-Token", "value": "={{ $vars.POSTMARK_SERVER_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ From: 'hello@mysitehq.com.au', To: $('Build Recovery Context').first().json.email, Subject: 'We\\'re about to delete your ' + $('Build Recovery Context').first().json.business_name + ' site', HtmlBody: '<p>Hi,</p><p>Your <strong>' + $('Build Recovery Context').first().json.business_name + '</strong> website has been sitting unused for 7 days. We\\'ll delete it in 23 more days.</p><p>If you want to keep it, you can go live right now and cancel anytime.</p><p><a href=\"' + $('Build Recovery Context').first().json.recovery_url + '\" style=\"background:#DC2626;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;display:inline-block;\">Save my site — last chance</a></p><p>— Preview Factory</p>', TextBody: 'Final notice: save your site before it is deleted. ' + $('Build Recovery Context').first().json.recovery_url, MessageStream: 'outbound' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0021-0001-000000000021",
+      "name": "Has Phone for T7d SMS?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [4420, 160],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-phone",
+              "leftValue": "={{ ($('Check Still Expired T7d').first().json[0] || $('Check Still Expired T7d').first().json).phone }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0022-0001-000000000022",
+      "name": "Send T+7d SMS",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [4640, 160],
+      "parameters": {
+        "operation": "send",
+        "from": "={{ $vars.TWILIO_FROM_NUMBER }}",
+        "to": "={{ ($('Check Still Expired T7d').first().json[0] || $('Check Still Expired T7d').first().json).phone }}",
+        "message": "=Preview Factory: Your {{ $('Build Recovery Context').first().json.business_name }} website expires in 23 days. Recover it: {{ $('Build Recovery Context').first().json.recovery_url }}"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0006-0023-0001-000000000023",
+      "name": "Log T7d Attempt",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [4860, 60],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/recovery_attempts",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "resolution=ignore-duplicates" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $('Build Recovery Context').first().json.lead_id, step: 't7d', channel: 'email', status: 'sent' }) }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Workflow Input": {
+      "main": [[{ "node": "Fetch Lead Details", "type": "main", "index": 0 }]]
+    },
+    "Fetch Lead Details": {
+      "main": [[{ "node": "Has Email?", "type": "main", "index": 0 }]]
+    },
+    "Has Email?": {
+      "main": [
+        [{ "node": "Build Recovery Context", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Build Recovery Context": {
+      "main": [[{ "node": "Send T+0 Recovery Email", "type": "main", "index": 0 }]]
+    },
+    "Send T+0 Recovery Email": {
+      "main": [[{ "node": "Log T0 Attempt", "type": "main", "index": 0 }]]
+    },
+    "Log T0 Attempt": {
+      "main": [[{ "node": "Wait 24h", "type": "main", "index": 0 }]]
+    },
+    "Wait 24h": {
+      "main": [[{ "node": "Check Still Expired T24", "type": "main", "index": 0 }]]
+    },
+    "Check Still Expired T24": {
+      "main": [[{ "node": "Still Expired T24?", "type": "main", "index": 0 }]]
+    },
+    "Still Expired T24?": {
+      "main": [
+        [{ "node": "Send T+24h Email", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Send T+24h Email": {
+      "main": [[{ "node": "Log T24 Attempt", "type": "main", "index": 0 }]]
+    },
+    "Log T24 Attempt": {
+      "main": [[{ "node": "Wait 48h", "type": "main", "index": 0 }]]
+    },
+    "Wait 48h": {
+      "main": [[{ "node": "Check Still Expired T72", "type": "main", "index": 0 }]]
+    },
+    "Check Still Expired T72": {
+      "main": [[{ "node": "Still Expired T72?", "type": "main", "index": 0 }]]
+    },
+    "Still Expired T72?": {
+      "main": [
+        [{ "node": "Send T+72h Email", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Send T+72h Email": {
+      "main": [[{ "node": "Log T72 Attempt", "type": "main", "index": 0 }]]
+    },
+    "Log T72 Attempt": {
+      "main": [[{ "node": "Wait 4 Days", "type": "main", "index": 0 }]]
+    },
+    "Wait 4 Days": {
+      "main": [[{ "node": "Check Still Expired T7d", "type": "main", "index": 0 }]]
+    },
+    "Check Still Expired T7d": {
+      "main": [[{ "node": "Still Expired T7d?", "type": "main", "index": 0 }]]
+    },
+    "Still Expired T7d?": {
+      "main": [
+        [
+          { "node": "Send T+7d Final Email", "type": "main", "index": 0 },
+          { "node": "Has Phone for T7d SMS?", "type": "main", "index": 0 }
+        ],
+        []
+      ]
+    },
+    "Send T+7d Final Email": {
+      "main": [[{ "node": "Log T7d Attempt", "type": "main", "index": 0 }]]
+    },
+    "Has Phone for T7d SMS?": {
+      "main": [
+        [{ "node": "Send T+7d SMS", "type": "main", "index": 0 }],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": ["preview-factory", "phase-f"],
+  "notes": "Recovery sequence: T+0 (immediate), T+24h, T+72h, T+7d. Each step checks lead.status before sending — if the lead has converted (status=paid), the chain exits cleanly via the IF false branch. Recovery attempt rows use UNIQUE (lead_id, step, channel) + Prefer: resolution=ignore-duplicates for idempotency. T+7d step also sends SMS if phone was captured. This workflow uses n8n Wait nodes (not pg_cron) so it must run on n8n with persistence enabled."
+}

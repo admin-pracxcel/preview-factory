@@ -1,0 +1,259 @@
+{
+  "name": "11 — Upsell Automation",
+  "nodes": [
+    {
+      "id": "a1b2c3d4-0011-0001-0001-000000000001",
+      "name": "Webhook or Workflow Input",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "parameters": {}
+    },
+    {
+      "id": "a1b2c3d4-0011-0002-0001-000000000002",
+      "name": "Fetch Lead and Subscription",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $json.lead_id }}&select=lead_id,business_name,email,phone,niche,suburb",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0011-0003-0001-000000000003",
+      "name": "Fetch Current Subscription",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/subscriptions?lead_id=eq.{{ $('Webhook or Workflow Input').first().json.lead_id }}&status=in.(active,past_due)&select=subscription_id,plan_name,niche,amount_cents,interval",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0011-0004-0001-000000000004",
+      "name": "Check Already Upsell Contacted",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/events?lead_id=eq.{{ $('Webhook or Workflow Input').first().json.lead_id }}&event_type=eq.upsell.triggered&created_at=gte.{{ new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString() }}&select=event_id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0011-0005-0001-000000000005",
+      "name": "Upsell Recently Sent?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 300],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-recent",
+              "leftValue": "={{ $json.length }}",
+              "rightValue": 0,
+              "operator": { "type": "number", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0011-0006-0001-000000000006",
+      "name": "Build Upsell Offer",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 220],
+      "parameters": {
+        "jsCode": "const lead = Array.isArray($('Fetch Lead and Subscription').first().json)\n  ? $('Fetch Lead and Subscription').first().json[0]\n  : $('Fetch Lead and Subscription').first().json;\n\nconst sub = Array.isArray($('Fetch Current Subscription').first().json)\n  ? $('Fetch Current Subscription').first().json[0]\n  : $('Fetch Current Subscription').first().json;\n\nconst triggerType = $('Webhook or Workflow Input').first().json.trigger_type;\nconst callCount = $('Webhook or Workflow Input').first().json.call_count || 0;\n\n// Niche-based upsell pricing\n// These prices are placeholders — the human sets actual Stripe price IDs\nconst upsellOffers = {\n  plateau: {\n    subject: 'Let\\'s get more calls coming in for ' + lead.business_name,\n    headline: 'Add our Local SEO Pack',\n    body: `Your site has been live for a while but calls have been slow. Our Local SEO Pack adds Google Business Profile optimisation, monthly Google Posts, and citation building. Most trades businesses see a 2–3x increase in calls within 60 days.`,\n    cta_text: 'Add SEO Pack',\n    cta_url: 'https://mysitehq.com.au/upgrade/seo-pack?lead_id=' + lead.lead_id,\n    price_display: 'Add from $49/mo'\n  },\n  milestone: {\n    subject: lead.business_name + ' is getting calls — ready to scale?',\n    headline: 'You\\'re getting enquiries. Here\\'s how to get more.',\n    body: `You\\'ve had ${callCount} tracked calls this month — that\\'s strong. Our Growth Plan adds Google Ads management, targeting your most profitable service-suburb combinations. Customers on this plan average 3x the call volume within 90 days.`,\n    cta_text: 'See Growth Plan',\n    cta_url: 'https://mysitehq.com.au/upgrade/growth?lead_id=' + lead.lead_id,\n    price_display: 'From $149/mo'\n  },\n  renewal: {\n    subject: 'Save 20% on your annual plan — limited time',\n    headline: 'Prepay for a year and save 20%',\n    body: `You\\'ve been on monthly billing. Switch to annual and save 20% — that\\'s $${Math.round((sub ? sub.amount_cents : 5900) * 12 * 0.2 / 100)} back in your pocket. Annual plans also get priority support and a free site refresh.`,\n    cta_text: 'Switch to annual',\n    cta_url: 'https://mysitehq.com.au/upgrade/annual?lead_id=' + lead.lead_id,\n    price_display: '20% off annual billing'\n  }\n};\n\nconst offer = upsellOffers[triggerType] || upsellOffers.plateau;\n\nconst html = `<!DOCTYPE html>\n<html>\n<body style=\"font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;\">\n<h1 style=\"color:#1D4ED8;\">${offer.headline}</h1>\n<p>Hi,</p>\n<p>${offer.body}</p>\n<p><a href=\"${offer.cta_url}\" style=\"background:#1D4ED8;color:#fff;padding:14px 28px;border-radius:6px;text-decoration:none;display:inline-block;font-size:16px;\">${offer.cta_text} — ${offer.price_display}</a></p>\n<p>Questions? Just reply to this email.</p>\n<p>— Preview Factory</p>\n</body>\n</html>`;\n\nreturn [{\n  json: {\n    lead_id: lead.lead_id,\n    business_name: lead.business_name,\n    email: lead.email,\n    phone: lead.phone,\n    trigger_type: triggerType,\n    offer_subject: offer.subject,\n    offer_html: html,\n    offer_cta_url: offer.cta_url,\n    sms_text: 'Preview Factory: ' + offer.headline + ' — ' + offer.price_display + '. Details: ' + offer.cta_url\n  }\n}];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0011-0007-0001-000000000007",
+      "name": "Has Email for Upsell?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1560, 220],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-email",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0011-0008-0001-000000000008",
+      "name": "Send Upsell Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 140],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.postmarkapp.com/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/json" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "X-Postmark-Server-Token", "value": "={{ $vars.POSTMARK_SERVER_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ From: 'hello@mysitehq.com.au', To: $json.email, Subject: $json.offer_subject, HtmlBody: $json.offer_html, TextBody: $json.sms_text, MessageStream: 'outbound' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0011-0009-0001-000000000009",
+      "name": "Has Phone for Upsell SMS?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1780, 300],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-phone",
+              "leftValue": "={{ $('Build Upsell Offer').first().json.phone }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            },
+            {
+              "id": "cond-milestone",
+              "leftValue": "={{ $('Build Upsell Offer').first().json.trigger_type }}",
+              "rightValue": "plateau",
+              "operator": { "type": "string", "operation": "notEquals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "notes": "Only send SMS for milestone and renewal triggers — plateau gets email only to avoid annoyance"
+    },
+    {
+      "id": "a1b2c3d4-0011-0010-0001-000000000010",
+      "name": "Send Upsell SMS",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [2000, 300],
+      "parameters": {
+        "operation": "send",
+        "from": "={{ $vars.TWILIO_FROM_NUMBER }}",
+        "to": "={{ $('Build Upsell Offer').first().json.phone }}",
+        "message": "={{ $('Build Upsell Offer').first().json.sms_text }}"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0011-0011-0001-000000000011",
+      "name": "Log Upsell Event",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2220, 220],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/events",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $('Build Upsell Offer').first().json.lead_id, event_type: 'upsell.triggered', event_data: { trigger_type: $('Build Upsell Offer').first().json.trigger_type, email_sent: !!$('Build Upsell Offer').first().json.email, sms_sent: !!$('Build Upsell Offer').first().json.phone }, source: 'n8n' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0011-0012-0001-000000000012",
+      "name": "Skip Already Contacted",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [1340, 420],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Webhook or Workflow Input": {
+      "main": [[{ "node": "Fetch Lead and Subscription", "type": "main", "index": 0 }]]
+    },
+    "Fetch Lead and Subscription": {
+      "main": [[{ "node": "Fetch Current Subscription", "type": "main", "index": 0 }]]
+    },
+    "Fetch Current Subscription": {
+      "main": [[{ "node": "Check Already Upsell Contacted", "type": "main", "index": 0 }]]
+    },
+    "Check Already Upsell Contacted": {
+      "main": [[{ "node": "Upsell Recently Sent?", "type": "main", "index": 0 }]]
+    },
+    "Upsell Recently Sent?": {
+      "main": [
+        [{ "node": "Build Upsell Offer", "type": "main", "index": 0 }],
+        [{ "node": "Skip Already Contacted", "type": "main", "index": 0 }]
+      ]
+    },
+    "Build Upsell Offer": {
+      "main": [[{ "node": "Has Email for Upsell?", "type": "main", "index": 0 }]]
+    },
+    "Has Email for Upsell?": {
+      "main": [
+        [{ "node": "Send Upsell Email", "type": "main", "index": 0 }],
+        [{ "node": "Has Phone for Upsell SMS?", "type": "main", "index": 0 }]
+      ]
+    },
+    "Send Upsell Email": {
+      "main": [[{ "node": "Has Phone for Upsell SMS?", "type": "main", "index": 0 }]]
+    },
+    "Has Phone for Upsell SMS?": {
+      "main": [
+        [{ "node": "Send Upsell SMS", "type": "main", "index": 0 }],
+        [{ "node": "Log Upsell Event", "type": "main", "index": 0 }]
+      ]
+    },
+    "Send Upsell SMS": {
+      "main": [[{ "node": "Log Upsell Event", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": ["preview-factory", "phase-f"],
+  "notes": "Triggered by workflow 10 (monthly reporting) or directly via executeWorkflow. trigger_type must be 'plateau', 'milestone', or 'renewal'. 30-day deduplication prevents spamming the same lead with multiple upsell attempts per month. SMS is sent for milestone and renewal triggers only. The upgrade URLs (mysitehq.com.au/upgrade/*) must be built as actual pages that redirect to Stripe Checkout — these are frontend pages not covered in this workflow spec."
+}

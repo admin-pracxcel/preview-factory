@@ -1,0 +1,224 @@
+{
+  "name": "09 — Onboarding Sequence (T+24h / T+72h / T+7d)",
+  "nodes": [
+    {
+      "id": "a1b2c3d4-0009-0001-0001-000000000001",
+      "name": "Workflow Input",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "parameters": {}
+    },
+    {
+      "id": "a1b2c3d4-0009-0002-0001-000000000002",
+      "name": "Wait for Delay",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [460, 300],
+      "parameters": {
+        "amount": "={{ $json.delay_hours || 24 }}",
+        "unit": "hours"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0009-0003-0001-000000000003",
+      "name": "Fetch Lead",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $('Workflow Input').first().json.lead_id }}&select=lead_id,business_name,email,phone,niche,suburb,status",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0009-0004-0001-000000000004",
+      "name": "Still Active Customer?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [900, 300],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-active",
+              "leftValue": "={{ ($json[0] || $json).status }}",
+              "rightValue": "churned",
+              "operator": { "type": "string", "operation": "notEquals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0009-0005-0001-000000000005",
+      "name": "Build Email Content",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1120, 220],
+      "parameters": {
+        "jsCode": "const lead = Array.isArray($input.first().json) ? $input.first().json[0] : $input.first().json;\nconst step = $('Workflow Input').first().json.sequence_step;\n\nconst subjectMap = {\n  1: 'Your site is being indexed — here\\'s what to expect',\n  2: 'Quick SEO tip for ' + lead.business_name,\n  3: 'One week in — have you had any calls yet?'\n};\n\nconst bodyMap = {\n  1: `<p>Hi,</p>\n<p>Your <strong>${lead.business_name}</strong> website is live and Google is already crawling it. You should appear in local search results within 24–72 hours.</p>\n<h2>How to check your ranking</h2>\n<ol>\n<li>Open an incognito window in Chrome</li>\n<li>Search for <strong>[your service] ${lead.suburb}</strong></li>\n<li>Your site should appear within a week</li>\n</ol>\n<p>Want to speed things up? Make sure your Google Business Profile links to your new website URL.</p>\n<p>— Preview Factory</p>`,\n  2: `<p>Hi,</p>\n<p>Quick tip: update your Google Business Profile to link directly to your new <strong>${lead.business_name}</strong> website. This sends a strong signal to Google that your site is your official web presence.</p>\n<p>Here\\'s how:</p>\n<ol>\n<li>Open <a href=\"https://business.google.com\">business.google.com</a></li>\n<li>Click \"Edit profile\"</li>\n<li>Under \"Website\", paste your site URL</li>\n<li>Click Save</li>\n</ol>\n<p>This one change typically adds 10–20% more impressions within 30 days.</p>\n<p>— Preview Factory</p>`,\n  3: `<p>Hi,</p>\n<p>It\\'s been one week since your <strong>${lead.business_name}</strong> website went live. We\\'d love to know — have you had any enquiries or calls from people who found you online?</p>\n<p>Just reply to this email and let us know. Your feedback helps us improve the service.</p>\n<p>And if you\\'d like to make any changes to your site — services, photos, contact details — just SMS us at ${$vars.TWILIO_FROM_NUMBER || '[your Twilio number]'} with the update.</p>\n<p>— Preview Factory</p>`\n};\n\nconst textMap = {\n  1: 'Your ' + lead.business_name + ' site is live and indexing. Check Google within 72 hours.',\n  2: 'Tip: link your Google Business Profile to your new website to improve rankings.',\n  3: 'One week in — reply and let us know if you\\'ve had any calls from the site.'\n};\n\nreturn [{\n  json: {\n    lead_id: lead.lead_id,\n    business_name: lead.business_name,\n    email: lead.email,\n    niche: lead.niche,\n    suburb: lead.suburb,\n    sequence_step: step,\n    subject: subjectMap[step] || 'Update from Preview Factory',\n    html_body: bodyMap[step] || '<p>Update from Preview Factory.</p>',\n    text_body: textMap[step] || 'Update from Preview Factory.'\n  }\n}];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0009-0006-0001-000000000006",
+      "name": "Has Email?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1340, 220],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-email",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0009-0007-0001-000000000007",
+      "name": "Send Onboarding Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 140],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.postmarkapp.com/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/json" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "X-Postmark-Server-Token", "value": "={{ $vars.POSTMARK_SERVER_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ From: 'hello@mysitehq.com.au', To: $json.email, Subject: $json.subject, HtmlBody: $json.html_body, TextBody: $json.text_body, MessageStream: 'outbound' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0009-0008-0001-000000000008",
+      "name": "Log Onboarding Event",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 220],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/events",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $('Build Email Content').first().json.lead_id, event_type: 'onboarding.email.sent', event_data: { step: $('Build Email Content').first().json.sequence_step, subject: $('Build Email Content').first().json.subject }, source: 'n8n' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0009-0009-0001-000000000009",
+      "name": "Queue Next Step?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2000, 220],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-next-step",
+              "leftValue": "={{ $('Workflow Input').first().json.sequence_step }}",
+              "rightValue": 3,
+              "operator": { "type": "number", "operation": "lt" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0009-0010-0001-000000000010",
+      "name": "Queue Next Onboarding Step",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [2220, 140],
+      "parameters": {
+        "workflowId": "={{ $vars.WORKFLOW_ID_09_ONBOARDING }}",
+        "options": { "waitForSubWorkflow": false },
+        "data": {
+          "specifyData": "json",
+          "jsonData": "={{ JSON.stringify({ lead_id: $('Workflow Input').first().json.lead_id, sequence_step: ($('Workflow Input').first().json.sequence_step || 1) + 1, delay_hours: ($('Workflow Input').first().json.sequence_step || 1) === 1 ? 48 : 96 }) }}"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0009-0011-0001-000000000011",
+      "name": "Sequence Complete",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [2220, 300],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Workflow Input": {
+      "main": [[{ "node": "Wait for Delay", "type": "main", "index": 0 }]]
+    },
+    "Wait for Delay": {
+      "main": [[{ "node": "Fetch Lead", "type": "main", "index": 0 }]]
+    },
+    "Fetch Lead": {
+      "main": [[{ "node": "Still Active Customer?", "type": "main", "index": 0 }]]
+    },
+    "Still Active Customer?": {
+      "main": [
+        [{ "node": "Build Email Content", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Build Email Content": {
+      "main": [[{ "node": "Has Email?", "type": "main", "index": 0 }]]
+    },
+    "Has Email?": {
+      "main": [
+        [{ "node": "Send Onboarding Email", "type": "main", "index": 0 }],
+        [{ "node": "Log Onboarding Event", "type": "main", "index": 0 }]
+      ]
+    },
+    "Send Onboarding Email": {
+      "main": [[{ "node": "Log Onboarding Event", "type": "main", "index": 0 }]]
+    },
+    "Log Onboarding Event": {
+      "main": [[{ "node": "Queue Next Step?", "type": "main", "index": 0 }]]
+    },
+    "Queue Next Step?": {
+      "main": [
+        [{ "node": "Queue Next Onboarding Step", "type": "main", "index": 0 }],
+        [{ "node": "Sequence Complete", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": ["preview-factory", "phase-f"],
+  "notes": "Self-scheduling: each step queues the next via executeWorkflow with delay_hours. Step 1 waits 24h (T+24h post-purchase), step 2 waits 48h more (T+72h), step 3 waits 96h more (T+7d). The workflow exits cleanly if the lead has churned. Requires n8n persistence to be enabled (database-backed, not in-memory) so Wait nodes survive restarts."
+}

@@ -1,0 +1,196 @@
+{
+  "name": "03 — Site Generation (Claude Sonnet)",
+  "nodes": [
+    {
+      "id": "a1b2c3d4-0003-0001-0001-000000000001",
+      "name": "Workflow Input",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "parameters": {}
+    },
+    {
+      "id": "a1b2c3d4-0003-0002-0001-000000000002",
+      "name": "Write Generating Progress",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/build_progress",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $json.lead_id, step: 'site_generating', message: 'Designing your site...' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0003-0003-0001-000000000003",
+      "name": "Update Lead Status Generating",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $('Workflow Input').first().json.lead_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "{\"status\": \"generating\"}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0003-0004-0001-000000000004",
+      "name": "Build Claude Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300],
+      "parameters": {
+        "jsCode": "const input = $('Workflow Input').first().json;\nconst { lead_id, business_name, niche, suburb, gbp_data } = input;\n\n// Map niche to template category\nconst nicheCategoryMap = {\n  'electrician': 'trades', 'plumber': 'trades', 'builder': 'trades',\n  'painter': 'trades', 'landscaper': 'trades', 'hvac': 'trades',\n  'physio': 'allied-health', 'chiro': 'allied-health', 'osteo': 'allied-health',\n  'dentist': 'allied-health', 'gp': 'allied-health', 'optometrist': 'allied-health',\n  'beauty': 'beauty-aesthetics', 'skin-clinic': 'beauty-aesthetics',\n  'hair-salon': 'beauty-aesthetics', 'nail-salon': 'beauty-aesthetics',\n  'personal-trainer': 'fitness-wellness', 'yoga': 'fitness-wellness',\n  'pilates': 'fitness-wellness', 'gym': 'fitness-wellness',\n  'accountant': 'professional-services', 'solicitor': 'professional-services',\n  'mortgage-broker': 'professional-services', 'financial-planner': 'professional-services',\n  'cafe': 'hospitality', 'restaurant': 'hospitality', 'food-truck': 'hospitality',\n  'other': 'trades'\n};\nconst category = nicheCategoryMap[niche] || 'trades';\n\n// Serialise GBP data for the prompt\nconst gbpSummary = gbp_data ? JSON.stringify({\n  name: gbp_data.name,\n  address: gbp_data.full_address,\n  phone: gbp_data.phone,\n  website: gbp_data.site,\n  description: gbp_data.description,\n  rating: gbp_data.rating,\n  reviews: gbp_data.reviews,\n  subtypes: gbp_data.subtypes,\n  photos: (gbp_data.photos || []).slice(0, 6),\n  latitude: gbp_data.latitude,\n  longitude: gbp_data.longitude\n}, null, 2) : '{\"name\": \"' + business_name + '\", \"address\": \"' + suburb + ', Australia\"}';\n\nconst systemPrompt = `You are a specialist website content generator for Australian small service businesses.\nYou produce a structured JSON object called SiteProps that drives a ${category} website template.\nThe output must be valid JSON only — no commentary, no markdown fences.\n\nSiteProps schema:\n{\n  \"business\": {\n    \"name\": string,           // business name as it should appear on the site\n    \"phone\": string,          // click-to-call format: \"04XX XXX XXX\"\n    \"email\": string | null,\n    \"address\": string,        // street address if available\n    \"suburb\": string,\n    \"state\": string,          // e.g. \"NSW\"\n    \"postcode\": string | null,\n    \"abn\": string | null,\n    \"tagline\": string,        // compelling, specific to niche — max 12 words\n    \"description\": string,    // 2-sentence business description, Australian English\n    \"yearFounded\": number | null,\n    \"rating\": number | null,\n    \"reviewCount\": number | null\n  },\n  \"brand\": {\n    \"primaryColour\": string,  // hex code matching niche — e.g. trades: \"#1D4ED8\"\n    \"accentColour\": string,\n    \"fontStyle\": \"modern\" | \"classic\" | \"bold\"\n  },\n  \"services\": [\n    {\n      \"slug\": string,         // kebab-case\n      \"name\": string,\n      \"shortDescription\": string,  // 1 sentence\n      \"longDescription\": string,   // 3-4 sentences for service page\n      \"price\": string | null,      // e.g. \"From $120\" or null if not typical to quote\n      \"icon\": string               // lucide-react icon name e.g. \"Wrench\"\n    }\n  ],                               // 6–10 services\n  \"locations\": [\n    {\n      \"suburb\": string,\n      \"state\": string,\n      \"slug\": string           // kebab-case\n    }\n  ],                               // primary suburb + 7–14 surrounding suburbs\n  \"serviceAreas\": [\n    {\n      \"slug\": string,          // e.g. \"plumber-auburn-nsw\"\n      \"service\": string,\n      \"suburb\": string,\n      \"state\": string,\n      \"headline\": string,      // e.g. \"Plumber in Auburn NSW — Same-Day Service\"\n      \"body\": string           // 2 sentences\n    }\n  ],                               // cross-product of top 3 services x top 5 locations\n  \"faq\": [\n    { \"question\": string, \"answer\": string }\n  ],                               // 6–10 FAQs\n  \"photos\": string[],              // GBP photo URLs, pass through\n  \"trustSignals\": {\n    \"badges\": string[],            // e.g. [\"Licensed\", \"Insured\", \"10+ Years\"]\n    \"guarantee\": string | null     // e.g. \"Same-day service or no call-out fee\"\n  },\n  \"meta\": {\n    \"generatedAt\": string,         // ISO timestamp\n    \"generatedBy\": \"claude-sonnet-4-5\",\n    \"templateCategory\": string,\n    \"niche\": string,\n    \"schemaVersion\": \"1.0\"\n  }\n}\n\nRules:\n- All copy is Australian English (use -ise not -ize, \"colour\" not \"color\" etc.)\n- Phone must be formatted as Australian mobile or landline\n- Generate realistic suburb list based on the business suburb — nearby suburbs only\n- Services must be specific to the niche, not generic\n- The tagline must be specific and compelling, never generic like \"Quality Service You Can Trust\"\n- Do not invent contact details not present in GBP data; use null for missing fields\n- Output valid JSON only — the system will crash if you add any prose`;\n\nconst userMessage = `Business niche: ${niche}\nPrimary suburb: ${suburb}\nTemplate category: ${category}\n\nGoogle Business Profile data:\n${gbpSummary}\n\nGenerate SiteProps JSON now.`;\n\nreturn [{\n  json: {\n    lead_id,\n    business_name,\n    niche,\n    suburb,\n    category,\n    system_prompt: systemPrompt,\n    user_message: userMessage,\n    generation_start: Date.now()\n  }\n}];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0003-0005-0001-000000000005",
+      "name": "Call Claude Sonnet",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "x-api-key", "value": "={{ $vars.ANTHROPIC_API_KEY }}" },
+            { "name": "anthropic-version", "value": "2023-06-01" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ model: 'claude-sonnet-4-5', max_tokens: 8192, system: $json.system_prompt, messages: [{ role: 'user', content: $json.user_message }] }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0003-0006-0001-000000000006",
+      "name": "Parse and Validate SiteProps",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 300],
+      "parameters": {
+        "jsCode": "const prevInput = $('Build Claude Prompt').first().json;\nconst raw = $input.first().json;\n\nconst generationMs = Date.now() - prevInput.generation_start;\n\n// Extract text from Claude response\nconst textContent = raw.content && raw.content[0] && raw.content[0].text;\nif (!textContent) {\n  throw new Error('Claude returned empty content. Stop reason: ' + raw.stop_reason);\n}\n\n// Strip potential markdown fences\nconst cleaned = textContent.replace(/^```json\\s*/i, '').replace(/^```\\s*/i, '').replace(/```\\s*$/i, '').trim();\n\nlet siteProps;\ntry {\n  siteProps = JSON.parse(cleaned);\n} catch (e) {\n  throw new Error('Claude response is not valid JSON: ' + e.message + '\\n\\nRaw: ' + textContent.substring(0, 500));\n}\n\n// Validate required fields\nconst required = [\n  ['business', 'object'],\n  ['business.name', 'string'],\n  ['services', 'array'],\n  ['locations', 'array'],\n  ['faq', 'array']\n];\n\nfunction getPath(obj, path) {\n  return path.split('.').reduce((o, k) => (o ? o[k] : undefined), obj);\n}\n\nfor (const [path, type] of required) {\n  const val = getPath(siteProps, path);\n  if (val === undefined || val === null) throw new Error('SiteProps missing required field: ' + path);\n  if (type === 'array' && !Array.isArray(val)) throw new Error('SiteProps field ' + path + ' must be array');\n  if (type === 'string' && typeof val !== 'string') throw new Error('SiteProps field ' + path + ' must be string');\n}\n\nif (!siteProps.services || siteProps.services.length < 3) {\n  throw new Error('SiteProps must have at least 3 services, got: ' + (siteProps.services || []).length);\n}\n\nif (!siteProps.locations || siteProps.locations.length < 3) {\n  throw new Error('SiteProps must have at least 3 locations, got: ' + (siteProps.locations || []).length);\n}\n\n// Inject meta if missing\nif (!siteProps.meta) {\n  siteProps.meta = {};\n}\nsiteProps.meta.generatedAt = new Date().toISOString();\nsiteProps.meta.generatedBy = 'claude-sonnet-4-5';\nsiteProps.meta.niche = prevInput.niche;\nsiteProps.meta.templateCategory = prevInput.category;\nsiteProps.meta.schemaVersion = '1.0';\n\n// Generate slug from business name + suburb\nconst slugBase = (siteProps.business.name + '-' + prevInput.suburb)\n  .toLowerCase()\n  .replace(/[^a-z0-9\\s-]/g, '')\n  .replace(/\\s+/g, '-')\n  .replace(/-+/g, '-')\n  .substring(0, 60);\n\nreturn [{\n  json: {\n    lead_id: prevInput.lead_id,\n    niche: prevInput.niche,\n    category: prevInput.category,\n    slug: slugBase,\n    site_props: siteProps,\n    generation_ms: generationMs\n  }\n}];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0003-0007-0001-000000000007",
+      "name": "Insert Site Row",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/sites",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "return=representation" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $json.lead_id, slug: $json.slug, niche: $json.niche, template_category: $json.category, site_props: $json.site_props, status: 'deploying', generation_ms: $json.generation_ms }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0003-0008-0001-000000000008",
+      "name": "Write Site Generated Progress",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/build_progress",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $('Parse and Validate SiteProps').first().json.lead_id, step: 'site_generated', message: 'Your site content is ready. Deploying...' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0003-0009-0001-000000000009",
+      "name": "Trigger Deployment",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [2000, 300],
+      "parameters": {
+        "workflowId": "={{ $vars.WORKFLOW_ID_04_DEPLOYMENT }}",
+        "options": { "waitForSubWorkflow": false },
+        "data": {
+          "specifyData": "json",
+          "jsonData": "={{ JSON.stringify({ lead_id: $('Parse and Validate SiteProps').first().json.lead_id, slug: $('Parse and Validate SiteProps').first().json.slug, site_id: (Array.isArray($('Insert Site Row').first().json) ? $('Insert Site Row').first().json[0].site_id : $('Insert Site Row').first().json.site_id), site_props: $('Parse and Validate SiteProps').first().json.site_props, niche: $('Parse and Validate SiteProps').first().json.niche, category: $('Parse and Validate SiteProps').first().json.category }) }}"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Workflow Input": {
+      "main": [[{ "node": "Write Generating Progress", "type": "main", "index": 0 }]]
+    },
+    "Write Generating Progress": {
+      "main": [[{ "node": "Update Lead Status Generating", "type": "main", "index": 0 }]]
+    },
+    "Update Lead Status Generating": {
+      "main": [[{ "node": "Build Claude Prompt", "type": "main", "index": 0 }]]
+    },
+    "Build Claude Prompt": {
+      "main": [[{ "node": "Call Claude Sonnet", "type": "main", "index": 0 }]]
+    },
+    "Call Claude Sonnet": {
+      "main": [[{ "node": "Parse and Validate SiteProps", "type": "main", "index": 0 }]]
+    },
+    "Parse and Validate SiteProps": {
+      "main": [[{ "node": "Insert Site Row", "type": "main", "index": 0 }]]
+    },
+    "Insert Site Row": {
+      "main": [[{ "node": "Write Site Generated Progress", "type": "main", "index": 0 }]]
+    },
+    "Write Site Generated Progress": {
+      "main": [[{ "node": "Trigger Deployment", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": ["preview-factory", "phase-f"],
+  "notes": "Calls Claude Sonnet 4.5 (update model string if upgrading) with a niche-specific system prompt. Parses and validates the SiteProps JSON blob, inserts a sites row, then fires workflow 04. The system prompt is embedded in the Build Claude Prompt code node — update it if the SiteProps schema changes. Timeout is 120s; Claude typically responds in 15-35s."
+}

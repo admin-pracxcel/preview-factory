@@ -1,0 +1,243 @@
+{
+  "name": "08 — Post-Purchase Welcome",
+  "nodes": [
+    {
+      "id": "a1b2c3d4-0008-0001-0001-000000000001",
+      "name": "Workflow Input",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "parameters": {}
+    },
+    {
+      "id": "a1b2c3d4-0008-0002-0001-000000000002",
+      "name": "Fetch Lead and Site",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $json.lead_id }}&select=lead_id,business_name,email,phone,niche,suburb",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0008-0003-0001-000000000003",
+      "name": "Fetch Site Record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/sites?lead_id=eq.{{ $('Workflow Input').first().json.lead_id }}&select=site_id,slug,permanent_url,status",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0008-0004-0001-000000000004",
+      "name": "Merge Lead and Site",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300],
+      "parameters": {
+        "jsCode": "const lead = Array.isArray($('Fetch Lead and Site').first().json)\n  ? $('Fetch Lead and Site').first().json[0]\n  : $('Fetch Lead and Site').first().json;\n\nconst site = Array.isArray($('Fetch Site Record').first().json)\n  ? $('Fetch Site Record').first().json[0]\n  : $('Fetch Site Record').first().json;\n\nif (!lead || !lead.lead_id) throw new Error('Lead not found');\nif (!site || !site.site_id) throw new Error('Site not found for lead ' + lead.lead_id);\n\nconst dashboardUrl = 'https://mysitehq.com.au/dashboard?lead_id=' + lead.lead_id;\nconst editInstructions = 'To update your site, SMS us at ' + ($vars.TWILIO_FROM_NUMBER || '[your Twilio number]') + ' with your change. E.g. \"Update phone to 0400 000 000\"';\n\nreturn [{\n  json: {\n    lead_id: lead.lead_id,\n    business_name: lead.business_name,\n    email: lead.email,\n    phone: lead.phone,\n    niche: lead.niche,\n    suburb: lead.suburb,\n    site_id: site.site_id,\n    permanent_url: site.permanent_url,\n    dashboard_url: dashboardUrl,\n    edit_instructions: editInstructions,\n    subscription_id: $('Workflow Input').first().json.subscription_id\n  }\n}];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0008-0005-0001-000000000005",
+      "name": "Has Phone for SMS?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1120, 300],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-phone",
+              "leftValue": "={{ $json.phone }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0008-0006-0001-000000000006",
+      "name": "Send Welcome SMS",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [1340, 220],
+      "parameters": {
+        "operation": "send",
+        "from": "={{ $vars.TWILIO_FROM_NUMBER }}",
+        "to": "={{ $json.phone }}",
+        "message": "=Welcome to Preview Factory! Your {{ $json.business_name }} website is live at {{ $json.permanent_url }} — To make changes, reply to this message with your update. E.g. 'Update phone to 0400 000 000'."
+      }
+    },
+    {
+      "id": "a1b2c3d4-0008-0007-0001-000000000007",
+      "name": "Has Email for Welcome?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1340, 380],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-email",
+              "leftValue": "={{ $('Merge Lead and Site').first().json.email }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0008-0008-0001-000000000008",
+      "name": "Send Welcome Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.postmarkapp.com/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/json" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "X-Postmark-Server-Token", "value": "={{ $vars.POSTMARK_SERVER_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ From: 'hello@mysitehq.com.au', To: $('Merge Lead and Site').first().json.email, Subject: 'Your ' + $('Merge Lead and Site').first().json.business_name + ' website is live', HtmlBody: '<!DOCTYPE html><html><body style=\"font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;\"><h1 style=\"color:#1D4ED8;\">Your site is live!</h1><p>Hi,</p><p>Your <strong>' + $('Merge Lead and Site').first().json.business_name + '</strong> website is live and already indexing in Google.</p><p><a href=\"' + $('Merge Lead and Site').first().json.permanent_url + '\" style=\"background:#1D4ED8;color:#fff;padding:14px 28px;border-radius:6px;text-decoration:none;display:inline-block;font-size:16px;\">Visit your site</a></p><h2>How to make changes</h2><p>' + $('Merge Lead and Site').first().json.edit_instructions + '</p><h2>What happens next</h2><ul><li>Google will index your site within 24–72 hours</li><li>You\\'ll get a call tracking number for your suburb</li><li>We\\'ll send you a performance report on the 1st of each month</li></ul><p>If you have any questions, reply to this email.</p><p>— Preview Factory</p></body></html>', TextBody: 'Your ' + $('Merge Lead and Site').first().json.business_name + ' website is live at ' + $('Merge Lead and Site').first().json.permanent_url + '. ' + $('Merge Lead and Site').first().json.edit_instructions, MessageStream: 'outbound' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0008-0009-0001-000000000009",
+      "name": "Update Lead Onboarding",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 300],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $('Merge Lead and Site').first().json.lead_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "{\"status\": \"onboarding\"}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0008-0010-0001-000000000010",
+      "name": "Log Welcome Event",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2000, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/events",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $('Merge Lead and Site').first().json.lead_id, event_type: 'welcome.sent', event_data: { sms_sent: !!$('Merge Lead and Site').first().json.phone, email_sent: !!$('Merge Lead and Site').first().json.email, permanent_url: $('Merge Lead and Site').first().json.permanent_url }, source: 'n8n' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0008-0011-0001-000000000011",
+      "name": "Schedule T+24h Onboarding",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [2220, 300],
+      "parameters": {
+        "workflowId": "={{ $vars.WORKFLOW_ID_09_ONBOARDING }}",
+        "options": { "waitForSubWorkflow": false },
+        "data": {
+          "specifyData": "json",
+          "jsonData": "={{ JSON.stringify({ lead_id: $('Merge Lead and Site').first().json.lead_id, sequence_step: 1, delay_hours: 24 }) }}"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Workflow Input": {
+      "main": [[{ "node": "Fetch Lead and Site", "type": "main", "index": 0 }]]
+    },
+    "Fetch Lead and Site": {
+      "main": [[{ "node": "Fetch Site Record", "type": "main", "index": 0 }]]
+    },
+    "Fetch Site Record": {
+      "main": [[{ "node": "Merge Lead and Site", "type": "main", "index": 0 }]]
+    },
+    "Merge Lead and Site": {
+      "main": [[{ "node": "Has Phone for SMS?", "type": "main", "index": 0 }]]
+    },
+    "Has Phone for SMS?": {
+      "main": [
+        [
+          { "node": "Send Welcome SMS", "type": "main", "index": 0 },
+          { "node": "Has Email for Welcome?", "type": "main", "index": 0 }
+        ],
+        [{ "node": "Has Email for Welcome?", "type": "main", "index": 0 }]
+      ]
+    },
+    "Send Welcome SMS": {
+      "main": []
+    },
+    "Has Email for Welcome?": {
+      "main": [
+        [{ "node": "Send Welcome Email", "type": "main", "index": 0 }],
+        [{ "node": "Update Lead Onboarding", "type": "main", "index": 0 }]
+      ]
+    },
+    "Send Welcome Email": {
+      "main": [[{ "node": "Update Lead Onboarding", "type": "main", "index": 0 }]]
+    },
+    "Update Lead Onboarding": {
+      "main": [[{ "node": "Log Welcome Event", "type": "main", "index": 0 }]]
+    },
+    "Log Welcome Event": {
+      "main": [[{ "node": "Schedule T+24h Onboarding", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": ["preview-factory", "phase-f"],
+  "notes": "Triggered by workflow 07 (checkout.session.completed). Sends welcome SMS (if phone captured) and welcome email (if email from Stripe). Then fires workflow 09 (onboarding) asynchronously with sequence_step=1 and delay_hours=24. The onboarding workflow uses a Wait node for the delay before sending."
+}

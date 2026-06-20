@@ -1,0 +1,289 @@
+{
+  "name": "10 — Monthly Reporting",
+  "nodes": [
+    {
+      "id": "a1b2c3d4-0010-0001-0001-000000000001",
+      "name": "Schedule 1st of Month 9AM AEST",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 23 28-31 * *"
+            }
+          ]
+        }
+      },
+      "notes": "Runs at 23:00 UTC (09:00 AEST) on days 28-31. The Code node below checks if today is actually the 1st, filtering out the 28-30th. Alternatively configure pg_cron in Supabase for precision."
+    },
+    {
+      "id": "a1b2c3d4-0010-0002-0001-000000000002",
+      "name": "Is First of Month?",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300],
+      "parameters": {
+        "jsCode": "// The schedule triggers on days 28-31 to catch month-end,\n// but we only want to run on the 1st of the NEXT month.\n// Cron does not natively support 'last day of month', so we\n// use the day-28-31 trick and guard here.\nconst now = new Date();\nconst isFirstOfMonth = now.getUTCDate() === 1;\n\nif (!isFirstOfMonth) {\n  // Not the first — do nothing, execution will show as completed with no output\n  return [];\n}\n\nconst year = now.getUTCFullYear();\n// Month is 1-indexed for the report period (the month that just ended)\nconst month = now.getUTCMonth() === 0 ? 12 : now.getUTCMonth(); // January 1st reports December\nconst reportYear = month === 12 ? year - 1 : year;\n\nreturn [{ json: { report_year: reportYear, report_month: month, run_at: now.toISOString() } }];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0010-0003-0001-000000000003",
+      "name": "Fetch Active Subscriptions",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/subscriptions?status=in.(active,past_due)&select=subscription_id,lead_id,plan_name,niche,amount_cents",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0010-0004-0001-000000000004",
+      "name": "Split Per Subscription",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [900, 300],
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0010-0005-0001-000000000005",
+      "name": "Fetch Lead Details",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $json.lead_id }}&select=lead_id,business_name,email,phone,suburb,niche",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0010-0006-0001-000000000006",
+      "name": "Fetch Call Count from Events",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 220],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/events?lead_id=eq.{{ $('Split Per Subscription').first().json.lead_id }}&event_type=eq.call.received&created_at=gte.{{ new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1).toISOString() }}&created_at=lt.{{ new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString() }}&select=event_id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Prefer", "value": "count=exact" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0010-0007-0001-000000000007",
+      "name": "Build Report HTML",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1560, 300],
+      "parameters": {
+        "jsCode": "const lead = Array.isArray($('Fetch Lead Details').first().json)\n  ? $('Fetch Lead Details').first().json[0]\n  : $('Fetch Lead Details').first().json;\n\nconst sub = $('Split Per Subscription').first().json;\nconst reportYear = $('Is First of Month?').first().json.report_year;\nconst reportMonth = $('Is First of Month?').first().json.report_month;\n\n// call count comes from content-range header (Supabase count=exact)\nconst callCountRaw = $('Fetch Call Count from Events').first().json;\nconst callCount = Array.isArray(callCountRaw) ? callCountRaw.length : 0;\n\nconst monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];\nconst monthName = monthNames[reportMonth - 1];\n\n// Upsell trigger: more than 20 calls this month → upsell opportunity\nconst triggerUpsell = callCount > 20;\n// Plateau: 0-2 calls for this month → flag for plateau upsell\nconst triggerPlateau = callCount < 3;\n\nconst html = `<!DOCTYPE html>\n<html>\n<body style=\"font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;\">\n<h1 style=\"color:#1D4ED8;\">${monthName} ${reportYear} — Your Monthly Report</h1>\n<p>Hi,</p>\n<p>Here's how your <strong>${lead.business_name}</strong> website performed in ${monthName}.</p>\n<table style=\"width:100%;border-collapse:collapse;margin:24px 0;\">\n<tr style=\"background:#F3F4F6;\">\n  <td style=\"padding:12px;border:1px solid #E5E7EB;\"><strong>Calls tracked</strong></td>\n  <td style=\"padding:12px;border:1px solid #E5E7EB;text-align:right;\"><strong>${callCount}</strong></td>\n</tr>\n<tr>\n  <td style=\"padding:12px;border:1px solid #E5E7EB;\">Google Search impressions</td>\n  <td style=\"padding:12px;border:1px solid #E5E7EB;text-align:right;\">— (connect GSC to enable)</td>\n</tr>\n</table>\n${callCount === 0 ? '<p style=\"color:#DC2626;\">No calls tracked this month. Make sure your site\\'s call tracking number is the number you\\'re answering. SMS us if you need to check it.</p>' : ''}\n${callCount > 0 ? '<p>Good work! Every call tracked is a lead that found you through your website.</p>' : ''}\n<p>To make any changes to your site, SMS us at the number you were sent in your welcome message.</p>\n<p>— Preview Factory</p>\n</body>\n</html>`;\n\nreturn [{\n  json: {\n    lead_id: lead.lead_id,\n    business_name: lead.business_name,\n    email: lead.email,\n    subscription_id: sub.subscription_id,\n    report_year: reportYear,\n    report_month: reportMonth,\n    call_count: callCount,\n    report_html: html,\n    trigger_upsell: triggerUpsell,\n    trigger_plateau: triggerPlateau\n  }\n}];"
+      }
+    },
+    {
+      "id": "a1b2c3d4-0010-0008-0001-000000000008",
+      "name": "Store Report in Supabase",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/monthly_reports",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "Prefer", "value": "resolution=merge-duplicates" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ lead_id: $json.lead_id, subscription_id: $json.subscription_id, period_year: $json.report_year, period_month: $json.report_month, call_count: $json.call_count, search_impressions: 0, search_clicks: 0, report_html: $json.report_html }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0010-0009-0001-000000000009",
+      "name": "Has Email for Report?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2000, 300],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-email",
+              "leftValue": "={{ $('Build Report HTML').first().json.email }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0010-0010-0001-000000000010",
+      "name": "Send Monthly Report Email",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2220, 220],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.postmarkapp.com/email",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Accept", "value": "application/json" },
+            { "name": "Content-Type", "value": "application/json" },
+            { "name": "X-Postmark-Server-Token", "value": "={{ $vars.POSTMARK_SERVER_TOKEN }}" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ From: 'reports@mysitehq.com.au', To: $('Build Report HTML').first().json.email, Subject: $('Build Report HTML').first().json.business_name + ' — ' + ['January','February','March','April','May','June','July','August','September','October','November','December'][$('Build Report HTML').first().json.report_month - 1] + ' performance report', HtmlBody: $('Build Report HTML').first().json.report_html, TextBody: 'Your monthly report for ' + $('Build Report HTML').first().json.business_name + ' is ready. ' + $('Build Report HTML').first().json.call_count + ' calls tracked.', MessageStream: 'outbound' }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0010-0011-0001-000000000011",
+      "name": "Update Report Sent At",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2440, 220],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/monthly_reports?lead_id=eq.{{ $('Build Report HTML').first().json.lead_id }}&period_year=eq.{{ $('Build Report HTML').first().json.report_year }}&period_month=eq.{{ $('Build Report HTML').first().json.report_month }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ JSON.stringify({ sent_at: new Date().toISOString(), postmark_message_id: $('Send Monthly Report Email').first().json.MessageID || null }) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0010-0012-0001-000000000012",
+      "name": "Should Trigger Upsell?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [2660, 300],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-upsell",
+              "leftValue": "={{ $('Build Report HTML').first().json.trigger_upsell || $('Build Report HTML').first().json.trigger_plateau }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0010-0013-0001-000000000013",
+      "name": "Trigger Upsell Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [2880, 220],
+      "parameters": {
+        "workflowId": "={{ $vars.WORKFLOW_ID_11_UPSELL }}",
+        "options": { "waitForSubWorkflow": false },
+        "data": {
+          "specifyData": "json",
+          "jsonData": "={{ JSON.stringify({ lead_id: $('Build Report HTML').first().json.lead_id, trigger_type: $('Build Report HTML').first().json.trigger_upsell ? 'milestone' : 'plateau', call_count: $('Build Report HTML').first().json.call_count }) }}"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule 1st of Month 9AM AEST": {
+      "main": [[{ "node": "Is First of Month?", "type": "main", "index": 0 }]]
+    },
+    "Is First of Month?": {
+      "main": [[{ "node": "Fetch Active Subscriptions", "type": "main", "index": 0 }]]
+    },
+    "Fetch Active Subscriptions": {
+      "main": [[{ "node": "Split Per Subscription", "type": "main", "index": 0 }]]
+    },
+    "Split Per Subscription": {
+      "main": [[{ "node": "Fetch Lead Details", "type": "main", "index": 0 }]]
+    },
+    "Fetch Lead Details": {
+      "main": [
+        [
+          { "node": "Fetch Call Count from Events", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Fetch Call Count from Events": {
+      "main": [[{ "node": "Build Report HTML", "type": "main", "index": 0 }]]
+    },
+    "Build Report HTML": {
+      "main": [[{ "node": "Store Report in Supabase", "type": "main", "index": 0 }]]
+    },
+    "Store Report in Supabase": {
+      "main": [[{ "node": "Has Email for Report?", "type": "main", "index": 0 }]]
+    },
+    "Has Email for Report?": {
+      "main": [
+        [{ "node": "Send Monthly Report Email", "type": "main", "index": 0 }],
+        [{ "node": "Should Trigger Upsell?", "type": "main", "index": 0 }]
+      ]
+    },
+    "Send Monthly Report Email": {
+      "main": [[{ "node": "Update Report Sent At", "type": "main", "index": 0 }]]
+    },
+    "Update Report Sent At": {
+      "main": [[{ "node": "Should Trigger Upsell?", "type": "main", "index": 0 }]]
+    },
+    "Should Trigger Upsell?": {
+      "main": [
+        [{ "node": "Trigger Upsell Workflow", "type": "main", "index": 0 }],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": ["preview-factory", "phase-f"],
+  "notes": "Runs monthly. Call count comes from the events table (event_type = 'call.received'). To integrate CallRail or Google Search Console, add HTTP Request nodes after 'Fetch Call Count from Events' and merge the data in 'Build Report HTML'. GSC requires OAuth2 — configure the Google credential in n8n Settings → Credentials before activating. WORKFLOW_ID_11_UPSELL must be set after importing workflow 11."
+}

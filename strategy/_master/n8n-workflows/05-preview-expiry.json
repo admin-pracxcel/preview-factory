@@ -1,0 +1,216 @@
+{
+  "name": "05 — Preview Expiry + Recovery Trigger",
+  "nodes": [
+    {
+      "id": "a1b2c3d4-0005-0001-0001-000000000001",
+      "name": "Schedule Every 5 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0005-0002-0001-000000000002",
+      "name": "Fetch Expired Previews",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/sites?status=eq.preview&expires_at=lt.{{ new Date().toISOString() }}&select=site_id,lead_id,slug,permanent_url,expires_at",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0005-0003-0001-000000000003",
+      "name": "Any Expired?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-length",
+              "leftValue": "={{ $json.length }}",
+              "rightValue": 0,
+              "operator": { "type": "number", "operation": "gt" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0005-0004-0001-000000000004",
+      "name": "Split Expired Sites",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [900, 220],
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0005-0005-0001-000000000005",
+      "name": "Mark Site Expired",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 220],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/sites?site_id=eq.{{ $json.site_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "{\"status\": \"expired\"}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0005-0006-0001-000000000006",
+      "name": "Mark Lead Expired",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 220],
+      "parameters": {
+        "method": "PATCH",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/leads?lead_id=eq.{{ $('Split Expired Sites').first().json.lead_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "body": "{\"status\": \"expired\"}",
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0005-0007-0001-000000000007",
+      "name": "Check No T0 Recovery Sent",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1560, 220],
+      "parameters": {
+        "method": "GET",
+        "url": "={{ $vars.SUPABASE_URL }}/rest/v1/recovery_attempts?lead_id=eq.{{ $('Split Expired Sites').first().json.lead_id }}&step=eq.t0&channel=eq.email&select=attempt_id",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "={{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" },
+            { "name": "Authorization", "value": "=Bearer {{ $vars.SUPABASE_SERVICE_ROLE_KEY }}" }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a1b2c3d4-0005-0008-0001-000000000008",
+      "name": "T0 Already Sent?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1780, 220],
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "cond-t0",
+              "leftValue": "={{ $json.length }}",
+              "rightValue": 0,
+              "operator": { "type": "number", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0005-0009-0001-000000000009",
+      "name": "Trigger Recovery Workflow",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1,
+      "position": [2000, 140],
+      "parameters": {
+        "workflowId": "={{ $vars.WORKFLOW_ID_05B_RECOVERY }}",
+        "options": { "waitForSubWorkflow": false },
+        "data": {
+          "specifyData": "json",
+          "jsonData": "={{ JSON.stringify({ lead_id: $('Split Expired Sites').first().json.lead_id, slug: $('Split Expired Sites').first().json.slug, permanent_url: $('Split Expired Sites').first().json.permanent_url }) }}"
+        }
+      }
+    },
+    {
+      "id": "a1b2c3d4-0005-0010-0001-000000000010",
+      "name": "No Action Needed",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [900, 420],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Schedule Every 5 Minutes": {
+      "main": [[{ "node": "Fetch Expired Previews", "type": "main", "index": 0 }]]
+    },
+    "Fetch Expired Previews": {
+      "main": [[{ "node": "Any Expired?", "type": "main", "index": 0 }]]
+    },
+    "Any Expired?": {
+      "main": [
+        [{ "node": "Split Expired Sites", "type": "main", "index": 0 }],
+        [{ "node": "No Action Needed", "type": "main", "index": 0 }]
+      ]
+    },
+    "Split Expired Sites": {
+      "main": [[{ "node": "Mark Site Expired", "type": "main", "index": 0 }]]
+    },
+    "Mark Site Expired": {
+      "main": [[{ "node": "Mark Lead Expired", "type": "main", "index": 0 }]]
+    },
+    "Mark Lead Expired": {
+      "main": [[{ "node": "Check No T0 Recovery Sent", "type": "main", "index": 0 }]]
+    },
+    "Check No T0 Recovery Sent": {
+      "main": [[{ "node": "T0 Already Sent?", "type": "main", "index": 0 }]]
+    },
+    "T0 Already Sent?": {
+      "main": [
+        [{ "node": "Trigger Recovery Workflow", "type": "main", "index": 0 }],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "tags": ["preview-factory", "phase-f"],
+  "notes": "Runs every 5 minutes via schedule trigger. Fetches all sites in 'preview' status with expires_at in the past. For each: marks site+lead expired, then fires workflow 05b ONCE (idempotency check prevents duplicate T0 emails). Set WORKFLOW_ID_05B_RECOVERY to the imported workflow 05b ID."
+}
