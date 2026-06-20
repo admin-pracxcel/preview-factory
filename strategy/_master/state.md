@@ -1,16 +1,21 @@
 # Project State
 
 Last updated: 2026-06-20
-Current phase: D — GATE WRITTEN (visual review). D-generator-checkpoint gate answered/redirected → resolved. New gate: autopilot/state/gates/D-generator-visual-review.json. Plumber preview route added at /preview/plumber. Awaiting human visual sign-off before category mass-production.
+Current phase: GATE WRITTEN — awaiting D-generator-visual-review sign-off before category mass-production.
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
   - generator/output/clearflow-plumbing.json: Clearflow Plumbing (Melbourne plumber) — 6 services, 8 locations, 5 service-areas. GRADER: PASS.
   - generator/index.ts: full TypeScript implementation for TS build integration.
   - Hydration fixes committed 95535b3: body suppressHydrationWarning + CountdownBanner null-init fix.
-  - Committed e508efa.
+  - Plumber preview route: /preview/plumber (all sub-pages work).
 
-Next action: Human approves gate D-generator-checkpoint → mass-produce allied-health, beauty-aesthetics, fitness-wellness categories (3 category-builder subagents in parallel, each grader-gated).
+Location page quality pass complete (2026-06-20) — commit 9421958:
+  - LocationPage.tsx: replaced plain arrow-card RelatedLinks for services with ServicesGrid (icon + price + description cards). Added testimonial fallback: if no suburb-specific testimonials, show site-wide max-3.
+  - electrician-site.json: all 6 location entries (Penrith, Blacktown, Parramatta, Castle Hill, St Marys, Quakers Hill) now have headline, benefits[] (4 items), and faqs[] (2 items). Broken image replaced (photo-1581094288338-2314dddb7ece).
+  - Grader PASS.
+
+Next action: Human approves gate D-generator-visual-review → mass-produce allied-health, beauty-aesthetics, fitness-wellness categories (3 category-builder subagents in parallel, each grader-gated).
 
 ## Phase A: Niche intelligence
 - [x] A1: meta-job-titles.md built (352 lines, AU-specific, last researched 2026-06-19)
