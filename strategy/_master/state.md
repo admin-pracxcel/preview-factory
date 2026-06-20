@@ -1,7 +1,7 @@
 # Project State
 
 Last updated: 2026-06-20
-Current phase: C — GATE WRITTEN (C-categories-checkpoint). All 4 categories built and grader-passing. Awaiting human visual sign-off on allied-health, beauty-aesthetics, fitness-wellness before Phase E.
+Current phase: C — GATE WRITTEN (C-categories-checkpoint-2). Service page + gallery fixes applied (commit 4e69078). Awaiting human visual re-sign-off before Phase E.
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
@@ -48,7 +48,10 @@ Foundation (C-0) DONE: SiteProps schema (shared/types/site-props.ts); shared UI 
 - [x] Allied health — Restore Physio (Chatswood NSW), 22 pages, teal palette, AHPRA-compliant, MedicalBusiness JSON-LD. GRADER PASS 2026-06-20.
 - [x] Beauty & aesthetics — Studio Luma salon (Fitzroy VIC), 23 pages, rose/gold palette, gallery-forward, HairSalon JSON-LD. GRADER PASS 2026-06-20.
 - [x] Fitness & wellness — Peak Form Training (South Yarra VIC), 22 pages, charcoal/red palette, SportsActivityLocation JSON-LD. GRADER PASS 2026-06-20.
-<<C-categories-checkpoint GATE WRITTEN — autopilot/state/gates/C-categories-checkpoint.json — awaiting human visual sign-off>>
+Visual fixes (commit 4e69078):
+  - allied-health/HomePage: GalleryGrid heading changed from default "Recent work" to "Our clinic".
+  - ServiceDetailPage (all 4 categories): inline full-width hero_image rendered after intro (16:7, rounded, shadowed). All 4 GRADER PASS.
+<<C-categories-checkpoint-2 GATE WRITTEN — awaiting human visual sign-off>>
 - [ ] Professional services (DEFERRED — HOLD niche)
 - [ ] Hospitality (DEFERRED — HOLD niche)
 - [ ] Retail & boutique (DEFERRED — HOLD niche)
