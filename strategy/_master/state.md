@@ -1,15 +1,16 @@
 # Project State
 
 Last updated: 2026-06-20
-Current phase: D — Generator build in progress.
-Gate C-trades-checkpoint resolved (answered → moved to answered/). Proceeding with Phase D (generator).
+Current phase: D — GATE WRITTEN. Generator proven end-to-end. Gate file written: autopilot/state/gates/D-generator-checkpoint.json — awaiting human review of generator/output/clearflow-plumbing.json before proceeding to mass-produce remaining categories.
 
-Additional fixes applied 2026-06-20:
-  - Hydration fix #1: app/layout.tsx <body> tag — added suppressHydrationWarning to silence browser extension attribute injection (__processed_*).
-  - Hydration fix #2: shared/ui/client.tsx CountdownBanner — useState initializer used Date.now() causing SSR/client mismatch. Fixed: initialize to null, set real value in useEffect. Committed 95535b3.
-  - Generator run.mjs: switched callClaude to streaming (Anthropic SDK requires streaming for max_tokens > ~16k to avoid 10-min timeout). Updated prompt to request achievable counts (6 services, 8 locations, 5 service_areas). Currently running.
+Phase D complete (2026-06-20):
+  - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
+  - generator/output/clearflow-plumbing.json: Clearflow Plumbing (Melbourne plumber) — 6 services, 8 locations, 5 service-areas. GRADER: PASS.
+  - generator/index.ts: full TypeScript implementation for TS build integration.
+  - Hydration fixes committed 95535b3: body suppressHydrationWarning + CountdownBanner null-init fix.
+  - Committed e508efa.
 
-Next action: Grade generator/output/clearflow-plumbing.json → if PASS, commit + write Phase D gate for human review.
+Next action: Human approves gate D-generator-checkpoint → mass-produce allied-health, beauty-aesthetics, fitness-wellness categories (3 category-builder subagents in parallel, each grader-gated).
 
 ## Phase A: Niche intelligence
 - [x] A1: meta-job-titles.md built (352 lines, AU-specific, last researched 2026-06-19)

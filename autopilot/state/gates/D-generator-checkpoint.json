@@ -1,0 +1,11 @@
+{
+  "title": "Phase D gate: generator end-to-end proof",
+  "question": "The generator (generator/run.mjs) successfully turned a real GBP payload (Melbourne plumber) into a complete SiteProps blob that PASSES the grader on first attempt. Please review the output at generator/output/clearflow-plumbing.json and the preview at /preview/trades to confirm the generator quality is acceptable before we proceed to mass-produce the remaining categories (allied-health, beauty-aesthetics, fitness-wellness).",
+  "context": "What was built:\n- generator/run.mjs: self-contained ESM script that loads the trades system-prompt, calls Claude API via streaming (required for 32k token output), validates with a Zod mini-schema + grader-mirror checks, retries once on failure. Grader: PASS on attempt 1.\n- generator/output/clearflow-plumbing.json: the generated Clearflow Plumbing (Melbourne plumber) site — 6 service pages, 8 location pages, 5 service-area pages, full home/about/faq. Navy/orange branding.\n- generator/index.ts: TypeScript implementation (same logic as run.mjs, for integration into the TS build once a runner is available).\n\nAlso fixed in this increment:\n- Hydration mismatch #1: <body suppressHydrationWarning> to silence browser extension attribute injection.\n- Hydration mismatch #2: CountdownBanner was using Date.now() in useState lazy initializer (SSR vs client diff). Fixed to initialize null, set real value in useEffect.\n\nOnce you approve: mass-production of allied-health, beauty-aesthetics, and fitness-wellness categories begins (3 category-builder subagents in parallel, each gated by the grader).",
+  "review_paths": [
+    "generator/output/clearflow-plumbing.json",
+    "generator/run.mjs",
+    "generator/index.ts"
+  ],
+  "at": "2026-06-20"
+}
