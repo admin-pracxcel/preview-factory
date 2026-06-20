@@ -1,7 +1,7 @@
 # Project State
 
 Last updated: 2026-06-20
-Current phase: C — GATE WRITTEN (C-categories-checkpoint-2). Service page + gallery fixes applied (commit 4e69078). Awaiting human visual re-sign-off before Phase E.
+Current phase: E — Phase E funnel infrastructure complete. Gate C-categories-checkpoint-2 approved and moved to answered/. All 6 funnel pages built. GRADER PASS (4 sites, tsc clean). Gate E-funnel-checkpoint WRITTEN — awaiting human funnel review.
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
@@ -61,12 +61,20 @@ Cleanups still pending (non-destructive so far): legacy single-page `templates/t
 - [ ] D1-D4 complete
 
 ## Phase E: Funnel infrastructure
-- [ ] E1: landing page
-- [ ] E2: building page
-- [ ] E3: preview page
-- [ ] E4: customise panel
-- [ ] E5: expired + welcome pages
-- [ ] E6: Supabase realtime
+Phase E complete (2026-06-20):
+  - app/page.tsx: landing page — dark navy, 3-field form (business name, niche dropdown, suburb), n8n webhook stub, trust strip. GRADER PASS / tsc clean.
+  - app/building/page.tsx: animated loading sequence — 5 phases with checkmarks, mock GBP data, inline phone capture mid-sequence, auto-navigate to /preview/[id].
+  - app/preview/[id]/page.tsx: countdown (3-hour, localStorage-persisted), mobile fullscreen iframe + sticky CTA, desktop phone mockup + CustomisePanel. Share via navigator.share / clipboard. Save stub to Stripe.
+  - app/components/CustomisePanel.tsx: 3 controls (colour swatches + hex, logo drag-drop upload, hero image 3-tab picker).
+  - app/expired/[id]/page.tsx: expiry recovery CTA with trust strip.
+  - app/welcome/[id]/page.tsx: permanent URL display, SMS edit instructions, what-happens-next section.
+  Gate E-funnel-checkpoint.json WRITTEN — awaiting human funnel review.
+- [x] E1: landing page
+- [x] E2: building page
+- [x] E3: preview page
+- [x] E4: customise panel
+- [x] E5: expired + welcome pages
+- [ ] E6: Supabase realtime (stubbed with setTimeout; real channel wired in prod)
 
 ## Phase F: Backend specs
 - [ ] F1: n8n workflow JSONs
