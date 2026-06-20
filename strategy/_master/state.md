@@ -1,8 +1,8 @@
 # Project State
 
-Last updated: 2026-06-19
-Current phase: C — Site system expansion (Phase B checkpoint APPROVED 2026-06-19). Foundation + first category (trades) COMPLETE → AWAITING HUMAN at Phase C CHECKPOINT (review rendered example).
-Next action: Human reviews the rendered trades example at /preview/trades (run `npm run dev`). On "continue" → auto-continue remaining categories: allied-health → beauty-aesthetics → fitness-wellness. NOTE: local `next build` bus-errors in the build sandbox (environmental, not code); tsc --noEmit passes clean and the example SiteProps validates + routes at runtime.
+Last updated: 2026-06-20
+Current phase: C — GATE WRITTEN. Trades grader now PASS (2026-06-20). Gate file written: autopilot/state/gates/C-trades-checkpoint.json — awaiting human visual sign-off on /preview/trades before proceeding to Phase D (generator).
+Next action: Human approves gate C-trades-checkpoint → Phase D generator build begins.
 
 ## Phase A: Niche intelligence
 - [x] A1: meta-job-titles.md built (352 lines, AU-specific, last researched 2026-06-19)
@@ -18,7 +18,7 @@ Next action: Human reviews the rendered trades example at /preview/trades (run `
 
 ## Phase C: Site system expansion (per category)
 Foundation (C-0) DONE: SiteProps schema (shared/types/site-props.ts); shared UI (shared/ui: helpers, icons, theme, seo, client, layout, sections) harvested from the legacy single-page trades template; page components (home, service-detail, location, service-area, faq, about) + dynamic routing (app/preview/trades/[[...slug]]).
-- [x] Trades — multi-page system + system-prompt.md + electrician example (18 pages). <<Phase C CHECKPOINT — awaiting human review of rendered example>>
+- [x] Trades — multi-page system + system-prompt.md + electrician example (18 pages). Grader PASS 2026-06-20 (fixed thin location/service-area pages + added 2 locations to meet 6-page floor). <<Phase C GATE WRITTEN — autopilot/state/gates/C-trades-checkpoint.json — awaiting human visual sign-off>>
 - [ ] Allied health (next; from scratch + Ahpra compliance)
 - [ ] Beauty & aesthetics (booking + gallery)
 - [ ] Fitness & wellness (timetable/booking + IG feed)
