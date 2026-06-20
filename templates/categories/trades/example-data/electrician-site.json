@@ -394,6 +394,12 @@
       "state": "NSW",
       "intro": "Voltvale Electrical is based right here in Penrith — your local, licensed electricians for everything from emergency faults to solar and EV chargers.",
       "body": "As a Penrith-based team, we know the local housing stock inside out — from older homes around the CBD that need switchboard upgrades to the new estates in Glenmore Park and Jordan Springs adding solar and EV chargers. Whatever the job, we're only minutes away.",
+      "sections": [
+        {
+          "heading": "Western Sydney's most reliable local electricians",
+          "body": "As a Penrith-based team, we know the local housing stock inside out — from older homes around the Penrith CBD that need switchboard upgrades to the newer estates in Glenmore Park and Jordan Springs adding solar and EV chargers. We live and work here, so your job is never a long drive for us. Same-day service, fixed pricing, and a licensed electrician who respects your home."
+        }
+      ],
       "hero_image": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1600&q=80",
       "landmarks": ["Penrith CBD", "Glenmore Park", "Jordan Springs", "Kingswood", "Cambridge Park"],
       "services_offered": [
@@ -414,6 +420,12 @@
       "state": "NSW",
       "intro": "Licensed electricians servicing Blacktown and surrounds — emergency repairs, switchboards, solar, battery and EV charging.",
       "body": "We cover all of Blacktown and the surrounding suburbs, with a strong focus on solar and battery installs for the area's many family homes looking to cut power bills, plus fast emergency response when the power goes out.",
+      "sections": [
+        {
+          "heading": "Solar, emergency repairs and more across Blacktown",
+          "body": "Blacktown's family homes are ideal candidates for solar — good roof space, high daytime usage, and strong solar performance. We cover all of Blacktown and the surrounding suburbs for solar and battery installs, emergency electrical repairs, switchboard upgrades, EV charger installations and general electrical work of any size. Our local team knows this area well and responds fast."
+        }
+      ],
       "landmarks": ["Blacktown CBD", "Marayong", "Kings Langley", "Doonside", "Prospect"],
       "services_offered": ["solar-battery", "emergency-electrician", "switchboard-upgrades"],
       "seo": {
@@ -428,6 +440,12 @@
       "state": "NSW",
       "intro": "From apartments to commercial fit-outs, our licensed electricians cover all of Parramatta and the surrounding business district.",
       "body": "Parramatta's mix of established homes, apartments and commercial spaces means varied electrical work — and we handle it all, from switchboard upgrades and office lighting to emergency faults and compliance inspections.",
+      "sections": [
+        {
+          "heading": "Commercial and residential electrical services in Parramatta",
+          "body": "Parramatta's mix of established homes, older apartments and commercial fit-outs means varied electrical work, and we handle it all. From switchboard upgrades in residential units to office lighting and safety compliance in commercial premises — our licensed team brings the same fixed-price, on-time approach to every job across the Parramatta CBD and surrounding suburbs."
+        }
+      ],
       "landmarks": ["Parramatta CBD", "Harris Park", "Westmead", "Rosehill", "North Parramatta"],
       "services_offered": ["switchboard-upgrades", "lighting-downlights", "emergency-electrician"],
       "seo": {
@@ -442,11 +460,57 @@
       "state": "NSW",
       "intro": "Trusted electricians for Castle Hill and The Hills — EV chargers, solar, lighting design and home upgrades done to a high standard.",
       "body": "Castle Hill homeowners increasingly come to us for EV charger installs and premium lighting, alongside the bread-and-butter of switchboards, safety and emergency work. We bring the same tidy, fixed-price service to every job.",
+      "sections": [
+        {
+          "heading": "Premium electrical services for The Hills District",
+          "body": "Castle Hill homeowners increasingly invest in EV chargers and premium lighting alongside essential work like switchboards, safety inspections and emergency repairs. Our licensed team brings a tidy, fixed-price service to every job across Castle Hill, Baulkham Hills, Kellyville, Rouse Hill and West Pennant Hills. Book a free quote online or call us any time."
+        }
+      ],
       "landmarks": ["Castle Towers", "Baulkham Hills", "Kellyville", "Rouse Hill", "West Pennant Hills"],
       "services_offered": ["ev-charger-installation", "lighting-downlights", "solar-battery"],
       "seo": {
         "title": "Electrician Castle Hill | Voltvale Electrical — The Hills",
         "description": "Licensed electricians for Castle Hill and The Hills district. EV chargers, solar, lighting, switchboards and emergency repairs. Free quotes.",
+        "schema_org_type": "Electrician"
+      }
+    },
+    {
+      "slug": "st-marys",
+      "suburb": "St Marys",
+      "state": "NSW",
+      "intro": "Licensed electricians covering St Marys and the surrounding western Penrith suburbs — emergency repairs, switchboard upgrades and rewiring.",
+      "body": "St Marys and its neighbouring suburbs see plenty of older homes that need switchboard and wiring upgrades, as well as growing new-build estates demanding solar and EV charger installs. We're nearby and respond fast.",
+      "sections": [
+        {
+          "heading": "Fast, local electrical services in St Marys",
+          "body": "Our Penrith-based team works across St Marys and the surrounding streets every day. Whether it's an after-hours emergency, a switchboard that needs upgrading before you add solar, or a rewire ahead of a home renovation, we arrive on time with the right gear and quote a fixed price before starting any work. No surprises on your invoice."
+        }
+      ],
+      "landmarks": ["St Marys CBD", "Colyton", "Werrington", "Oxley Park", "Claremont Meadows"],
+      "services_offered": ["emergency-electrician", "switchboard-upgrades", "rewiring-safety"],
+      "seo": {
+        "title": "Electrician St Marys | Voltvale Electrical",
+        "description": "Licensed electricians in St Marys and surrounds. Emergency repairs, switchboard upgrades, rewiring and solar installs. Upfront pricing, 24/7 service.",
+        "schema_org_type": "Electrician"
+      }
+    },
+    {
+      "slug": "quakers-hill",
+      "suburb": "Quakers Hill",
+      "state": "NSW",
+      "intro": "Trusted electricians for Quakers Hill and the Blacktown Hills area — solar, switchboards, EV chargers and emergency call-outs.",
+      "body": "Quakers Hill's residential streets and growing population mean steady demand for solar installs, switchboard upgrades and new circuits. We're on the road in this area regularly and can be with you fast.",
+      "sections": [
+        {
+          "heading": "Solar and electrical upgrades in Quakers Hill",
+          "body": "Quakers Hill homeowners are among the keenest solar adopters in Western Sydney — great roof space, high household energy usage, and strong sunlight hours. We size every solar or battery system to your actual consumption, handle the rebates and paperwork, and install it with care. We also cover emergency faults, switchboard upgrades, EV chargers and all everyday electrical work across the suburb."
+        }
+      ],
+      "landmarks": ["Quakers Hill Station", "Quakers Hill Parkway", "Lalor Park", "Kings Langley", "Woodcroft"],
+      "services_offered": ["solar-battery", "switchboard-upgrades", "ev-charger-installation", "emergency-electrician"],
+      "seo": {
+        "title": "Electrician Quakers Hill | Voltvale Electrical",
+        "description": "Licensed electricians in Quakers Hill. Solar and battery installs, switchboard upgrades, EV chargers, emergency repairs. Upfront pricing.",
         "schema_org_type": "Electrician"
       }
     }
@@ -460,6 +524,12 @@
       "state": "NSW",
       "headline": "Emergency electrician in Penrith — on the road to you fast",
       "body": "Lost power, sparking outlets or a safety switch that won't reset? Our Penrith-based emergency electricians respond fast, any hour of the day or night. Because we're local, we're often at your door within the hour with the parts to fix most faults on the spot.",
+      "sections": [
+        {
+          "heading": "What to do in a Penrith electrical emergency",
+          "body": "If you can smell burning or see sparks, switch off the power at the main switch if it is safe to do so, keep clear of any water near electrical fittings, and call us immediately. Our Penrith-based electricians are on the road day and night — we will talk you through staying safe until we arrive and fix the fault on the spot."
+        }
+      ],
       "benefits": [
         "Local Penrith team — fast response",
         "Available 24/7, including public holidays",
@@ -480,6 +550,12 @@
       "state": "NSW",
       "headline": "24/7 emergency electrician in Blacktown",
       "body": "An electrical fault is stressful — especially after hours. Our licensed electricians cover all of Blacktown around the clock, arriving fast to make your home safe and your power back on. Upfront pricing, no after-hours nasty surprises.",
+      "sections": [
+        {
+          "heading": "Around-the-clock electrical cover for Blacktown",
+          "body": "We keep Western Sydney homes safe after hours. Our licensed electricians travel to all corners of Blacktown — from the CBD to Kings Langley, Doonside and Prospect — and can be at your door quickly, fully stocked to diagnose and fix most common faults on the first visit. Upfront fixed pricing, no surprises."
+        }
+      ],
       "benefits": [
         "Around-the-clock Blacktown coverage",
         "Licensed, insured and safety-certified",
@@ -500,6 +576,12 @@
       "state": "NSW",
       "headline": "Solar & battery installation in Blacktown",
       "body": "Blacktown's sunny rooftops and family-sized power bills make it ideal for solar. As CEC-accredited installers we design a system to your home's real usage, handle the rebates and paperwork, and install it tidily with quality gear and proper warranties.",
+      "sections": [
+        {
+          "heading": "Why Blacktown is ideal for solar",
+          "body": "Blacktown gets strong sunlight hours and typical family homes here use enough daytime power to see fast returns on a properly sized solar system. We design every install around your actual meter data — not a national average — so you get a system that works for your home and your electricity bill. We also handle the STC rebate and grid-connection paperwork from start to finish."
+        }
+      ],
       "benefits": [
         "CEC-accredited local installers",
         "Systems sized to your actual usage",
@@ -520,6 +602,12 @@
       "state": "NSW",
       "headline": "EV charger installation in Castle Hill",
       "body": "Charge at home overnight and skip the public chargers. We install all major EV chargers for Castle Hill and The Hills homes, assess your switchboard capacity, and deliver a tidy, compliant install with a fixed price quoted upfront.",
+      "sections": [
+        {
+          "heading": "Home EV charging for Castle Hill and The Hills",
+          "body": "Castle Hill households are among the fastest adopters of electric vehicles in Western Sydney. We install all major charger brands, assess your switchboard capacity, and deliver a tidy, compliant install at a fixed price — usually within a few days of your free quote. Our licenced electricians handle every detail so you can charge at home overnight with confidence."
+        }
+      ],
       "benefits": [
         "All major charger brands installed",
         "Switchboard capacity check included",
@@ -540,6 +628,12 @@
       "state": "NSW",
       "headline": "Switchboard upgrades in Parramatta",
       "body": "Many of Parramatta's established homes and apartments still run old ceramic-fuse boards without safety switches. We replace them with safe, modern switchboards — usually in a few hours — and supply a compliance certificate, ready for solar, battery or EV charging down the track.",
+      "sections": [
+        {
+          "heading": "Why Parramatta homes need switchboard upgrades",
+          "body": "Many of Parramatta's established homes and older apartment blocks still carry ceramic fuse boards without safety switches. Our licensed electricians replace them with a safe, modern switchboard in a few hours, with only a brief planned power outage during the changeover, and supply a certificate of electrical safety on completion. Future-ready for solar, battery and EV chargers."
+        }
+      ],
       "benefits": [
         "RCD safety switches on every circuit",
         "Most upgrades done in a few hours",
@@ -580,7 +674,7 @@
       {
         "id": "faq-5",
         "question": "What areas do you service?",
-        "answer": "We cover Penrith, Blacktown, Parramatta, Castle Hill and the surrounding Western Sydney and Hills suburbs. If you're not sure whether we reach you, just give us a call."
+        "answer": "We cover Penrith, Blacktown, Parramatta, Castle Hill, St Marys, Quakers Hill and the surrounding Western Sydney and Hills suburbs. If you're not sure whether we reach you, just give us a call."
       },
       {
         "id": "faq-6",
