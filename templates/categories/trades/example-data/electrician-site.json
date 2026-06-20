@@ -103,7 +103,7 @@
     "gallery": [
       {
         "id": "g1",
-        "image_url": "https://images.unsplash.com/photo-1558389186-438424b00a6b?auto=format&fit=crop&w=900&q=80",
+        "image_url": "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=900&q=80",
         "caption": "Switchboard upgrade, Glenmore Park"
       },
       {
@@ -236,7 +236,7 @@
       "summary": "Replace old, unsafe ceramic-fuse boards with a modern switchboard and RCD safety switches.",
       "icon": "Zap",
       "starting_price": "From $900",
-      "hero_image": "https://images.unsplash.com/photo-1558389186-438424b00a6b?auto=format&fit=crop&w=1600&q=80",
+      "hero_image": "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=1600&q=80",
       "intro": "If your home still has ceramic fuses or you don't have safety switches on every circuit, your switchboard is overdue for an upgrade. A modern board protects your family from electric shock and your home from electrical fires — and it's essential before adding solar, a battery or an EV charger.",
       "benefits": [
         "RCD safety switches on every circuit",
@@ -392,6 +392,7 @@
       "slug": "penrith",
       "suburb": "Penrith",
       "state": "NSW",
+      "headline": "Electrician in Penrith — Local, Licensed & On Call",
       "intro": "Voltvale Electrical is based right here in Penrith — your local, licensed electricians for everything from emergency faults to solar and EV chargers.",
       "body": "As a Penrith-based team, we know the local housing stock inside out — from older homes around the CBD that need switchboard upgrades to the new estates in Glenmore Park and Jordan Springs adding solar and EV chargers. Whatever the job, we're only minutes away.",
       "sections": [
@@ -408,6 +409,24 @@
         "solar-battery",
         "ev-charger-installation"
       ],
+      "benefits": [
+        "Penrith-based team — minutes away, not hours",
+        "24/7 emergency response with no after-hours call-out surcharge before 10pm",
+        "Fixed pricing quoted before we start — no hidden extras on your bill",
+        "NSW Licensed Electricians with 14+ years serving Western Sydney"
+      ],
+      "faqs": [
+        {
+          "id": "faq-penrith-1",
+          "question": "How quickly can you reach Penrith for an emergency?",
+          "answer": "Because we're based in Penrith, we can typically have a licensed electrician at your door within 30–60 minutes for genuine emergencies anywhere in the Penrith LGA — day or night."
+        },
+        {
+          "id": "faq-penrith-2",
+          "question": "Do you cover Glenmore Park, Jordan Springs and Kingswood?",
+          "answer": "Yes — all of these are within our core Penrith service area. We work across the entire LGA every day, so there's no extra travel charge for these suburbs."
+        }
+      ],
       "seo": {
         "title": "Electrician Penrith | Voltvale Electrical — Local & Licensed",
         "description": "Local licensed electricians in Penrith. Emergency call-outs, switchboard upgrades, solar, EV chargers and rewiring. Upfront pricing, 24/7 service.",
@@ -418,6 +437,7 @@
       "slug": "blacktown",
       "suburb": "Blacktown",
       "state": "NSW",
+      "headline": "Electrician in Blacktown — Solar, Emergency & Switchboards",
       "intro": "Licensed electricians servicing Blacktown and surrounds — emergency repairs, switchboards, solar, battery and EV charging.",
       "body": "We cover all of Blacktown and the surrounding suburbs, with a strong focus on solar and battery installs for the area's many family homes looking to cut power bills, plus fast emergency response when the power goes out.",
       "sections": [
@@ -428,6 +448,24 @@
       ],
       "landmarks": ["Blacktown CBD", "Marayong", "Kings Langley", "Doonside", "Prospect"],
       "services_offered": ["solar-battery", "emergency-electrician", "switchboard-upgrades"],
+      "benefits": [
+        "CEC-accredited solar installers — Blacktown's preferred choice for solar and battery",
+        "Emergency electrical response available 24/7 across all of Blacktown",
+        "Switchboard upgrades completed same-day in most cases",
+        "Free solar design quote — we size the system to your actual usage"
+      ],
+      "faqs": [
+        {
+          "id": "faq-blacktown-1",
+          "question": "Is Blacktown a good area for solar?",
+          "answer": "Yes — Blacktown gets excellent sunlight hours and most family homes here have enough roof space for a 6.6kW system, which typically pays back within 4–6 years. We'll model your household's actual usage before recommending a system size."
+        },
+        {
+          "id": "faq-blacktown-2",
+          "question": "Can you upgrade my switchboard and install solar in the same visit?",
+          "answer": "Often yes — if your switchboard needs upgrading before solar can be safely connected, we can plan both jobs together to minimise disruption. Call us for a combined quote."
+        }
+      ],
       "seo": {
         "title": "Electrician Blacktown | Voltvale Electrical",
         "description": "Licensed electricians in Blacktown. Emergency repairs, switchboard upgrades, solar and battery, EV chargers and rewiring. Free quotes, 24/7 service.",
@@ -438,6 +476,7 @@
       "slug": "parramatta",
       "suburb": "Parramatta",
       "state": "NSW",
+      "headline": "Electrician in Parramatta — Commercial & Residential",
       "intro": "From apartments to commercial fit-outs, our licensed electricians cover all of Parramatta and the surrounding business district.",
       "body": "Parramatta's mix of established homes, apartments and commercial spaces means varied electrical work — and we handle it all, from switchboard upgrades and office lighting to emergency faults and compliance inspections.",
       "sections": [
@@ -448,6 +487,22 @@
       ],
       "landmarks": ["Parramatta CBD", "Harris Park", "Westmead", "Rosehill", "North Parramatta"],
       "services_offered": ["switchboard-upgrades", "lighting-downlights", "emergency-electrician"],
+      "benefits": [
+        "Licenced team with commercial + strata experience",
+        "Fixed pricing quoted before any work starts",
+        "Same-day availability for urgent faults across the CBD",
+        "Safety inspections accepted by real-estate agents and building managers"
+      ],
+      "faqs": [
+        {
+          "question": "Can you work in strata buildings and apartment blocks in Parramatta?",
+          "answer": "Yes — we work in both strata and freehold apartments across Parramatta regularly. We coordinate with building managers where access or shared infrastructure is involved and handle the required compliance paperwork."
+        },
+        {
+          "question": "Do you handle office and retail fit-out electrical work?",
+          "answer": "Absolutely. Our licensed team does data cabling, three-phase power, emergency lighting compliance and general fit-out electrical for commercial spaces across the Parramatta CBD and surrounds."
+        }
+      ],
       "seo": {
         "title": "Electrician Parramatta | Voltvale Electrical",
         "description": "Licensed electricians across Parramatta. Switchboard upgrades, lighting, emergency repairs, EV chargers and safety inspections. Upfront pricing.",
@@ -458,6 +513,7 @@
       "slug": "castle-hill",
       "suburb": "Castle Hill",
       "state": "NSW",
+      "headline": "Electrician in Castle Hill — EV Chargers, Solar & Lighting",
       "intro": "Trusted electricians for Castle Hill and The Hills — EV chargers, solar, lighting design and home upgrades done to a high standard.",
       "body": "Castle Hill homeowners increasingly come to us for EV charger installs and premium lighting, alongside the bread-and-butter of switchboards, safety and emergency work. We bring the same tidy, fixed-price service to every job.",
       "sections": [
@@ -468,6 +524,22 @@
       ],
       "landmarks": ["Castle Towers", "Baulkham Hills", "Kellyville", "Rouse Hill", "West Pennant Hills"],
       "services_offered": ["ev-charger-installation", "lighting-downlights", "solar-battery"],
+      "benefits": [
+        "EV charger specialists — all major brands installed and certified",
+        "Tesla, Enphase and SolarEdge solar systems available",
+        "Premium lighting design for new builds and renovations",
+        "Tidy workmanship — we leave every job as clean as we found it"
+      ],
+      "faqs": [
+        {
+          "question": "Which EV charger brands do you install in Castle Hill?",
+          "answer": "We install all major brands including Tesla Wall Connector, Ocular, Wallbox and Charge Amps. We'll recommend the right charger for your car model, home wiring and budget, and handle the full installation and grid approval."
+        },
+        {
+          "question": "How long does a solar installation take in Castle Hill?",
+          "answer": "Most residential solar installs take one day. We handle everything from the design and paperwork through to the grid connection approval, so you're generating your own power as quickly as possible."
+        }
+      ],
       "seo": {
         "title": "Electrician Castle Hill | Voltvale Electrical — The Hills",
         "description": "Licensed electricians for Castle Hill and The Hills district. EV chargers, solar, lighting, switchboards and emergency repairs. Free quotes.",
@@ -478,6 +550,7 @@
       "slug": "st-marys",
       "suburb": "St Marys",
       "state": "NSW",
+      "headline": "Electrician in St Marys — Emergency Repairs & Upgrades",
       "intro": "Licensed electricians covering St Marys and the surrounding western Penrith suburbs — emergency repairs, switchboard upgrades and rewiring.",
       "body": "St Marys and its neighbouring suburbs see plenty of older homes that need switchboard and wiring upgrades, as well as growing new-build estates demanding solar and EV charger installs. We're nearby and respond fast.",
       "sections": [
@@ -488,6 +561,22 @@
       ],
       "landmarks": ["St Marys CBD", "Colyton", "Werrington", "Oxley Park", "Claremont Meadows"],
       "services_offered": ["emergency-electrician", "switchboard-upgrades", "rewiring-safety"],
+      "benefits": [
+        "Penrith-based team — fast response to St Marys and surrounds",
+        "Switchboard upgrades from $850 — compliant and future-ready",
+        "Full rewires for older St Marys homes completed in 1-2 days",
+        "Available 24/7 for after-hours electrical emergencies"
+      ],
+      "faqs": [
+        {
+          "question": "My switchboard has ceramic fuses — do I need to upgrade it?",
+          "answer": "Older ceramic fuse boards don't provide the safety protection of modern circuit breakers and safety switches. We strongly recommend upgrading to a modern switchboard — it's required before adding solar or high-draw appliances, and improves your home's safety significantly. We quote upgrades from $850 installed."
+        },
+        {
+          "question": "How do I know if my older St Marys home needs rewiring?",
+          "answer": "Warning signs include flickering lights, frequently tripping circuits, burning smells from power points, or wiring made of aluminium or rubber (common in homes built before 1980). We offer a full safety inspection and provide a clear written report — no obligation to proceed."
+        }
+      ],
       "seo": {
         "title": "Electrician St Marys | Voltvale Electrical",
         "description": "Licensed electricians in St Marys and surrounds. Emergency repairs, switchboard upgrades, rewiring and solar installs. Upfront pricing, 24/7 service.",
@@ -498,6 +587,7 @@
       "slug": "quakers-hill",
       "suburb": "Quakers Hill",
       "state": "NSW",
+      "headline": "Electrician in Quakers Hill — Solar, EV Chargers & Switchboards",
       "intro": "Trusted electricians for Quakers Hill and the Blacktown Hills area — solar, switchboards, EV chargers and emergency call-outs.",
       "body": "Quakers Hill's residential streets and growing population mean steady demand for solar installs, switchboard upgrades and new circuits. We're on the road in this area regularly and can be with you fast.",
       "sections": [
@@ -508,6 +598,22 @@
       ],
       "landmarks": ["Quakers Hill Station", "Quakers Hill Parkway", "Lalor Park", "Kings Langley", "Woodcroft"],
       "services_offered": ["solar-battery", "switchboard-upgrades", "ev-charger-installation", "emergency-electrician"],
+      "benefits": [
+        "Solar specialists — panels, inverters and batteries all handled",
+        "Switchboard upgrade required before solar? We bundle both jobs",
+        "EV charger installs completed in under 3 hours on most visits",
+        "Friendly local team who know the area — fast response times"
+      ],
+      "faqs": [
+        {
+          "question": "What solar rebates are available for Quakers Hill homeowners?",
+          "answer": "Quakers Hill residents are eligible for the federal Small-scale Technology Certificate (STC) rebate, which reduces the upfront cost of a solar system. We calculate the rebate value and deduct it directly from your quote — no chasing the paperwork yourself."
+        },
+        {
+          "question": "Can I add a battery to my existing solar system?",
+          "answer": "In most cases, yes. We assess your current inverter and panels to confirm compatibility, then recommend the right battery size for your usage. Popular options include the Tesla Powerwall and Enphase IQ Battery. We handle the full installation and grid approval."
+        }
+      ],
       "seo": {
         "title": "Electrician Quakers Hill | Voltvale Electrical",
         "description": "Licensed electricians in Quakers Hill. Solar and battery installs, switchboard upgrades, EV chargers, emergency repairs. Upfront pricing.",

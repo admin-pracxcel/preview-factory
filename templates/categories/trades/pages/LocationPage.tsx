@@ -6,6 +6,7 @@ import {
   Breadcrumbs,
   PageHero,
   ContentSections,
+  ServicesGrid,
   BenefitsList,
   FaqList,
   CtaBand,
@@ -38,15 +39,23 @@ export function LocationPage({
 
   // Services to surface for this suburb: explicit list if given, else all.
   const wanted = page.services_offered.map((s) => s.toLowerCase());
-  const serviceLinks = (
+  const filteredServices = (
     wanted.length
       ? site.services.filter(
           (s) => wanted.includes(s.title.toLowerCase()) || wanted.includes(s.slug.toLowerCase()),
         )
       : site.services
-  )
-    .slice(0, 6)
-    .map((s) => ({ label: s.title, href: href(basePath, "services", s.slug), sublabel: s.summary }));
+  ).slice(0, 6);
+
+  // Map ServicePage[] → ServicesGrid shape (id, title, description, icon, starting_price, slug).
+  const serviceCards = filteredServices.map((s) => ({
+    id: s.slug,
+    title: s.title,
+    description: s.summary,
+    icon: s.icon,
+    starting_price: s.starting_price,
+    slug: s.slug,
+  }));
 
   // Service-in-area landing pages anchored to this suburb.
   const areaPages = site.service_areas
@@ -59,12 +68,16 @@ export function LocationPage({
     .slice(0, 6)
     .map((l) => ({ label: l.suburb, href: href(basePath, "locations", l.slug) }));
 
-  // Pull testimonials that mention this suburb (case-insensitive) — gives the
-  // location page genuine social proof without duplicating everything from home.
+  // Pull testimonials that mention this suburb (case-insensitive). Fall back to
+  // all site testimonials (capped at 3) so every location page has social proof.
   const suburbLower = page.suburb.toLowerCase();
-  const localTestimonials = (site.home.testimonials ?? []).filter(
+  const allTestimonials = site.home.testimonials ?? [];
+  const localTestimonials = allTestimonials.filter(
     (t) => t.location?.toLowerCase().includes(suburbLower),
   );
+  const testimonialsToShow = localTestimonials.length > 0
+    ? localTestimonials
+    : allTestimonials.slice(0, 3);
 
   const cta = primaryCta(site, basePath);
   const title = page.headline ?? `${site.business.name} in ${page.suburb}`;
@@ -118,11 +131,13 @@ export function LocationPage({
         </div>
       </section>
 
-      {/* Services we offer here — clickable cards linking to full service pages */}
-      {serviceLinks.length > 0 && (
-        <RelatedLinks
+      {/* Services we offer here — icon cards with prices linking to full service pages */}
+      {serviceCards.length > 0 && (
+        <ServicesGrid
+          services={serviceCards}
+          basePath={basePath}
           heading={`Services we offer in ${page.suburb}`}
-          links={serviceLinks}
+          subheading={`Available across ${page.suburb} and nearby suburbs — same fixed pricing, same licensed team.`}
         />
       )}
 
@@ -131,11 +146,15 @@ export function LocationPage({
         <RelatedLinks heading={`Popular in ${page.suburb}`} links={areaPages} />
       )}
 
-      {/* Social proof from locals in this suburb */}
-      {localTestimonials.length > 0 && (
+      {/* Social proof — suburb-specific if available, otherwise site-wide (max 3) */}
+      {testimonialsToShow.length > 0 && (
         <TestimonialsSection
-          items={localTestimonials}
-          heading={`What ${page.suburb} customers say`}
+          items={testimonialsToShow}
+          heading={
+            localTestimonials.length > 0
+              ? `What ${page.suburb} customers say`
+              : "What our customers say"
+          }
         />
       )}
 
