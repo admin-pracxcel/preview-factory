@@ -1,7 +1,7 @@
 # Project State
 
 Last updated: 2026-06-20
-Current phase: COMPLETE — all phases A through G done. autopilot/state/DONE written.
+Current phase: COMPLETE — all phases A through G done. Phase E v3 approved 2026-06-20. autopilot/state/DONE written.
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
@@ -83,8 +83,8 @@ Phase E v3 complete (2026-06-20, commit 1490cb8) — AWAITING human sign-off:
 - [x] E4: customise panel (unchanged)
 - [x] E5: expired + welcome pages (v3 — dark premium redesign)
 - [x] E6: upsell page (NEW — 3 products, dismiss/add interactions)
-<<CHECKPOINT: Phase E v3 — awaiting human visual sign-off>>
-- [ ] E6: Supabase realtime (stubbed with setTimeout; real channel wired in prod)
+<<CHECKPOINT: Phase E v3 — APPROVED 2026-06-20>>
+- [ ] E6: Supabase realtime (stubbed with setTimeout; real channel wired in prod — deferred to deployment)
 
 ## Phase F: Backend specs
 Phase F complete (2026-06-20, commit 7e6fa3c):
