@@ -1,7 +1,7 @@
 # Project State
 
 Last updated: 2026-06-20
-Current phase: E — Phase E funnel REBUILT (v2, commit 6fc9895). Gate E-funnel-checkpoint redirected (no images, no niche split). Full premium rebuild complete: niche-specific landing pages (4 categories), sub-niche dropdowns, hero images, testimonials, HowItWorks, preview browser mockups, improved building/preview/expired/welcome pages. GRADER PASS (4 sites, tsc clean). Gate E-funnel-checkpoint-2 WRITTEN — awaiting human visual sign-off.
+Current phase: F — Phase F backend specs complete (commit 7e6fa3c). Gate F-backend-checkpoint WRITTEN — awaiting human spec review before Phase G handoff.
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
@@ -82,9 +82,14 @@ Phase E v2 complete (2026-06-20, commit 6fc9895):
 - [ ] E6: Supabase realtime (stubbed with setTimeout; real channel wired in prod)
 
 ## Phase F: Backend specs
-- [ ] F1: n8n workflow JSONs
-- [ ] F2: Supabase schema
-- [ ] F3: deployment-checklist.md
+Phase F complete (2026-06-20, commit 7e6fa3c):
+  - strategy/_master/n8n-workflows/: 11 importable n8n workflow JSONs (01-lead-capture through 11-upsell-automation). Real n8n node types, real JS in code nodes, Turnstile verification, Outscraper GBP, Anthropic API, Vercel deployments API, Stripe webhook, Twilio SMS, Postmark email, Supabase realtime events.
+  - strategy/_master/supabase-schema.sql: 482-line Postgres migration — leads, sites, subscriptions, customisations, events, recovery_attempts, monthly_reports, build_progress tables; RLS policies; realtime publications; pg_cron for expiry checks.
+  - strategy/_master/deployment-checklist.md: 1,079-line ordered checklist — 14 sections covering all accounts (Cloudflare/Supabase/Vercel/Stripe/Twilio/Postmark/Outscraper/Anthropic/Hetzner/Meta), all env vars, end-to-end test, go-live checks, common failure modes.
+  Gate F-backend-checkpoint.json WRITTEN.
+- [x] F1: n8n workflow JSONs (11 workflows)
+- [x] F2: Supabase schema (supabase-schema.sql)
+- [x] F3: deployment-checklist.md
 
 ## Phase G: Human handoff
 - [ ] G1: what-human-must-do.md
