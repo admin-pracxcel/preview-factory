@@ -1,7 +1,7 @@
 # Project State
 
 Last updated: 2026-06-20
-Current phase: GATE WRITTEN — awaiting D-generator-visual-review sign-off before category mass-production.
+Current phase: GATE WRITTEN — awaiting D-generator-visual-review-2 sign-off before category mass-production.
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
@@ -15,7 +15,15 @@ Location page quality pass complete (2026-06-20) — commit 9421958:
   - electrician-site.json: all 6 location entries (Penrith, Blacktown, Parramatta, Castle Hill, St Marys, Quakers Hill) now have headline, benefits[] (4 items), and faqs[] (2 items). Broken image replaced (photo-1581094288338-2314dddb7ece).
   - Grader PASS.
 
-Next action: Human approves gate D-generator-visual-review → mass-produce allied-health, beauty-aesthetics, fitness-wellness categories (3 category-builder subagents in parallel, each grader-gated).
+Schema hardening complete (2026-06-20) — commit 36d45eb:
+  - grade.mjs: inline Zod sitePropsSafeSchema validates contact.hours {label,value}, faq ids, content blocks on every grader run, even when AUTOPILOT_SKIP_BUILD=1.
+  - generator/run.mjs: tightened mini-schema home.contact; prompt now explicitly documents {label,value} format with example.
+  - system-prompt.md: added contact.hours format note.
+  - electrician-site.json: added missing faq id fields to Parramatta, Castle Hill, St Marys, Quakers Hill.
+  - clearflow-plumbing.json: regenerated clean — both sites GRADER PASS + schema PASS.
+  - Gate D-generator-visual-review-2.json written.
+
+Next action: Human approves gate D-generator-visual-review-2 → mass-produce allied-health, beauty-aesthetics, fitness-wellness categories (3 category-builder subagents in parallel, each grader-gated).
 
 ## Phase A: Niche intelligence
 - [x] A1: meta-job-titles.md built (352 lines, AU-specific, last researched 2026-06-19)
