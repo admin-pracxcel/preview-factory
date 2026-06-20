@@ -62,23 +62,28 @@ Cleanups still pending (non-destructive so far): legacy single-page `templates/t
 
 ## Phase E: Funnel infrastructure
 Phase E v1 (commit 43fc900): initial 6-page build — REJECTED (no images, no niche split, not premium enough).
-Phase E v2 complete (2026-06-20, commit 6fc9895):
-  - app/page.tsx: white master landing — 2x2 niche category tiles (Trades/Allied Health/Beauty/Fitness) with Unsplash background images, stats bar, HowItWorks, Testimonials, feature grid, blue CTA band.
-  - app/for/trades/, app/for/allied-health/, app/for/beauty/, app/for/fitness/: 4 niche landing pages each with full-viewport hero image + overlay, sub-niche dropdown (9 options each), niche copy, live iframe browser mockup, HowItWorks, Testimonials (3 per niche), FAQ accordion, bottom repeat form.
-  - app/components/NicheForm.tsx: shared form (sub-niche select, business name, suburb, submit with n8n stub).
-  - app/components/NicheLanding.tsx: shared niche landing template component.
-  - app/components/HowItWorks.tsx: 3-step explainer with numbered pills, icons, cards.
-  - app/components/Testimonials.tsx: star ratings + quote cards, configurable items.
-  - app/building/page.tsx: improved — ambient glow, GBP result card with icons, checklist reveal, build stage cycling progress bar.
-  - app/preview/[id]/page.tsx: improved — struck-through price, urgency countdown, Stripe lock note, mobile customise toggle.
-  - app/expired/[id]/page.tsx: improved — animated clock ring, preview thumbnail, 3-point checklist card.
-  - app/welcome/[id]/page.tsx: improved — animated star burst, copy URL button, action cards grid, SMS example, timeline.
-  Gate E-funnel-checkpoint-2.json WRITTEN — awaiting human visual sign-off.
-- [x] E1: landing page (v2 with category tiles + images)
-- [x] E2: building page (improved)
-- [x] E3: preview page (improved)
+Phase E v2 (commit 6fc9895): REJECTED by human owner — iframe preview window, uninspiring fonts, not stunning enough, upsell page missing.
+Phase E v3 complete (2026-06-20, commit 1490cb8) — AWAITING human sign-off:
+  - app/layout.tsx: Sora display font added (weights 400/600/700/800, --font-sora CSS var).
+  - app/page.tsx: FULL REDESIGN — dark #0A0F1E master landing: radial blue glow hero, Sora extrabold H1 with cyan gradient, trust strip, stats bar (4 metrics, white/5 band), 2x2 category tile grid on dark bg, HowItWorks in #040812 with white/5 cards, Testimonials dark #0A0F1E, Features 6-card grid, gradient blue CTA band, dark footer.
+  - app/components/NicheLanding.tsx: iframe/BrowserMockup REMOVED. Frosted glass form card in hero. Social proof strip. New "What your site includes" 6-card feature grid (no iframe). New TRUST STACK section (4 pillars: real data, 7-day money-back, 100% Australian, 4.2x enquiries). Dark footer.
+  - app/components/HowItWorks.tsx: redesigned to dark #040812 with white/5 cards.
+  - app/components/Testimonials.tsx: redesigned to dark #0A0F1E with white/5 cards.
+  - app/for/trades/page.tsx: headline "More local jobs. Starting today."
+  - app/for/allied-health/page.tsx: AHPRA-compliant, 3 new testimonials, teal accent, full subNiches list.
+  - app/for/beauty/page.tsx: 3 new testimonials, rose accent, gallery/booking FAQ.
+  - app/for/fitness/page.tsx: 3 new testimonials, red accent, class schedule FAQ.
+  - app/building/page.tsx: Sora font on H1 only (rest unchanged — already good).
+  - app/expired/[id]/page.tsx: full dark redesign — clock visual, white/5 status card, shadow-blue-900/40 CTA.
+  - app/welcome/[id]/page.tsx: full dark redesign — white/5 URL card, action cards, SMS card, timeline card.
+  - app/upsell/[id]/page.tsx: NEW — 3 upsell products: Complete Growth Engine $297/mo, intelliLens Reports $49/mo, Repuboost Social $79/mo. Dismiss + add interactions. Skip link.
+- [x] E1: master landing page (v3 — dark premium redesign)
+- [x] E2: building page (Sora font only, design already approved)
+- [x] E3: preview page (unchanged — structure correct)
 - [x] E4: customise panel (unchanged)
-- [x] E5: expired + welcome pages (improved)
+- [x] E5: expired + welcome pages (v3 — dark premium redesign)
+- [x] E6: upsell page (NEW — 3 products, dismiss/add interactions)
+<<CHECKPOINT: Phase E v3 — awaiting human visual sign-off>>
 - [ ] E6: Supabase realtime (stubbed with setTimeout; real channel wired in prod)
 
 ## Phase F: Backend specs
