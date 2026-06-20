@@ -1,0 +1,1184 @@
+{
+  "business": {
+    "name": "Studio Luma",
+    "tagline": "Fitzroy's neighbourhood hair salon — colour, cuts and care",
+    "phone": "(03) 9417 2233",
+    "email": "hello@studioluma.com.au",
+    "suburb": "Fitzroy",
+    "state": "VIC",
+    "abn": "47 183 652 091"
+  },
+  "branding": {
+    "primary_color": "#9d2b4c",
+    "secondary_color": "#6b1a33",
+    "accent_color": "#d4a853",
+    "logo_url": "",
+    "hero_image_url": "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=80",
+    "font_heading": "Inter"
+  },
+  "seo": {
+    "title": "Studio Luma | Hair Salon Fitzroy — Colour, Cuts & Treatments",
+    "description": "Studio Luma is Fitzroy's go-to hair salon. Expert colour, cuts, balayage, keratin treatments and extensions. Walk from Brunswick St or Smith St. Book online.",
+    "schema_org_type": "HairSalon"
+  },
+  "home": {
+    "hero": {
+      "headline": "Great hair starts here.",
+      "subheadline": "Studio Luma is Fitzroy's neighbourhood salon for colour, cuts, balayage and more. Seven years serving inner Melbourne — book today.",
+      "cta_primary": { "label": "Call (03) 9417 2233", "href": "tel:+61394172233" },
+      "cta_secondary": { "label": "Book online", "href": "#contact" }
+    },
+    "services": [
+      {
+        "id": "h-colour",
+        "slug": "colour-highlights",
+        "title": "Colour & Highlights",
+        "description": "Full colour, foils, and face-framing highlights. We colour-match on the day so the result is always yours.",
+        "icon": "Paintbrush",
+        "starting_price": "From $180"
+      },
+      {
+        "id": "h-cut",
+        "slug": "cut-style",
+        "title": "Cut & Style",
+        "description": "Haircuts for all lengths and textures. Includes wash, cut, blow-dry and a finish you can recreate at home.",
+        "icon": "Scissors",
+        "starting_price": "From $85"
+      },
+      {
+        "id": "h-keratin",
+        "slug": "keratin-blowout",
+        "title": "Brazilian Blowout & Keratin",
+        "description": "Smooth frizz and cut blow-dry time in half. Results that last 3–4 months.",
+        "icon": "Wind",
+        "starting_price": "From $290"
+      },
+      {
+        "id": "h-balayage",
+        "slug": "balayage-ombre",
+        "title": "Balayage & Ombre",
+        "description": "Hand-painted colour for a lived-in, sun-kissed look that grows out beautifully.",
+        "icon": "Sparkle",
+        "starting_price": "From $220"
+      },
+      {
+        "id": "h-treatments",
+        "slug": "hair-treatments",
+        "title": "Hair Treatments & Masks",
+        "description": "Olaplex, bond-building and hydration treatments to restore condition and shine.",
+        "icon": "Droplets",
+        "starting_price": "From $75"
+      },
+      {
+        "id": "h-extensions",
+        "slug": "extensions",
+        "title": "Extensions",
+        "description": "Tape-in, clip-in and hand-tied extensions for instant length and volume.",
+        "icon": "Star",
+        "starting_price": "From $350"
+      }
+    ],
+    "about": {
+      "heading": "Seven years on Smith Street",
+      "body": "Studio Luma opened in 2017 at 88 Smith St, Fitzroy. We started as a two-chair salon and grew because of repeat clients, not walk-ins. Our team of five stylists cover colour, cuts, treatments and extensions for every hair type.\n\nWe use L'Oréal Professionnel and Olaplex throughout, and we take the time to do a proper consultation before any colour. No rushing, no surprises.",
+      "photo_url": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80",
+      "years_in_business": 7,
+      "licence": "Hairdresser Member — HBIA Victoria"
+    },
+    "service_area": {
+      "heading": "We're in Fitzroy, close to everyone",
+      "intro": "Walk from Brunswick St or Smith St. Free parking on side streets after 6pm.",
+      "suburbs": [
+        "Fitzroy",
+        "Collingwood",
+        "Carlton",
+        "Northcote",
+        "Brunswick",
+        "Richmond",
+        "Abbotsford",
+        "Clifton Hill"
+      ]
+    },
+    "gallery": [
+      {
+        "id": "g1",
+        "image_url": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=80",
+        "caption": "Balayage with warm copper tones",
+        "alt": "Warm copper balayage result on a client at Studio Luma"
+      },
+      {
+        "id": "g2",
+        "image_url": "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=900&q=80",
+        "caption": "Blunt bob cut and blow-dry",
+        "alt": "Blunt bob haircut and blow-dry at Studio Luma Fitzroy"
+      },
+      {
+        "id": "g3",
+        "image_url": "https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=900&q=80",
+        "caption": "Full highlights and toner, Collingwood client",
+        "alt": "Full foil highlights with toner on a brunette"
+      },
+      {
+        "id": "g4",
+        "image_url": "https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?auto=format&fit=crop&w=900&q=80",
+        "caption": "Tape-in extensions for length and volume",
+        "alt": "Tape-in hair extensions applied at Studio Luma"
+      },
+      {
+        "id": "g5",
+        "image_url": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=900&q=80",
+        "caption": "Keratin smoothing treatment result",
+        "alt": "Smooth, frizz-free hair after keratin treatment"
+      },
+      {
+        "id": "g6",
+        "image_url": "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=900&q=80",
+        "caption": "Rich brunette colour refresh",
+        "alt": "Deep brunette glossy colour result"
+      }
+    ],
+    "testimonials": [
+      {
+        "id": "t1",
+        "quote": "I've been going to Studio Luma for three years. The colour is always consistent, they remember what I like, and it never takes longer than they say it will.",
+        "author": "Sarah M.",
+        "location": "Fitzroy",
+        "rating": 5
+      },
+      {
+        "id": "t2",
+        "quote": "Best balayage I've had in Melbourne. They took their time with the consultation, matched exactly what I showed them, and the result lasted four months before I needed a refresh.",
+        "author": "Priya K.",
+        "location": "Collingwood",
+        "rating": 5
+      },
+      {
+        "id": "t3",
+        "quote": "I came in with heat-damaged hair and left looking like a different person after the Olaplex treatment. Reasonable price too.",
+        "author": "Jade T.",
+        "location": "Carlton",
+        "rating": 5
+      },
+      {
+        "id": "t4",
+        "quote": "They fitted me in the same week for tape-in extensions before a wedding. Professional, fast, and they matched my colour perfectly.",
+        "author": "Emma R.",
+        "location": "Richmond",
+        "rating": 5
+      }
+    ],
+    "social_proof": {
+      "heading": "Why clients come back",
+      "items": [
+        { "id": "sp1", "value": "7 years in Fitzroy", "icon": "Star" },
+        { "id": "sp2", "value": "4.8★ from 320+ reviews", "icon": "Heart" },
+        { "id": "sp3", "value": "L'Oréal Professionnel + Olaplex", "icon": "BadgeCheck" },
+        { "id": "sp4", "value": "Same-week bookings available", "icon": "Calendar" }
+      ]
+    },
+    "offer": {
+      "headline": "New client? 15% off your first visit",
+      "description": "Mention this offer when you book and we'll take 15% off your first colour or treatment service.",
+      "price": "15% off",
+      "code": "NEWLUMA",
+      "cta": { "label": "Book now", "href": "tel:+61394172233" }
+    },
+    "contact": {
+      "heading": "Book an appointment",
+      "phone": "(03) 9417 2233",
+      "email": "hello@studioluma.com.au",
+      "address": "88 Smith St, Fitzroy VIC 3065",
+      "hours": [
+        { "label": "Monday – Tuesday", "value": "Closed" },
+        { "label": "Wednesday – Friday", "value": "10:00am – 7:00pm" },
+        { "label": "Saturday", "value": "9:00am – 5:00pm" },
+        { "label": "Sunday", "value": "10:00am – 4:00pm" }
+      ],
+      "cta": { "label": "Call to book", "href": "tel:+61394172233" }
+    }
+  },
+  "services": [
+    {
+      "slug": "colour-highlights",
+      "title": "Colour & Highlights",
+      "summary": "Full colour, foils and face-framing highlights. Colour-matched on the day so the result is exactly what you came in for.",
+      "icon": "Paintbrush",
+      "starting_price": "From $180",
+      "hero_image": "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Whether you want to go lighter, richer or just refresh your existing colour, our colourists work from a detailed consultation so you leave with exactly what you pictured. We use L'Oréal Professionnel colour throughout, with a toner service included on most full-colour appointments.\n\nServices start from $180 for a root tint or single-process colour. Full foils, colour corrections and multi-tonal work are quoted individually at your consultation.",
+      "benefits": [
+        "Colour consultation before every service",
+        "L'Oréal Professionnel colour and developer used throughout",
+        "Toner included on full-colour appointments",
+        "Olaplex bond-builder available as an add-on",
+        "Detailed at-home care advice included",
+        "Colour corrections welcome — we'll be honest about what's possible"
+      ],
+      "sections": [
+        {
+          "heading": "What's included in a colour service",
+          "body": "Every colour appointment starts with a consultation where we look at your current colour, discuss your target result, and check the condition of your hair. We'll tell you upfront if a colour correction is needed and what that involves.\n\nThe service includes application, processing time, a toner to finish and a blow-dry. If you add Olaplex to your appointment, we apply it during processing at no extra delay."
+        },
+        {
+          "heading": "How long does hair colour last?",
+          "body": "Root tints and full colours typically last 6–8 weeks before you'll notice significant regrowth. Tonal services like glosses last 4–6 weeks. We'll recommend the right maintenance schedule at your appointment and give you a home-care kit suggestion to make the colour last as long as possible."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-colour-highlights-1",
+          "question": "How long does a full colour appointment take?",
+          "answer": "A standard full colour with toner takes around 2 to 2.5 hours. Colour corrections or multi-tonal work can take 3–4 hours. We'll give you an accurate time estimate at your consultation."
+        },
+        {
+          "id": "faq-colour-highlights-2",
+          "question": "Can I come in if I've had colour done elsewhere?",
+          "answer": "Yes. We ask that you tell us what products were used previously so we can assess your hair properly. For colour corrections from a different salon we always do a strand test first."
+        },
+        {
+          "id": "faq-colour-highlights-3",
+          "question": "Do you do a patch test before colour?",
+          "answer": "We ask all new colour clients to complete a brief allergy history form. If you've had a reaction to colour before, we'll do a patch test 48 hours before your appointment. Just let us know when you book."
+        }
+      ],
+      "seo": {
+        "title": "Hair Colour & Highlights Fitzroy | Studio Luma",
+        "description": "Expert hair colour and highlights at Studio Luma, Fitzroy. Full colour from $180, foils, toners and colour corrections. L'Oréal Professionnel. Book now.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "cut-style",
+      "title": "Cut & Style",
+      "summary": "Haircuts for all lengths and textures. Includes wash, cut, blow-dry and a finish you can recreate at home.",
+      "icon": "Scissors",
+      "starting_price": "From $85",
+      "hero_image": "https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1600&q=80",
+      "intro": "A good cut is the foundation of everything. Our stylists work with your natural texture and growth pattern so the cut still looks good three weeks after you leave. Short cuts, long layers, textured bobs, fringes — we cover all of them.\n\nEvery cut includes a wash and a blow-dry or rough-dry finish. We'll show you how to style it at home so you're not starting from scratch.",
+      "benefits": [
+        "Wash, cut and blow-dry included",
+        "Consultation on style and maintenance before we start",
+        "Works with your natural texture and growth pattern",
+        "At-home styling tips before you leave",
+        "Fringe trims free between full appointments",
+        "All lengths and hair types welcome"
+      ],
+      "sections": [
+        {
+          "heading": "Cuts for every length and texture",
+          "body": "We cut short pixies, textured bobs, shaggy layers, blunt lobs and long single-length cuts. We also work with curly, coily and wavy hair — if you want to embrace your texture rather than fight it, tell us at your consultation and we'll cut accordingly."
+        },
+        {
+          "heading": "Add-ons to make the most of your appointment",
+          "body": "Combine your cut with a colour, highlights or a treatment for a full-service result in one visit. We can also add a GHD blow-dry finish or a scalp massage with conditioning oil. Ask at reception when you book."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-cut-style-1",
+          "question": "How often should I get a haircut?",
+          "answer": "For most people, every 8–12 weeks keeps a cut looking its best. If you're growing your hair out, every 12–16 weeks for a light dusting is usually enough to keep ends healthy."
+        },
+        {
+          "id": "faq-cut-style-2",
+          "question": "Do you cut children's hair?",
+          "answer": "Yes, we cut children's hair (ages 5 and up). Saturday mornings are a popular time for families. Ring ahead to book a kids' appointment as we allocate specific times."
+        },
+        {
+          "id": "faq-cut-style-3",
+          "question": "Can I bring a photo of what I want?",
+          "answer": "Please do. Photos are the best way to align on the result before we pick up the scissors. We'll let you know honestly if the style will work with your hair type and texture."
+        }
+      ],
+      "seo": {
+        "title": "Haircuts Fitzroy | Cut & Style at Studio Luma",
+        "description": "Haircuts for all lengths and textures at Studio Luma Fitzroy. From $85 including wash and blow-dry. Short, long, curly, straight — book today.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "keratin-blowout",
+      "title": "Brazilian Blowout & Keratin",
+      "summary": "Smooth frizz and cut your blow-dry time in half. Professional keratin treatments with results that last 3–4 months.",
+      "icon": "Wind",
+      "starting_price": "From $290",
+      "hero_image": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1600&q=80",
+      "intro": "If your mornings are spent fighting frizz or your blow-dry takes more time than everything else combined, a keratin treatment changes the equation. We offer both Brazilian Blowout and traditional keratin smoothing — each suited to different hair goals.\n\nResults last 3–4 months, the hair stays manageable in humidity, and the treatment adds a noticeable shine. We'll recommend the right option at your consultation.",
+      "benefits": [
+        "Reduces blow-dry time by 40–60%",
+        "Smooths frizz and flyaways in humidity",
+        "Adds gloss and body to fine or damaged hair",
+        "Results last 3–4 months with the right home care",
+        "Safe for colour-treated hair",
+        "Formaldehyde-free formulas used throughout"
+      ],
+      "sections": [
+        {
+          "heading": "Brazilian Blowout vs traditional keratin — which one is right for you?",
+          "body": "Brazilian Blowout is gentler, takes around 2 hours and can be done the same day as a colour service. It smooths without dramatically changing your natural texture. Traditional keratin treatments (such as Keratherapy or similar) provide a stronger smoothing result, take 2.5–3 hours, and require 48–72 hours before washing.\n\nAt your consultation we'll look at your hair type, porosity and what you're hoping to achieve, and recommend the right treatment."
+        },
+        {
+          "heading": "Making the results last",
+          "body": "Sulphate-free shampoo is essential after a keratin service — we stock a range at the salon and we'll send you home with a sample. Avoid tying your hair up or using clips for the first 72 hours if you've had a traditional keratin treatment. We'll give you a full aftercare sheet at your appointment."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-keratin-blowout-1",
+          "question": "Can I colour and do a keratin treatment in the same visit?",
+          "answer": "Yes, for a Brazilian Blowout. We apply colour first, then the treatment. For traditional keratin, we recommend spacing colour and the treatment by at least one week either side."
+        },
+        {
+          "id": "faq-keratin-blowout-2",
+          "question": "Is keratin safe for bleached or heavily colour-treated hair?",
+          "answer": "It can be, but we'll assess your hair's current condition before confirming. If your hair is very porous or damaged, we may recommend a bond-building treatment first."
+        },
+        {
+          "id": "faq-keratin-blowout-3",
+          "question": "How long does the appointment take?",
+          "answer": "A Brazilian Blowout takes around 2 to 2.5 hours. A traditional keratin treatment takes 2.5 to 3 hours. We'll give you an accurate time when you book."
+        }
+      ],
+      "seo": {
+        "title": "Keratin Treatment & Brazilian Blowout Fitzroy | Studio Luma",
+        "description": "Professional keratin treatments and Brazilian Blowout at Studio Luma Fitzroy. Smooth frizz, cut blow-dry time in half. Results last 3–4 months. From $290.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "balayage-ombre",
+      "title": "Balayage & Ombre",
+      "summary": "Hand-painted colour for a lived-in, sun-kissed look that grows out beautifully.",
+      "icon": "Sparkle",
+      "starting_price": "From $220",
+      "hero_image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Balayage is hand-painted colour — no foils, no harsh lines, just a natural-looking blend from your roots through to your ends. The result grows out in a way that looks intentional rather than neglected, which means you can go longer between appointments.\n\nWe offer balayage in warm blondes, coppers and brunettes as well as cooler ash and platinum tones. Ombre creates a more defined transition from dark at the roots to light at the ends. Both are quoted at consultation based on your hair's length, current colour and desired result.",
+      "benefits": [
+        "Low-maintenance result — grows out without a visible line",
+        "Hand-painted for a natural, sun-kissed look",
+        "Personalised to your skin tone and base colour",
+        "Can be combined with a gloss or toner to refine the result",
+        "Suitable for all lengths and most base colours",
+        "Touch-up appointments typically every 3–5 months"
+      ],
+      "sections": [
+        {
+          "heading": "What to expect at your balayage appointment",
+          "body": "We start with a detailed colour consultation — we'll look at photos you bring in and compare against your current hair to figure out how many sessions are needed. Most clients get their target result in one appointment. If you're starting from a dark base or have previously been coloured, we may suggest a two-stage process.\n\nThe paint application takes 45–90 minutes depending on your hair length, followed by processing, a toner or gloss to blend the result, a wash and a blow-dry finish."
+        },
+        {
+          "heading": "Balayage maintenance: what you need to know",
+          "body": "One of balayage's main advantages is its low maintenance. Most clients come back every 3–5 months for a refresh rather than every 6–8 weeks like traditional highlights. Between appointments, a purple or blue toning shampoo once a week keeps the tone fresh if you're going lighter."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-balayage-ombre-1",
+          "question": "How long does a balayage appointment take?",
+          "answer": "Plan for 3–4 hours for a full balayage with toner and blow-dry. Shorter hair or a partial balayage can take 2–2.5 hours. We'll give you an accurate time at your consultation."
+        },
+        {
+          "id": "faq-balayage-ombre-2",
+          "question": "Can I get balayage if my hair is dark?",
+          "answer": "Yes. Dark hair balayage looks beautiful — warm coppers, caramels and rich chocolates work well on dark bases without needing to go very light. If you want a high-contrast result on dark hair, we may suggest a two-session approach."
+        },
+        {
+          "id": "faq-balayage-ombre-3",
+          "question": "What's the difference between balayage and ombre?",
+          "answer": "Balayage is painted freehand for a scattered, natural look with soft transitions. Ombre creates a more defined gradient from dark at the roots to light at the ends. Balayage is lower maintenance; ombre creates more contrast."
+        }
+      ],
+      "seo": {
+        "title": "Balayage & Ombre Fitzroy | Studio Luma Hair Salon",
+        "description": "Hand-painted balayage and ombre at Studio Luma, Fitzroy. Natural sun-kissed colour from $220. Low-maintenance results that grow out beautifully. Book now.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "hair-treatments",
+      "title": "Hair Treatments & Masks",
+      "summary": "Olaplex, bond-building and deep hydration treatments to restore condition, strength and shine.",
+      "icon": "Droplets",
+      "starting_price": "From $75",
+      "hero_image": "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Colour processing, heat styling and environmental exposure take a toll on hair over time. Our treatment menu covers Olaplex bond-rebuilding, deep hydration masks, scalp treatments and protein work — each targeting a specific concern.\n\nTreatments can be added to any colour or cut appointment, or booked as a standalone service. From $75 for a single-treatment add-on.",
+      "benefits": [
+        "Olaplex No. 1 and No. 2 bond-builder available during colour",
+        "Deep hydration masks for dry, brittle or porous hair",
+        "Scalp treatments for flakiness, oiliness or sensitivity",
+        "Protein treatments for fine or over-processed hair",
+        "Instant results you'll feel in the chair",
+        "Take-home products recommended for ongoing care"
+      ],
+      "sections": [
+        {
+          "heading": "Olaplex — bond-building during colour",
+          "body": "Olaplex works during the colour or bleaching process to rebuild the disulfide bonds broken by chemical services. We offer Olaplex No. 1 (mixed into the colour) and No. 2 (applied as a post-colour treatment) for anyone wanting extra protection. It's our most popular add-on for bleach and balayage clients."
+        },
+        {
+          "heading": "Hydration and protein masks",
+          "body": "If your hair feels dry, snaps easily or looks dull, it usually needs either hydration or protein (sometimes both). We assess your hair at the consultation and recommend the right treatment. Most mask treatments take 20–30 minutes with heat and can sit alongside a colour service."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-hair-treatments-1",
+          "question": "How often should I get a treatment?",
+          "answer": "For coloured or bleached hair, adding Olaplex to every colour service is ideal. Standalone hydration or protein treatments work well every 6–8 weeks. We'll recommend a schedule based on your hair's condition."
+        },
+        {
+          "id": "faq-hair-treatments-2",
+          "question": "Can I combine a treatment with a colour appointment?",
+          "answer": "Yes — in fact, most of our treatment add-ons are designed to be used during colour services. Just mention it when you book so we can allocate the right time."
+        }
+      ],
+      "seo": {
+        "title": "Hair Treatments & Olaplex Fitzroy | Studio Luma",
+        "description": "Olaplex, bond-building, hydration and protein treatments at Studio Luma, Fitzroy. Restore condition and shine from $75. Book as a standalone or add to any appointment.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "extensions",
+      "title": "Hair Extensions",
+      "summary": "Tape-in, clip-in and hand-tied extensions for instant length and volume using colour-matched human hair.",
+      "icon": "Star",
+      "starting_price": "From $350",
+      "hero_image": "https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Extensions transform thin, short hair or add volume where your natural hair doesn't. We work with premium 100% human hair extensions in a range of lengths and textures, colour-matched at your consultation for a seamless result.\n\nWe offer tape-in extensions (the most popular, low-maintenance option), clip-in sets for occasional wear, and hand-tied wefts for a flat, natural look. Prices start from $350 for tape-in sets and vary by hair length and the number of pieces needed.",
+      "benefits": [
+        "100% human hair — styled just like your natural hair",
+        "Colour-matched at consultation for a seamless blend",
+        "Tape-in extensions re-usable for up to 3 removal and re-application cycles",
+        "Maintenance appointments every 6–8 weeks",
+        "Safe for coloured hair — no additional bleaching required in most cases",
+        "Full aftercare kit and instructions provided"
+      ],
+      "sections": [
+        {
+          "heading": "Choosing the right extension method",
+          "body": "Tape-in extensions are our most popular method. They sit flat against the scalp, are quick to apply (1–2 hours for a standard set) and cause minimal stress on natural hair with proper care. They're re-usable for multiple application cycles, making them cost-effective long-term.\n\nHand-tied weft extensions are ideal for very fine hair or clients who want a completely undetectable result. They take longer to apply (3–4 hours) but sit incredibly flat and are very lightweight.\n\nClip-in sets are the most affordable starting point for occasional use — great for events or trying extensions before committing to a semi-permanent method."
+        },
+        {
+          "heading": "Extension maintenance and removal",
+          "body": "Tape-in extensions need a maintenance appointment every 6–8 weeks as your natural hair grows. At this appointment we remove the tape bonds, reposition the extensions higher on the shaft, and add fresh tape. Hair extensions can last 3–6 months in total before the hair itself needs replacing.\n\nRemoval is gentle and causes no damage when done professionally. We do not recommend DIY removal."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-extensions-1",
+          "question": "Will extensions damage my natural hair?",
+          "answer": "Not when applied and removed by a professional using the right technique. We always assess your natural hair's condition before recommending extensions. If your hair is already compromised, we may suggest a strengthening program first."
+        },
+        {
+          "id": "faq-extensions-2",
+          "question": "How long does an extension appointment take?",
+          "answer": "Tape-in extensions take 1–2 hours for a standard set. Hand-tied wefts take 3–4 hours. We'll confirm timing and the number of pieces needed at your consultation."
+        },
+        {
+          "id": "faq-extensions-3",
+          "question": "Can I colour my extensions?",
+          "answer": "We can tone or gloss extensions to blend them with a colour service, but we don't recommend bleaching or dramatically lightening extension hair. We'll colour-match the extensions to your hair at the consultation to avoid the need for post-purchase colouring."
+        }
+      ],
+      "seo": {
+        "title": "Hair Extensions Fitzroy | Tape-In & Hand-Tied | Studio Luma",
+        "description": "Tape-in and hand-tied hair extensions at Studio Luma, Fitzroy. 100% human hair, colour-matched. From $350. Instant length and volume — book a consultation.",
+        "schema_org_type": "Service"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "slug": "fitzroy",
+      "suburb": "Fitzroy",
+      "state": "VIC",
+      "headline": "Hair Salon in Fitzroy — Studio Luma on Smith St",
+      "intro": "Studio Luma is on Smith Street in Fitzroy, a short walk from Brunswick Street and the Edinburgh Gardens. We've been Fitzroy's neighbourhood salon since 2017.",
+      "body": "We're at 88 Smith St, between Johnston St and Gertrude St. If you're coming from Brunswick St, walk south on Smith — we're a 5-minute walk. Parking on Gore St and Napier St is free after 6pm on weekdays and all day Sunday.\n\nFitzroy clients are our core base. You'll find regulars who've been coming in for years alongside new clients discovering us through local recommendations. We offer the full service menu here — colour, cuts, balayage, keratin treatments and extensions.",
+      "hero_image": "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=80",
+      "landmarks": [
+        "Smith Street shopping strip",
+        "Edinburgh Gardens (5 min walk)",
+        "Brunswick Street café precinct",
+        "Gertrude Street"
+      ],
+      "services_offered": [
+        "colour-highlights",
+        "cut-style",
+        "balayage-ombre",
+        "keratin-blowout",
+        "hair-treatments",
+        "extensions"
+      ],
+      "benefits": [
+        "Walk to us from Edinburgh Gardens or Gertrude St",
+        "Full service menu including colour, cuts and extensions",
+        "Same-week bookings regularly available",
+        "Free street parking nearby evenings and weekends"
+      ],
+      "sections": [
+        {
+          "heading": "Your local Fitzroy salon",
+          "body": "Smith St has changed a lot in seven years, but the regulars who come to Studio Luma haven't. We're known in the area for consistent colour results and the fact that appointments rarely run late. If you've moved to Fitzroy or nearby and need a reliable local salon, come in for a chat first — we'll match you with the right stylist."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-fitzroy-1",
+          "question": "Where exactly is Studio Luma in Fitzroy?",
+          "answer": "We're at 88 Smith St, Fitzroy VIC 3065. We're on the east side of Smith Street, between Johnston Street and Gertrude Street, above a coffee shop."
+        },
+        {
+          "id": "faq-fitzroy-2",
+          "question": "Is there parking near the salon?",
+          "answer": "Paid parking on Smith St is available during the day. Side streets like Gore Street and Napier Street are free after 6pm on weekdays and free all day on weekends."
+        }
+      ],
+      "seo": {
+        "title": "Hair Salon Fitzroy | Studio Luma — Smith Street",
+        "description": "Studio Luma is Fitzroy's neighbourhood hair salon at 88 Smith St. Colour, cuts, balayage, keratin and extensions. Seven years on Smith Street. Book now.",
+        "schema_org_type": "HairSalon"
+      }
+    },
+    {
+      "slug": "collingwood",
+      "suburb": "Collingwood",
+      "state": "VIC",
+      "headline": "Hair Salon near Collingwood — Studio Luma Fitzroy",
+      "intro": "Collingwood clients walk to Studio Luma in under 10 minutes via Johnston Street or Hoddle Street. We're the closest full-service hair salon to the Collingwood arts precinct.",
+      "body": "Collingwood regulars make up a solid part of our client base — many walk over after a coffee on Smith St or combine an appointment with a visit to the Collingwood Yards or the Bowery Theatre nearby.\n\nEverything on the service menu is available: colour, balayage, cuts, keratin treatments and extensions. We hold Wednesday evening slots open specifically for Collingwood clients who work in the city.",
+      "landmarks": [
+        "Collingwood Yards arts precinct",
+        "Hoddle Street",
+        "Johnston Street corridor",
+        "Victoria Park station"
+      ],
+      "services_offered": [
+        "colour-highlights",
+        "cut-style",
+        "balayage-ombre",
+        "keratin-blowout",
+        "hair-treatments",
+        "extensions"
+      ],
+      "benefits": [
+        "10-minute walk from Victoria Park station",
+        "Evening appointments available on Wednesdays",
+        "Full colour and treatment menu",
+        "Walk from Collingwood Yards or Johnston St"
+      ],
+      "sections": [
+        {
+          "heading": "Getting to Studio Luma from Collingwood",
+          "body": "From Victoria Park station, walk north on Hoddle Street and cross at Johnston Street, then continue west on Johnston and north on Smith — total walk time under 10 minutes. From the Collingwood Yards, head west on Johnston Street and it's a straight 8-minute walk."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-collingwood-1",
+          "question": "How far is Studio Luma from Collingwood?",
+          "answer": "We're at 88 Smith St, Fitzroy — roughly 10 minutes on foot from central Collingwood via Johnston Street. Victoria Park station is a 10-minute walk."
+        },
+        {
+          "id": "faq-collingwood-2",
+          "question": "Do you take late-afternoon bookings for Collingwood clients?",
+          "answer": "Yes. We open until 7pm Wednesday through Friday, which works well for Collingwood clients coming in after work or after picking up kids."
+        }
+      ],
+      "seo": {
+        "title": "Hair Salon near Collingwood | Studio Luma Fitzroy",
+        "description": "Studio Luma is 10 minutes walk from Collingwood. Hair colour, cuts, balayage and treatments on Smith St, Fitzroy. Evening appointments available. Book now.",
+        "schema_org_type": "HairSalon"
+      }
+    },
+    {
+      "slug": "carlton",
+      "suburb": "Carlton",
+      "state": "VIC",
+      "headline": "Hair Salon near Carlton — Studio Luma Fitzroy",
+      "intro": "Carlton clients reach Studio Luma via Lygon Street or the tram on Brunswick Street. We're 15 minutes from the centre of Carlton by foot, or a quick tram ride from Swanston Street.",
+      "body": "We see a lot of Carlton clients — students from the University of Melbourne, residents from Drummond St and Rathdowne St, and locals who prefer a smaller salon to the big chains on Lygon St.\n\nOur full service menu is available for Carlton bookings. Saturday morning slots are particularly popular with Carlton clients. If you're coming by tram, the Route 96 stops near our door on Smith St.",
+      "landmarks": [
+        "Lygon Street café strip",
+        "University of Melbourne (20 min walk)",
+        "Carlton Gardens and Exhibition Building",
+        "Drummond Street"
+      ],
+      "services_offered": [
+        "colour-highlights",
+        "cut-style",
+        "balayage-ombre",
+        "hair-treatments",
+        "extensions"
+      ],
+      "benefits": [
+        "Easy tram access via Route 96 on Smith St",
+        "Saturday morning bookings popular and available",
+        "Friendly to University of Melbourne staff and students",
+        "No big-chain experience — a proper neighbourhood salon"
+      ],
+      "sections": [
+        {
+          "heading": "Getting here from Carlton",
+          "body": "Walk south down Rathdowne Street, cross Victoria Street and continue through Fitzroy North — the walk to Smith Street takes about 15 minutes. Alternatively, catch the Route 96 tram heading north along Smith Street from Melbourne CBD and alight near Johnston Street. It's a short ride from Swanston Street."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-carlton-1",
+          "question": "Is Studio Luma accessible from Carlton by public transport?",
+          "answer": "Yes — the Route 96 tram runs along Smith Street and stops close to the salon. From the Swanston Street tram interchange in the CBD, it's about 15 minutes. From Lygon Street Carlton, it's a 15-minute walk through Carlton North."
+        },
+        {
+          "id": "faq-carlton-2",
+          "question": "Do you cater to students or budget-conscious clients?",
+          "answer": "We price fairly and clearly — you'll see starting prices on our services page. For students, a cut and blow-dry starts from $85. We don't charge hidden fees or add-ons without telling you first."
+        }
+      ],
+      "seo": {
+        "title": "Hair Salon near Carlton | Studio Luma Fitzroy",
+        "description": "Studio Luma on Smith St, Fitzroy is 15 minutes walk or a short tram ride from Carlton. Colour, cuts and balayage. Friendly service, no surprises. Book now.",
+        "schema_org_type": "HairSalon"
+      }
+    },
+    {
+      "slug": "northcote",
+      "suburb": "Northcote",
+      "state": "VIC",
+      "headline": "Hair Salon near Northcote — Studio Luma Fitzroy",
+      "intro": "Northcote clients reach Studio Luma in under 15 minutes by tram or car. We're the full-service alternative to the smaller bolt-hole salons on High Street.",
+      "body": "High Street, Northcote has a strong café and small-business culture, and many of our regulars live within a few blocks of it. The 86 tram connects Northcote directly to Fitzroy, and there's metered parking on Smith Street during the day.\n\nNorthcote clients typically come to us for colour and balayage work — it's a service that benefits from consistency with the same colourist, and we make it easy to book with the same person each time.",
+      "landmarks": [
+        "High Street café and retail strip",
+        "Northcote Plaza",
+        "Tram stop 26 on High Street",
+        "Merri Creek Trail"
+      ],
+      "services_offered": [
+        "colour-highlights",
+        "balayage-ombre",
+        "cut-style",
+        "keratin-blowout",
+        "hair-treatments"
+      ],
+      "benefits": [
+        "Direct tram access via Route 86 to Smith Street",
+        "Book with the same colourist every time",
+        "Full colour menu including balayage and colour correction",
+        "Easy scheduling for busy Northcote households"
+      ],
+      "sections": [
+        {
+          "heading": "Getting here from Northcote",
+          "body": "Catch the Route 86 tram heading south along High Street from Northcote and alight at Smith Street junction. Walk south on Smith Street — we're a 3-minute walk from the tram. Total travel time from central Northcote is under 15 minutes."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-northcote-1",
+          "question": "How do I get to Studio Luma from Northcote?",
+          "answer": "The Route 86 tram runs directly between High Street, Northcote and Smith Street, Fitzroy. Alight near Johnston Street and walk south on Smith Street — we're at number 88."
+        },
+        {
+          "id": "faq-northcote-2",
+          "question": "Can I book with the same colourist every time?",
+          "answer": "Yes. We strongly encourage it for colour clients. When you book, request a specific stylist by name and we'll do our best to match your preferred times."
+        }
+      ],
+      "seo": {
+        "title": "Hair Salon near Northcote | Studio Luma Fitzroy",
+        "description": "Studio Luma on Smith St, Fitzroy is 15 minutes by tram from Northcote. Hair colour, balayage and cuts. Book with the same stylist every visit. Book now.",
+        "schema_org_type": "HairSalon"
+      }
+    },
+    {
+      "slug": "brunswick",
+      "suburb": "Brunswick",
+      "state": "VIC",
+      "headline": "Hair Salon near Brunswick — Studio Luma Fitzroy",
+      "intro": "Brunswick is one suburb north of Fitzroy. Our clients from Sydney Road and Lygon Street Brunswick reach us quickly on the 19 tram or by bike along the Capital City Trail.",
+      "body": "Brunswick clients have always been part of our mix. Sydney Road's independent retail culture and Fitzroy's overlap in taste mean we share a lot of the same clientele. The 19 tram runs from Sydney Road down towards Fitzroy, and Smith St is easily accessible from Brunswick by bicycle.\n\nWe offer the full service menu for Brunswick clients. Keratin treatments are particularly popular with Brunswick regulars who find the summer humidity on Sydney Road tough on their hair.",
+      "landmarks": [
+        "Sydney Road shopping and café strip",
+        "Lygon Street Brunswick",
+        "Brunswick Baths",
+        "Capital City Trail cycling path"
+      ],
+      "services_offered": [
+        "colour-highlights",
+        "cut-style",
+        "keratin-blowout",
+        "balayage-ombre",
+        "hair-treatments"
+      ],
+      "benefits": [
+        "Easy tram access via Sydney Road routes",
+        "Accessible by bike via Capital City Trail",
+        "Full colour and keratin treatment menu",
+        "Consistent colourists who remember your history"
+      ],
+      "sections": [
+        {
+          "heading": "Getting here from Brunswick",
+          "body": "From Sydney Road Brunswick, catch the Route 19 tram heading south towards the city. Alight at Flemington Road and switch to the Route 96 along Smith Street heading north, or walk east via Elgin Street and north to Smith Street. Cycling is a popular option — the Capital City Trail connects Brunswick and Fitzroy North directly."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-brunswick-1",
+          "question": "Can I get to Studio Luma from Brunswick without a car?",
+          "answer": "Easily. The tram network connects Sydney Road Brunswick with Smith Street Fitzroy. The cycle route via Capital City Trail takes about 20 minutes. We also have bike racks outside."
+        },
+        {
+          "id": "faq-brunswick-2",
+          "question": "Do you offer keratin treatments for Brunswick clients?",
+          "answer": "Yes, and it's one of our most popular services for Brunswick regulars. Our Brazilian Blowout and traditional keratin options are both available — we'll recommend the right one at consultation."
+        }
+      ],
+      "seo": {
+        "title": "Hair Salon near Brunswick | Studio Luma Fitzroy",
+        "description": "Studio Luma on Smith St, Fitzroy serves Brunswick clients. Colour, cuts, keratin treatments and balayage. Easy tram access. Book your appointment now.",
+        "schema_org_type": "HairSalon"
+      }
+    },
+    {
+      "slug": "richmond",
+      "suburb": "Richmond",
+      "state": "VIC",
+      "headline": "Hair Salon near Richmond — Studio Luma Fitzroy",
+      "intro": "Richmond is directly south of Fitzroy. Our clients from Swan Street and Bridge Road reach Smith Street in 15 minutes by tram, bike or car via Johnston Street.",
+      "body": "Richmond is one of Melbourne's busiest inner-suburb corridors, and many of our Richmond clients combine a salon appointment with a visit to the Swan Street café strip or Bridge Road boutiques.\n\nWe see a lot of colour correction work from Richmond clients who've tried salons on Swan Street and want a more consistent result. Our colourists will be direct about what's achievable and how long it takes.",
+      "landmarks": [
+        "Swan Street café and restaurant strip",
+        "Bridge Road boutiques",
+        "Richmond station",
+        "Punt Road Oval"
+      ],
+      "services_offered": [
+        "colour-highlights",
+        "cut-style",
+        "balayage-ombre",
+        "extensions",
+        "hair-treatments"
+      ],
+      "benefits": [
+        "Direct tram route from Swan Street Richmond",
+        "Colour correction specialists on the team",
+        "Extension consultations available with same-week bookings",
+        "15-minute ride from Richmond station"
+      ],
+      "sections": [
+        {
+          "heading": "Getting here from Richmond",
+          "body": "From Swan Street, catch the Route 70 tram heading west and then connect to Smith Street heading north via the city, or take a direct Uber — it's about 10 minutes by car via Johnston Street. Richmond station is 15 minutes by tram via the CBD."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-richmond-1",
+          "question": "How long does it take to get to Studio Luma from Richmond?",
+          "answer": "By car via Johnston Street, it's around 10 minutes depending on traffic. By tram from Richmond station via the city, allow 20–25 minutes."
+        },
+        {
+          "id": "faq-richmond-2",
+          "question": "Do you do colour corrections for Richmond clients?",
+          "answer": "Yes. Colour corrections are a regular part of our work. We'll assess your hair at a free consultation, explain what's achievable and quote you before any work starts."
+        }
+      ],
+      "seo": {
+        "title": "Hair Salon near Richmond | Studio Luma Fitzroy",
+        "description": "Studio Luma on Smith St, Fitzroy serves Richmond clients. Hair colour, cuts, balayage and extensions. 10 minutes by car from Swan Street. Book now.",
+        "schema_org_type": "HairSalon"
+      }
+    },
+    {
+      "slug": "abbotsford",
+      "suburb": "Abbotsford",
+      "state": "VIC",
+      "headline": "Hair Salon near Abbotsford — Studio Luma Fitzroy",
+      "intro": "Abbotsford sits between Collingwood and Richmond, just minutes from Smith Street. Our Abbotsford clients typically walk, cycle or catch the 109 tram to get here.",
+      "body": "The Abbotsford Convent precinct and Victoria Street corridor bring a mix of creative professionals and young families to our area. Many Abbotsford clients prefer to walk across Victoria Park and come up Smith Street — it's a 15-minute walk.\n\nWe offer the full service menu for Abbotsford bookings. Extensions are popular with clients in Abbotsford who want to add length before summer.",
+      "landmarks": [
+        "Abbotsford Convent",
+        "Victoria Street Vietnamese restaurant strip",
+        "Collingwood Children's Farm (nearby)",
+        "Victoria Park"
+      ],
+      "services_offered": [
+        "colour-highlights",
+        "cut-style",
+        "balayage-ombre",
+        "extensions",
+        "hair-treatments",
+        "keratin-blowout"
+      ],
+      "benefits": [
+        "15-minute walk via Victoria Park",
+        "Accessible by tram on Victoria Street",
+        "Extensions popular with Abbotsford clients before summer",
+        "Welcoming to first-time salon visitors"
+      ],
+      "sections": [
+        {
+          "heading": "Getting here from Abbotsford",
+          "body": "From the Abbotsford Convent area, walk north through Victoria Park to Johnston Street and turn west to Smith Street — a 15-minute walk. From Victoria Street, catch the Route 109 tram one stop west to Smith Street and walk north."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-abbotsford-1",
+          "question": "Can I walk to Studio Luma from Abbotsford?",
+          "answer": "Yes — from central Abbotsford it's about a 15-minute walk north through Victoria Park, then west along Johnston Street and north up Smith Street."
+        },
+        {
+          "id": "faq-abbotsford-2",
+          "question": "Do you offer extension consultations?",
+          "answer": "Yes. We offer free extension consultations where we look at your current hair, discuss the method and length, and quote you. No commitment required. Ring ahead to book a consultation slot."
+        }
+      ],
+      "seo": {
+        "title": "Hair Salon near Abbotsford | Studio Luma Fitzroy",
+        "description": "Studio Luma on Smith St is a 15-minute walk from Abbotsford. Colour, cuts, extensions and treatments. Welcoming neighbourhood salon. Book now.",
+        "schema_org_type": "HairSalon"
+      }
+    },
+    {
+      "slug": "clifton-hill",
+      "suburb": "Clifton Hill",
+      "state": "VIC",
+      "headline": "Hair Salon near Clifton Hill — Studio Luma Fitzroy",
+      "intro": "Clifton Hill is a short tram ride from Smith Street along the Route 86. Our Clifton Hill clients enjoy a low-key trip into Fitzroy for salon appointments without going into the CBD.",
+      "body": "Clifton Hill has a tight-knit neighbourhood feel, and a lot of our clients from here have come through word of mouth from their neighbours. Queens Parade connects to Hoddle Street and down to Johnston Street, making the journey straightforward.\n\nWe see a mix of colour refresh appointments and cuts from Clifton Hill clients. Family bookings (parent and teenager) are common on Saturday mornings.",
+      "landmarks": [
+        "Queens Parade shopping strip",
+        "Clifton Hill station",
+        "Darling Gardens",
+        "Merri Creek Reserve"
+      ],
+      "services_offered": [
+        "colour-highlights",
+        "cut-style",
+        "balayage-ombre",
+        "hair-treatments"
+      ],
+      "benefits": [
+        "Direct tram via Route 86 from Clifton Hill to Fitzroy",
+        "Family bookings welcome on Saturday mornings",
+        "Colour refresh and maintenance appointments available",
+        "No CBD traffic or CBD parking costs"
+      ],
+      "sections": [
+        {
+          "heading": "Getting here from Clifton Hill",
+          "body": "The Route 86 tram runs south from Clifton Hill along Queens Parade and Hoddle Street, turning west into Smith Street at the Fitzroy junction. Alight near Johnston Street — we're on Smith Street, a 3-minute walk south from the tram stop. Total travel time from Clifton Hill is around 15 minutes."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-clifton-hill-1",
+          "question": "What tram goes from Clifton Hill to Studio Luma?",
+          "answer": "The Route 86 tram runs from Clifton Hill south along Queens Parade and Hoddle Street, connecting directly to Smith Street in Fitzroy. Alight near Johnston Street and walk south to number 88."
+        },
+        {
+          "id": "faq-clifton-hill-2",
+          "question": "Do you take family bookings?",
+          "answer": "Yes — we often see a parent and their child or teenager come in together on Saturday mornings. Just let us know when you book so we can allocate side-by-side chairs."
+        }
+      ],
+      "seo": {
+        "title": "Hair Salon near Clifton Hill | Studio Luma Fitzroy",
+        "description": "Studio Luma on Smith St, Fitzroy is a short tram ride from Clifton Hill on Route 86. Hair colour, cuts and balayage. Family bookings welcome. Book now.",
+        "schema_org_type": "HairSalon"
+      }
+    }
+  ],
+  "service_areas": [
+    {
+      "slug": "colour-highlights-fitzroy",
+      "service_slug": "colour-highlights",
+      "service_title": "Colour & Highlights",
+      "suburb": "Fitzroy",
+      "state": "VIC",
+      "headline": "Hair Colour & Highlights in Fitzroy",
+      "intro": "Looking for hair colour in Fitzroy? Studio Luma at 88 Smith St has been colouring Fitzroy hair since 2017.",
+      "body": "Fitzroy has a strong culture of supporting local businesses, and Studio Luma has been part of Smith Street since we opened. Our colour clients in Fitzroy range from first-time salon visitors wanting a simple tint, to regulars who've been booking quarterly colour refreshes for years.\n\nWe use L'Oréal Professionnel colour throughout and work from a detailed consultation before every colour appointment. Full colour services start from $180. Foil highlights start from $200 for a half-head and $260 for a full head. Colour corrections are quoted individually.\n\nFitzroy clients can walk to us, and parking on Gore Street or Napier Street is free in the evenings. We hold late appointments on Wednesdays and Thursdays specifically for clients who work in the city.",
+      "benefits": [
+        "Walk-in distance for most Fitzroy residents",
+        "Consistent colourists — book with the same person each time",
+        "L'Oréal Professionnel colour and developer",
+        "Evening slots available Wednesday and Thursday",
+        "Colour correction welcome with free initial consultation",
+        "Olaplex bond-builder available as an add-on"
+      ],
+      "sections": [
+        {
+          "heading": "What to expect from your colour appointment in Fitzroy",
+          "body": "When you arrive, your stylist will take you through a colour consultation — we look at your current colour, check your hair's condition, and discuss your target result. We'll show you reference images and confirm the colour plan before mixing anything.\n\nMost full-colour appointments run 2–2.5 hours. We'll send you a reminder the day before and call you if we're running more than 10 minutes behind. We don't overbook."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-colour-highlights-fitzroy-1",
+          "question": "Do you do same-week colour appointments in Fitzroy?",
+          "answer": "Often yes. We get cancellations regularly. The best way to get a same-week slot is to call directly on (03) 9417 2233 — we keep a short cancellation list."
+        },
+        {
+          "id": "faq-colour-highlights-fitzroy-2",
+          "question": "How much does hair colour cost at Studio Luma?",
+          "answer": "Full colour (root tint or single process) starts from $180. Half-head foils start from $200. Full-head foils start from $260. All services include a toner. Prices are confirmed at consultation for more complex work."
+        }
+      ],
+      "seo": {
+        "title": "Hair Colour & Highlights in Fitzroy | Studio Luma",
+        "description": "Expert hair colour and highlights in Fitzroy at Studio Luma, 88 Smith St. L'Oréal Professionnel colour from $180. Book same-week appointments. Call (03) 9417 2233.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "balayage-collingwood",
+      "service_slug": "balayage-ombre",
+      "service_title": "Balayage & Ombre",
+      "suburb": "Collingwood",
+      "state": "VIC",
+      "headline": "Balayage in Collingwood — Studio Luma Fitzroy",
+      "intro": "Collingwood clients wanting balayage or ombre come to Studio Luma on Smith Street — a 10-minute walk through the arts precinct.",
+      "body": "Balayage has been our most-requested colour technique for three years running, and a large proportion of those requests come from Collingwood. The hand-painted technique suits the area's relaxed, creative aesthetic — a result that looks intentional without looking overdone.\n\nFor Collingwood clients, the walk to our Smith Street salon passes the Collingwood Yards, making it easy to combine a salon appointment with a browse through the gallery precinct. We also hold Wednesday evening slots that suit Collingwood clients coming from the arts sector.\n\nBalayage prices start from $220 and vary based on your hair length and base colour. We'll quote accurately at your consultation, which takes about 15 minutes before we start.",
+      "benefits": [
+        "10-minute walk from central Collingwood",
+        "Low-maintenance result — grows out without obvious regrowth",
+        "Hand-painted for a natural, editorial finish",
+        "Warm and cool tones available — we match to your skin tone",
+        "Evening bookings on Wednesdays for after-work appointments",
+        "Free 15-minute consultation included"
+      ],
+      "sections": [
+        {
+          "heading": "Balayage for Collingwood's creative crowd",
+          "body": "We see a lot of Collingwood clients who work in the creative industries — graphic designers, architects, gallery staff and freelancers who want a colour that looks considered but doesn't need weekly maintenance. Balayage is the natural fit: the result looks fresh at four weeks and still looks intentional at twelve."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-balayage-collingwood-1",
+          "question": "Can I walk to Studio Luma from Collingwood for balayage?",
+          "answer": "Yes — it's about a 10-minute walk from central Collingwood via Johnston Street. We're at 88 Smith St, Fitzroy, on the east side of the street."
+        },
+        {
+          "id": "faq-balayage-collingwood-2",
+          "question": "How much does balayage cost for Collingwood clients?",
+          "answer": "Balayage starts from $220. The final price depends on your hair length and how many passes we need to achieve the result. We'll quote at consultation before starting."
+        }
+      ],
+      "seo": {
+        "title": "Balayage near Collingwood | Studio Luma Fitzroy",
+        "description": "Hand-painted balayage for Collingwood clients at Studio Luma, Smith St Fitzroy. Natural sun-kissed colour from $220. Walk from the Collingwood Yards. Book now.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "cut-style-carlton",
+      "service_slug": "cut-style",
+      "service_title": "Cut & Style",
+      "suburb": "Carlton",
+      "state": "VIC",
+      "headline": "Haircuts near Carlton — Studio Luma Fitzroy",
+      "intro": "Carlton clients wanting a quality haircut without a big-chain experience come to Studio Luma on Smith Street, Fitzroy — 15 minutes by tram from Lygon Street.",
+      "body": "Carlton's Lygon Street has plenty of salons, but clients looking for a local, relationship-based experience often make the short trip to Fitzroy. Studio Luma's cut team works with all hair types — straight, curly, wavy, fine and thick — and we spend real time on the consultation so the cut works with your natural growth pattern.\n\nCuts start from $85 including wash and blow-dry. We cut all lengths: short pixies, textured bobs, long layers, and single-length cuts. Fringe trims for existing clients are free between full appointments.\n\nSaturday mornings are popular with Carlton clients — book a few days ahead if you're flexible on time, or call to check for cancellations mid-week.",
+      "benefits": [
+        "15-minute tram ride from Lygon Street Carlton",
+        "All hair types and lengths — straight, curly, wavy",
+        "Cuts from $85 including wash and blow-dry",
+        "Free fringe trims for existing clients",
+        "Saturday morning slots popular with Carlton locals",
+        "No hidden charges — price confirmed before scissors come out"
+      ],
+      "sections": [
+        {
+          "heading": "Why Carlton clients choose Studio Luma",
+          "body": "We hear regularly from Carlton clients that they prefer a neighbourhood salon where the stylists remember their name and their hair history. Studio Luma is small enough that it works that way. Our team of five stylists keeps things personal, and the majority of our Carlton clients book with the same person every time."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-cut-style-carlton-1",
+          "question": "How do I get to Studio Luma from Carlton for a haircut?",
+          "answer": "The Route 96 tram runs along Smith Street and is accessible from Melbourne CBD, which connects to Carlton via Swanston Street. The walk from central Carlton takes about 15 minutes south via Rathdowne Street and through Carlton North."
+        },
+        {
+          "id": "faq-cut-style-carlton-2",
+          "question": "How much does a haircut cost at Studio Luma for Carlton clients?",
+          "answer": "Cuts and blow-dry start from $85. We'll confirm the price at your consultation based on your hair's length and the style you're after. No surprises."
+        }
+      ],
+      "seo": {
+        "title": "Haircuts near Carlton | Studio Luma Smith St Fitzroy",
+        "description": "Quality haircuts for Carlton clients at Studio Luma on Smith St, Fitzroy. Cut and blow-dry from $85. Easy tram access via Route 96. Saturday mornings available. Book now.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "keratin-northcote",
+      "service_slug": "keratin-blowout",
+      "service_title": "Brazilian Blowout & Keratin",
+      "suburb": "Northcote",
+      "state": "VIC",
+      "headline": "Keratin Treatment near Northcote — Studio Luma Fitzroy",
+      "intro": "Northcote clients wanting a keratin treatment or Brazilian Blowout reach Studio Luma in under 15 minutes on the Route 86 tram.",
+      "body": "Northcote summers are humid enough that keratin treatments have become one of our most popular services for clients from the suburb. High Street has a number of nail and beauty spots, but for professional keratin work, Northcote clients consistently come to Smith Street.\n\nWe offer both the Brazilian Blowout (gentler, 2 hours, can be combined with colour) and traditional keratin smoothing (stronger result, 2.5–3 hours, requires 72-hour pre-wash wait). Both use formaldehyde-free formulas.\n\nPrices start from $290. The final price depends on your hair's length and the thickness of the treatment needed. We'll confirm at your free 15-minute consultation.",
+      "benefits": [
+        "Direct tram connection from High Street Northcote",
+        "Formaldehyde-free keratin formulas only",
+        "Brazilian Blowout can be combined with colour in one visit",
+        "Results last 3–4 months with sulphate-free home care",
+        "Aftercare kit available to purchase at the salon",
+        "Evening appointments available for Northcote weekday clients"
+      ],
+      "sections": [
+        {
+          "heading": "Which keratin option suits Northcote hair?",
+          "body": "For clients on the humid strip of High Street who primarily want to speed up their blow-dry and reduce frizz, the Brazilian Blowout is usually the right call. It's faster, more flexible (you can wash your hair the same day after the service), and can be stacked with a colour in one appointment.\n\nIf you want maximum smoothing and can handle the 72-hour pre-wash wait, traditional keratin gives a stronger result that lasts 3–4 months. We'll talk through both options at your consultation."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-keratin-northcote-1",
+          "question": "How do I get to Studio Luma from Northcote for a keratin treatment?",
+          "answer": "Catch the Route 86 tram south from High Street, Northcote towards the city. The tram connects to Smith Street in Fitzroy — alight near Johnston Street and walk south to number 88. Total travel time is about 15 minutes."
+        },
+        {
+          "id": "faq-keratin-northcote-2",
+          "question": "Can I colour my hair and get a keratin treatment on the same day?",
+          "answer": "Yes for Brazilian Blowout — we do colour first, then the blowout treatment. For traditional keratin, we recommend spacing colour and the keratin treatment by at least one week."
+        }
+      ],
+      "seo": {
+        "title": "Keratin Treatment near Northcote | Studio Luma Fitzroy",
+        "description": "Professional keratin treatments for Northcote clients at Studio Luma, Smith St Fitzroy. Brazilian Blowout from $290. Formaldehyde-free. Book via (03) 9417 2233.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "extensions-richmond",
+      "service_slug": "extensions",
+      "service_title": "Hair Extensions",
+      "suburb": "Richmond",
+      "state": "VIC",
+      "headline": "Hair Extensions near Richmond — Studio Luma Fitzroy",
+      "intro": "Richmond clients wanting tape-in or hand-tied hair extensions come to Studio Luma on Smith Street, Fitzroy — a 10-minute drive or 20 minutes by tram.",
+      "body": "Richmond has a strong fashion and lifestyle culture on Swan Street and Bridge Road, and extensions are a regular topic for clients heading to events or wanting to change their look for summer. Studio Luma's extension team works exclusively with 100% human hair, colour-matched at consultation.\n\nWe offer tape-in extensions (from $350 for a standard set) and hand-tied wefts (from $580). Clip-in sets are available for purchase if you want to try extensions before committing to a semi-permanent method.\n\nExtension appointments include a colour-match consultation, application, and a blow-dry finish. Maintenance appointments (re-taping) take 45 minutes–1 hour and are recommended every 6–8 weeks as your natural hair grows.",
+      "benefits": [
+        "100% human hair colour-matched at consultation",
+        "Tape-in and hand-tied weft options available",
+        "Maintenance appointments every 6–8 weeks",
+        "Extensions reusable for multiple application cycles",
+        "10-minute drive from Swan Street Richmond",
+        "Free initial consultation for extension clients"
+      ],
+      "sections": [
+        {
+          "heading": "Extensions for Richmond event season",
+          "body": "We see a significant rise in extension bookings from Richmond clients ahead of Melbourne Cup, weddings, and the summer social season. If you're planning extensions for an event, book a consultation at least 6 weeks out so we can assess your hair, order the right pieces, and schedule the application appointment at the right time before your event."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-extensions-richmond-1",
+          "question": "How do I book a hair extension consultation in Richmond?",
+          "answer": "Call us on (03) 9417 2233 or email hello@studioluma.com.au to book a free 30-minute extension consultation. We'll look at your hair, discuss the method and length, and quote you. No commitment required at the consultation."
+        },
+        {
+          "id": "faq-extensions-richmond-2",
+          "question": "How much do tape-in extensions cost for Richmond clients?",
+          "answer": "Tape-in extensions start from $350 for a standard 20-piece set in shorter hair. Longer hair or a fuller set can run $450–$650. We confirm the exact price at consultation based on your hair length and the number of pieces needed."
+        }
+      ],
+      "seo": {
+        "title": "Hair Extensions near Richmond | Studio Luma Fitzroy",
+        "description": "Tape-in and hand-tied hair extensions for Richmond clients at Studio Luma, Smith St Fitzroy. From $350. 100% human hair, colour-matched. Book a free consultation.",
+        "schema_org_type": "Service"
+      }
+    }
+  ],
+  "faq": {
+    "heading": "Frequently asked questions",
+    "intro": "Common questions about booking, pricing and services at Studio Luma.",
+    "items": [
+      {
+        "id": "faq-site-1",
+        "question": "Where is Studio Luma?",
+        "answer": "We're at 88 Smith Street, Fitzroy VIC 3065. We're between Johnston Street and Gertrude Street on the east side of Smith Street."
+      },
+      {
+        "id": "faq-site-2",
+        "question": "How do I book an appointment?",
+        "answer": "Call us on (03) 9417 2233 or email hello@studioluma.com.au. We're working on online booking — in the meantime, phone is the fastest way to get a slot."
+      },
+      {
+        "id": "faq-site-3",
+        "question": "What are your opening hours?",
+        "answer": "We're open Wednesday through Friday from 10am–7pm, Saturday 9am–5pm, and Sunday 10am–4pm. We're closed on Mondays and Tuesdays."
+      },
+      {
+        "id": "faq-site-4",
+        "question": "Do you take walk-ins?",
+        "answer": "We occasionally take walk-ins for cuts if a stylist has a gap, but we can't guarantee availability. For colour and treatment services, we always recommend booking ahead as these take 2–4 hours."
+      },
+      {
+        "id": "faq-site-5",
+        "question": "What products do you use?",
+        "answer": "We use L'Oréal Professionnel for colour and colour services, and Olaplex for bond-building treatments. We also stock Kevin.Murphy and Kerastase retail products."
+      },
+      {
+        "id": "faq-site-6",
+        "question": "What is your cancellation policy?",
+        "answer": "We ask for 24 hours notice for cancellations. Late cancellations or no-shows on colour and treatment appointments may incur a fee as these hold large time slots. Just call us if something comes up — we're reasonable."
+      },
+      {
+        "id": "faq-site-7",
+        "question": "Do you cater to curly or textured hair?",
+        "answer": "Yes. Two of our stylists specialise in curly and wavy hair, including curly cuts done dry to follow the natural curl pattern. Mention it when you book so we match you with the right stylist."
+      },
+      {
+        "id": "faq-site-8",
+        "question": "Is there parking near the salon?",
+        "answer": "Street parking on Smith Street itself is metered during business hours. Side streets like Gore Street and Napier Street have free parking after 6pm on weekdays and all day on weekends."
+      }
+    ],
+    "seo": {
+      "title": "FAQ | Studio Luma Hair Salon Fitzroy",
+      "description": "Common questions about booking, pricing, products and services at Studio Luma on Smith Street, Fitzroy."
+    }
+  },
+  "about": {
+    "heading": "About Studio Luma",
+    "body": "Studio Luma opened on Smith Street, Fitzroy in 2017. We started as a two-chair salon with a clear idea: be the reliable neighbourhood salon that Fitzroy didn't have.\n\nSeven years later we're a five-chair team covering colour, cuts, treatments and extensions. Our clients range from long-term Fitzroy residents who've been booking with the same stylist since we opened, to people who moved to inner Melbourne recently and found us through a friend's recommendation.\n\nWe use L'Oréal Professionnel colour and Olaplex throughout, and we keep our service menu focused so we do a smaller range of things very well rather than trying to cover everything. Consultations are included in every service — we don't start until you're happy with the plan.\n\nSmith Street has changed a lot since 2017, but the way we run the salon hasn't.",
+    "photo_url": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80",
+    "years_in_business": 7,
+    "licence": "HBIA Victoria Member",
+    "values": [
+      {
+        "id": "v1",
+        "title": "Consultation first",
+        "body": "Every service starts with a consultation. We don't pick up scissors or mix colour until we know exactly what you want and you've agreed to the plan.",
+        "icon": "MessageCircle"
+      },
+      {
+        "id": "v2",
+        "title": "Honest pricing",
+        "body": "We quote before we start and we stick to it. If a service turns out to be more complex, we tell you before proceeding, not after.",
+        "icon": "DollarSign"
+      },
+      {
+        "id": "v3",
+        "title": "Consistent quality",
+        "body": "Our clients book with the same stylist every time because consistency matters in colour and cuts. We don't rotate clients around the team without reason.",
+        "icon": "Star"
+      }
+    ],
+    "seo": {
+      "title": "About Studio Luma | Hair Salon Fitzroy",
+      "description": "Studio Luma has been Fitzroy's neighbourhood hair salon since 2017. Five stylists, honest pricing, L'Oréal Professionnel and Olaplex. 88 Smith Street, Fitzroy."
+    }
+  }
+}

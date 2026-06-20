@@ -1,0 +1,1057 @@
+{
+  "business": {
+    "name": "Restore Physio",
+    "tagline": "Registered physiotherapists serving the North Shore",
+    "phone": "(02) 9410 5678",
+    "email": "hello@restorephysio.com.au",
+    "suburb": "Chatswood",
+    "state": "NSW",
+    "address": "Suite 4, 12 Victor St, Chatswood NSW 2067",
+    "abn": "51 234 567 890"
+  },
+  "branding": {
+    "primary_color": "#0f5f6e",
+    "secondary_color": "#073a42",
+    "accent_color": "#f59e0b",
+    "logo_url": "",
+    "hero_image_url": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80",
+    "font_heading": "Inter"
+  },
+  "seo": {
+    "title": "Restore Physio | Registered Physiotherapists in Chatswood & North Shore",
+    "description": "Evidence-based physiotherapy in Chatswood, NSW. Sports injury rehab, back and neck pain, post-surgical rehab, workplace injury and dry needling. Same-day appointments often available.",
+    "schema_org_type": "MedicalBusiness"
+  },
+  "home": {
+    "hero": {
+      "headline": "Pain holding you back? Evidence-based physio, same day.",
+      "subheadline": "Registered physiotherapists in Chatswood helping patients across the North Shore manage pain, recover from injury and get back to doing what they enjoy. Upfront fees, no GP referral required.",
+      "cta_primary": { "label": "Book an appointment", "href": "tel:+61294105678" },
+      "cta_secondary": { "label": "Our treatments", "href": "#services" }
+    },
+    "services": [
+      {
+        "id": "h-sports",
+        "slug": "sports-injury-rehabilitation",
+        "title": "Sports Injury Rehabilitation",
+        "description": "Assessment and rehabilitation for acute sports injuries, muscle tears, ligament sprains and return-to-sport programs.",
+        "icon": "Activity",
+        "starting_price": "From $120"
+      },
+      {
+        "id": "h-back",
+        "slug": "back-neck-pain",
+        "title": "Back & Neck Pain",
+        "description": "Evidence-based treatment for acute and chronic back pain, neck stiffness, sciatica and disc-related conditions.",
+        "icon": "PersonStanding",
+        "starting_price": "From $120"
+      },
+      {
+        "id": "h-surgical",
+        "slug": "post-surgical-rehabilitation",
+        "title": "Post-Surgical Rehabilitation",
+        "description": "Structured rehabilitation programs following joint replacement, ligament reconstruction and spinal surgery.",
+        "icon": "HeartPulse",
+        "starting_price": "From $120"
+      },
+      {
+        "id": "h-workplace",
+        "slug": "workplace-injury",
+        "title": "Workplace Injury (Workers Comp)",
+        "description": "Approved provider for icare and workers compensation claims. Workplace injury assessment, treatment and return-to-work support.",
+        "icon": "Briefcase",
+        "starting_price": "From $145"
+      },
+      {
+        "id": "h-needling",
+        "slug": "dry-needling-manual-therapy",
+        "title": "Dry Needling & Manual Therapy",
+        "description": "Hands-on manual therapy and dry needling to help manage pain and improve joint and soft-tissue mobility.",
+        "icon": "Syringe",
+        "starting_price": "From $130"
+      },
+      {
+        "id": "h-hydro",
+        "slug": "hydrotherapy",
+        "title": "Hydrotherapy",
+        "description": "Supervised aquatic physiotherapy for arthritis, post-surgical recovery and chronic pain management.",
+        "icon": "Waves",
+        "starting_price": "From $95"
+      }
+    ],
+    "about": {
+      "heading": "Registered physiotherapists focused on you",
+      "body": "Restore Physio has been providing evidence-based physiotherapy to patients on the North Shore for 9 years. Our team of registered physiotherapists hold current AHPRA registration and undertake ongoing professional development to stay current with best-practice guidelines.\n\nWe take time to understand your history, work and activity goals before developing a treatment plan. We work with private health funds, icare, DVA and Medicare chronic disease management plans.",
+      "photo_url": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80",
+      "years_in_business": 9,
+      "licence": "AHPRA Reg. PHY0001234567 (example placeholder)"
+    },
+    "service_area": {
+      "heading": "Serving the North Shore and surrounds",
+      "intro": "Our Chatswood clinic is well-placed for patients from across the North Shore. If your suburb is not listed, give us a call.",
+      "suburbs": [
+        "Chatswood",
+        "North Sydney",
+        "St Leonards",
+        "Lane Cove",
+        "Willoughby",
+        "Artarmon",
+        "Crows Nest",
+        "Neutral Bay",
+        "Cremorne",
+        "Mosman"
+      ]
+    },
+    "gallery": [
+      {
+        "id": "g1",
+        "image_url": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80",
+        "caption": "Treatment room, Chatswood clinic"
+      },
+      {
+        "id": "g2",
+        "image_url": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=80",
+        "caption": "Sports rehabilitation exercises"
+      },
+      {
+        "id": "g3",
+        "image_url": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=900&q=80",
+        "caption": "Manual therapy assessment"
+      },
+      {
+        "id": "g4",
+        "image_url": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?auto=format&fit=crop&w=900&q=80",
+        "caption": "Exercise rehabilitation program"
+      }
+    ],
+    "testimonials": [
+      {
+        "id": "t1",
+        "quote": "The team at Restore Physio are thorough and professional. They explained every step of the assessment and made sure I understood the treatment plan before we started.",
+        "author": "Michael R.",
+        "location": "Chatswood",
+        "rating": 5
+      },
+      {
+        "id": "t2",
+        "quote": "Easy to book, on time for appointments, and the reception staff are friendly. The whole clinic runs smoothly.",
+        "author": "Sarah K.",
+        "location": "Willoughby",
+        "rating": 5
+      },
+      {
+        "id": "t3",
+        "quote": "My physio took the time to go through my scan results and explain what they meant. I appreciated not being rushed.",
+        "author": "James L.",
+        "location": "Artarmon",
+        "rating": 5
+      }
+    ],
+    "social_proof": {
+      "heading": "Why patients choose Restore Physio",
+      "items": [
+        { "id": "sp1", "value": "AHPRA-registered physiotherapists", "icon": "BadgeCheck" },
+        { "id": "sp2", "value": "4.9 from 380+ patient reviews", "icon": "Star" },
+        { "id": "sp3", "value": "Same-day appointments available", "icon": "Clock" },
+        { "id": "sp4", "value": "Private health fund recognised", "icon": "ShieldCheck" }
+      ]
+    },
+    "offer": {
+      "headline": "New patient initial consultation",
+      "description": "A thorough 60-minute initial assessment covering your history, movement, and a clear treatment plan. No GP referral required.",
+      "price": "$120",
+      "cta": { "label": "Book initial consultation", "href": "tel:+61294105678" }
+    },
+    "contact": {
+      "heading": "Book an appointment",
+      "phone": "(02) 9410 5678",
+      "email": "hello@restorephysio.com.au",
+      "address": "Suite 4, 12 Victor St, Chatswood NSW 2067",
+      "hours": [
+        { "label": "Monday – Friday", "value": "7:30am – 7:00pm" },
+        { "label": "Saturday", "value": "8:00am – 2:00pm" },
+        { "label": "Sunday", "value": "Closed" }
+      ],
+      "cta": { "label": "Call to book", "href": "tel:+61294105678" }
+    }
+  },
+  "services": [
+    {
+      "slug": "sports-injury-rehabilitation",
+      "title": "Sports Injury Rehabilitation",
+      "summary": "Assessment, treatment and return-to-sport programs for acute and chronic sports injuries across all activity levels.",
+      "icon": "Activity",
+      "starting_price": "From $120",
+      "hero_image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Sports injuries range from acute muscle strains and ligament sprains to chronic overuse conditions that develop over time. At Restore Physio, our registered physiotherapists conduct a thorough assessment to identify the nature and extent of your injury before developing an individualised treatment plan.\n\nWe work with recreational and competitive athletes across the North Shore, tailoring rehabilitation programs to your specific sport, position, training load and return-to-sport goals. Treatment may include manual therapy, exercise prescription, taping and load management strategies.",
+      "benefits": [
+        "Thorough initial assessment covering movement, strength and load tolerance",
+        "Treatment plans aligned with your return-to-sport timeline",
+        "Exercise programs you can continue between sessions",
+        "Injury prevention strategies to support ongoing participation",
+        "Liaison with coaches and trainers where appropriate",
+        "Private health fund rebates available on the spot"
+      ],
+      "sections": [
+        {
+          "heading": "Common conditions we treat",
+          "body": "Our physiotherapists regularly assess and treat: ankle sprains and ligament injuries, hamstring and quadriceps strains, shoulder rotator cuff injuries, ACL and knee ligament sprains, Achilles tendinopathy, patellofemoral pain, stress fractures and bone stress reactions, shoulder impingement and bursitis, and wrist and hand injuries from racquet sports and contact sports."
+        },
+        {
+          "heading": "Return-to-sport planning",
+          "body": "A structured return-to-sport plan sets out the criteria you need to meet at each stage before progressing. This helps manage your risk of re-injury and gives you clear targets to work toward. We can collaborate with your club physio, GP or specialist to ensure a coordinated approach."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-sports-injury-1",
+          "question": "Do I need a referral to see a physiotherapist for a sports injury?",
+          "answer": "No GP referral is required to book an appointment. You can contact us directly. If you are claiming through a Medicare chronic disease management plan or a workers compensation insurer, a referral from your GP will be needed."
+        },
+        {
+          "id": "faq-sports-injury-2",
+          "question": "Can I claim sports physio on private health insurance?",
+          "answer": "Yes, most private health funds with extras cover include physiotherapy. Rebates vary by fund and policy level. We have HICAPS on site so you can claim on the spot and pay only the gap."
+        },
+        {
+          "id": "faq-sports-injury-3",
+          "question": "How long does a sports injury rehabilitation program take?",
+          "answer": "This depends on the type and severity of the injury, your activity goals, and how your body responds to treatment. Some acute injuries resolve in a few weeks; complex ligament or post-surgical rehabilitation may take several months. Your physiotherapist will outline a realistic timeframe at your initial assessment."
+        }
+      ],
+      "seo": {
+        "title": "Sports Injury Rehabilitation | Restore Physio Chatswood",
+        "description": "Sports injury assessment and rehabilitation in Chatswood, NSW. Registered physiotherapists treating strains, sprains, overuse injuries and return-to-sport programs across the North Shore."
+      }
+    },
+    {
+      "slug": "back-neck-pain",
+      "title": "Back & Neck Pain",
+      "summary": "Evidence-based physiotherapy for acute and chronic back pain, neck stiffness, sciatica and disc-related conditions.",
+      "icon": "PersonStanding",
+      "starting_price": "From $120",
+      "hero_image": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Back and neck pain affects most people at some point, and for some it becomes a persistent problem that interferes with work, sleep and daily activities. Physiotherapy can help you understand what is driving your pain and provide evidence-based strategies to manage it.\n\nOur physiotherapists assess your movement, strength, posture and lifestyle factors before developing a treatment plan. This may include manual therapy, targeted exercise, education about pain and load management, and workplace ergonomics advice.",
+      "benefits": [
+        "Thorough assessment of movement, posture and contributing factors",
+        "Manual therapy to improve joint mobility and reduce muscle tension",
+        "Targeted exercise programs to build strength and support recovery",
+        "Education about your condition in plain language",
+        "Workplace ergonomics review for desk-related pain",
+        "Coordination with your GP or specialist if imaging is needed"
+      ],
+      "sections": [
+        {
+          "heading": "Conditions we commonly assess and treat",
+          "body": "Our physiotherapists work with patients experiencing: acute lower back pain and lumbar disc conditions, chronic lower back pain, neck pain and stiffness, cervicogenic headaches, sciatica and referred leg pain, thoracic pain and mid-back stiffness, postural pain from desk work, whiplash from motor vehicle accidents, and spondylosis and facet joint conditions."
+        },
+        {
+          "heading": "What to expect at your first appointment",
+          "body": "Your initial consultation is 60 minutes. We will take a detailed history of your symptoms, conduct a physical assessment and explain what we found. You will leave with a clear understanding of your condition and an agreed treatment plan, including how many sessions are likely to be needed and what you can do between appointments to support your progress."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-back-neck-1",
+          "question": "Should I rest or keep moving when I have back pain?",
+          "answer": "For most people, staying as active as comfort allows produces better outcomes than bed rest. Your physiotherapist will advise on appropriate activity levels, safe movements and any activities to avoid in the short term based on your assessment findings."
+        },
+        {
+          "id": "faq-back-neck-2",
+          "question": "Do I need an MRI or X-ray before seeing a physiotherapist?",
+          "answer": "Not usually. Most back and neck conditions can be assessed clinically. Your physiotherapist will advise if imaging is likely to change the management approach. If imaging is needed, we can liaise with your GP."
+        }
+      ],
+      "seo": {
+        "title": "Back & Neck Pain Physiotherapy | Restore Physio Chatswood",
+        "description": "Evidence-based physio for back pain, neck pain, sciatica and disc conditions in Chatswood and the North Shore. Registered physiotherapists, same-day appointments often available."
+      }
+    },
+    {
+      "slug": "post-surgical-rehabilitation",
+      "title": "Post-Surgical Rehabilitation",
+      "summary": "Structured physiotherapy programs following joint replacement, ligament reconstruction and spinal surgery.",
+      "icon": "HeartPulse",
+      "starting_price": "From $120",
+      "hero_image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Post-surgical rehabilitation is a structured, progressive process that helps you regain movement, strength and function after an operation. The right physiotherapy program, started at the right time, is a key part of achieving a good surgical outcome.\n\nOur physiotherapists work closely with surgeons and specialists across the North Shore to provide rehabilitation that follows evidence-based protocols and aligns with your surgeon's post-operative guidelines.",
+      "benefits": [
+        "Protocols aligned with your surgeon's post-operative guidelines",
+        "Progressive rehabilitation from early mobility to full function",
+        "Strengthening and neuromuscular control exercises",
+        "Scar tissue and swelling management",
+        "Clear milestones and progress tracking",
+        "Return-to-work and return-to-sport planning"
+      ],
+      "sections": [
+        {
+          "heading": "Surgeries we commonly support",
+          "body": "We provide post-surgical physiotherapy following: total knee replacement, total hip replacement, ACL reconstruction and other knee ligament surgeries, rotator cuff repair, shoulder stabilisation procedures, spinal discectomy and fusion, ankle ligament reconstruction, carpal tunnel release, and elbow and wrist procedures."
+        },
+        {
+          "heading": "Working alongside your surgical team",
+          "body": "We are happy to contact your surgeon or specialist directly to clarify post-operative instructions and ensure our program aligns with their expectations. If you have a surgical report or discharge summary, please bring it to your first appointment or send it ahead of time."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-post-surgical-1",
+          "question": "When should I start physiotherapy after surgery?",
+          "answer": "Timing depends on the procedure. Some surgeries benefit from physiotherapy within days; others require a period of protected weight-bearing or rest first. Your surgeon will advise on the appropriate start time, and we can coordinate directly with their rooms if needed."
+        },
+        {
+          "id": "faq-post-surgical-2",
+          "question": "Can I claim post-surgical physio on Medicare?",
+          "answer": "Medicare does not typically rebate standard physiotherapy consultations. However, if your GP has set up a chronic disease management plan, you may be eligible for a limited number of subsidised sessions. Private health insurance extras cover usually applies."
+        }
+      ],
+      "seo": {
+        "title": "Post-Surgical Rehabilitation | Restore Physio Chatswood North Shore",
+        "description": "Post-surgical physiotherapy in Chatswood, NSW. Structured rehab programs following knee replacement, ACL reconstruction, shoulder surgery and more. Registered physiotherapists."
+      }
+    },
+    {
+      "slug": "workplace-injury",
+      "title": "Workplace Injury (Workers Comp)",
+      "summary": "Approved provider for icare NSW workers compensation claims. Workplace injury assessment, treatment and return-to-work support.",
+      "icon": "Briefcase",
+      "starting_price": "From $145",
+      "hero_image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Workplace injuries can affect your ability to do your job and your quality of life outside work. As an approved icare provider, Restore Physio can treat NSW workers compensation patients without an upfront cost to you — the claim covers the consultation fee.\n\nOur physiotherapists are experienced in workplace injury management and understand the documentation and reporting requirements of the workers compensation system. We work collaboratively with your employer, insurer and treating GP to support your recovery and a safe return to work.",
+      "benefits": [
+        "Approved icare NSW workers compensation provider",
+        "No out-of-pocket cost for eligible claims",
+        "Experienced in workplace injury documentation and reporting",
+        "Return-to-work planning in consultation with your employer",
+        "Functional capacity assessment where required",
+        "Coordination with treating GP and specialists"
+      ],
+      "sections": [
+        {
+          "heading": "How to access treatment under workers compensation",
+          "body": "If you have been injured at work in NSW, you need to: report the injury to your employer, obtain a WorkCover certificate from your GP (also called a workers compensation medical certificate), and contact your employer's insurer or icare to lodge a claim. Once your claim number is confirmed, contact us and we can schedule your appointment without any upfront payment from you."
+        },
+        {
+          "heading": "Common workplace injuries we treat",
+          "body": "We regularly treat: back injuries from manual handling and lifting, shoulder injuries from repetitive overhead work, repetitive strain injuries and tendinopathies, neck pain from computer-based work, wrist and hand injuries, knee injuries from kneeling and stair work, and psychological injuries where physiotherapy is part of an approved treatment plan."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-workplace-injury-1",
+          "question": "Do I need my employer's approval to see a physio for a work injury?",
+          "answer": "You do not need your employer's approval to receive initial treatment. Under NSW workers compensation law, you are entitled to access approved treatment. You will need a valid WorkCover medical certificate from your GP and a claim number from the insurer."
+        },
+        {
+          "id": "faq-workplace-injury-2",
+          "question": "What is a functional capacity evaluation and when is it needed?",
+          "answer": "A functional capacity evaluation (FCE) is a structured assessment of your physical work capacity. It is sometimes requested by insurers or employers to help plan a return-to-work program. Our physiotherapists are experienced in conducting FCEs and providing written reports."
+        }
+      ],
+      "seo": {
+        "title": "Workers Compensation Physiotherapy | Restore Physio Chatswood",
+        "description": "Approved icare workers compensation physio in Chatswood, NSW. Workplace injury treatment, functional capacity assessments and return-to-work support for North Shore patients."
+      }
+    },
+    {
+      "slug": "dry-needling-manual-therapy",
+      "title": "Dry Needling & Manual Therapy",
+      "summary": "Hands-on physiotherapy including dry needling, joint mobilisation and soft-tissue techniques to help manage pain and improve mobility.",
+      "icon": "Syringe",
+      "starting_price": "From $130",
+      "hero_image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Manual therapy and dry needling are hands-on techniques used as part of a broader physiotherapy treatment plan. They are not standalone treatments but can be effective adjuncts to exercise and education when used appropriately.\n\nOur physiotherapists are trained in a range of manual therapy techniques including joint mobilisation, manipulation, soft-tissue therapy, and dry needling. The specific techniques used depend on your assessment findings and your comfort with each approach.",
+      "benefits": [
+        "Dry needling for muscle trigger points and myofascial pain",
+        "Joint mobilisation and manipulation for stiff or painful joints",
+        "Soft-tissue and myofascial release techniques",
+        "Techniques chosen based on your assessment, not a one-size approach",
+        "Combined with exercise to support lasting change",
+        "Full explanation and consent before any technique is used"
+      ],
+      "sections": [
+        {
+          "heading": "What is dry needling?",
+          "body": "Dry needling involves inserting fine acupuncture-style needles into muscle trigger points. The aim is to reduce local muscle tension and pain sensitivity. It is different from traditional acupuncture in that it is based on anatomical and neurophysiological principles rather than traditional Chinese medicine theory. Some people experience a mild twitch or ache during needling, which is normal."
+        },
+        {
+          "heading": "Conditions where manual therapy may help",
+          "body": "Manual therapy approaches are used as part of treatment for: neck pain and stiffness, lower back pain, shoulder pain and restricted movement, headaches with a cervical component, hip and knee stiffness, ankle and foot conditions, and thoracic pain. Your physiotherapist will discuss whether these techniques are appropriate for your specific presentation."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-dry-needling-1",
+          "question": "Is dry needling the same as acupuncture?",
+          "answer": "Dry needling uses similar fine needles to acupuncture but is applied according to musculoskeletal anatomy and neurophysiology rather than traditional acupuncture meridian theory. Physiotherapists who perform dry needling have completed specific training in this technique."
+        },
+        {
+          "id": "faq-dry-needling-2",
+          "question": "Does dry needling hurt?",
+          "answer": "Most people feel minimal discomfort during dry needling. You may feel a brief twitch response in the muscle, which is a normal part of the technique. Some local soreness after the session can occur and usually settles within a day or two."
+        }
+      ],
+      "seo": {
+        "title": "Dry Needling & Manual Therapy | Restore Physio Chatswood",
+        "description": "Dry needling and manual therapy physiotherapy in Chatswood, North Shore NSW. Registered physiotherapists trained in joint mobilisation, soft-tissue techniques and dry needling."
+      }
+    },
+    {
+      "slug": "hydrotherapy",
+      "title": "Hydrotherapy",
+      "summary": "Supervised aquatic physiotherapy for arthritis, post-surgical recovery, chronic pain and conditions where land-based exercise is limited.",
+      "icon": "Waves",
+      "starting_price": "From $95",
+      "hero_image": "https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Hydrotherapy uses the properties of warm water to support movement and exercise that may be difficult on land. Buoyancy reduces load on joints, while the resistance and warmth of the water can help with pain management, strength and range of motion.\n\nOur physiotherapist-supervised hydrotherapy programs are conducted at a local heated pool facility near Chatswood. Programs are individually designed and progressed based on your goals.",
+      "benefits": [
+        "Reduced joint load — suitable when land-based exercise is limited",
+        "Warm-water environment to support movement and reduce stiffness",
+        "Individually designed exercise programs",
+        "Suitable for arthritis, post-surgical recovery and chronic conditions",
+        "Physiotherapist-supervised sessions",
+        "Private health fund rebates available"
+      ],
+      "sections": [
+        {
+          "heading": "Who benefits from hydrotherapy?",
+          "body": "Hydrotherapy is often recommended for patients with osteoarthritis of the hip or knee, rheumatoid arthritis, early post-surgical rehabilitation where land-based loading is restricted, fibromyalgia and chronic pain conditions, neurological conditions affecting balance and mobility, and older adults who find land-based exercise difficult. It is not appropriate for all conditions, and your physiotherapist will assess suitability at your initial consultation."
+        },
+        {
+          "heading": "How are sessions structured?",
+          "body": "Your first session includes an in-water assessment and introduction to the exercises. Subsequent sessions progress the program based on your tolerance and goals. Sessions are typically 45 minutes. Our physiotherapist attends the pool and supervises exercises directly, monitoring your technique and adjusting the program as needed."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-hydrotherapy-1",
+          "question": "Do I need a referral for hydrotherapy?",
+          "answer": "No referral is required for private hydrotherapy. If you are attending under a Medicare chronic disease management plan, a GP referral and management plan are needed. Workers compensation and DVA patients will need relevant approval from their insurer or the Department of Veterans' Affairs."
+        },
+        {
+          "id": "faq-hydrotherapy-2",
+          "question": "What should I bring to a hydrotherapy session?",
+          "answer": "Bring swimwear, a towel and thongs or sandals for poolside. Water shoes are optional. Lockers and showers are available at the pool facility. If you have any skin conditions or open wounds, please let us know in advance as this may affect suitability."
+        }
+      ],
+      "seo": {
+        "title": "Hydrotherapy | Restore Physio Chatswood North Shore NSW",
+        "description": "Physiotherapist-supervised hydrotherapy near Chatswood, North Shore. Aquatic physiotherapy for arthritis, post-surgical recovery and chronic pain. Private health fund recognised."
+      }
+    }
+  ],
+  "locations": [
+    {
+      "slug": "chatswood",
+      "suburb": "Chatswood",
+      "state": "NSW",
+      "headline": "Physiotherapy in Chatswood",
+      "intro": "Our Chatswood clinic on Victor Street is the home base for Restore Physio. We see patients from across Chatswood and the wider North Shore for physiotherapy, sports injury rehabilitation, workplace injury and hydrotherapy.",
+      "body": "Chatswood is a busy commercial and residential hub on Sydney's North Shore. Our clinic is a short walk from Chatswood station and has street parking available on Victor Street and nearby Bertram Street. We are accessible for patients commuting from the city or travelling from neighbouring suburbs like Willoughby, Artarmon and Lane Cove.\n\nWe offer early morning and evening appointments to fit around work and school schedules. Same-day appointments are often available for acute injuries.",
+      "hero_image": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1600&q=80",
+      "landmarks": [
+        "Near Chatswood Chase shopping centre",
+        "Short walk from Chatswood train station",
+        "Close to Chatswood Business District",
+        "Near Willoughby Leisure Centre"
+      ],
+      "services_offered": [
+        "sports-injury-rehabilitation",
+        "back-neck-pain",
+        "post-surgical-rehabilitation",
+        "workplace-injury",
+        "dry-needling-manual-therapy",
+        "hydrotherapy"
+      ],
+      "benefits": [
+        "Ground-floor access with disability access available",
+        "Early morning appointments from 7:30am",
+        "Evening appointments until 7:00pm",
+        "HICAPS terminal for on-the-spot health fund claiming",
+        "Street parking on Victor Street and nearby streets"
+      ],
+      "sections": [
+        {
+          "heading": "Getting here from Chatswood",
+          "body": "The clinic is at Suite 4, 12 Victor Street, Chatswood. From Chatswood station, it is a 5-minute walk down Victoria Avenue and along Victor Street. Bus stops on Victoria Avenue serve routes from Chatswood to the city and surrounding suburbs."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-chatswood-1",
+          "question": "Is parking available at the Chatswood clinic?",
+          "answer": "Street parking is available on Victor Street and nearby streets. Paid parking is also available at Chatswood Chase and the Chatswood station precinct a short walk away."
+        }
+      ],
+      "seo": {
+        "title": "Physiotherapy Chatswood | Restore Physio NSW 2067",
+        "description": "Registered physiotherapists in Chatswood, NSW 2067. Sports injury, back pain, workplace injury and hydrotherapy. Early morning and evening appointments available."
+      }
+    },
+    {
+      "slug": "north-sydney",
+      "suburb": "North Sydney",
+      "state": "NSW",
+      "headline": "Physiotherapy for North Sydney patients",
+      "intro": "Restore Physio regularly sees patients from North Sydney at our Chatswood clinic. North Sydney is just 10 minutes away by train or a short drive via the Pacific Highway.",
+      "body": "North Sydney is a major commercial hub with a large workforce, many of whom experience desk-related back and neck pain, repetitive strain injuries and workplace injuries. We are an approved icare NSW provider and can treat eligible workers compensation claims.\n\nFor North Sydney patients, our Chatswood location is easy to reach via the North Shore train line. We offer early morning, lunchtime and evening appointments to suit CBD-based work schedules.",
+      "landmarks": [
+        "Close to North Sydney CBD",
+        "Easy train access via North Shore line",
+        "Near Miller Street business precinct",
+        "10 minutes from North Sydney station"
+      ],
+      "services_offered": [
+        "back-neck-pain",
+        "workplace-injury",
+        "sports-injury-rehabilitation",
+        "dry-needling-manual-therapy"
+      ],
+      "benefits": [
+        "Quick train access from North Sydney station",
+        "Workers compensation approved provider",
+        "Flexible appointment times for CBD workers",
+        "HICAPS on-the-spot health fund claiming"
+      ],
+      "sections": [
+        {
+          "heading": "Treating desk workers and CBD professionals",
+          "body": "Back pain, neck stiffness and postural issues are common in office environments. Our physiotherapists regularly see patients from North Sydney businesses experiencing persistent desk-related discomfort. We provide practical advice on workstation setup alongside hands-on treatment and exercise programs you can continue at home or in the office."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-north-sydney-1",
+          "question": "How do I get to your clinic from North Sydney?",
+          "answer": "From North Sydney station, take the North Shore line to Chatswood. The clinic is a 5-minute walk from Chatswood station. The journey is around 10 minutes by train."
+        }
+      ],
+      "seo": {
+        "title": "Physiotherapy for North Sydney Patients | Restore Physio",
+        "description": "Restore Physio in Chatswood sees patients from North Sydney. Back pain, neck pain, workplace injury and sports rehab. Easy train access, workers comp approved."
+      }
+    },
+    {
+      "slug": "st-leonards",
+      "suburb": "St Leonards",
+      "state": "NSW",
+      "headline": "Physiotherapy for St Leonards patients",
+      "intro": "St Leonards is 5 minutes from our Chatswood clinic by train. We regularly treat patients from the St Leonards and Crows Nest corridor for back pain, neck pain, post-surgical rehabilitation and workplace injuries.",
+      "body": "St Leonards is a growing medical and commercial precinct on the lower North Shore. Many patients from St Leonards work in healthcare or come to us following referral from specialists at Royal North Shore Hospital. We are familiar with the rehabilitation needs of post-operative patients and work closely with surgical teams at RNS.\n\nThe Pacific Highway and the North Shore train line make our Chatswood clinic straightforward to access for St Leonards patients.",
+      "landmarks": [
+        "Near Royal North Shore Hospital",
+        "Pacific Highway access",
+        "Close to RNS medical precinct",
+        "5 minutes from St Leonards station"
+      ],
+      "services_offered": [
+        "post-surgical-rehabilitation",
+        "back-neck-pain",
+        "sports-injury-rehabilitation",
+        "workplace-injury"
+      ],
+      "benefits": [
+        "Experience with post-surgical patients from Royal North Shore Hospital",
+        "Familiarity with specialist referrals from the RNS precinct",
+        "Quick train access from St Leonards station",
+        "Workers compensation approved provider"
+      ],
+      "sections": [
+        {
+          "heading": "Post-surgical rehab for RNS patients",
+          "body": "We regularly see patients who have had surgery at Royal North Shore Hospital or nearby private hospitals, including Mater Hospital in North Sydney. If your surgeon has recommended physiotherapy, we can obtain the surgical report and liaise with the treating team to ensure our program aligns with post-operative guidelines."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-st-leonards-1",
+          "question": "Can you liaise with my surgeon at Royal North Shore Hospital?",
+          "answer": "Yes. If you provide consent, we are happy to contact your surgical team directly to confirm post-operative instructions and keep them informed of your progress. Please bring any discharge paperwork or surgeon's notes to your first appointment."
+        }
+      ],
+      "seo": {
+        "title": "Physiotherapy St Leonards | Restore Physio North Shore NSW",
+        "description": "Physiotherapy for St Leonards patients near Royal North Shore Hospital. Post-surgical rehab, back pain and workplace injury treatment. Registered physiotherapists in Chatswood."
+      }
+    },
+    {
+      "slug": "lane-cove",
+      "suburb": "Lane Cove",
+      "state": "NSW",
+      "headline": "Physiotherapy for Lane Cove patients",
+      "intro": "Lane Cove is a leafy lower North Shore suburb a short drive from our Chatswood clinic. We see patients from Lane Cove across all our treatment areas, with sports injury rehabilitation and back pain among the most common presentations.",
+      "body": "Lane Cove has an active community with strong participation in local sport through the Lane Cove River Runners, local football and cricket clubs, and the Lane Cove Aquatic Centre. Active residents from Lane Cove often come to us for management of running-related injuries, football injuries and swimming-related shoulder conditions.\n\nOur clinic is approximately 10 minutes by car from Lane Cove village via Longueville Road and the Pacific Highway.",
+      "landmarks": [
+        "Near Lane Cove National Park",
+        "Lane Cove village precinct",
+        "Lane Cove Aquatic Centre nearby",
+        "Access via Longueville Road"
+      ],
+      "services_offered": [
+        "sports-injury-rehabilitation",
+        "back-neck-pain",
+        "dry-needling-manual-therapy",
+        "hydrotherapy"
+      ],
+      "benefits": [
+        "Experience treating common running and swimming injuries",
+        "Understanding of local sporting demands",
+        "Flexible appointment times to suit Lane Cove commuters",
+        "Private health fund recognised"
+      ],
+      "sections": [
+        {
+          "heading": "Treating runners and active residents from Lane Cove",
+          "body": "Lane Cove has a strong running community, with many residents training along the Lane Cove River Trail and entering events like the City2Surf. Common presentations from active Lane Cove residents include Achilles tendinopathy, plantar fasciitis, IT band syndrome and stress-related injuries. Our physiotherapists can assess your running technique, footwear and training load as part of a comprehensive management plan."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-lane-cove-1",
+          "question": "Can you assess my running gait as part of a physio appointment?",
+          "answer": "Yes. Running gait analysis can be included as part of your assessment for running-related injuries. Your physiotherapist will observe your gait and may use video analysis to identify contributing movement factors. Please wear your running shoes to the appointment."
+        }
+      ],
+      "seo": {
+        "title": "Physiotherapy Lane Cove | Restore Physio North Shore NSW",
+        "description": "Physiotherapy for Lane Cove patients. Sports injury, back pain and dry needling near Lane Cove village. Registered physiotherapists in Chatswood, 10 minutes from Lane Cove."
+      }
+    },
+    {
+      "slug": "willoughby",
+      "suburb": "Willoughby",
+      "state": "NSW",
+      "headline": "Physiotherapy for Willoughby patients",
+      "intro": "Willoughby is one of our closest neighbouring suburbs, just minutes from the Chatswood clinic. Many Willoughby patients come to us for sports injury management, back and neck pain, and post-surgical rehabilitation.",
+      "body": "Willoughby is a well-established residential suburb with a mix of families, professionals and older residents. Common presentations from Willoughby patients include back pain from desk work and manual tasks, knee and hip conditions in older adults, and sports injuries from participation in local football, netball and tennis.\n\nThe clinic is easily accessible from Willoughby via the Pacific Highway or Mowbray Road.",
+      "landmarks": [
+        "Near Willoughby Leisure Centre",
+        "Close to Willoughby Road shops",
+        "Easy access via Pacific Highway",
+        "Near Chatswood High School precinct"
+      ],
+      "services_offered": [
+        "back-neck-pain",
+        "sports-injury-rehabilitation",
+        "post-surgical-rehabilitation",
+        "hydrotherapy"
+      ],
+      "benefits": [
+        "Short drive from Willoughby via Pacific Highway",
+        "Experience with older adult presentations common in Willoughby",
+        "Hydrotherapy suitable for arthritis and age-related conditions",
+        "HICAPS for on-the-spot health fund claiming"
+      ],
+      "sections": [
+        {
+          "heading": "Supporting older adults from Willoughby",
+          "body": "Willoughby has a significant older adult population, and we see many patients from the suburb with osteoarthritis, balance issues and post-surgical rehabilitation needs. Hydrotherapy is often appropriate for this group and can be a comfortable starting point for patients who find land-based exercise difficult."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-willoughby-1",
+          "question": "Do you treat older adults with arthritis or balance problems?",
+          "answer": "Yes. Our physiotherapists have experience working with older adults with osteoarthritis, post-surgical rehabilitation needs and balance conditions. Hydrotherapy is often recommended for patients where land-based exercise is limited. Please mention any mobility aids or medical conditions when booking."
+        }
+      ],
+      "seo": {
+        "title": "Physiotherapy Willoughby | Restore Physio Chatswood NSW",
+        "description": "Physiotherapy for Willoughby patients. Back pain, sports injury, post-surgical rehab and hydrotherapy. Registered physiotherapists minutes from Willoughby via Pacific Highway."
+      }
+    },
+    {
+      "slug": "artarmon",
+      "suburb": "Artarmon",
+      "state": "NSW",
+      "headline": "Physiotherapy for Artarmon patients",
+      "intro": "Artarmon is a 5-minute drive from our Chatswood clinic. We regularly see patients from Artarmon for workplace injury management, back and neck pain, and sports rehabilitation.",
+      "body": "Artarmon has a mix of residential areas and light industrial and commercial properties. We see patients from both the residential community and local businesses, including workers compensation claims for manual handling and repetitive strain injuries.\n\nOur clinic is easily accessed from Artarmon via the Pacific Highway or Herbert Street, and there is train access via Artarmon station on the North Shore line with one stop to Chatswood.",
+      "landmarks": [
+        "One stop from Artarmon station to Chatswood",
+        "Pacific Highway connection",
+        "Near Artarmon industrial precinct",
+        "Close to Artarmon Reserve"
+      ],
+      "services_offered": [
+        "workplace-injury",
+        "back-neck-pain",
+        "sports-injury-rehabilitation",
+        "dry-needling-manual-therapy"
+      ],
+      "benefits": [
+        "Approved icare NSW workers compensation provider",
+        "Easy train access from Artarmon station",
+        "Experience with manual handling and industrial injuries",
+        "Early morning appointments available"
+      ],
+      "sections": [
+        {
+          "heading": "Workplace injury support for Artarmon businesses",
+          "body": "Artarmon's industrial precinct means workplace injuries from manual handling, repetitive tasks and slips and falls are not uncommon. As an approved icare NSW provider, we can treat eligible workers compensation claims without out-of-pocket costs to the employee. We provide all required documentation and reporting for the insurer."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-artarmon-1",
+          "question": "Can you treat workplace injuries for businesses based in Artarmon?",
+          "answer": "Yes. We are an approved icare NSW workers compensation provider. Employees from Artarmon businesses with a valid claim and WorkCover medical certificate can access physiotherapy treatment at our Chatswood clinic without paying out of pocket."
+        }
+      ],
+      "seo": {
+        "title": "Physiotherapy Artarmon | Restore Physio Workers Comp North Shore",
+        "description": "Physiotherapy for Artarmon patients. Workplace injury, workers compensation, back pain and sports rehab. Registered physiotherapists one train stop from Artarmon."
+      }
+    },
+    {
+      "slug": "crows-nest",
+      "suburb": "Crows Nest",
+      "state": "NSW",
+      "headline": "Physiotherapy for Crows Nest patients",
+      "intro": "Crows Nest is a vibrant lower North Shore suburb a short trip from our Chatswood clinic. We treat patients from Crows Nest and the surrounding St Leonards corridor across a range of physiotherapy services.",
+      "body": "Crows Nest has a busy cafe and dining strip and a strong community of professionals and families. Many patients from Crows Nest come to us with desk-related back and neck pain, shoulder injuries from active commuting or sport, and post-surgical rehabilitation following procedures at Mater Hospital or Royal North Shore.\n\nCrows Nest is one stop from St Leonards on the North Shore train line, with frequent services to and from Chatswood.",
+      "landmarks": [
+        "Near Crows Nest shopping village",
+        "Close to Mater Hospital",
+        "St Leonards and Crows Nest corridor",
+        "Access via Pacific Highway and Miller Street"
+      ],
+      "services_offered": [
+        "back-neck-pain",
+        "post-surgical-rehabilitation",
+        "sports-injury-rehabilitation",
+        "dry-needling-manual-therapy"
+      ],
+      "benefits": [
+        "Experience with post-surgical patients from Mater Hospital",
+        "Flexible appointment times for Crows Nest professionals",
+        "Easy train connection via St Leonards to Chatswood",
+        "Private health fund recognised"
+      ],
+      "sections": [
+        {
+          "heading": "Serving the Crows Nest and St Leonards corridor",
+          "body": "The Crows Nest and St Leonards precinct includes a significant medical community and a large residential population. We are well placed to provide physiotherapy for patients in this corridor, with familiarity with referral networks at Mater Hospital, Royal North Shore and local GP practices."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-crows-nest-1",
+          "question": "How far is your clinic from Crows Nest?",
+          "answer": "Our Chatswood clinic is approximately 10 minutes from Crows Nest by car or public transport. From Crows Nest, take the train from St Leonards to Chatswood (one stop, around 5 minutes), then a 5-minute walk to the clinic."
+        }
+      ],
+      "seo": {
+        "title": "Physiotherapy Crows Nest | Restore Physio North Shore NSW",
+        "description": "Physiotherapy for Crows Nest patients. Back pain, post-surgical rehab and sports injury treatment. Registered physiotherapists in Chatswood, close to Mater Hospital and RNS."
+      }
+    },
+    {
+      "slug": "neutral-bay",
+      "suburb": "Neutral Bay",
+      "state": "NSW",
+      "headline": "Physiotherapy for Neutral Bay patients",
+      "intro": "Neutral Bay is a lower North Shore suburb with strong community sport and an active resident population. Restore Physio in Chatswood is well-placed to serve Neutral Bay patients via the Pacific Highway or the North Shore train line.",
+      "body": "Neutral Bay residents come to us for a range of presentations including sports injuries from local football and rugby clubs, shoulder and knee conditions in younger adults, and back and neck pain in professionals commuting to the CBD.\n\nNeutral Bay is served by frequent bus services to North Sydney and the city, with train access available at North Sydney station and connections to Chatswood. The drive via the Pacific Highway is typically 15 minutes outside peak times.",
+      "landmarks": [
+        "Near Neutral Bay Junction shopping area",
+        "Close to Neutral Bay Oval sporting grounds",
+        "Bus access to North Sydney and city",
+        "Pacific Highway connection"
+      ],
+      "services_offered": [
+        "sports-injury-rehabilitation",
+        "back-neck-pain",
+        "dry-needling-manual-therapy",
+        "post-surgical-rehabilitation"
+      ],
+      "benefits": [
+        "Experience with local sporting injuries from the Neutral Bay area",
+        "Accessible via Pacific Highway and public transport",
+        "Flexible booking with early and late appointments",
+        "Private health fund recognised, HICAPS claiming on the spot"
+      ],
+      "sections": [
+        {
+          "heading": "Active residents and sporting injuries from Neutral Bay",
+          "body": "Neutral Bay has strong participation in community rugby union, football and netball. We regularly manage shoulder injuries, knee ligament sprains and ankle injuries from contact and field sports. Our physiotherapists understand the specific demands of these sports and can incorporate sport-specific rehabilitation goals into your treatment plan."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-neutral-bay-1",
+          "question": "Is there a closer physiotherapy clinic to Neutral Bay?",
+          "answer": "There are several physiotherapy clinics in the Neutral Bay area. We are based in Chatswood, approximately 15 minutes away. Our patients from Neutral Bay value the extended appointment times, evidence-based approach and flexibility of our booking system. We welcome you to call and discuss whether our clinic is the right fit."
+        }
+      ],
+      "seo": {
+        "title": "Physiotherapy Neutral Bay | Restore Physio North Shore NSW",
+        "description": "Physiotherapy for Neutral Bay patients. Sports injury, back pain and manual therapy from a registered physio practice in Chatswood, North Shore NSW."
+      }
+    }
+  ],
+  "service_areas": [
+    {
+      "slug": "sports-injury-chatswood",
+      "service_slug": "sports-injury-rehabilitation",
+      "service_title": "Sports Injury Rehabilitation",
+      "suburb": "Chatswood",
+      "state": "NSW",
+      "headline": "Sports Injury Rehabilitation in Chatswood",
+      "intro": "Restore Physio in Chatswood provides evidence-based sports injury assessment and rehabilitation for active residents and athletes across the North Shore.",
+      "body": "Whether you are a competitive athlete or a weekend runner, a sports injury can disrupt your training and daily life. Our registered physiotherapists in Chatswood conduct a thorough assessment of your injury, including movement analysis and load testing, before developing an individualised rehabilitation program.\n\nWe treat a wide range of sports injuries in Chatswood including ankle sprains, hamstring strains, shoulder rotator cuff injuries, knee ligament injuries and overuse tendinopathies. Our approach combines manual therapy, targeted exercise and education to help you manage your injury and work toward returning to your activity.",
+      "benefits": [
+        "Evidence-based assessment and treatment from registered physiotherapists",
+        "Rehabilitation programs tailored to your sport and return-to-activity goals",
+        "Manual therapy and exercise combined for a comprehensive approach",
+        "Private health fund recognised — HICAPS claiming on the spot",
+        "Same-day and next-day appointments often available in Chatswood"
+      ],
+      "sections": [
+        {
+          "heading": "Sports injuries we treat in Chatswood",
+          "body": "Our Chatswood physiotherapists regularly assess and manage: ankle ligament sprains from court and field sports, hamstring and quadriceps muscle strains, knee ligament and cartilage injuries, shoulder rotator cuff conditions from overhead sports, Achilles tendinopathy in runners, stress fractures in endurance athletes, and wrist and elbow injuries from racquet sports."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-sports-injury-chatswood-1",
+          "question": "How do I get an appointment for sports injury rehab in Chatswood?",
+          "answer": "Call us on (02) 9410 5678 or book online. No GP referral is required for private physiotherapy. We offer same-day appointments for acute injuries when available."
+        }
+      ],
+      "seo": {
+        "title": "Sports Injury Rehabilitation Chatswood | Restore Physio",
+        "description": "Sports injury rehabilitation in Chatswood, North Shore NSW. Registered physiotherapists treating sprains, strains and return-to-sport programs. Same-day appointments available."
+      }
+    },
+    {
+      "slug": "back-pain-north-sydney",
+      "service_slug": "back-neck-pain",
+      "service_title": "Back & Neck Pain",
+      "suburb": "North Sydney",
+      "state": "NSW",
+      "headline": "Back & Neck Pain Physiotherapy for North Sydney",
+      "intro": "Restore Physio in Chatswood provides evidence-based physiotherapy for back and neck pain, serving patients from North Sydney and the CBD corridor.",
+      "body": "Back and neck pain is one of the most common reasons people seek physiotherapy. For North Sydney professionals spending long hours at a desk, poor workstation setup, prolonged sitting and high work demands can contribute to persistent discomfort. Our physiotherapists assess movement, posture, work habits and lifestyle factors to understand what is driving your pain.\n\nFrom our Chatswood base, we are accessible to North Sydney patients via a 10-minute train journey on the North Shore line. Early morning and evening appointments are available to fit around CBD work schedules. Treatment may include manual therapy, targeted strengthening, ergonomic advice and pain education.",
+      "benefits": [
+        "Detailed assessment covering posture, movement and work demands",
+        "Practical ergonomic advice for desk-based workers",
+        "Manual therapy and targeted exercise combined",
+        "Easy train access from North Sydney for CBD workers",
+        "Early morning and evening appointments available"
+      ],
+      "sections": [
+        {
+          "heading": "Desk workers and postural pain",
+          "body": "North Sydney has a large professional workforce, and desk-related back and neck pain is extremely common. We regularly provide workstation ergonomics advice alongside hands-on physiotherapy to address the physical factors contributing to pain. Simple changes to screen height, chair setup and movement habits can make a meaningful difference when combined with targeted treatment."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-back-pain-north-sydney-1",
+          "question": "Can you help with neck pain from sitting at a computer all day?",
+          "answer": "Yes. Cervicogenic (neck-related) pain from prolonged desk work is one of the most common presentations we see from North Sydney patients. Treatment typically includes manual therapy, postural correction exercises and ergonomic guidance."
+        }
+      ],
+      "seo": {
+        "title": "Back & Neck Pain Physio North Sydney | Restore Physio",
+        "description": "Physiotherapy for back and neck pain for North Sydney patients. Desk workers, postural pain and sciatica treatment from registered physios in Chatswood. Easy train access."
+      }
+    },
+    {
+      "slug": "sports-injury-st-leonards",
+      "service_slug": "sports-injury-rehabilitation",
+      "service_title": "Sports Injury Rehabilitation",
+      "suburb": "St Leonards",
+      "state": "NSW",
+      "headline": "Sports Injury Rehabilitation near St Leonards",
+      "intro": "Restore Physio in Chatswood provides sports injury rehabilitation for active residents from St Leonards and the surrounding lower North Shore.",
+      "body": "St Leonards is close to several sporting grounds and parks used by local residents for running, football and other activities. When injuries occur, our Chatswood clinic is a quick train ride or short drive away.\n\nSports injury rehabilitation at Restore Physio starts with a thorough assessment of your injury, movement and training history. We develop an individualised program that addresses the injury, improves the relevant physical qualities and supports a safe return to your chosen activity. We work with patients from all levels of sport from social participants to competitive athletes.",
+      "benefits": [
+        "Evidence-based rehabilitation for a wide range of sports injuries",
+        "Individualised programs based on your sport, position and goals",
+        "Close to St Leonards via train on the North Shore line",
+        "Familiarity with the sporting community in the St Leonards corridor",
+        "Private health fund recognised, HICAPS on-the-spot claiming"
+      ],
+      "sections": [
+        {
+          "heading": "Connecting St Leonards athletes with effective rehabilitation",
+          "body": "Active residents from the St Leonards area participate in running events, football competitions and gym training. Common injuries we see from this cohort include running-related lower limb injuries, gym-related shoulder conditions, and contact sport knee and ankle injuries. Our physiotherapists understand the demands of these activities and incorporate sport-specific work into rehabilitation programs."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-sports-injury-st-leonards-1",
+          "question": "Do you offer sports injury appointments for patients coming from St Leonards?",
+          "answer": "Yes. Our Chatswood clinic is one train stop from St Leonards on the North Shore line. We offer same-day appointments for acute injuries when available and can accommodate early morning and evening bookings."
+        }
+      ],
+      "seo": {
+        "title": "Sports Injury Rehab near St Leonards | Restore Physio Chatswood",
+        "description": "Sports injury rehabilitation for St Leonards patients. Registered physiotherapists in Chatswood, one stop from St Leonards station. Sprains, strains and return-to-sport programs."
+      }
+    },
+    {
+      "slug": "post-surgical-rehab-willoughby",
+      "service_slug": "post-surgical-rehabilitation",
+      "service_title": "Post-Surgical Rehabilitation",
+      "suburb": "Willoughby",
+      "state": "NSW",
+      "headline": "Post-Surgical Rehabilitation for Willoughby Patients",
+      "intro": "Restore Physio in Chatswood provides structured post-surgical physiotherapy for patients from Willoughby recovering from joint replacement, ligament surgery and other procedures.",
+      "body": "Post-surgical rehabilitation helps you regain mobility, strength and function after an operation. For Willoughby residents, our Chatswood clinic is minutes away via the Pacific Highway or Mowbray Road, making it a convenient option for the regular appointments that post-surgical rehab typically requires.\n\nOur physiotherapists work from protocols aligned with your surgeon's post-operative instructions. We progress your program carefully, monitoring for signs of swelling, pain or limited movement that may require liaison with your surgical team. Milestones and progress are documented throughout.",
+      "benefits": [
+        "Protocols aligned with your surgeon's specific post-operative guidelines",
+        "Short drive from Willoughby via Pacific Highway",
+        "Experienced in knee, hip, shoulder and spinal post-surgical rehab",
+        "Regular documentation and progress reporting",
+        "Private health fund recognised for post-surgical consultations"
+      ],
+      "sections": [
+        {
+          "heading": "Common post-surgical pathways for Willoughby patients",
+          "body": "Willoughby residents commonly access us following procedures at Mater Hospital, Royal North Shore Hospital and local private hospitals. Frequent post-surgical presentations include total knee replacement, total hip replacement, ACL reconstruction, rotator cuff repair and spinal procedures. We are experienced in these pathways and can liaise with your surgical team directly."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-post-surgical-rehab-willoughby-1",
+          "question": "How soon after surgery should I start physiotherapy?",
+          "answer": "This depends on the type of surgery. Some procedures benefit from physiotherapy within the first few days; others require a period of rest or protected movement. Your surgeon will advise, and we can coordinate with their rooms to clarify the recommended start time and any restrictions."
+        }
+      ],
+      "seo": {
+        "title": "Post-Surgical Rehabilitation Willoughby | Restore Physio Chatswood",
+        "description": "Post-surgical physiotherapy for Willoughby patients. Knee replacement, ACL, shoulder surgery rehab from registered physios in Chatswood. Minutes from Willoughby via Pacific Highway."
+      }
+    },
+    {
+      "slug": "workplace-injury-artarmon",
+      "service_slug": "workplace-injury",
+      "service_title": "Workplace Injury (Workers Comp)",
+      "suburb": "Artarmon",
+      "state": "NSW",
+      "headline": "Workers Compensation Physiotherapy for Artarmon Employees",
+      "intro": "Restore Physio is an approved icare NSW provider serving workers from Artarmon businesses with workplace injury treatment and return-to-work support.",
+      "body": "Artarmon has a mix of light industrial, warehouse and commercial operations where manual handling, repetitive tasks and workplace injuries occur. As an approved icare NSW physiotherapy provider, we can see eligible workers compensation patients from Artarmon without any out-of-pocket cost to the employee.\n\nOur physiotherapists are experienced in the documentation and reporting requirements of the NSW workers compensation system. We provide treatment, return-to-work planning and functional capacity assessments as needed, working collaboratively with the treating GP, employer and insurer to support a safe return to work.",
+      "benefits": [
+        "Approved icare NSW workers compensation provider — no upfront cost",
+        "One train stop from Artarmon station to Chatswood",
+        "Experienced in industrial and manual handling injury management",
+        "Return-to-work planning and functional capacity assessments",
+        "All required insurer documentation provided"
+      ],
+      "sections": [
+        {
+          "heading": "Workers compensation claims from Artarmon",
+          "body": "Eligible workers from Artarmon businesses can access physiotherapy at Restore Physio without paying out of pocket. You will need a valid WorkCover certificate from your GP and a claim number from your employer's insurer or icare. Once these are confirmed, contact us to schedule your appointments. We handle all billing directly with the insurer."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-workplace-injury-artarmon-1",
+          "question": "I was injured at work in Artarmon. What are my next steps?",
+          "answer": "Report your injury to your employer, see your GP to obtain a WorkCover certificate, and contact your employer's insurer or icare to lodge a claim. Once you have a claim number, contact us and we can book your physiotherapy appointment without any out-of-pocket expense."
+        }
+      ],
+      "seo": {
+        "title": "Workers Comp Physio Artarmon | Restore Physio Chatswood",
+        "description": "icare approved workers compensation physiotherapy for Artarmon employees. Workplace injury treatment, return-to-work planning and FCE. One stop from Artarmon station."
+      }
+    }
+  ],
+  "faq": {
+    "heading": "Frequently asked questions",
+    "intro": "Common questions about physiotherapy at Restore Physio, fees, rebates and what to expect.",
+    "items": [
+      {
+        "id": "faq-general-1",
+        "question": "Do I need a referral from my GP to see a physiotherapist?",
+        "answer": "No. You can book directly with a physiotherapist without a GP referral for private consultations. A GP referral is required if you wish to use a Medicare chronic disease management plan (which subsidises a limited number of sessions) or if you are claiming through workers compensation or DVA."
+      },
+      {
+        "id": "faq-general-2",
+        "question": "Does private health insurance cover physiotherapy?",
+        "answer": "Most private health insurance extras policies include physiotherapy. Rebates vary by fund and policy level. We have HICAPS on site so you can claim on the spot and pay only the gap. We recommend calling your fund to confirm your physiotherapy benefit before your appointment."
+      },
+      {
+        "id": "faq-general-3",
+        "question": "What should I bring to my first appointment?",
+        "answer": "Please bring your private health insurance card if applicable, any relevant imaging (X-rays, MRI, ultrasound), a referral letter or WorkCover certificate if you have one, and any relevant medical history paperwork. Wear comfortable clothing that allows access to the area being assessed."
+      },
+      {
+        "id": "faq-general-4",
+        "question": "How long is a physiotherapy appointment?",
+        "answer": "Initial appointments are 60 minutes and include a detailed assessment and the start of treatment. Follow-up appointments are typically 30 to 45 minutes. Specific appointment lengths vary by treatment type — hydrotherapy sessions are 45 minutes and workplace injury initial assessments may be up to 60 minutes."
+      },
+      {
+        "id": "faq-general-5",
+        "question": "Are you registered with AHPRA?",
+        "answer": "Yes. All physiotherapists at Restore Physio hold current registration with the Australian Health Practitioner Regulation Agency (AHPRA). You can verify any physiotherapist's registration at the AHPRA website."
+      },
+      {
+        "id": "faq-general-6",
+        "question": "Do you offer Medicare-subsidised physiotherapy?",
+        "answer": "Physiotherapy is not covered under standard Medicare. However, patients with a chronic condition and an active Enhanced Primary Care (EPC) or Chronic Disease Management (CDM) plan from their GP may be eligible for a Medicare rebate on up to 5 allied health services per calendar year. Ask your GP if you may be eligible."
+      },
+      {
+        "id": "faq-general-7",
+        "question": "Can I see a physio for NDIS-funded treatment?",
+        "answer": "We see NDIS participants who are plan-managed or self-managed. Agency-managed participants may need to confirm that Restore Physio is a registered NDIS provider before booking. Please contact us to discuss your NDIS plan and funding details."
+      },
+      {
+        "id": "faq-general-8",
+        "question": "What is the cancellation policy?",
+        "answer": "We ask for at least 24 hours notice to cancel or reschedule an appointment. Cancellations with less than 24 hours notice may incur a cancellation fee. This policy helps us offer appointment times to other patients who need them."
+      }
+    ],
+    "seo": {
+      "title": "Physiotherapy FAQ | Restore Physio Chatswood North Shore",
+      "description": "Answers to common questions about physiotherapy at Restore Physio in Chatswood. Rebates, referrals, what to bring, Medicare, private health and workers compensation explained."
+    }
+  },
+  "about": {
+    "heading": "About Restore Physio",
+    "body": "Restore Physio has been providing evidence-based physiotherapy to patients on Sydney's North Shore for 9 years. Our clinic is based in Chatswood, with a team of registered physiotherapists who hold current AHPRA registration and maintain their professional development through ongoing education and peer supervision.\n\nWe treat the full range of musculoskeletal and sports conditions, from acute injuries to chronic pain presentations. We also work with post-surgical patients, workplace injury claimants, DVA patients and people with chronic conditions accessing treatment through Medicare enhanced primary care plans.\n\nOur approach is straightforward: we take the time to properly assess what is driving your problem, explain it to you clearly, and develop a treatment plan that makes sense for your life and goals. We do not recommend more treatment than is necessary.",
+    "photo_url": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1200&q=80",
+    "years_in_business": 9,
+    "licence": "AHPRA Reg. PHY0001234567 (example placeholder)",
+    "values": [
+      {
+        "id": "val-evidence",
+        "title": "Evidence-based practice",
+        "body": "Our treatment decisions are guided by current clinical evidence and best-practice guidelines. We do not recommend treatments that lack a sound evidence base.",
+        "icon": "BadgeCheck"
+      },
+      {
+        "id": "val-patient",
+        "title": "Patient-centred care",
+        "body": "We involve you in all decisions about your treatment. You will always know what we found in your assessment, what we recommend and why, and what to expect from the treatment plan.",
+        "icon": "HeartPulse"
+      },
+      {
+        "id": "val-transparent",
+        "title": "Transparent fees",
+        "body": "Our fees are published and discussed upfront. There are no surprise charges. We provide HICAPS claiming so you pay only the gap after your health fund rebate.",
+        "icon": "ShieldCheck"
+      }
+    ],
+    "seo": {
+      "title": "About Restore Physio | Registered Physiotherapists Chatswood",
+      "description": "About Restore Physio in Chatswood, NSW. AHPRA-registered physiotherapists with 9 years of practice on Sydney's North Shore. Evidence-based treatment, transparent fees."
+    }
+  },
+  "nav": [
+    { "label": "Home", "href": "" },
+    { "label": "Treatments", "href": "services/sports-injury-rehabilitation" },
+    { "label": "Locations", "href": "locations/chatswood" },
+    { "label": "FAQ", "href": "faq" },
+    { "label": "About", "href": "about" }
+  ],
+  "preview": {
+    "category": "allied-health",
+    "niche": "physiotherapy"
+  }
+}

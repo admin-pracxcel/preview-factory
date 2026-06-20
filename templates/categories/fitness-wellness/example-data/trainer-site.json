@@ -1,0 +1,1087 @@
+{
+  "business": {
+    "name": "Peak Form Training",
+    "tagline": "Personal training in South Yarra — results without the guesswork",
+    "phone": "(03) 9826 4411",
+    "email": "info@peakformtraining.com.au",
+    "suburb": "South Yarra",
+    "state": "VIC",
+    "address": "Studio 3, 221 Toorak Rd, South Yarra VIC 3141",
+    "abn": "74 382 910 556"
+  },
+  "branding": {
+    "primary_color": "#1a1a2e",
+    "secondary_color": "#16213e",
+    "accent_color": "#e94560",
+    "logo_url": "",
+    "hero_image_url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80",
+    "font_heading": "Inter"
+  },
+  "seo": {
+    "title": "Peak Form Training | Personal Trainer South Yarra & Inner Melbourne",
+    "description": "Personal training studio in South Yarra. 1-on-1 sessions, small group training, online coaching and 12-week body transformation programs. Qualified trainers, no lock-in contracts.",
+    "schema_org_type": "SportsActivityLocation"
+  },
+  "home": {
+    "hero": {
+      "headline": "Stop guessing. Start training with a plan that works.",
+      "subheadline": "Personal training at Studio 3, South Yarra. 1-on-1 sessions, small groups and online coaching — structured programs built around what you actually want to achieve.",
+      "cta_primary": { "label": "Book a free consult", "href": "tel:+61398264411" },
+      "cta_secondary": { "label": "View programs", "href": "#services" }
+    },
+    "social_proof": {
+      "items": [
+        { "id": "sp-1", "icon": "Trophy", "value": "6 years in South Yarra" },
+        { "id": "sp-2", "icon": "Users", "value": "300+ active clients" },
+        { "id": "sp-3", "icon": "Star", "value": "Cert IV Fitness + First Aid" },
+        { "id": "sp-4", "icon": "ShieldCheck", "value": "Fully insured" }
+      ]
+    },
+    "offer": {
+      "headline": "First session free",
+      "description": "New clients get a complimentary 45-minute assessment session — no commitment required.",
+      "cta": { "label": "Claim your free session", "href": "tel:+61398264411" }
+    },
+    "services": [
+      {
+        "id": "h-1on1",
+        "slug": "personal-training",
+        "title": "1-on-1 Personal Training",
+        "description": "Fully tailored sessions with a dedicated trainer. Strength, conditioning, weight management or sport-specific — we build the program around your schedule and goals.",
+        "icon": "Dumbbell",
+        "starting_price": "From $95/session"
+      },
+      {
+        "id": "h-group",
+        "slug": "small-group-training",
+        "title": "Small Group Training",
+        "description": "Train alongside 2–4 people for a fraction of 1-on-1 rates. Same structured programming, same qualified trainer — shared costs, better energy.",
+        "icon": "Users",
+        "starting_price": "From $55/person"
+      },
+      {
+        "id": "h-online",
+        "slug": "online-coaching",
+        "title": "Online Coaching",
+        "description": "Full programming, weekly check-ins and form reviews delivered remotely. Train at your own gym or at home — we build the plan, you do the work.",
+        "icon": "Monitor",
+        "starting_price": "From $149/month"
+      },
+      {
+        "id": "h-transformation",
+        "slug": "body-transformation-program",
+        "title": "Body Transformation Program",
+        "description": "A structured 12-week program covering training, nutrition guidance and accountability check-ins. For people who want a concrete starting point and a clear finish line.",
+        "icon": "TrendingUp",
+        "starting_price": "From $1,890"
+      },
+      {
+        "id": "h-strength",
+        "slug": "strength-conditioning",
+        "title": "Strength & Conditioning",
+        "description": "Progressive strength programs for athletes, returning gym-goers and anyone who wants to get meaningfully stronger. Periodised, tracked and adjusted each month.",
+        "icon": "Zap",
+        "starting_price": "From $95/session"
+      },
+      {
+        "id": "h-rehab",
+        "slug": "post-injury-training",
+        "title": "Post-Injury & Rehabilitation Training",
+        "description": "Exercise programming designed to work alongside your physio or GP plan. We support your return to full movement — not a replacement for medical care.",
+        "icon": "HeartPulse",
+        "starting_price": "From $110/session"
+      }
+    ],
+    "about": {
+      "heading": "Real programs. Qualified trainers. No fluff.",
+      "body": "Peak Form Training has operated out of South Yarra for six years. Every trainer holds a Cert IV in Fitness and current first-aid certification. We work with clients across inner Melbourne — from first-timers who've never set foot in a gym to competitive athletes chasing performance targets.\n\nThe studio is small by design. No crowded floors, no waiting for equipment. Sessions run to the minute, programs are tracked weekly and results are measured in concrete metrics: lifts, times, body composition — not vague feelings.",
+      "photo_url": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1200&q=80",
+      "years_in_business": 6,
+      "licence": "Cert IV Fitness | First Aid certified"
+    },
+    "service_area": {
+      "heading": "Covering inner Melbourne",
+      "intro": "We train clients across South Yarra, Toorak, Prahran, Armadale, Malvern, St Kilda, Brighton and Hawthorn. Online coaching is available Australia-wide.",
+      "suburbs": [
+        "South Yarra",
+        "Toorak",
+        "Prahran",
+        "Armadale",
+        "Malvern",
+        "St Kilda",
+        "Brighton",
+        "Hawthorn",
+        "Windsor",
+        "Elsternwick"
+      ]
+    },
+    "gallery": [
+      {
+        "id": "g-1",
+        "image_url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80",
+        "caption": "South Yarra studio floor",
+        "alt": "Peak Form Training studio in South Yarra"
+      },
+      {
+        "id": "g-2",
+        "image_url": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80",
+        "caption": "1-on-1 strength session",
+        "alt": "Personal training session at Peak Form"
+      },
+      {
+        "id": "g-3",
+        "image_url": "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=800&q=80",
+        "caption": "Small group training",
+        "alt": "Small group session at Peak Form Training"
+      },
+      {
+        "id": "g-4",
+        "image_url": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=800&q=80",
+        "caption": "Conditioning drills",
+        "alt": "Conditioning training at Peak Form"
+      }
+    ],
+    "testimonials": [
+      {
+        "id": "t-1",
+        "quote": "I'd tried three gyms before Peak Form. The difference is the trainer actually tracks what you do from week to week and adjusts the program — not just counts reps.",
+        "author": "Michael B.",
+        "location": "South Yarra",
+        "rating": 5
+      },
+      {
+        "id": "t-2",
+        "quote": "Small group sessions work out to about $60 a pop. For that you get a real program, not just instructions to use the same machine over and over.",
+        "author": "Priya S.",
+        "location": "Toorak",
+        "rating": 5
+      },
+      {
+        "id": "t-3",
+        "quote": "I came in after a knee surgery. The trainer coordinated with my physio and built a program around what I could actually do. Six months later I'm back to running.",
+        "author": "James L.",
+        "location": "Prahran",
+        "rating": 5
+      },
+      {
+        "id": "t-4",
+        "quote": "Online coaching exceeded my expectations. Weekly check-ins are genuinely useful — the trainer watches the form videos and makes real adjustments.",
+        "author": "Sarah K.",
+        "location": "Brighton",
+        "rating": 5
+      },
+      {
+        "id": "t-5",
+        "quote": "Completed the 12-week program. Hit all three of my targets. The nutrition guidance was practical, not a fad diet.",
+        "author": "Tom W.",
+        "location": "Armadale",
+        "rating": 5
+      }
+    ],
+    "contact": {
+      "heading": "Book your first session",
+      "phone": "(03) 9826 4411",
+      "email": "info@peakformtraining.com.au",
+      "address": "Studio 3, 221 Toorak Rd, South Yarra VIC 3141",
+      "hours": [
+        { "label": "Monday – Friday", "value": "6:00am – 8:00pm" },
+        { "label": "Saturday", "value": "7:00am – 1:00pm" },
+        { "label": "Sunday", "value": "Closed" }
+      ],
+      "cta": { "label": "Call (03) 9826 4411", "href": "tel:+61398264411" }
+    }
+  },
+  "services": [
+    {
+      "slug": "personal-training",
+      "title": "1-on-1 Personal Training",
+      "summary": "Fully tailored training sessions with a dedicated qualified trainer — strength, conditioning, weight management or sport-specific.",
+      "icon": "Dumbbell",
+      "starting_price": "From $95/session",
+      "hero_image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80",
+      "intro": "1-on-1 personal training at Peak Form means every session is planned in advance, tracked as you go and adjusted based on what you actually did last time. There's no generic template — your program reflects your current fitness level, schedule and specific goals.\n\nSessions run for 45 or 60 minutes at our South Yarra studio. The trainer is fully focused on you for the entire session: form correction, load management, rest timing and the kind of honest feedback that accelerates progress. Packages start at five sessions and scale up to monthly unlimited blocks.",
+      "benefits": [
+        "Program designed from your first assessment session",
+        "45 or 60-minute sessions, fully one-on-one",
+        "Load and progress tracked every week",
+        "Form correction throughout every set",
+        "Flexible scheduling — sessions available 6am to 8pm weekdays",
+        "No lock-in contracts — buy sessions in blocks or casually"
+      ],
+      "sections": [
+        {
+          "heading": "How your program is built",
+          "body": "The first session is a movement assessment and goal-setting conversation. The trainer establishes your baseline — current strength, mobility, any injury history and what you're actually trying to achieve. From that, they build a 4–8 week training block with specific targets for each session.\n\nEvery session result is logged. When you hit a target consistently, the program advances. When something isn't working, it gets changed. This is the part most gym memberships skip entirely."
+        },
+        {
+          "heading": "Pricing and session packages",
+          "body": "Casual sessions are available at $115 each. Block packages reduce the per-session cost: 5 sessions for $475, 10 sessions for $895, or a monthly unlimited package at $380/month for up to 4 sessions per week. All sessions are 45 minutes by default; 60-minute sessions are available at a surcharge.\n\nPackage credits don't expire within 12 months of purchase. Unused credits are refundable if you can no longer train."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-personal-training-1",
+          "question": "Do I need any gym experience before starting?",
+          "answer": "No experience is required. The assessment session establishes your starting point and the program is built accordingly. Beginners are common at Peak Form — the trainer adjusts the load and complexity to match where you are, not where they'd prefer you to be."
+        },
+        {
+          "id": "faq-personal-training-2",
+          "question": "What does the first session cover?",
+          "answer": "The first session is a 45-minute assessment covering your movement baseline, injury history, current fitness level and goals. You'll also do a short training block so the trainer can observe how you move under load. This is provided free of charge for all new clients."
+        },
+        {
+          "id": "faq-personal-training-3",
+          "question": "Can I train if I have an existing injury?",
+          "answer": "Yes, but we need to know about it before we build your program. For post-surgical or complex injuries, we'll ask for clearance from your GP or physio and coordinate with them on any restrictions. We won't load movements that are contraindicated."
+        }
+      ],
+      "seo": {
+        "title": "1-on-1 Personal Training South Yarra | Peak Form Training",
+        "description": "Tailored 1-on-1 personal training sessions at our South Yarra studio. Strength, conditioning and weight management programs tracked weekly. From $95/session, no lock-in contracts."
+      }
+    },
+    {
+      "slug": "small-group-training",
+      "title": "Small Group Training",
+      "summary": "Train with 2–4 people at shared cost — structured programming with a qualified trainer, available most days at the South Yarra studio.",
+      "icon": "Users",
+      "starting_price": "From $55/person",
+      "hero_image": "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Small group training at Peak Form sits between a 1-on-1 session and a group fitness class. Groups are capped at four people, so the trainer can actually coach each person through their movement — not just call out a circuit from across the room.\n\nThe program is written for the group as a whole but scaled to individual capacity. If one person is working toward strength and another toward endurance, the loading and rest times are adjusted accordingly. You train together, but you're not all doing the same weight.",
+      "benefits": [
+        "Groups capped at 4 — genuine coaching, not just supervision",
+        "Program scaled to each individual's capacity",
+        "Available as regular scheduled sessions or formed with your own group",
+        "Lower cost per session than 1-on-1 training",
+        "Mix of strength, conditioning and mobility in each session",
+        "Trainer tracks individual progress across sessions"
+      ],
+      "sections": [
+        {
+          "heading": "Forming your group",
+          "body": "You can join an existing scheduled group or bring 2–3 other people and form your own. The trainer will run an initial assessment for each group member and set a baseline for each. Groups that form together typically share similar fitness goals, which makes programming more consistent.\n\nScheduled group spots open each Monday for the following week. Casual spots can be filled if a group has capacity."
+        },
+        {
+          "heading": "Pricing",
+          "body": "Per-person pricing starts at $55 for a 45-minute group session. Block packs of 10 sessions per person reduce this to $49/session. Bringing your own group of 3–4 gets an additional 10% discount across the block. Groups booked together use a shared session credit pool."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-small-group-training-1",
+          "question": "Can I join a group if I don't know anyone in it?",
+          "answer": "Yes. We run scheduled open groups where individuals book in. The trainer introduces everyone at the start of the first session and establishes the group baseline. Most people find the social element helpful for accountability."
+        },
+        {
+          "id": "faq-small-group-training-2",
+          "question": "What if one person in the group is much fitter than the others?",
+          "answer": "The trainer scales each person's load and intensity. You're doing the same movements and working in the same time windows, but the actual weight or difficulty is adjusted per person. The program accounts for different capacity levels from the start."
+        }
+      ],
+      "seo": {
+        "title": "Small Group Training South Yarra | Peak Form Training",
+        "description": "Small group personal training (2–4 people) in South Yarra. Qualified trainer, structured programming, from $55/person per session. Join an existing group or bring your own."
+      }
+    },
+    {
+      "slug": "online-coaching",
+      "title": "Online Coaching",
+      "summary": "Full programming, weekly check-ins and form reviews delivered remotely — train at your gym or at home, coached by a qualified trainer.",
+      "icon": "Monitor",
+      "starting_price": "From $149/month",
+      "intro": "Online coaching from Peak Form is a structured remote training service — not a generic app subscription. You get a qualified trainer who writes your program, reviews your form via video, tracks your progress and adjusts the plan monthly based on results.\n\nThe service suits people who travel frequently, live outside inner Melbourne or prefer training at their own gym without paying studio session rates. Programs are delivered weekly with full exercise descriptions, video demonstrations and loading targets. Check-ins happen every Sunday via a brief form review — you report, the trainer adjusts.",
+      "benefits": [
+        "Custom program written for your specific goals and equipment access",
+        "Weekly check-in via structured form submission",
+        "Form video review with written feedback within 24 hours",
+        "Monthly program update based on progress data",
+        "Nutrition guidance included — practical, not prescriptive",
+        "Available Australia-wide, no studio attendance required"
+      ],
+      "sections": [
+        {
+          "heading": "What's included each month",
+          "body": "Each monthly coaching block covers: an updated 4-week training program (3–5 days/week depending on your schedule), weekly check-in review, up to three form video reviews, and a nutrition guidelines document. Programs are written for your actual equipment — home gym, commercial gym or minimal setup.\n\nThe first month includes a longer onboarding call (30 minutes) to establish goals, training history and preferences. After that, communication is primarily via the weekly check-in system."
+        },
+        {
+          "heading": "Pricing tiers",
+          "body": "Standard coaching is $149/month and covers the full service described above. The premium tier at $229/month adds fortnightly 20-minute video calls, priority same-day responses and a dedicated WhatsApp channel for quick questions. Both tiers are month-to-month — cancel anytime before your next billing date."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-online-coaching-1",
+          "question": "What equipment do I need?",
+          "answer": "Programs are written around whatever you have access to. A commercial gym membership gives the most flexibility. Home gym programs are available for those with dumbbells, a barbell and a bench. Minimal equipment programs (resistance bands and bodyweight) are possible but come with limitations on strength progression."
+        },
+        {
+          "id": "faq-online-coaching-2",
+          "question": "How do I submit form videos?",
+          "answer": "Videos are submitted via the weekly check-in form — you upload a short clip directly. The trainer reviews it and sends written notes on corrections within 24 hours. For complex form issues, a short video response from the trainer can be requested."
+        }
+      ],
+      "seo": {
+        "title": "Online Coaching Melbourne | Peak Form Training",
+        "description": "Remote personal training from Peak Form. Custom programming, weekly check-ins and form video reviews from $149/month. Available Australia-wide, no studio required."
+      }
+    },
+    {
+      "slug": "body-transformation-program",
+      "title": "Body Transformation Program",
+      "summary": "A 12-week structured program combining training sessions, nutrition guidance and accountability check-ins — for people who want a clear plan with a defined endpoint.",
+      "icon": "TrendingUp",
+      "starting_price": "From $1,890",
+      "hero_image": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=1600&q=80",
+      "intro": "The 12-week body transformation program at Peak Form is a complete package: three weekly training sessions, a structured nutrition framework, weekly progress measurements and biweekly coaching reviews. The goal is to give you enough time to see real, measurable change — not a quick fix followed by a regression.\n\nThe program suits people who've been in and out of the gym without consistent results and want a structured approach with genuine accountability. It's not a crash program. Training loads increase progressively. Nutrition targets are realistic and adjusted based on weekly results rather than locked to a generic calorie number.",
+      "benefits": [
+        "Three 45-minute training sessions per week at the studio",
+        "Personalised nutrition framework — not a generic meal plan",
+        "Weekly body composition measurements and progress review",
+        "Biweekly 1-on-1 coaching check-in (in-person or video)",
+        "Full program booklet with session-by-session progressions",
+        "Transition plan provided at program end to maintain results"
+      ],
+      "sections": [
+        {
+          "heading": "How the 12 weeks are structured",
+          "body": "Weeks 1–4 focus on movement quality and establishing training baselines. The loads are deliberately conservative to reduce injury risk and build the habits. Weeks 5–8 ramp intensity and introduce more complex compound movements. Weeks 9–12 push to peak loads and refine technique under fatigue.\n\nNutrition targets are set at the start and adjusted every fortnight. Progress is measured weekly via weight, photos and key lifts — the data drives the adjustments, not guesswork."
+        },
+        {
+          "heading": "Pricing and inclusions",
+          "body": "The full 12-week program is $1,890 (three sessions per week). An intensive version with five sessions per week is $2,650. Both include all coaching reviews, nutrition framework and the transition plan. A deposit of $500 secures your start date. The balance is due before week one begins.\n\nA two-person version (you and a training partner) is available at $1,490 per person — same program, same structure, sessions run together."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-body-transformation-program-1",
+          "question": "Is the nutrition component a strict diet?",
+          "answer": "No. The nutrition framework sets protein and calorie targets and offers practical meal structures — it doesn't prescribe a specific diet or eliminate food groups. The targets are adjusted every two weeks based on actual progress. If you're not hitting targets consistently, the trainer works with you on practical barriers, not just willpower."
+        },
+        {
+          "id": "faq-body-transformation-program-2",
+          "question": "What happens after the 12 weeks?",
+          "answer": "Every program ends with a full review session and a written transition plan covering maintenance training and nutrition targets. Most clients move to ongoing 1-on-1 or group sessions after completing the program. There's no pressure to continue — the plan is designed to give you the tools to maintain results independently if you prefer."
+        }
+      ],
+      "seo": {
+        "title": "12-Week Body Transformation Program South Yarra | Peak Form Training",
+        "description": "Structured 12-week program: three weekly training sessions, nutrition guidance and weekly check-ins. From $1,890. South Yarra studio. No fad diets, no crash training."
+      }
+    },
+    {
+      "slug": "strength-conditioning",
+      "title": "Strength & Conditioning",
+      "summary": "Progressive strength programs for athletes, returning gym-goers and anyone who wants to lift heavier consistently. Periodised, tracked and adjusted monthly.",
+      "icon": "Zap",
+      "starting_price": "From $95/session",
+      "intro": "Strength and conditioning training at Peak Form follows a periodised structure — not a random selection of exercises. Each training block has a specific goal (hypertrophy, maximal strength, peaking, deload) and the program advances based on measured results rather than arbitrary time windows.\n\nThe approach suits competitive athletes who need structured off-season programming, recreational lifters who've plateaued on self-written programs, and sport-specific clients whose coaches have requested supplementary conditioning work. Sessions at the South Yarra studio use free weights, barbells and conditioning equipment.",
+      "benefits": [
+        "Periodised training blocks with defined strength targets",
+        "Competition and sports performance programming available",
+        "Barbell compound movements as the foundation",
+        "Conditioning work integrated without compromising strength gains",
+        "Deload weeks built into the program to manage fatigue",
+        "Monthly max testing to track strength gains accurately"
+      ],
+      "sections": [
+        {
+          "heading": "Who this is for",
+          "body": "Strength and conditioning sessions work well for: recreational lifters who want a structured program beyond the basics; athletes in football, rugby, basketball or tennis who need off-season strength work; clients who've followed bodybuilding-style programs and want to shift to performance-based training; and anyone who's hit a strength plateau and needs a fresh programming approach.\n\nSessions involve heavier compound lifts (squat, deadlift, press, row variations) plus targeted accessory work and conditioning. They're physically demanding — the trainer sets load targets at or above current maxes."
+        },
+        {
+          "heading": "Sport-specific programming",
+          "body": "For clients with a specific sport or competition target, the trainer builds a program backwards from that date — peaking the relevant physical qualities at the right time. For a team sport athlete, this typically means power and speed development in the pre-season, strength base in the off-season and maintenance during the competition period. Coordination with coaching staff is possible on request."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-strength-conditioning-1",
+          "question": "Do I need to be experienced with barbell training?",
+          "answer": "Not necessarily, but some baseline familiarity with compound movements helps. If you're new to barbell work, the first few sessions focus on technique before loads increase. The trainer won't add weight until form is reliable under lighter loads."
+        },
+        {
+          "id": "faq-strength-conditioning-2",
+          "question": "Can strength training be combined with cardio goals?",
+          "answer": "Yes, but there are trade-offs. Maximising both simultaneously is difficult — the programming will prioritise one quality and support the other. The trainer will discuss your primary goal at assessment and design accordingly. If you want to get stronger and also run a half marathon, the program can accommodate both, but the loading for each will be moderated."
+        }
+      ],
+      "seo": {
+        "title": "Strength & Conditioning Training South Yarra | Peak Form Training",
+        "description": "Periodised strength and conditioning programs for athletes and recreational lifters in South Yarra. Barbell-based, tracked monthly. From $95/session."
+      }
+    },
+    {
+      "slug": "post-injury-training",
+      "title": "Post-Injury & Rehabilitation Training",
+      "summary": "Exercise programming to support your return to full movement after injury or surgery — coordinated with your physio or GP, not a replacement for medical care.",
+      "icon": "HeartPulse",
+      "starting_price": "From $110/session",
+      "intro": "Post-injury training at Peak Form is structured exercise programming for people who have completed or are partway through medical rehabilitation and need qualified guidance returning to full training. The trainer works alongside your physiotherapist or GP — not instead of them.\n\nSessions are built around any restrictions or progressions set by your treating practitioner. The trainer communicates directly with your physio if you're comfortable with that, coordinates on load restrictions and adapts the program as your clearances change. Sessions are held at the South Yarra studio using controlled equipment loads.",
+      "benefits": [
+        "Program designed around your specific injury and medical clearances",
+        "Direct communication with your physio or GP on request",
+        "Gradual load progression — not rushed return to full training",
+        "Regular reassessment as clearances are updated",
+        "Pain and discomfort monitoring at every session",
+        "Documentation available for your treating practitioner"
+      ],
+      "sections": [
+        {
+          "heading": "Common post-injury scenarios we support",
+          "body": "We work with clients recovering from knee replacements and ACL reconstructions, rotator cuff repairs, hip replacements, lower back disc injuries, ankle ligament reconstructions and general sport-related muscle strains. The trainer needs written clearance or a GP referral for post-surgical cases before the first session.\n\nFor chronic conditions (lower back pain, osteoarthritis, hypermobility), the trainer coordinates with the treating practitioner to understand contraindications and build a safe exercise framework around them."
+        },
+        {
+          "heading": "What to bring to the first session",
+          "body": "Bring any written instructions, restrictions or programs from your physiotherapist or surgeon. If you have imaging reports (MRI, X-ray) and your practitioner is happy for the trainer to review them, that's useful context but not required. The session starts with a structured movement screen focused on the injured area — loads don't increase until quality of movement meets a safe threshold."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-post-injury-training-1",
+          "question": "Is this a replacement for physiotherapy?",
+          "answer": "No. Post-injury training at Peak Form is exercise programming that supports your physiotherapy plan — it doesn't replace it. If you haven't seen a physio for your injury, we'll recommend you do before starting. We're a fitness service, not a medical or allied health service."
+        },
+        {
+          "id": "faq-post-injury-training-2",
+          "question": "How do you decide what I can and can't do in a session?",
+          "answer": "The first session includes a movement assessment that identifies pain-free ranges of motion and any compensatory patterns. The trainer sets initial load and range limits based on this assessment and any written instructions from your treating practitioner. Limits are updated at each session based on how you respond."
+        }
+      ],
+      "seo": {
+        "title": "Post-Injury Rehabilitation Training South Yarra | Peak Form Training",
+        "description": "Exercise programming for post-injury and post-surgical recovery in South Yarra. Works alongside your physio plan. From $110/session. Qualified trainers, structured approach."
+      }
+    }
+  ],
+  "locations": [
+    {
+      "slug": "south-yarra",
+      "suburb": "South Yarra",
+      "state": "VIC",
+      "headline": "Personal Training in South Yarra — Peak Form Studio",
+      "intro": "Peak Form Training is based at Studio 3, 221 Toorak Rd, South Yarra. The studio sits a short walk from Jam Factory and the South Yarra train station, making it accessible before work, at lunch or after 5pm.",
+      "body": "South Yarra is a suburb where the demand for serious training is high and the options are spread across franchise gyms and boutique studios. Peak Form focuses on what the franchise gyms can't: a qualified trainer dedicated to your session, a program that advances based on your data and a studio environment where you can actually concentrate.\n\nClients from South Yarra cover the full range — professionals fitting sessions around work schedules, young athletes in off-season training, returning gym-goers who want structured programming and older adults managing chronic conditions with exercise. The studio is equipped for strength and conditioning work, not group classes.",
+      "landmarks": [
+        "Jam Factory shopping centre",
+        "South Yarra train station",
+        "Chapel Street",
+        "Fawkner Park",
+        "Alexandra Gardens"
+      ],
+      "services_offered": [
+        "personal-training",
+        "small-group-training",
+        "body-transformation-program",
+        "strength-conditioning",
+        "post-injury-training"
+      ],
+      "benefits": [
+        "Studio is a 5-minute walk from South Yarra station",
+        "Sessions run 6am–8pm weekdays, 7am–1pm Saturday",
+        "Private studio — no queuing for equipment",
+        "All programs tracked and updated weekly"
+      ],
+      "sections": [
+        {
+          "heading": "Getting to the studio",
+          "body": "The studio is at 221 Toorak Rd — a few doors east of Jam Factory. Street parking is available on Toorak Rd and in the surrounding streets. The South Yarra train station (Glen Waverley, Cranbourne and Pakenham lines) is a 6-minute walk. Tram routes 58 and 8 stop directly on Chapel Street nearby."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-south-yarra-1",
+          "question": "Do I need my own training gear?",
+          "answer": "Bring comfortable training clothes and a water bottle. The studio provides all equipment. Training shoes with a flat sole are recommended for strength work — running shoes are acceptable but soles with excessive cushioning make barbell lifts less stable."
+        }
+      ],
+      "seo": {
+        "title": "Personal Training South Yarra | Peak Form Training Studio",
+        "description": "Peak Form Training studio is located in South Yarra on Toorak Rd. 1-on-1 training, small groups and 12-week programs. Walk from South Yarra station."
+      }
+    },
+    {
+      "slug": "toorak",
+      "suburb": "Toorak",
+      "state": "VIC",
+      "headline": "Personal Trainer in Toorak | Peak Form Training",
+      "intro": "Toorak clients train at our South Yarra studio on Toorak Rd — a direct 5-minute drive or a short walk from Toorak Village. We also offer early morning and evening sessions to suit professional schedules.",
+      "body": "Toorak is directly adjacent to our South Yarra studio. Most Toorak clients drive to the studio on Toorak Rd or walk from Toorak Village — the location is central to the area. Sessions are available from 6am for early risers and until 8pm for those finishing later in the day.\n\nToorak clients at Peak Form tend to be after specific outcomes — weight management alongside professional schedules, strength programs for recreational sport, or structured programs after a period away from training. The trainer writes a program based on the initial assessment, not on a generic template.",
+      "landmarks": [
+        "Toorak Village",
+        "Toorak Road shopping strip",
+        "St Kevin's College",
+        "Kooyong Lawn Tennis Club",
+        "Orrong Park"
+      ],
+      "services_offered": [
+        "personal-training",
+        "small-group-training",
+        "strength-conditioning",
+        "body-transformation-program"
+      ],
+      "benefits": [
+        "Studio accessible via Toorak Rd — 5 minutes from Toorak Village",
+        "Evening sessions available until 8pm weekdays",
+        "Programs structured around professional schedules",
+        "Small group options for Toorak clients with friends or colleagues"
+      ],
+      "sections": [
+        {
+          "heading": "Training alongside a professional schedule",
+          "body": "Many Toorak clients work long hours and need training sessions that fit reliably around meetings and travel. Peak Form accommodates this with flexible scheduling — sessions can be rescheduled with 24 hours notice and early morning blocks (6am, 6:45am, 7:30am) are popular with pre-work clients. Block packages don't expire, so a busy week doesn't mean a lost session."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-toorak-1",
+          "question": "Is there parking near the studio?",
+          "answer": "Yes. There is metered street parking on Toorak Rd and in the surrounding side streets. Parking is generally easier in the early morning and evening sessions than at lunchtime."
+        }
+      ],
+      "seo": {
+        "title": "Personal Trainer Toorak | Peak Form Training South Yarra Studio",
+        "description": "Personal training for Toorak residents at Peak Form's South Yarra studio. 5 minutes from Toorak Village. 1-on-1 and small group sessions, from $95/session."
+      }
+    },
+    {
+      "slug": "prahran",
+      "suburb": "Prahran",
+      "state": "VIC",
+      "headline": "Personal Training in Prahran | Peak Form Training",
+      "intro": "Peak Form Training serves Prahran clients at our South Yarra studio on Toorak Rd — a short ride from Prahran Market and accessible via the 72 tram on Chapel Street.",
+      "body": "Prahran sits a few blocks from our South Yarra studio and many clients walk or tram from the surrounding streets. The studio is designed for focused, structured training — no equipment queues, no background music designed to keep you on cardio machines, just a program and a trainer.\n\nPrahran clients at Peak Form include people from the hospitality and creative industries with irregular hours who need flexible session booking, younger clients new to structured training, and those returning after a break who want accountability rather than just a gym floor to use.",
+      "landmarks": [
+        "Prahran Market",
+        "Chapel Street precinct",
+        "Greville Street",
+        "Prahran train station",
+        "Cato Street Park"
+      ],
+      "services_offered": [
+        "personal-training",
+        "small-group-training",
+        "online-coaching",
+        "post-injury-training"
+      ],
+      "benefits": [
+        "Accessible via Chapel Street tram (route 72) from Prahran",
+        "Flexible early and late session times around shift work",
+        "No joining fees or membership requirements",
+        "Post-injury programming for clients with existing conditions"
+      ],
+      "sections": [
+        {
+          "heading": "Flexible scheduling for irregular schedules",
+          "body": "Clients in hospitality, retail and the creative sector often work non-standard hours. Peak Form's scheduling system lets you book sessions within 2 hours of the start time if spots are available. Block packages have 12-month expiry and sessions can be moved with 24 hours' notice. This makes structured training practical even when your week changes from one day to the next."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-prahran-1",
+          "question": "Can I come in without a booking?",
+          "answer": "Sessions need to be booked in advance — the trainer prepares your program before you arrive. Same-day bookings are available if there's a spot free, but we recommend booking at least a day ahead to guarantee your session."
+        }
+      ],
+      "seo": {
+        "title": "Personal Trainer Prahran | Peak Form Training",
+        "description": "Personal training for Prahran clients at our South Yarra studio. Flexible scheduling, 1-on-1 and group sessions. Short tram ride from Chapel Street."
+      }
+    },
+    {
+      "slug": "armadale",
+      "suburb": "Armadale",
+      "state": "VIC",
+      "headline": "Personal Training in Armadale | Peak Form Training",
+      "intro": "Armadale clients train at our South Yarra studio, a direct drive along Toorak Rd or High Street. We see a mix of strength, performance and body composition clients from the Armadale area.",
+      "body": "Armadale's residential streets are a short drive from the Peak Form studio on Toorak Rd. The studio is easily accessible from Kooyong Rd, High Street and the surrounding area. Most Armadale clients drive and find parking on Toorak Rd within a few minutes.\n\nPeak Form attracts Armadale clients who want more than a gym floor — people who've outgrown self-directed training and want a qualified trainer writing and tracking their program. The 12-week body transformation program is particularly popular with clients from this area who are looking for a defined structure.",
+      "landmarks": [
+        "Armadale train station",
+        "High Street shops",
+        "Kooyong Park",
+        "Malvern Road precinct",
+        "Central Park Armadale"
+      ],
+      "services_offered": [
+        "personal-training",
+        "body-transformation-program",
+        "strength-conditioning",
+        "small-group-training"
+      ],
+      "benefits": [
+        "Direct access via Toorak Rd from Armadale",
+        "Strength and performance programs for competitive athletes",
+        "12-week structured program popular with Armadale clients",
+        "Group sessions available for friends training together"
+      ],
+      "sections": [
+        {
+          "heading": "What Armadale clients train for",
+          "body": "The Armadale client base at Peak Form includes recreational tennis and golf players looking to improve their physical performance, professionals in their 30s and 40s who want structured training rather than gym floor guesswork, and people who have tried multiple programs without measuring results. The trainer's approach — tracking loads, adjusting the program based on data and setting clear targets — addresses the main reason people stop making progress."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-armadale-1",
+          "question": "How long before I see results from personal training?",
+          "answer": "Most clients notice measurable changes in strength and energy levels within 4–6 weeks of consistent training. Body composition changes typically take 8–12 weeks to be clearly visible. The trainer tracks specific metrics from the first session so progress is measured objectively, not just felt."
+        }
+      ],
+      "seo": {
+        "title": "Personal Trainer Armadale | Peak Form Training South Yarra",
+        "description": "Personal training for Armadale clients at Peak Form's South Yarra studio. Strength, conditioning and 12-week transformation programs. Qualified trainers, tracked weekly."
+      }
+    },
+    {
+      "slug": "malvern",
+      "suburb": "Malvern",
+      "state": "VIC",
+      "headline": "Personal Training in Malvern | Peak Form Training",
+      "intro": "Malvern clients travel to our South Yarra studio via Toorak Rd or High Street — a 10-minute drive from the Malvern central area. We offer morning, lunchtime and evening sessions.",
+      "body": "Malvern is a 10–12 minute drive from the Peak Form studio, making it a practical training destination for clients who don't want to train at a franchise gym close to home. The studio's private format means you get a genuine training session — not a shared floor.\n\nSeveral Malvern-based clients commute to the studio as part of their work routine, stopping in before heading to the CBD. The studio is open from 6am weekdays, which suits early-morning preferences. The strength and conditioning program is particularly popular with Malvern clients involved in sport or those who have a history of training and want to resume at an appropriate level.",
+      "landmarks": [
+        "Malvern Central shopping centre",
+        "High Street Malvern",
+        "Malvern train station",
+        "Malvern Park",
+        "Glenferrie Road"
+      ],
+      "services_offered": [
+        "personal-training",
+        "strength-conditioning",
+        "small-group-training",
+        "post-injury-training"
+      ],
+      "benefits": [
+        "10-minute drive from Malvern Central along Toorak Rd",
+        "Early morning session slots from 6am",
+        "Strength programs for sport and recreational athletes",
+        "Post-injury training for Malvern clients with existing conditions"
+      ],
+      "sections": [
+        {
+          "heading": "What sets structured training apart",
+          "body": "Malvern has a number of commercial gyms and boutique studios. What Peak Form offers is different: every session is planned in advance, the trainer is fully present, and the program advances based on what you did last session — not on a fixed schedule. For clients who've used gyms for years without systematic progress, this is a meaningful change in approach."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-malvern-1",
+          "question": "Can I try one session before committing to a package?",
+          "answer": "Yes. The first assessment session is free for all new clients. After that, casual sessions are available before purchasing a block. Most clients find a block more cost-effective and easier to plan around — but there's no pressure to commit until you've experienced the training."
+        }
+      ],
+      "seo": {
+        "title": "Personal Trainer Malvern | Peak Form Training",
+        "description": "Personal training for Malvern clients at our South Yarra studio. Strength, conditioning and injury rehabilitation programs. 10 minutes from Malvern Central."
+      }
+    },
+    {
+      "slug": "st-kilda",
+      "suburb": "St Kilda",
+      "state": "VIC",
+      "headline": "Personal Training in St Kilda | Peak Form Training",
+      "intro": "St Kilda clients reach our South Yarra studio via St Kilda Rd or the 3/67 tram routes. The studio is 15 minutes from Fitzroy Street and a direct route along St Kilda Rd.",
+      "body": "St Kilda has no shortage of gym options, but Peak Form offers something different: a small private studio with a qualified trainer and a structured program. No crowded floors, no impersonal group classes — just a trainer who knows what you did last session and has planned what comes next.\n\nSt Kilda clients at Peak Form include people who train for aesthetic goals alongside active lifestyles, athletes from the local football and basketball clubs, and individuals managing chronic conditions who benefit from exercise programming that works around their limitations.",
+      "landmarks": [
+        "Fitzroy Street",
+        "St Kilda Beach",
+        "Catani Gardens",
+        "St Kilda Junction",
+        "Acland Street"
+      ],
+      "services_offered": [
+        "personal-training",
+        "small-group-training",
+        "body-transformation-program",
+        "post-injury-training"
+      ],
+      "benefits": [
+        "Direct tram access from St Kilda via routes 3 and 67",
+        "Training programs suited to active and social lifestyles",
+        "Body transformation program for structured 12-week results",
+        "Post-injury support for clients with existing conditions"
+      ],
+      "sections": [
+        {
+          "heading": "Training that fits an active lifestyle",
+          "body": "Many St Kilda clients already have active social lives — beach walks, recreational sport, cycling. Peak Form builds training programs that complement existing activity rather than compete with it. If you're already walking 8,000 steps daily and playing social tennis, the trainer adjusts the program volume accordingly — not just stacking additional sessions on top."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-st-kilda-1",
+          "question": "Can I book online or by phone?",
+          "answer": "The easiest way to start is by calling us on (03) 9826 4411 to set up your free assessment session. From there, the trainer will walk you through how to book ongoing sessions."
+        }
+      ],
+      "seo": {
+        "title": "Personal Trainer St Kilda | Peak Form Training South Yarra",
+        "description": "Personal training for St Kilda clients. 15 minutes from Fitzroy Street. 1-on-1 sessions, group training and 12-week programs at our South Yarra studio."
+      }
+    },
+    {
+      "slug": "brighton",
+      "suburb": "Brighton",
+      "state": "VIC",
+      "headline": "Personal Training in Brighton | Peak Form Training",
+      "intro": "Brighton clients travel to our South Yarra studio for structured programming that their local gym options don't provide — a 20-minute drive along Nepean Highway or the Sandringham train line to South Yarra station.",
+      "body": "Brighton is further from the South Yarra studio than most of our regular catchment, but we have a consistent group of Brighton-based clients who make the trip specifically because of the programming quality. The drive along Nepean Highway takes 20–25 minutes in standard traffic and is a practical commute for early morning sessions.\n\nBrighton clients tend to be established in their careers and looking for training that delivers results without wasted time. The 12-week transformation program and the online coaching option are both popular with clients from this area — the latter because it eliminates the commute entirely.",
+      "landmarks": [
+        "Church Street Brighton",
+        "Brighton Beach",
+        "Elsternwick Park",
+        "Bay Street shops",
+        "Brighton train station"
+      ],
+      "services_offered": [
+        "personal-training",
+        "online-coaching",
+        "body-transformation-program",
+        "strength-conditioning"
+      ],
+      "benefits": [
+        "20-minute drive from Brighton to South Yarra studio",
+        "Online coaching available for Brighton clients who prefer no commute",
+        "12-week program popular with Brighton clients seeking structure",
+        "Evening slots available for post-work arrivals from Brighton"
+      ],
+      "sections": [
+        {
+          "heading": "Online coaching as an alternative",
+          "body": "For Brighton clients who don't want to make the commute to the studio, online coaching provides the same programming and check-in structure delivered remotely. You train at a commercial gym close to home — we write the program, review your form via video and adjust monthly. Several Brighton clients use a hybrid arrangement: studio sessions once per week for direct coaching, supplemented by two online-programmed sessions."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-brighton-1",
+          "question": "Is online coaching as effective as in-person training?",
+          "answer": "For experienced clients who already have reliable technique, online coaching delivers comparable results because the programming quality is the same. For beginners or those with technique issues, the first few months of in-person training establish foundations that make the remote format significantly more effective."
+        }
+      ],
+      "seo": {
+        "title": "Personal Trainer Brighton Melbourne | Peak Form Training",
+        "description": "Personal training for Brighton clients at our South Yarra studio. Online coaching also available — same programming, no commute. 12-week programs from $1,890."
+      }
+    },
+    {
+      "slug": "hawthorn",
+      "suburb": "Hawthorn",
+      "state": "VIC",
+      "headline": "Personal Training in Hawthorn | Peak Form Training",
+      "intro": "Hawthorn clients reach our South Yarra studio in 15 minutes via Toorak Rd, or by train to South Yarra station from Hawthorn station on the Glen Waverley or Alamein lines.",
+      "body": "Hawthorn is well connected to South Yarra by both road and rail. The train takes around 12 minutes from Hawthorn station to South Yarra station, making it a straightforward commute for early morning sessions before work in the CBD.\n\nPeak Form serves a mix of Hawthorn clients: university students wanting structured training, professionals in their 30s managing desk-job physiques, and sport-specific athletes from the local clubs. The strength and conditioning program sees consistent interest from Hawthorn clients involved in football, rowing and tennis.",
+      "landmarks": [
+        "Hawthorn train station",
+        "Glenferrie Road",
+        "Swinburne University",
+        "Yarra River walking trails",
+        "Hawthorn Aquatic and Leisure Centre"
+      ],
+      "services_offered": [
+        "personal-training",
+        "strength-conditioning",
+        "small-group-training",
+        "body-transformation-program"
+      ],
+      "benefits": [
+        "Train from Hawthorn station direct to South Yarra (12 minutes)",
+        "Strength programs suited to football, rowing and tennis athletes",
+        "Group sessions for students training with flatmates or teammates",
+        "Morning sessions from 6am for pre-work commuters"
+      ],
+      "sections": [
+        {
+          "heading": "Sport-specific training for Hawthorn athletes",
+          "body": "Hawthorn has a strong sporting culture — local clubs in football, cricket, rowing and basketball all draw members who want to improve their physical performance. Peak Form's strength and conditioning programming for athletes is based on their specific sport demands: power development for football, endurance base for rowing, rotational strength for cricket and tennis. The trainer can liaise with club coaches if you have an existing program framework to work within."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-hawthorn-1",
+          "question": "Do you offer student discounts?",
+          "answer": "We offer group session pricing that's popular with students — $55/person for small group training makes it significantly cheaper than 1-on-1 sessions. Students who bring a training partner or two can access the same coaching quality at a lower per-person cost. Contact us to discuss options."
+        }
+      ],
+      "seo": {
+        "title": "Personal Trainer Hawthorn | Peak Form Training South Yarra",
+        "description": "Personal training for Hawthorn clients. 12-minute train to South Yarra station. Strength, conditioning and group training programs. Sport-specific programming available."
+      }
+    }
+  ],
+  "service_areas": [
+    {
+      "slug": "personal-training-south-yarra",
+      "service_slug": "personal-training",
+      "service_title": "1-on-1 Personal Training",
+      "suburb": "South Yarra",
+      "state": "VIC",
+      "headline": "1-on-1 Personal Training in South Yarra",
+      "intro": "South Yarra is where Peak Form Training is based. Studio sessions run from 6am at our Toorak Rd studio, with trainers available across all key time slots.",
+      "body": "South Yarra clients have direct access to the Peak Form studio on Toorak Rd. 1-on-1 personal training here means a dedicated trainer, a private studio environment and a program that advances week by week based on tracked results.\n\nThe South Yarra training market has a high density of boutique studios and franchise gyms. What Peak Form offers is different: sessions are planned in advance, loads are tracked to the kilogram, and the program changes when the data says it should — not on a fixed rotation. The trainer brings your session plan to each session and adjusts based on how you performed last time.\n\nFor South Yarra residents, the location on Toorak Rd means sessions are practical before work, at lunch or after 5pm. Parking is available on Toorak Rd and surrounding streets, and the studio is a 6-minute walk from South Yarra train station.",
+      "benefits": [
+        "Based in South Yarra — no commute for local clients",
+        "Private studio with no equipment wait times",
+        "Sessions available 6am–8pm weekdays and 7am–1pm Saturdays",
+        "Programs tracked and advanced based on weekly data"
+      ],
+      "sections": [
+        {
+          "heading": "Why South Yarra clients choose Peak Form",
+          "body": "South Yarra has options — but most of them are either expensive boutique studios charging $150+ per session, large commercial gyms with no programming support, or group fitness formats that don't adapt to individual needs. Peak Form sits in between: qualified 1-on-1 training at a competitive rate with genuine programming rigour.\n\nNew South Yarra clients typically come from one of three backgrounds: people who've been going to a gym without measurable progress, people returning after a break who need a structured re-entry, and people who've hit a plateau on self-written programs and want an objective set of eyes on their training."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-personal-training-south-yarra-1",
+          "question": "How do I get started?",
+          "answer": "Call (03) 9826 4411 or email info@peakformtraining.com.au to book your free assessment session. The first session establishes your baseline and we'll discuss which program format suits your goals and schedule."
+        }
+      ],
+      "seo": {
+        "title": "Personal Training South Yarra | Peak Form — Studio on Toorak Rd",
+        "description": "1-on-1 personal training at Peak Form's South Yarra studio. Structured programs, tracked weekly. 6am start times. Walk from South Yarra station. From $95/session."
+      }
+    },
+    {
+      "slug": "group-training-toorak",
+      "service_slug": "small-group-training",
+      "service_title": "Small Group Training",
+      "suburb": "Toorak",
+      "state": "VIC",
+      "headline": "Small Group Training for Toorak Clients",
+      "intro": "Group training sessions at our South Yarra studio are a practical option for Toorak clients wanting qualified coaching at a shared cost. The studio is a short drive along Toorak Rd.",
+      "body": "Small group training at Peak Form suits Toorak clients who want structured programming without the full cost of 1-on-1 sessions. Groups run at 2–4 people, capped to maintain coaching quality. The program is built for the group's shared goals and scaled per individual — you train together but you're not all lifting the same weight.\n\nToorak clients often book group sessions with colleagues, neighbours or training partners they already know. Bringing your own group of 3–4 gets an additional 10% discount on block purchases. The trainer manages the group dynamic, paces each person appropriately and tracks individual progress across sessions.\n\nSessions are scheduled across the week in morning and evening blocks. Toorak Road provides a direct 5-minute drive to the studio from most parts of Toorak, and street parking is generally available at both early morning and evening times.",
+      "benefits": [
+        "Groups capped at 4 — genuine coaching not just supervision",
+        "5-minute drive from Toorak Village along Toorak Rd",
+        "Discount for groups of 3–4 who book together",
+        "Individual scaling within group sessions"
+      ],
+      "sections": [
+        {
+          "heading": "Forming a Toorak group",
+          "body": "Several Toorak-based groups have formed at Peak Form — colleagues, couples and neighbours who train together regularly. To start a group, call us to discuss availability and we'll schedule an initial session to assess the group baseline. Groups formed together have more consistent programming than individuals joining random groups, because the trainer can write specifically for that cohort's goals."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-group-training-toorak-1",
+          "question": "What days and times are group sessions available?",
+          "answer": "Group sessions run Monday to Friday at 6am, 7am, 12pm, 5:30pm and 6:30pm. Saturday sessions are available at 7:30am and 9am. Times are subject to availability — call to check current open spots."
+        }
+      ],
+      "seo": {
+        "title": "Small Group Training Toorak | Peak Form South Yarra Studio",
+        "description": "Small group personal training for Toorak clients. 5-minute drive from Toorak Village. Groups capped at 4, qualified trainer, from $55/person per session."
+      }
+    },
+    {
+      "slug": "personal-training-prahran",
+      "service_slug": "personal-training",
+      "service_title": "1-on-1 Personal Training",
+      "suburb": "Prahran",
+      "state": "VIC",
+      "headline": "1-on-1 Personal Training for Prahran Clients",
+      "intro": "Prahran clients reach our South Yarra studio via Chapel Street or the 72 tram. The studio is a 10-minute walk from Prahran Market and a short ride from the Prahran train station.",
+      "body": "Prahran is well connected to our South Yarra studio. The 72 tram on Chapel Street runs to Toorak Rd, where the studio is located, in under 10 minutes. For Prahran clients without a car, this makes studio sessions practical without driving.\n\nPersoanl training for Prahran clients covers the same structured format as all Peak Form sessions: a program written before you arrive, loads tracked throughout and an updated plan ready for next time. Prahran's mix of residents — hospitality workers with irregular hours, young professionals, established families — means the trainer adapts session times and program structures to fit varied schedules.\n\nCasual sessions are available at $115 each. Block packages start at 5 sessions for $475, with a free assessment session for all new clients. The trainer also offers a lunchtime slot popular with Prahran clients who work from home and can fit a session in the middle of the day.",
+      "benefits": [
+        "10-minute tram from Chapel Street on route 72",
+        "Lunchtime session slots popular with work-from-home Prahran clients",
+        "Flexible scheduling for shift workers and irregular schedules",
+        "Free assessment session for all new Prahran clients"
+      ],
+      "sections": [
+        {
+          "heading": "How the assessment session works",
+          "body": "New Prahran clients start with a 45-minute assessment — free of charge. This covers a movement screen, a conversation about training history and goals, and a short training block at controlled loads. The trainer uses this to set your starting program. There's no obligation to continue after the assessment, but most clients book their first paid session before they leave."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-personal-training-prahran-1",
+          "question": "Can I do sessions more than once a week?",
+          "answer": "Yes. Most clients train 2–4 times per week. The program is written to account for the training frequency you've committed to — rest days and recovery are built into the schedule, not left to chance."
+        }
+      ],
+      "seo": {
+        "title": "Personal Training Prahran | Peak Form South Yarra",
+        "description": "1-on-1 personal training for Prahran clients at our South Yarra studio. 10-minute tram on Chapel Street route 72. From $95/session, free assessment for new clients."
+      }
+    },
+    {
+      "slug": "strength-conditioning-armadale",
+      "service_slug": "strength-conditioning",
+      "service_title": "Strength & Conditioning",
+      "suburb": "Armadale",
+      "state": "VIC",
+      "headline": "Strength & Conditioning Training for Armadale Clients",
+      "intro": "Armadale clients access our South Yarra studio via Toorak Rd for periodised strength and conditioning programming. Sport-specific training available for local athletes.",
+      "body": "Armadale is directly connected to South Yarra via Toorak Rd, making the 8-minute drive one of the more straightforward commutes in our catchment. Strength and conditioning clients from Armadale tend to have specific performance goals — sport return, strength targets, or movement quality after injury or inactivity.\n\nThe strength and conditioning program at Peak Form uses periodised blocks with defined strength targets. Each block lasts 4–8 weeks and advances based on measured results. For Armadale athletes, the trainer builds sport-specific blocks that peak the right physical qualities at competition time — not just pushing volume year-round.\n\nThe studio is equipped with a full barbell and rack setup, dumbbells across the full weight range, conditioning equipment and cable machines. Sessions are structured around compound movements with targeted accessory work. Load targets are set at or above current maxes, which is the key difference between a structured strength program and general gym training.",
+      "benefits": [
+        "8-minute drive from Armadale via Toorak Rd",
+        "Periodised blocks targeting specific strength qualities",
+        "Sport-specific programming for tennis, football and golf athletes",
+        "Monthly max testing to track strength progress accurately"
+      ],
+      "sections": [
+        {
+          "heading": "Periodised programming explained",
+          "body": "Periodisation means planning training in phases with different goals — building a strength base, then accumulating volume, then peaking for maximum effort. Each phase feeds into the next. Without this structure, most people stall after 3–6 months of training because their program isn't changing fast enough to drive adaptation.\n\nFor Armadale clients, the trainer maps out a 12–16 week block at the start of the engagement and sets strength targets for key lifts at the end of the block. Hitting those targets is the measure of success — not whether you felt tired after each session."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-strength-conditioning-armadale-1",
+          "question": "How heavy do strength sessions get?",
+          "answer": "Load depends on your baseline and goals. The trainer sets starting loads based on the assessment and increases them progressively. By the end of a 12-week block, most clients are working at or above their previous 1-rep max on key movements. The progression is systematic — not about adding weight every session, but about accumulating the right stimulus over the block."
+        }
+      ],
+      "seo": {
+        "title": "Strength & Conditioning Armadale | Peak Form Training",
+        "description": "Periodised strength and conditioning for Armadale clients at our South Yarra studio. Sport-specific programming, monthly max testing. 8-minute drive via Toorak Rd."
+      }
+    },
+    {
+      "slug": "online-coaching-melbourne",
+      "service_slug": "online-coaching",
+      "service_title": "Online Coaching",
+      "suburb": "Melbourne",
+      "state": "VIC",
+      "headline": "Online Personal Training Coaching — Melbourne & Australia-Wide",
+      "intro": "Peak Form's online coaching service delivers full programming, weekly check-ins and form video reviews to clients anywhere in Melbourne or across Australia. Same qualified trainers, no studio commute required.",
+      "body": "Online coaching from Peak Form is available to clients across Melbourne and Australia-wide. The service is built for people who travel frequently, prefer training at their own gym, or live outside our studio catchment but want structured programming from a qualified trainer.\n\nThe online format covers everything the in-studio service does, minus the in-person sessions: a custom 4-week training program, weekly check-in reviews where you report training results and the trainer responds with feedback, form video review within 24 hours, and a monthly program update based on progress data. Nutrition guidance is included in both pricing tiers.\n\nMelbourne clients using online coaching typically train at commercial gyms across the inner suburbs — Fitness First, Virgin Active, F45 or local independent gyms. The trainer writes the program around whatever equipment your gym has. For clients with a home gym setup, the program is adjusted to available equipment without compromising the programming logic.",
+      "benefits": [
+        "Available across Melbourne and Australia-wide",
+        "Program written for your actual gym or home setup",
+        "Weekly check-in with written trainer feedback",
+        "Form video review with corrections within 24 hours",
+        "No commute — train at a gym near home or work"
+      ],
+      "sections": [
+        {
+          "heading": "How online coaching works in practice",
+          "body": "After signing up, you complete an onboarding form covering training history, goals, available equipment and schedule. The trainer uses this to write your first 4-week training block. Every Sunday, you submit a brief check-in: which sessions you completed, how they felt and any relevant feedback. The trainer reviews this within 24 hours and notes any program adjustments.\n\nForm video submissions work the same way — you upload a clip of a key movement and the trainer sends written notes on corrections, plus a demonstration video if needed. At the end of the 4-week block, the trainer assesses your data and writes the next block. You never have the same program twice."
+        },
+        {
+          "heading": "Who online coaching suits",
+          "body": "Online coaching works well for clients who already have solid gym habits but lack direction, frequent travellers who need a program that travels with them, people who've done in-person training before and understand how to execute a program safely, and Melbourne clients who live outside the South Yarra catchment. It's less suitable for beginners with significant technique gaps — the in-person format is more appropriate for that."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "faq-online-coaching-melbourne-1",
+          "question": "Can I switch from online to in-person later?",
+          "answer": "Yes. Many clients start with online coaching and move to in-person sessions when their schedule changes or they want direct coaching. The transition is seamless — the trainer already knows your program history."
+        },
+        {
+          "id": "faq-online-coaching-melbourne-2",
+          "question": "Is there a minimum contract period?",
+          "answer": "No. Online coaching is month-to-month. You can cancel before your next billing date without penalty. We don't offer week-to-week billing as the program works best over at least 4-week blocks, but there's no lock-in beyond the current month."
+        }
+      ],
+      "seo": {
+        "title": "Online Personal Training Melbourne | Peak Form Training",
+        "description": "Online coaching from Peak Form Training — custom programming, weekly check-ins and form video reviews. Available across Melbourne and Australia-wide. From $149/month."
+      }
+    }
+  ],
+  "faq": {
+    "heading": "Frequently asked questions",
+    "intro": "Common questions about personal training at Peak Form Training in South Yarra.",
+    "items": [
+      {
+        "id": "faq-site-1",
+        "question": "Where is the studio located?",
+        "answer": "The studio is at Studio 3, 221 Toorak Rd, South Yarra VIC 3141. It's a 6-minute walk from South Yarra train station and accessible by tram routes 58 and 8 on Chapel Street. Street parking is available on Toorak Rd and surrounding streets."
+      },
+      {
+        "id": "faq-site-2",
+        "question": "Do you offer a free first session?",
+        "answer": "Yes. All new clients receive a complimentary 45-minute assessment session. This covers a movement screen, a conversation about your goals and training history, and a short training block at controlled loads. There's no obligation to book further sessions after the assessment."
+      },
+      {
+        "id": "faq-site-3",
+        "question": "Are there lock-in contracts?",
+        "answer": "No. Sessions are sold in blocks (5, 10 or monthly unlimited) or casually. Block credits are valid for 12 months from purchase and unused credits are refundable if you can no longer train. Online coaching is month-to-month with cancellation before the next billing date."
+      },
+      {
+        "id": "faq-site-4",
+        "question": "What are your session prices?",
+        "answer": "1-on-1 personal training starts at $95 per session in blocks. Small group training (2–4 people) is from $55 per person. Online coaching starts at $149/month. The 12-week body transformation program starts at $1,890 for three sessions per week. Post-injury and rehabilitation training starts at $110 per session."
+      },
+      {
+        "id": "faq-site-5",
+        "question": "What qualifications do the trainers hold?",
+        "answer": "All Peak Form trainers hold a Certificate IV in Fitness and current first-aid certification. The studio is fully insured for public liability. Trainers do not hold medical qualifications — for post-injury clients, we work alongside your GP or physiotherapist."
+      },
+      {
+        "id": "faq-site-6",
+        "question": "Can I train if I have a health condition or recent injury?",
+        "answer": "Many clients train with existing conditions or in post-injury phases. For recent surgeries or complex injuries, we require written clearance from your GP or physiotherapist before starting. The trainer coordinates with your treating practitioner on load restrictions and progressions. We are a fitness service — not a medical or allied health provider."
+      },
+      {
+        "id": "faq-site-7",
+        "question": "How do I book?",
+        "answer": "Call (03) 9826 4411 or email info@peakformtraining.com.au. The first step is the free assessment session — from there, the trainer will recommend the program format that suits your goals and budget."
+      },
+      {
+        "id": "faq-site-8",
+        "question": "Do you offer nutrition coaching?",
+        "answer": "Nutrition guidance is included in the 12-week body transformation program and both online coaching tiers. For standalone sessions, the trainer can provide a practical nutrition framework as part of the program — this is not a substitute for dietitian advice and we don't provide clinical dietary prescriptions."
+      }
+    ],
+    "seo": {
+      "title": "FAQ — Peak Form Training South Yarra",
+      "description": "Answers to common questions about personal training at Peak Form Training in South Yarra. Pricing, session formats, qualifications, booking and more."
+    }
+  },
+  "about": {
+    "heading": "About Peak Form Training",
+    "body": "Peak Form Training has operated from South Yarra for six years. The studio on Toorak Rd started as a single-trainer operation and now runs three qualified trainers across 1-on-1, group and online formats.\n\nEvery trainer at Peak Form holds a Certificate IV in Fitness and current first-aid certification. The studio carries full public liability insurance. We're not a franchise — the programming approach, session structure and client management systems are ours, developed through six years of tracking what actually works.\n\nThe client base covers a wide range: first-timers who've never been in a gym, competitive athletes in off-season training, older adults managing chronic conditions through exercise, and working professionals fitting three sessions per week around demanding schedules. The common thread is that they want their training to produce measurable results — not just feel hard.\n\nWe don't do before-and-after photos as a marketing tool. Progress is tracked through load records, body composition measurements and movement quality assessments. If you're doing better than you were six months ago on those metrics, the training is working.",
+    "photo_url": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1200&q=80",
+    "years_in_business": 6,
+    "licence": "Cert IV Fitness | First Aid | Public Liability Insured",
+    "values": [
+      {
+        "id": "v-1",
+        "title": "Structured programming",
+        "body": "Every session is written before you arrive and updated based on what you did last time. No improvised workouts. No generic templates recycled across all clients.",
+        "icon": "Activity"
+      },
+      {
+        "id": "v-2",
+        "title": "Tracked results",
+        "body": "Progress is measured in specific metrics — load on the bar, body composition data, timed performance. Not how you feel, not effort ratings. Concrete numbers that tell you whether the training is working.",
+        "icon": "TrendingUp"
+      },
+      {
+        "id": "v-3",
+        "title": "No lock-in contracts",
+        "body": "Sessions are sold in blocks with 12-month expiry or casually. Online coaching is month-to-month. You stay because the training works, not because you're contractually obligated.",
+        "icon": "ShieldCheck"
+      },
+      {
+        "id": "v-4",
+        "title": "Qualified trainers only",
+        "body": "Every trainer holds a Cert IV in Fitness minimum, plus current first-aid. We don't take on trainers mid-study or with only a short-course qualification.",
+        "icon": "BadgeCheck"
+      },
+      {
+        "id": "v-5",
+        "title": "Small studio, focused sessions",
+        "body": "The studio is designed for 2–3 concurrent clients maximum. No crowded floors, no equipment waits, no background noise that makes coaching ineffective.",
+        "icon": "Dumbbell"
+      },
+      {
+        "id": "v-6",
+        "title": "Direct trainer communication",
+        "body": "You deal with your trainer directly — not a receptionist or a booking platform. When something about your program needs to change, you call or message the trainer and it happens.",
+        "icon": "Users"
+      }
+    ],
+    "seo": {
+      "title": "About Peak Form Training | South Yarra Personal Training Studio",
+      "description": "Peak Form Training has operated in South Yarra for 6 years. Qualified trainers (Cert IV Fitness), structured programming and tracked results. No lock-in contracts."
+    }
+  }
+}
