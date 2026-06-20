@@ -10,7 +10,7 @@ const TESTIMONIALS = [
     name: "Dave S.",
     role: "Electrician, Penrith NSW",
     quote:
-      "I was getting maybe 5 calls a week from Google. Now I get 22. The site went live in about 45 seconds and looked exactly like what I'd pay an agency $5k for.",
+      "I was getting maybe 5 calls a week from Google. Now I get 22. The site went live in about 45 seconds and looked exactly like what I'd pay an agency $5,000 for.",
     rating: 5 as const,
   },
   {
@@ -54,8 +54,8 @@ export default function TradesPage() {
       category="trades"
       heroImage="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1600&q=80"
       tag="For Tradies"
-      headline="Get more local jobs."
-      subheadline="See your new website in 60 seconds. Built from your Google Business Profile."
+      headline="More local jobs. Starting today."
+      subheadline="Enter your details and see your finished website in 60 seconds. Built from your Google listing — no setup, no agency."
       subNiches={[
         "Electrician",
         "Plumber",

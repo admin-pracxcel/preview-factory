@@ -24,14 +24,14 @@ function StarRating({ count }: { count: number }) {
 
 export default function Testimonials({ items, heading = "What local businesses are saying" }: TestimonialsProps) {
   return (
-    <section className="w-full bg-slate-50 py-20 px-6">
+    <section className="w-full bg-[#0A0F1E] py-24 px-6">
       <div className="max-w-5xl mx-auto">
         {/* Heading */}
-        <div className="text-center mb-12">
-          <p className="text-sm font-semibold text-blue-600 uppercase tracking-widest mb-3">
+        <div className="text-center mb-14">
+          <p className="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-3">
             Real results
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+          <h2 className="font-[family-name:var(--font-sora)] font-extrabold text-4xl text-white tracking-tight">
             {heading}
           </h2>
         </div>
@@ -41,27 +41,27 @@ export default function Testimonials({ items, heading = "What local businesses a
           {items.map((t, i) => (
             <div
               key={i}
-              className="bg-white border border-slate-100 rounded-2xl p-7 flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white/5 border border-white/10 rounded-2xl p-7 flex flex-col gap-4"
             >
               {/* Stars */}
               <StarRating count={t.rating} />
 
               {/* Quote */}
-              <p className="text-slate-700 text-sm leading-relaxed italic flex-1">
+              <p className="text-white/70 text-sm leading-relaxed italic flex-1">
                 &ldquo;{t.quote}&rdquo;
               </p>
 
               {/* Author */}
-              <div className="flex items-center gap-3 pt-2 border-t border-slate-100">
+              <div className="flex items-center gap-3 pt-2 border-t border-white/10">
                 {/* Avatar initials */}
-                <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
-                  <span className="text-xs font-bold text-blue-700">
+                <div className="w-9 h-9 rounded-full bg-blue-800 flex items-center justify-center shrink-0">
+                  <span className="text-xs font-bold text-blue-200">
                     {t.name.charAt(0)}
                   </span>
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-slate-900">{t.name}</p>
-                  <p className="text-xs text-slate-500">{t.role}</p>
+                  <p className="text-white text-sm font-bold">{t.name}</p>
+                  <p className="text-white/40 text-xs">{t.role}</p>
                 </div>
               </div>
             </div>

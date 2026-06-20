@@ -75,7 +75,7 @@ function CopyButton({ text }: { text: string }) {
     <button
       type="button"
       onClick={handleCopy}
-      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-400 hover:text-white hover:border-slate-500 text-xs font-medium transition-colors shrink-0"
+      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 text-white/60 hover:text-white hover:border-white/40 text-xs font-medium transition-colors shrink-0"
     >
       {copied ? (
         <>
@@ -164,32 +164,34 @@ export default function WelcomePage() {
   }
 
   return (
-    <div className="flex flex-col flex-1 min-h-screen bg-slate-950 text-white">
+    <div className="flex flex-col flex-1 min-h-screen bg-[#0A0F1E] text-white">
       {/* Header */}
       <header className="px-6 py-5 max-w-2xl mx-auto w-full">
-        <div className="text-lg font-bold text-white">Preview Factory</div>
+        <div className="text-xl font-[family-name:var(--font-sora)] font-extrabold text-white">
+          Preview Factory
+        </div>
       </header>
 
-      <main className="flex flex-1 flex-col items-center px-6 py-8">
+      <main className="flex flex-1 flex-col items-center px-6 py-12">
         <div className="w-full max-w-xl flex flex-col gap-8">
 
           {/* Hero */}
           <div className="text-center flex flex-col gap-3">
             <StarBurst />
-            <h1 className="text-4xl sm:text-5xl font-black tracking-tight">
+            <h1 className="font-[family-name:var(--font-sora)] font-extrabold text-4xl sm:text-5xl text-white tracking-tight mt-4">
               Your site is live.
             </h1>
-            <p className="text-slate-400 text-lg">
-              It is permanently published at the address below.
+            <p className="text-white/55 text-lg mt-2">
+              It is permanently published at the address below. Share it anywhere.
             </p>
           </div>
 
           {/* URL card */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4">
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col gap-4">
+            <p className="text-white/40 text-xs font-bold uppercase tracking-widest">
               Your permanent web address
             </p>
-            <div className="flex items-center gap-3 bg-slate-800 rounded-xl px-4 py-3">
+            <div className="bg-black/30 rounded-xl px-4 py-3 flex items-center gap-3">
               <span className="flex-1 text-blue-400 font-mono text-sm break-all">
                 {siteUrl}
               </span>
@@ -199,7 +201,7 @@ export default function WelcomePage() {
               href={siteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold text-sm transition-colors"
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold text-sm transition-colors mt-4"
             >
               <ExternalLink className="w-4 h-4" />
               Visit your site
@@ -213,47 +215,47 @@ export default function WelcomePage() {
               href={siteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-3 bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-600 transition-colors text-center"
+              className="flex flex-col items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-colors text-center"
             >
-              <div className="w-10 h-10 rounded-xl bg-blue-600/15 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-blue-900/40 flex items-center justify-center">
                 <ExternalLink className="w-5 h-5 text-blue-400" />
               </div>
-              <span className="text-sm font-semibold text-white">Visit your site</span>
+              <span className="text-white font-semibold text-sm">Visit your site</span>
             </a>
 
             {/* Share */}
             <button
               type="button"
               onClick={handleShare}
-              className="flex flex-col items-center gap-3 bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-600 transition-colors text-center"
+              className="flex flex-col items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-colors text-center"
             >
-              <div className="w-10 h-10 rounded-xl bg-green-600/15 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-green-900/40 flex items-center justify-center">
                 <Share2 className="w-5 h-5 text-green-400" />
               </div>
-              <span className="text-sm font-semibold text-white">Share with a friend</span>
+              <span className="text-white font-semibold text-sm">Share with a friend</span>
             </button>
 
             {/* Update logo */}
             <Link
               href={`/preview/${id}`}
-              className="flex flex-col items-center gap-3 bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-600 transition-colors text-center"
+              className="flex flex-col items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-colors text-center"
             >
-              <div className="w-10 h-10 rounded-xl bg-purple-600/15 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-purple-900/40 flex items-center justify-center">
                 <Palette className="w-5 h-5 text-purple-400" />
               </div>
-              <span className="text-sm font-semibold text-white">Update your logo</span>
+              <span className="text-white font-semibold text-sm">Update your logo</span>
             </Link>
           </div>
 
           {/* SMS editing */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <MessageSquare className="w-5 h-5 text-blue-400 shrink-0" />
               <h2 className="text-base font-bold text-white">
                 Update your site anytime
               </h2>
             </div>
-            <p className="text-slate-300 text-sm leading-relaxed">
+            <p className="text-white/60 text-sm leading-relaxed">
               Text your changes to{" "}
               <a
                 href="sms:+611800000000"
@@ -263,11 +265,11 @@ export default function WelcomePage() {
               </a>
               . We will update your site within 2 hours. No logins. No portals.
             </p>
-            <div className="bg-slate-800 rounded-xl p-4">
-              <p className="text-xs text-slate-500 font-semibold mb-3 uppercase tracking-wide">
+            <div className="bg-black/30 rounded-xl p-4">
+              <p className="text-xs text-white/30 font-semibold mb-3 uppercase tracking-wide">
                 Example messages
               </p>
-              <ul className="flex flex-col gap-2 text-xs text-slate-400">
+              <ul className="flex flex-col gap-2 text-xs text-white/50">
                 {[
                   "Update my phone number to 0412 345 678",
                   "Add carpet cleaning to my services",
@@ -283,7 +285,7 @@ export default function WelcomePage() {
           </div>
 
           {/* What happens next timeline */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col gap-5">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col gap-5">
             <h2 className="text-base font-bold text-white">What happens next</h2>
             <div className="flex flex-col gap-0">
               {TIMELINE.map((item, i) => (
@@ -292,16 +294,16 @@ export default function WelcomePage() {
                   <div className="flex flex-col items-center">
                     <div className={`w-3 h-3 rounded-full shrink-0 mt-1 ${item.colour}`} />
                     {i < TIMELINE.length - 1 && (
-                      <div className="w-px flex-1 bg-slate-800 my-1" />
+                      <div className="w-px flex-1 bg-white/10 my-1" />
                     )}
                   </div>
                   {/* Content */}
-                  <div className={`pb-5 ${i < TIMELINE.length - 1 ? "" : ""}`}>
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-0.5">
+                  <div className="pb-5">
+                    <p className="text-xs font-bold text-white/30 uppercase tracking-widest mb-0.5">
                       {item.period}
                     </p>
-                    <p className="text-sm font-semibold text-slate-200">{item.event}</p>
-                    <p className="text-xs text-slate-500 mt-1">{item.sub}</p>
+                    <p className="text-sm font-semibold text-white/80">{item.event}</p>
+                    <p className="text-xs text-white/40 mt-1">{item.sub}</p>
                   </div>
                 </div>
               ))}
@@ -309,12 +311,12 @@ export default function WelcomePage() {
           </div>
 
           {/* Footer links */}
-          <div className="text-center flex flex-col gap-2 text-sm text-slate-500">
+          <div className="text-center text-white/30 text-sm">
             <p>
               Need help?{" "}
               <a
                 href="tel:1800000000"
-                className="text-slate-300 hover:text-white transition-colors"
+                className="text-white/60 hover:text-white transition-colors"
               >
                 Call 1800 XXX XXX
               </a>{" "}
@@ -322,7 +324,7 @@ export default function WelcomePage() {
             </p>
             <Link
               href="/"
-              className="text-xs text-slate-700 hover:text-slate-400 transition-colors"
+              className="text-xs text-white/20 hover:text-white/40 transition-colors mt-2 inline-block"
             >
               Back to Preview Factory
             </Link>

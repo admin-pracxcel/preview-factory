@@ -7,44 +7,40 @@ export const metadata = {
 
 const TESTIMONIALS = [
   {
-    name: "Sarah K.",
+    name: "Maria C.",
     role: "Physiotherapist, Chatswood NSW",
     quote:
-      "I was relying on word of mouth. Three weeks after my site went live I had 11 new bookings from Google searches. It just works.",
+      "I had no website at all. Three weeks after going live I was getting enquiries from Google for the first time.",
     rating: 5 as const,
   },
   {
-    name: "Emma R.",
-    role: "Chiropractor, Brisbane QLD",
+    name: "Ben A.",
+    role: "Osteopath, Fitzroy VIC",
     quote:
-      "The site looked professional from day one. AHPRA-compliant, my services listed properly, showing up in local searches. I could not have built this myself.",
+      "Setup took literally one minute. My Google profile already had all my info — the site just appeared.",
     rating: 5 as const,
   },
   {
-    name: "Tom H.",
-    role: "Osteopath, South Yarra VIC",
+    name: "Priya S.",
+    role: "Massage Therapist, Bondi NSW",
     quote:
-      "I was sceptical about a 60-second website but the result was genuinely impressive. My patients comment on how professional it looks.",
+      "Clients tell me they found me on Google now. Before, they would just walk past.",
     rating: 5 as const,
   },
 ];
 
 const FAQS = [
   {
-    q: "Is the site AHPRA-compliant?",
-    a: "Yes. Sites for regulated health professions avoid testimonial claims about clinical outcomes and do not include guarantee language. Your registration details are shown as supplied.",
+    q: "Is the site AHPRA compliant?",
+    a: "Yes. We do not include patient testimonials about clinical outcomes, and we never fabricate credentials or treatment claims. All content is based on your Google Business Profile data.",
   },
   {
-    q: "Can patients book directly from the site?",
-    a: "Yes. Your phone number and a booking link (if you have one) are featured prominently on every page.",
+    q: "Can I list my AHPRA registration number?",
+    a: "Yes. After your preview goes live, SMS us your registration number and we will add it to your about page within 2 hours.",
   },
   {
-    q: "What if I work from multiple locations?",
-    a: "Each location gets its own page with locally-relevant content. Let us know your locations when you sign up.",
-  },
-  {
-    q: "How long does it take to set up?",
-    a: "Your preview is live in under 60 seconds. Full site with your branding takes about 10 minutes.",
+    q: "What if my Google profile has wrong information?",
+    a: "SMS us after you receive your preview link. We will update any details within 2 hours.",
   },
 ];
 
@@ -54,20 +50,21 @@ export default function AlliedHealthPage() {
       category="allied-health"
       heroImage="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1600&q=80"
       tag="For Allied Health"
-      headline="Fill your appointment book."
-      subheadline="A professional clinic website, live in 60 seconds. No web designer needed."
+      headline="More local patients. Starting this week."
+      subheadline="See your finished allied health website in 60 seconds. AHPRA-compliant, built from your Google listing."
       subNiches={[
         "Physiotherapist",
         "Chiropractor",
-        "Massage Therapist",
         "Osteopath",
-        "Podiatrist",
+        "Massage Therapist",
         "Occupational Therapist",
+        "Psychologist",
         "Dietitian",
+        "Speech Therapist",
         "Other allied health",
       ]}
       previewRoute="/preview/allied-health"
-      previewCaption="Your site will include clinic pages, an appointment booking link, and local SEO. Built in under 60 seconds."
+      previewCaption="Your site will include a homepage, 6 service pages, 8 suburb pages, and your AHPRA details."
       testimonials={TESTIMONIALS}
       faqs={FAQS}
       accentClass="bg-teal-600 hover:bg-teal-500 active:bg-teal-700"

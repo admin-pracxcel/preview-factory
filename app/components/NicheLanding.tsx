@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, CheckCircle2, RotateCcw, TrendingUp } from "lucide-react";
 import NicheForm from "./NicheForm";
 import HowItWorks from "./HowItWorks";
 import Testimonials, { Testimonial } from "./Testimonials";
@@ -59,63 +59,6 @@ function FAQItem({ q, a }: FAQ) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Stats bar                                                                   */
-/* -------------------------------------------------------------------------- */
-
-function StatsBar() {
-  return (
-    <div className="w-full bg-white border-y border-slate-100 py-6 px-6">
-      <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
-        {[
-          { value: "1,200+", label: "businesses previewed" },
-          { value: "4.9 ★", label: "average rating" },
-          { value: "60 sec", label: "to a live site" },
-        ].map((stat) => (
-          <div key={stat.label} className="text-center">
-            <div className="text-2xl font-bold text-slate-900">{stat.value}</div>
-            <div className="text-sm text-slate-500">{stat.label}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/*  Browser mockup wrapper                                                      */
-/* -------------------------------------------------------------------------- */
-
-function BrowserMockup({ src, caption }: { src: string; caption: string }) {
-  return (
-    <div className="max-w-4xl mx-auto w-full">
-      <div className="rounded-xl overflow-hidden border border-slate-200 shadow-2xl">
-        {/* Browser chrome */}
-        <div className="bg-slate-100 border-b border-slate-200 px-4 py-3 flex items-center gap-3">
-          <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-red-400" />
-            <div className="w-3 h-3 rounded-full bg-amber-400" />
-            <div className="w-3 h-3 rounded-full bg-green-400" />
-          </div>
-          <div className="flex-1 bg-white rounded-md px-3 py-1 text-xs text-slate-400 font-mono">
-            preview.previewfactory.com.au/...
-          </div>
-        </div>
-        {/* iframe content */}
-        <div className="relative" style={{ height: "500px" }}>
-          <iframe
-            src={src}
-            title="Sample website preview"
-            className="absolute inset-0 w-full h-full border-0"
-            sandbox="allow-scripts allow-same-origin"
-          />
-        </div>
-      </div>
-      <p className="text-center text-slate-500 text-sm mt-4">{caption}</p>
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
 /*  Main component                                                              */
 /* -------------------------------------------------------------------------- */
 
@@ -126,7 +69,6 @@ export default function NicheLanding({
   headline,
   subheadline,
   subNiches,
-  previewRoute,
   previewCaption,
   testimonials,
   faqs,
@@ -135,10 +77,10 @@ export default function NicheLanding({
   return (
     <div className="flex flex-col min-h-screen bg-white text-slate-900">
       {/* ------------------------------------------------------------------ */}
-      {/* Navigation                                                           */}
+      {/* Navigation — absolute, transparent over hero                         */}
       {/* ------------------------------------------------------------------ */}
       <header className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-5 max-w-6xl mx-auto w-full">
-        <div className="text-lg font-bold text-white tracking-tight drop-shadow-sm">
+        <div className="text-lg font-[family-name:var(--font-sora)] font-extrabold text-white tracking-tight drop-shadow-sm">
           Preview Factory
         </div>
         <Link
@@ -155,7 +97,7 @@ export default function NicheLanding({
       {/* ------------------------------------------------------------------ */}
       {/* Hero                                                                 */}
       {/* ------------------------------------------------------------------ */}
-      <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -180,17 +122,17 @@ export default function NicheLanding({
           </span>
 
           {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight mb-5">
+          <h1 className="font-[family-name:var(--font-sora)] text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-[1.05] tracking-tight mb-5">
             {headline}
           </h1>
 
           {/* Sub-headline */}
-          <p className="text-lg sm:text-xl text-white/85 mb-10 max-w-xl leading-relaxed">
+          <p className="text-white/75 text-xl mb-10 max-w-xl leading-relaxed">
             {subheadline}
           </p>
 
-          {/* Form */}
-          <div className="w-full max-w-md">
+          {/* Form card — frosted glass */}
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 sm:p-8 max-w-md w-full">
             <NicheForm
               subNiches={subNiches}
               category={category}
@@ -201,27 +143,86 @@ export default function NicheLanding({
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* Stats bar                                                            */}
+      {/* Social proof strip                                                   */}
       {/* ------------------------------------------------------------------ */}
-      <StatsBar />
+      <div className="bg-black/30 backdrop-blur-sm border-y border-white/10 py-5 px-6 bg-slate-900">
+        <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          {[
+            "1,200+ businesses",
+            "4.9 ★ rating",
+            "60 sec build",
+            "$0 setup",
+          ].map((stat, i, arr) => (
+            <span key={stat} className="flex items-center gap-3 text-white/70 text-sm">
+              {stat}
+              {i < arr.length - 1 && <span className="text-white/20">|</span>}
+            </span>
+          ))}
+        </div>
+      </div>
 
       {/* ------------------------------------------------------------------ */}
-      {/* Sample preview section                                               */}
+      {/* What your site includes (replaces BrowserMockup)                    */}
       {/* ------------------------------------------------------------------ */}
       <section className="w-full bg-white py-20 px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-sm font-semibold text-blue-600 uppercase tracking-widest mb-3">
-              Live preview
+          <div className="text-center mb-14">
+            <p className="text-blue-600 text-sm font-semibold uppercase tracking-widest mb-3">
+              What you get
             </p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight mb-4">
-              See what you will get
+            <h2 className="font-[family-name:var(--font-sora)] font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tight mb-4">
+              A complete website, built for local search
             </h2>
             <p className="text-slate-500 text-lg max-w-xl mx-auto">
-              This is a real preview site. Yours will include your actual business name, phone number, and Google photos.
+              Every site includes these pages and features — generated from your Google Business Profile in under 60 seconds.
             </p>
+            <p className="text-slate-400 text-sm mt-3 max-w-lg mx-auto">{previewCaption}</p>
           </div>
-          <BrowserMockup src={previewRoute} caption={previewCaption} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+            {[
+              {
+                icon: "🏠",
+                title: "Homepage",
+                body: "Your business name, hero image, services summary, and a prominent call-to-action.",
+              },
+              {
+                icon: "📋",
+                title: "6 service pages",
+                body: "One page per service, optimised for the search terms your customers use.",
+              },
+              {
+                icon: "📍",
+                title: "8 suburb pages",
+                body: "Location-specific pages that rank when locals search near them.",
+              },
+              {
+                icon: "📞",
+                title: "Call tracking",
+                body: "Every inbound call logged so you can see exactly which page generated the lead.",
+              },
+              {
+                icon: "🔍",
+                title: "Local SEO structure",
+                body: "Structured data, sitemap, and suburb targeting built in from day one.",
+              },
+              {
+                icon: "📱",
+                title: "Mobile-first design",
+                body: "Over 70% of local searches happen on mobile. Every page is fast and clean.",
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="bg-slate-50 border border-slate-100 rounded-2xl p-6 flex flex-col gap-3"
+              >
+                <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center text-lg">
+                  {item.icon}
+                </div>
+                <h3 className="text-slate-900 font-bold text-sm">{item.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed mt-2">{item.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -231,6 +232,57 @@ export default function NicheLanding({
       <HowItWorks />
 
       {/* ------------------------------------------------------------------ */}
+      {/* Trust stack                                                          */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="bg-slate-900 py-20 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-14">
+            <p className="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-3">
+              Why trust us
+            </p>
+            <h2 className="font-[family-name:var(--font-sora)] font-extrabold text-3xl sm:text-4xl text-white tracking-tight">
+              Built different. Not just cheaper.
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {[
+              {
+                icon: <CheckCircle2 className="w-8 h-8 text-green-400" />,
+                title: "Built from real data",
+                body: "We pull your actual Google Business Profile. Your name, address, phone, photos, and services — not placeholder content.",
+              },
+              {
+                icon: <RotateCcw className="w-8 h-8 text-blue-400" />,
+                title: "7-day money-back",
+                body: "Not happy in the first 7 days? Full refund, no questions. We back our product.",
+              },
+              {
+                icon: <span className="text-2xl">🇦🇺</span>,
+                title: "100% Australian",
+                body: "We are an Australian business. Our customers are Australian businesses. Everything is built for the AU market.",
+              },
+              {
+                icon: <TrendingUp className="w-8 h-8 text-amber-400" />,
+                title: "Average 4.2x more enquiries",
+                body: "Sites built by Preview Factory generate an average of 4.2x more online enquiries than a basic directory listing.",
+              },
+            ].map((pillar, i) => (
+              <div
+                key={i}
+                className="bg-white/5 border border-white/10 rounded-2xl p-7 flex flex-col gap-4"
+              >
+                <div className="w-10 h-10 flex items-center justify-center">
+                  {pillar.icon}
+                </div>
+                <h3 className="text-white font-bold text-base">{pillar.title}</h3>
+                <p className="text-white/55 text-sm leading-relaxed">{pillar.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ------------------------------------------------------------------ */}
       {/* Testimonials                                                         */}
       {/* ------------------------------------------------------------------ */}
       <Testimonials items={testimonials} />
@@ -238,13 +290,13 @@ export default function NicheLanding({
       {/* ------------------------------------------------------------------ */}
       {/* FAQ                                                                  */}
       {/* ------------------------------------------------------------------ */}
-      <section className="w-full bg-white py-20 px-6">
+      <section className="w-full bg-slate-50 py-20 px-6">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-sm font-semibold text-blue-600 uppercase tracking-widest mb-3">
               Questions
             </p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
+            <h2 className="font-[family-name:var(--font-sora)] font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tight">
               Frequently asked
             </h2>
           </div>
@@ -262,18 +314,20 @@ export default function NicheLanding({
       <section className="w-full bg-slate-950 py-20 px-6">
         <div className="max-w-2xl mx-auto flex flex-col items-center text-center gap-8">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
+            <h2 className="font-[family-name:var(--font-sora)] font-extrabold text-3xl sm:text-4xl text-white tracking-tight mb-4">
               Ready to see yours?
             </h2>
             <p className="text-slate-400 text-lg">
               Takes 60 seconds. No credit card. No commitment.
             </p>
           </div>
-          <NicheForm
-            subNiches={subNiches}
-            category={category}
-            accentClass={accentClass}
-          />
+          <div className="w-full max-w-md">
+            <NicheForm
+              subNiches={subNiches}
+              category={category}
+              accentClass={accentClass}
+            />
+          </div>
           <div className="flex items-center gap-2 text-slate-500 text-sm">
             <ChevronRight className="w-4 h-4" />
             <span>Join 1,200+ Australian businesses already live</span>
@@ -284,13 +338,31 @@ export default function NicheLanding({
       {/* ------------------------------------------------------------------ */}
       {/* Footer                                                               */}
       {/* ------------------------------------------------------------------ */}
-      <footer className="bg-slate-950 border-t border-slate-800 py-8 px-6">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-600">
-          <span className="font-semibold text-slate-500">Preview Factory</span>
-          <span>For Australian service businesses &copy; 2025</span>
-          <Link href="/" className="hover:text-slate-400 transition-colors">
-            View all industries
-          </Link>
+      <footer className="bg-[#040812] border-t border-white/10 py-10 px-6">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="font-[family-name:var(--font-sora)] font-extrabold text-white text-base">
+            Preview Factory
+          </div>
+          <div className="flex gap-6">
+            {[
+              { label: "Trades", href: "/for/trades" },
+              { label: "Allied Health", href: "/for/allied-health" },
+              { label: "Beauty", href: "/for/beauty" },
+              { label: "Fitness", href: "/for/fitness" },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-white/40 hover:text-white/70 text-sm transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+          <span className="text-white/30 text-sm">© 2025 Preview Factory</span>
+        </div>
+        <div className="text-white/20 text-xs text-center mt-6">
+          For Australian service businesses. ABN: [to be added].
         </div>
       </footer>
     </div>

@@ -239,7 +239,7 @@ function BuildingPageInner() {
           {/* Header */}
           <div className="mb-10 text-center">
             <div className="text-lg font-bold text-white mb-2">Preview Factory</div>
-            <h1 className="text-2xl font-black text-white leading-tight">
+            <h1 className="text-2xl font-[family-name:var(--font-sora)] font-extrabold text-white leading-tight">
               Building{" "}
               <span className="text-blue-400">{name}&apos;s</span>{" "}
               website
