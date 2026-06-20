@@ -495,10 +495,12 @@
       ],
       "faqs": [
         {
+          "id": "faq-loc-parramatta-1",
           "question": "Can you work in strata buildings and apartment blocks in Parramatta?",
           "answer": "Yes — we work in both strata and freehold apartments across Parramatta regularly. We coordinate with building managers where access or shared infrastructure is involved and handle the required compliance paperwork."
         },
         {
+          "id": "faq-loc-parramatta-2",
           "question": "Do you handle office and retail fit-out electrical work?",
           "answer": "Absolutely. Our licensed team does data cabling, three-phase power, emergency lighting compliance and general fit-out electrical for commercial spaces across the Parramatta CBD and surrounds."
         }
@@ -532,10 +534,12 @@
       ],
       "faqs": [
         {
+          "id": "faq-loc-castle-hill-1",
           "question": "Which EV charger brands do you install in Castle Hill?",
           "answer": "We install all major brands including Tesla Wall Connector, Ocular, Wallbox and Charge Amps. We'll recommend the right charger for your car model, home wiring and budget, and handle the full installation and grid approval."
         },
         {
+          "id": "faq-loc-castle-hill-2",
           "question": "How long does a solar installation take in Castle Hill?",
           "answer": "Most residential solar installs take one day. We handle everything from the design and paperwork through to the grid connection approval, so you're generating your own power as quickly as possible."
         }
@@ -569,10 +573,12 @@
       ],
       "faqs": [
         {
+          "id": "faq-loc-st-marys-1",
           "question": "My switchboard has ceramic fuses — do I need to upgrade it?",
           "answer": "Older ceramic fuse boards don't provide the safety protection of modern circuit breakers and safety switches. We strongly recommend upgrading to a modern switchboard — it's required before adding solar or high-draw appliances, and improves your home's safety significantly. We quote upgrades from $850 installed."
         },
         {
+          "id": "faq-loc-st-marys-2",
           "question": "How do I know if my older St Marys home needs rewiring?",
           "answer": "Warning signs include flickering lights, frequently tripping circuits, burning smells from power points, or wiring made of aluminium or rubber (common in homes built before 1980). We offer a full safety inspection and provide a clear written report — no obligation to proceed."
         }
@@ -606,10 +612,12 @@
       ],
       "faqs": [
         {
+          "id": "faq-loc-quakers-hill-1",
           "question": "What solar rebates are available for Quakers Hill homeowners?",
           "answer": "Quakers Hill residents are eligible for the federal Small-scale Technology Certificate (STC) rebate, which reduces the upfront cost of a solar system. We calculate the rebate value and deduct it directly from your quote — no chasing the paperwork yourself."
         },
         {
+          "id": "faq-loc-quakers-hill-2",
           "question": "Can I add a battery to my existing solar system?",
           "answer": "In most cases, yes. We assess your current inverter and panels to confirm compatibility, then recommend the right battery size for your usage. Popular options include the Tesla Powerwall and Enphase IQ Battery. We handle the full installation and grid approval."
         }

@@ -20,6 +20,86 @@ import { readFileSync, readdirSync, statSync, existsSync, mkdirSync, writeFileSy
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { execSync } from "node:child_process";
+import { createRequire } from "node:module";
+
+const _require = createRequire(import.meta.url);
+const { z } = _require("zod");
+
+// ---- Inline Zod schema for the fields most likely to drift between prompt and
+// TypeScript definition (contact.hours, testimonials, faqItem IDs, etc.).
+// This catches schema-invalid generated sites even when AUTOPILOT_SKIP_BUILD=1,
+// without needing to compile the TypeScript schema first.
+
+const hoursEntrySchema = z.object({ label: z.string(), value: z.string() });
+const faqItemSchema = z.object({ id: z.string(), question: z.string(), answer: z.string() });
+const contentBlockSchema = z.object({ heading: z.string().optional(), body: z.string() });
+const pageSeoSchema = z.object({ title: z.string(), description: z.string().optional() });
+
+const contactSchema = z.object({
+  heading: z.string().optional(),
+  phone: z.string().optional(),
+  email: z.string().optional(),
+  address: z.string().optional(),
+  hours: z.array(hoursEntrySchema).optional(),
+  cta: z.any().optional(),
+});
+
+const servicePageSchema = z.object({
+  slug: z.string(),
+  title: z.string(),
+  summary: z.string().default(""),
+  icon: z.string().optional(),
+  starting_price: z.string().optional(),
+  hero_image: z.string().optional(),
+  intro: z.string().default(""),
+  benefits: z.array(z.string()).default([]),
+  sections: z.array(contentBlockSchema).default([]),
+  faqs: z.array(faqItemSchema).default([]),
+  seo: pageSeoSchema,
+});
+
+const locationPageSchema = z.object({
+  slug: z.string(),
+  suburb: z.string(),
+  state: z.string().optional(),
+  headline: z.string().optional(),
+  intro: z.string().default(""),
+  body: z.string().optional(),
+  hero_image: z.string().optional(),
+  landmarks: z.array(z.string()).default([]),
+  services_offered: z.array(z.string()).default([]),
+  benefits: z.array(z.string()).default([]),
+  sections: z.array(contentBlockSchema).default([]),
+  faqs: z.array(faqItemSchema).default([]),
+  seo: pageSeoSchema,
+});
+
+const serviceAreaPageSchema = z.object({
+  slug: z.string(),
+  service_slug: z.string(),
+  service_title: z.string(),
+  suburb: z.string(),
+  state: z.string().optional(),
+  headline: z.string(),
+  intro: z.string().optional(),
+  body: z.string(),
+  benefits: z.array(z.string()).default([]),
+  sections: z.array(contentBlockSchema).default([]),
+  faqs: z.array(faqItemSchema).default([]),
+  seo: pageSeoSchema,
+});
+
+const sitePropsSafeSchema = z.object({
+  business: z.object({ name: z.string(), phone: z.string() }).passthrough(),
+  branding: z.object({ primary_color: z.string(), accent_color: z.string() }).passthrough(),
+  home: z.object({
+    hero: z.object({ headline: z.string() }).passthrough(),
+    contact: contactSchema.optional(),
+  }).passthrough(),
+  services: z.array(servicePageSchema).default([]),
+  locations: z.array(locationPageSchema).default([]),
+  service_areas: z.array(serviceAreaPageSchema).default([]),
+}).passthrough();
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
@@ -71,6 +151,16 @@ function gradeSite(file) {
   try { site = JSON.parse(readFileSync(file, "utf8")); }
   catch (e) { fail(`${file}: invalid JSON (${e.message})`); return; }
   const tag = file.replace(REPO + "/", "");
+
+  // Schema-shape validation (runs even when AUTOPILOT_SKIP_BUILD=1).
+  // Catches field-name mismatches (e.g. contact.hours using {days,hours} instead
+  // of {label,value}) that would cause a ZodError in the Next.js preview route.
+  const schemaResult = sitePropsSafeSchema.safeParse(site);
+  if (!schemaResult.success) {
+    for (const issue of schemaResult.error.issues) {
+      fail(`${tag}: schema violation at ${issue.path.join(".")}: ${issue.message}`);
+    }
+  }
 
   // business / NAP present
   const b = site.business || {};

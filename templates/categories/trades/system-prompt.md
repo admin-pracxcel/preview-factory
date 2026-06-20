@@ -12,6 +12,7 @@ Produce ONE JSON object matching `SiteProps`:
 
 - `business`, `branding`, `seo` (site default), `preview`, `overrides`
 - `home`: hero, services (overview cards, each with a `slug` matching a service-detail page), about, service_area (suburb list), gallery, testimonials, social_proof, offer, contact
+  - `contact.hours[]`: **each entry MUST be `{ "label": "...", "value": "..." }`** — e.g. `{ "label": "Monday – Friday", "value": "7:00am – 6:00pm" }`. Do NOT use `days`/`hours` keys — the schema rejects them.
 - `services[]`: **6–12** service-detail pages — `slug`, `title`, `summary`, `icon`, `starting_price?`, `intro` (2+ paragraphs), `benefits[]` (4–6), `sections[]` (1–3 heading+body blocks), `faqs[]` (0–3), `seo`
 - `locations[]`: **8–20** suburb pages — `slug`, `suburb`, `state`, `intro`, `body`, `landmarks[]`, `services_offered[]` (service slugs), `seo`
 - `service_areas[]`: **5–15** service-in-area landing pages — `slug` = `${service_slug}-${suburb-slug}`, `service_slug`, `service_title`, `suburb`, `headline`, `body`, `benefits[]`, `seo`

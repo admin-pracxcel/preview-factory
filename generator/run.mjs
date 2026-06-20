@@ -117,7 +117,13 @@ const sitePropsMiniSchema = z.object({
     testimonials: z.array(z.any()).optional(),
     social_proof: z.any().optional(),
     offer: z.any().optional(),
-    contact: z.any().optional(),
+    contact: z.object({
+      heading: z.string().optional(),
+      phone: z.string().optional(),
+      email: z.string().optional(),
+      address: z.string().optional(),
+      hours: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
+    }).optional(),
   }),
   services: z.array(servicePageSchema).default([]),
   locations: z.array(locationPageSchema).default([]),
@@ -285,6 +291,8 @@ ${reviewsText}
 - home.gallery[]: 6 items {id, image_url (Unsplash URL), caption}
 - home.offer: {headline, description, price, code, cta: {label, href}}
 - home.contact: {heading, phone, email: "info@clearflowplumbing.com.au", address, hours[4]}
+  CRITICAL — hours entries MUST use { "label": "...", "value": "..." } (NOT "days"/"hours" keys).
+  Example: { "label": "Monday – Friday", "value": "7:00am – 6:00pm" }
 - faq: {heading, items[5 Q&A], seo: {title, description}}
 - about: {heading, body (100+ words), years_in_business: 11, licence: "VIC Plumbing Lic. No. 51234", values[4 each {id,title,body,icon}], seo}
 - branding: {primary_color: "#0f2a55", secondary_color: "#07193a", accent_color: "#e85d04", logo_url: "", hero_image_url: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=1600&q=80", font_heading: "Inter"}
