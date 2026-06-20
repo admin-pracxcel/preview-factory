@@ -1,0 +1,641 @@
+{
+  "business": {
+    "name": "Voltvale Electrical",
+    "tagline": "Licensed electricians for Western Sydney homes & business",
+    "phone": "0455 210 760",
+    "email": "book@voltvale.com.au",
+    "suburb": "Penrith",
+    "state": "NSW",
+    "abn": "61 204 887 113"
+  },
+  "branding": {
+    "primary_color": "#0f2a4a",
+    "secondary_color": "#0a1c33",
+    "accent_color": "#f7b500",
+    "logo_url": "",
+    "hero_image_url": "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1600&q=80",
+    "font_heading": "Inter"
+  },
+  "seo": {
+    "title": "Voltvale Electrical | Licensed Electricians Penrith & Western Sydney",
+    "description": "Fast, licensed electricians across Penrith and Western Sydney. Emergency call-outs, switchboard upgrades, solar & battery, EV chargers and rewiring. Upfront pricing, 24/7 service.",
+    "schema_org_type": "Electrician"
+  },
+  "home": {
+    "hero": {
+      "headline": "Power problems? Licensed electricians, on the road today.",
+      "subheadline": "Emergency faults, switchboard upgrades, solar, EV chargers and rewires across Penrith and Western Sydney. Upfront fixed pricing and 24/7 emergency call-outs.",
+      "cta_primary": { "label": "Call 0455 210 760", "href": "tel:+61455210760" },
+      "cta_secondary": { "label": "Get a free quote", "href": "#contact" }
+    },
+    "services": [
+      {
+        "id": "h-emergency",
+        "slug": "emergency-electrician",
+        "title": "24/7 Emergency Electrician",
+        "description": "Power outages, burning smells, tripping safety switches and electrical faults handled around the clock.",
+        "icon": "Siren",
+        "starting_price": "From $99 call-out"
+      },
+      {
+        "id": "h-switchboard",
+        "slug": "switchboard-upgrades",
+        "title": "Switchboard Upgrades",
+        "description": "Replace old ceramic-fuse boards with safe modern switchboards and RCD safety switches.",
+        "icon": "Zap",
+        "starting_price": "From $900"
+      },
+      {
+        "id": "h-solar",
+        "slug": "solar-battery",
+        "title": "Solar & Battery",
+        "description": "CEC-accredited solar panel and home battery installs to cut your power bills.",
+        "icon": "Sun",
+        "starting_price": "Free quote"
+      },
+      {
+        "id": "h-ev",
+        "slug": "ev-charger-installation",
+        "title": "EV Charger Installation",
+        "description": "Safe, compliant home and workplace EV charger installation for every make.",
+        "icon": "BatteryCharging",
+        "starting_price": "From $750"
+      },
+      {
+        "id": "h-lighting",
+        "slug": "lighting-downlights",
+        "title": "Lighting & Downlights",
+        "description": "LED downlight upgrades, outdoor lighting, ceiling fans and smart lighting.",
+        "icon": "Lightbulb",
+        "starting_price": "From $120"
+      },
+      {
+        "id": "h-rewiring",
+        "slug": "rewiring-safety",
+        "title": "Rewiring & Safety",
+        "description": "Full and partial rewires, safety inspections and smoke alarm compliance.",
+        "icon": "ShieldCheck"
+      }
+    ],
+    "about": {
+      "heading": "Local, licensed and on time, every time",
+      "body": "Voltvale Electrical has kept Western Sydney homes and businesses safely powered for over 14 years. We're a local team of fully licensed electricians who turn up when we say we will, quote before we start, and leave your place clean and safe. From a tripping safety switch to a full solar-and-battery install, we treat every job like it's our own home.",
+      "photo_url": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80",
+      "years_in_business": 14,
+      "licence": "NSW Electrical Lic. No. 248861C"
+    },
+    "service_area": {
+      "heading": "Proudly serving Penrith & Western Sydney",
+      "intro": "If your suburb isn't listed, give us a call — chances are we cover it too.",
+      "suburbs": [
+        "Penrith",
+        "Blacktown",
+        "Parramatta",
+        "Castle Hill",
+        "St Marys",
+        "Kingswood",
+        "Glenmore Park",
+        "Quakers Hill",
+        "Rouse Hill",
+        "Kellyville"
+      ]
+    },
+    "gallery": [
+      {
+        "id": "g1",
+        "image_url": "https://images.unsplash.com/photo-1558389186-438424b00a6b?auto=format&fit=crop&w=900&q=80",
+        "caption": "Switchboard upgrade, Glenmore Park"
+      },
+      {
+        "id": "g2",
+        "image_url": "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=900&q=80",
+        "caption": "6.6kW solar install, Blacktown"
+      },
+      {
+        "id": "g3",
+        "image_url": "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=900&q=80",
+        "caption": "Home EV charger, Castle Hill"
+      },
+      {
+        "id": "g4",
+        "image_url": "https://images.unsplash.com/photo-1565608438257-fac3c27beb36?auto=format&fit=crop&w=900&q=80",
+        "caption": "LED downlight upgrade, Penrith"
+      },
+      {
+        "id": "g5",
+        "image_url": "https://images.unsplash.com/photo-1621905252472-943afaa20e20?auto=format&fit=crop&w=900&q=80",
+        "caption": "Emergency fault repair, St Marys"
+      },
+      {
+        "id": "g6",
+        "image_url": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=900&q=80",
+        "caption": "Outdoor lighting, Kellyville"
+      }
+    ],
+    "testimonials": [
+      {
+        "id": "t1",
+        "quote": "Our safety switch kept tripping at 9pm with a newborn in the house. Voltvale had someone here within the hour, found the fault and fixed it on the spot. Lifesavers.",
+        "author": "Megan T.",
+        "location": "Glenmore Park",
+        "rating": 5
+      },
+      {
+        "id": "t2",
+        "quote": "Got three quotes for solar and a battery — Voltvale explained it the clearest and weren't the dearest. Install was tidy and they handled all the paperwork.",
+        "author": "Anh & Dave P.",
+        "location": "Blacktown",
+        "rating": 5
+      },
+      {
+        "id": "t3",
+        "quote": "Booked an EV charger install. On time, fixed price, and they walked me through how to use it before they left. Highly recommend.",
+        "author": "Robert K.",
+        "location": "Castle Hill",
+        "rating": 5
+      }
+    ],
+    "social_proof": {
+      "heading": "Why locals trust us",
+      "items": [
+        { "id": "sp1", "value": "Fully licensed & insured", "icon": "BadgeCheck" },
+        { "id": "sp2", "value": "4.9★ from 410+ reviews", "icon": "Star" },
+        { "id": "sp3", "value": "Same-day & 24/7 service", "icon": "Clock" },
+        { "id": "sp4", "value": "Upfront fixed pricing", "icon": "DollarSign" }
+      ]
+    },
+    "offer": {
+      "headline": "$50 off your first booking",
+      "description": "Mention this website when you call and we'll take $50 off any job over $250 booked this month.",
+      "price": "$50 off",
+      "code": "WEB50",
+      "cta": { "label": "Claim this offer", "href": "tel:+61455210760" }
+    },
+    "contact": {
+      "heading": "Get in touch",
+      "phone": "0455 210 760",
+      "email": "book@voltvale.com.au",
+      "address": "Unit 7, 12 Production Pl, Penrith NSW 2750",
+      "hours": [
+        { "label": "Mon – Fri", "value": "7:00am – 5:00pm" },
+        { "label": "Saturday", "value": "8:00am – 2:00pm" },
+        { "label": "Sunday", "value": "Emergency only" },
+        { "label": "Emergencies", "value": "24 hours, 7 days" }
+      ],
+      "cta": { "label": "Request a free quote", "href": "tel:+61455210760" }
+    }
+  },
+  "services": [
+    {
+      "slug": "emergency-electrician",
+      "title": "24/7 Emergency Electrician",
+      "summary": "Fast response to power outages, faults, burning smells and tripping safety switches — any hour, any day.",
+      "icon": "Siren",
+      "starting_price": "From $99 call-out",
+      "hero_image": "https://images.unsplash.com/photo-1621905252472-943afaa20e20?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Electrical emergencies don't wait for business hours — and neither do we. If you've lost power, can smell burning, have sparking outlets or a safety switch that won't stay on, call us and a licensed electrician will be on the road to you fast.\n\nWe arrive fully stocked, diagnose the fault on the spot, and tell you the fixed price before we start any work.",
+      "benefits": [
+        "Licensed electrician on the road within the hour",
+        "Available 24 hours, 7 days a week",
+        "Upfront fixed pricing before work starts",
+        "Fully insured and safety-certified work",
+        "Same-day repairs for most faults",
+        "Honest advice — we won't upsell you"
+      ],
+      "sections": [
+        {
+          "heading": "Common electrical emergencies we fix",
+          "body": "Total or partial power loss, safety switches that keep tripping, burning smells from outlets or the switchboard, sparking or scorched power points, hot light switches, storm and water damage, and fallen or damaged consumer mains. If it involves electricity and it can't wait, it's a job for us."
+        },
+        {
+          "heading": "Stay safe until we arrive",
+          "body": "If you can smell burning or see sparks, switch off power at the main switch if it's safe to do so, keep clear of any water near electrical fittings, and don't try to reset a switchboard repeatedly. Call us and we'll talk you through staying safe until our electrician arrives."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "f-em-1",
+          "question": "How quickly can you get to me?",
+          "answer": "For genuine emergencies across Penrith and Western Sydney we aim to have a licensed electrician on the road to you within the hour, day or night."
+        },
+        {
+          "id": "f-em-2",
+          "question": "What does an emergency call-out cost?",
+          "answer": "Our call-out starts from $99, and we always confirm the fixed price for any repair before we begin so there are no surprises."
+        }
+      ],
+      "seo": {
+        "title": "24/7 Emergency Electrician Penrith & Western Sydney | Voltvale",
+        "description": "Fast emergency electrician across Penrith and Western Sydney. Power outages, faults, burning smells and tripping safety switches fixed 24/7. From $99 call-out.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "switchboard-upgrades",
+      "title": "Switchboard Upgrades",
+      "summary": "Replace old, unsafe ceramic-fuse boards with a modern switchboard and RCD safety switches.",
+      "icon": "Zap",
+      "starting_price": "From $900",
+      "hero_image": "https://images.unsplash.com/photo-1558389186-438424b00a6b?auto=format&fit=crop&w=1600&q=80",
+      "intro": "If your home still has ceramic fuses or you don't have safety switches on every circuit, your switchboard is overdue for an upgrade. A modern board protects your family from electric shock and your home from electrical fires — and it's essential before adding solar, a battery or an EV charger.",
+      "benefits": [
+        "RCD safety switches on every circuit",
+        "Safe replacement of old ceramic-fuse boards",
+        "Ready for solar, battery and EV charging",
+        "Compliant certificate of electrical safety supplied",
+        "Tidy, labelled board you can actually understand",
+        "Fixed-price quote before we start"
+      ],
+      "sections": [
+        {
+          "heading": "Signs you need a switchboard upgrade",
+          "body": "Ceramic or rewireable fuses, no safety switches (RCDs), a board that's hot to touch, frequent tripping, flickering lights across the house, or simply running out of space to add new circuits. Older homes across Western Sydney very often need this done."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "f-sb-1",
+          "question": "How long does a switchboard upgrade take?",
+          "answer": "Most domestic switchboard upgrades are completed within a few hours, with only a short planned power interruption while we make the changeover."
+        }
+      ],
+      "seo": {
+        "title": "Switchboard Upgrades Penrith & Western Sydney | Voltvale Electrical",
+        "description": "Upgrade old ceramic-fuse switchboards to safe modern boards with RCD safety switches. Licensed electricians across Penrith and Western Sydney. From $900.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "solar-battery",
+      "title": "Solar & Battery Installation",
+      "summary": "CEC-accredited solar panel and home battery systems sized to slash your power bills.",
+      "icon": "Sun",
+      "starting_price": "Free quote",
+      "hero_image": "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Cut your power bills and take control of your energy with a properly designed solar and battery system. We're CEC-accredited installers and we size every system to your actual usage — not a one-size-fits-all sales pitch.",
+      "benefits": [
+        "CEC-accredited design and installation",
+        "Systems sized to your real energy usage",
+        "Quality panels, inverters and batteries",
+        "We handle rebates and grid-connection paperwork",
+        "Workmanship and product warranties",
+        "Honest payback estimates, no hard sell"
+      ],
+      "sections": [
+        {
+          "heading": "Solar, battery, or both?",
+          "body": "Solar alone delivers the fastest payback for most homes. Adding a battery stores your daytime generation for use at night and provides backup during outages. We'll model both options for your household and let you decide — there's never any pressure."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "f-sl-1",
+          "question": "Do you handle the rebates and paperwork?",
+          "answer": "Yes. We manage the STC rebate and the grid-connection application as part of every install, so you don't have to chase paperwork."
+        }
+      ],
+      "seo": {
+        "title": "Solar & Battery Installation Western Sydney | Voltvale Electrical",
+        "description": "CEC-accredited solar and home battery installation across Penrith and Western Sydney. Systems sized to your usage, rebates handled. Free quote.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "ev-charger-installation",
+      "title": "EV Charger Installation",
+      "summary": "Safe, compliant home and workplace EV charger installation for every make and model.",
+      "icon": "BatteryCharging",
+      "starting_price": "From $750",
+      "hero_image": "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Charge at home overnight and never queue at a public charger again. We install all major home and workplace EV chargers, assess your switchboard's capacity, and make sure everything is safe and compliant.",
+      "benefits": [
+        "Installation for all major charger brands",
+        "Switchboard and load assessment included",
+        "Compliant, certified installation",
+        "Tidy cable runs and weatherproof mounting",
+        "Advice on the right charger for your car",
+        "Fixed-price quote upfront"
+      ],
+      "sections": [
+        {
+          "heading": "Will my switchboard handle a charger?",
+          "body": "Many older homes need a switchboard check — and sometimes a small upgrade — before adding an EV charger. We assess your board's capacity as part of the quote and let you know exactly what's required, with no surprises on the day."
+        }
+      ],
+      "faqs": [
+        {
+          "id": "f-ev-1",
+          "question": "Which EV chargers do you install?",
+          "answer": "We install all major brands of home and workplace chargers. If you haven't bought one yet, we'll recommend the right charger for your vehicle and home."
+        }
+      ],
+      "seo": {
+        "title": "EV Charger Installation Penrith & Western Sydney | Voltvale",
+        "description": "Licensed EV charger installation for homes and workplaces across Western Sydney. All brands, switchboard assessment included, compliant. From $750.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "lighting-downlights",
+      "title": "Lighting & Downlights",
+      "summary": "LED downlight upgrades, outdoor and security lighting, ceiling fans and smart lighting.",
+      "icon": "Lightbulb",
+      "starting_price": "From $120",
+      "hero_image": "https://images.unsplash.com/photo-1565608438257-fac3c27beb36?auto=format&fit=crop&w=1600&q=80",
+      "intro": "Brighten your home and cut running costs with energy-efficient LED lighting. From swapping tired old downlights to designing outdoor and security lighting, we'll get the look and the light levels right.",
+      "benefits": [
+        "Energy-efficient LED downlight upgrades",
+        "Outdoor, garden and security lighting",
+        "Ceiling fan supply and installation",
+        "Smart and dimmable lighting setups",
+        "Safe removal of old halogen fittings",
+        "Clean, dust-managed installation"
+      ],
+      "sections": [],
+      "faqs": [],
+      "seo": {
+        "title": "LED Downlights & Lighting Penrith & Western Sydney | Voltvale",
+        "description": "LED downlight upgrades, outdoor and security lighting, ceiling fans and smart lighting across Western Sydney. Licensed electricians. From $120.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "rewiring-safety",
+      "title": "Rewiring & Safety Inspections",
+      "summary": "Full and partial rewires, electrical safety inspections and smoke alarm compliance.",
+      "icon": "ShieldCheck",
+      "intro": "Old or damaged wiring is one of the most common causes of house fires. Whether you're renovating, buying, or just want peace of mind, our rewiring and safety services keep your home protected and compliant.",
+      "benefits": [
+        "Full and partial home rewiring",
+        "Comprehensive electrical safety inspections",
+        "Smoke alarm supply, install and compliance",
+        "Pre-purchase and rental safety checks",
+        "Fault-finding for intermittent problems",
+        "Detailed written report supplied"
+      ],
+      "sections": [
+        {
+          "heading": "When does a home need rewiring?",
+          "body": "Homes built before the 1980s, or any home with cloth-insulated or perished wiring, frequent faults, discoloured outlets or no earthing often need partial or full rewiring. We'll inspect first and recommend only what's genuinely needed."
+        }
+      ],
+      "faqs": [],
+      "seo": {
+        "title": "Rewiring & Electrical Safety Inspections Western Sydney | Voltvale",
+        "description": "Full and partial rewiring, electrical safety inspections and smoke alarm compliance across Penrith and Western Sydney. Licensed and insured.",
+        "schema_org_type": "Service"
+      }
+    }
+  ],
+  "locations": [
+    {
+      "slug": "penrith",
+      "suburb": "Penrith",
+      "state": "NSW",
+      "intro": "Voltvale Electrical is based right here in Penrith — your local, licensed electricians for everything from emergency faults to solar and EV chargers.",
+      "body": "As a Penrith-based team, we know the local housing stock inside out — from older homes around the CBD that need switchboard upgrades to the new estates in Glenmore Park and Jordan Springs adding solar and EV chargers. Whatever the job, we're only minutes away.",
+      "hero_image": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1600&q=80",
+      "landmarks": ["Penrith CBD", "Glenmore Park", "Jordan Springs", "Kingswood", "Cambridge Park"],
+      "services_offered": [
+        "emergency-electrician",
+        "switchboard-upgrades",
+        "solar-battery",
+        "ev-charger-installation"
+      ],
+      "seo": {
+        "title": "Electrician Penrith | Voltvale Electrical — Local & Licensed",
+        "description": "Local licensed electricians in Penrith. Emergency call-outs, switchboard upgrades, solar, EV chargers and rewiring. Upfront pricing, 24/7 service.",
+        "schema_org_type": "Electrician"
+      }
+    },
+    {
+      "slug": "blacktown",
+      "suburb": "Blacktown",
+      "state": "NSW",
+      "intro": "Licensed electricians servicing Blacktown and surrounds — emergency repairs, switchboards, solar, battery and EV charging.",
+      "body": "We cover all of Blacktown and the surrounding suburbs, with a strong focus on solar and battery installs for the area's many family homes looking to cut power bills, plus fast emergency response when the power goes out.",
+      "landmarks": ["Blacktown CBD", "Marayong", "Kings Langley", "Doonside", "Prospect"],
+      "services_offered": ["solar-battery", "emergency-electrician", "switchboard-upgrades"],
+      "seo": {
+        "title": "Electrician Blacktown | Voltvale Electrical",
+        "description": "Licensed electricians in Blacktown. Emergency repairs, switchboard upgrades, solar and battery, EV chargers and rewiring. Free quotes, 24/7 service.",
+        "schema_org_type": "Electrician"
+      }
+    },
+    {
+      "slug": "parramatta",
+      "suburb": "Parramatta",
+      "state": "NSW",
+      "intro": "From apartments to commercial fit-outs, our licensed electricians cover all of Parramatta and the surrounding business district.",
+      "body": "Parramatta's mix of established homes, apartments and commercial spaces means varied electrical work — and we handle it all, from switchboard upgrades and office lighting to emergency faults and compliance inspections.",
+      "landmarks": ["Parramatta CBD", "Harris Park", "Westmead", "Rosehill", "North Parramatta"],
+      "services_offered": ["switchboard-upgrades", "lighting-downlights", "emergency-electrician"],
+      "seo": {
+        "title": "Electrician Parramatta | Voltvale Electrical",
+        "description": "Licensed electricians across Parramatta. Switchboard upgrades, lighting, emergency repairs, EV chargers and safety inspections. Upfront pricing.",
+        "schema_org_type": "Electrician"
+      }
+    },
+    {
+      "slug": "castle-hill",
+      "suburb": "Castle Hill",
+      "state": "NSW",
+      "intro": "Trusted electricians for Castle Hill and The Hills — EV chargers, solar, lighting design and home upgrades done to a high standard.",
+      "body": "Castle Hill homeowners increasingly come to us for EV charger installs and premium lighting, alongside the bread-and-butter of switchboards, safety and emergency work. We bring the same tidy, fixed-price service to every job.",
+      "landmarks": ["Castle Towers", "Baulkham Hills", "Kellyville", "Rouse Hill", "West Pennant Hills"],
+      "services_offered": ["ev-charger-installation", "lighting-downlights", "solar-battery"],
+      "seo": {
+        "title": "Electrician Castle Hill | Voltvale Electrical — The Hills",
+        "description": "Licensed electricians for Castle Hill and The Hills district. EV chargers, solar, lighting, switchboards and emergency repairs. Free quotes.",
+        "schema_org_type": "Electrician"
+      }
+    }
+  ],
+  "service_areas": [
+    {
+      "slug": "emergency-electrician-penrith",
+      "service_slug": "emergency-electrician",
+      "service_title": "Emergency Electrician",
+      "suburb": "Penrith",
+      "state": "NSW",
+      "headline": "Emergency electrician in Penrith — on the road to you fast",
+      "body": "Lost power, sparking outlets or a safety switch that won't reset? Our Penrith-based emergency electricians respond fast, any hour of the day or night. Because we're local, we're often at your door within the hour with the parts to fix most faults on the spot.",
+      "benefits": [
+        "Local Penrith team — fast response",
+        "Available 24/7, including public holidays",
+        "From $99 call-out, fixed price before we start",
+        "Most faults fixed on the first visit"
+      ],
+      "seo": {
+        "title": "Emergency Electrician Penrith | 24/7 | Voltvale Electrical",
+        "description": "24/7 emergency electrician in Penrith. Fast local response to power outages, faults and tripping safety switches. From $99 call-out.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "emergency-electrician-blacktown",
+      "service_slug": "emergency-electrician",
+      "service_title": "Emergency Electrician",
+      "suburb": "Blacktown",
+      "state": "NSW",
+      "headline": "24/7 emergency electrician in Blacktown",
+      "body": "An electrical fault is stressful — especially after hours. Our licensed electricians cover all of Blacktown around the clock, arriving fast to make your home safe and your power back on. Upfront pricing, no after-hours nasty surprises.",
+      "benefits": [
+        "Around-the-clock Blacktown coverage",
+        "Licensed, insured and safety-certified",
+        "Honest fixed pricing before any work",
+        "Fast diagnosis and same-visit repairs"
+      ],
+      "seo": {
+        "title": "Emergency Electrician Blacktown | 24/7 | Voltvale Electrical",
+        "description": "24/7 emergency electrician in Blacktown. Fast response to power loss, faults and safety-switch trips. Licensed, insured, fixed pricing.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "solar-battery-blacktown",
+      "service_slug": "solar-battery",
+      "service_title": "Solar & Battery",
+      "suburb": "Blacktown",
+      "state": "NSW",
+      "headline": "Solar & battery installation in Blacktown",
+      "body": "Blacktown's sunny rooftops and family-sized power bills make it ideal for solar. As CEC-accredited installers we design a system to your home's real usage, handle the rebates and paperwork, and install it tidily with quality gear and proper warranties.",
+      "benefits": [
+        "CEC-accredited local installers",
+        "Systems sized to your actual usage",
+        "STC rebates and grid paperwork handled",
+        "Quality panels, inverters and batteries"
+      ],
+      "seo": {
+        "title": "Solar & Battery Blacktown | Voltvale Electrical",
+        "description": "CEC-accredited solar and battery installation in Blacktown. Systems sized to your usage, rebates handled, quality gear. Free quote.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "ev-charger-installation-castle-hill",
+      "service_slug": "ev-charger-installation",
+      "service_title": "EV Charger Installation",
+      "suburb": "Castle Hill",
+      "state": "NSW",
+      "headline": "EV charger installation in Castle Hill",
+      "body": "Charge at home overnight and skip the public chargers. We install all major EV chargers for Castle Hill and The Hills homes, assess your switchboard capacity, and deliver a tidy, compliant install with a fixed price quoted upfront.",
+      "benefits": [
+        "All major charger brands installed",
+        "Switchboard capacity check included",
+        "Compliant, certified installation",
+        "Fixed-price quote before we start"
+      ],
+      "seo": {
+        "title": "EV Charger Installation Castle Hill | Voltvale Electrical",
+        "description": "Home EV charger installation in Castle Hill and The Hills. All brands, switchboard assessment, compliant and tidy. From $750.",
+        "schema_org_type": "Service"
+      }
+    },
+    {
+      "slug": "switchboard-upgrades-parramatta",
+      "service_slug": "switchboard-upgrades",
+      "service_title": "Switchboard Upgrades",
+      "suburb": "Parramatta",
+      "state": "NSW",
+      "headline": "Switchboard upgrades in Parramatta",
+      "body": "Many of Parramatta's established homes and apartments still run old ceramic-fuse boards without safety switches. We replace them with safe, modern switchboards — usually in a few hours — and supply a compliance certificate, ready for solar, battery or EV charging down the track.",
+      "benefits": [
+        "RCD safety switches on every circuit",
+        "Most upgrades done in a few hours",
+        "Compliance certificate supplied",
+        "Future-ready for solar and EV"
+      ],
+      "seo": {
+        "title": "Switchboard Upgrades Parramatta | Voltvale Electrical",
+        "description": "Switchboard upgrades in Parramatta. Replace old ceramic-fuse boards with safe modern boards and RCD safety switches. From $900.",
+        "schema_org_type": "Service"
+      }
+    }
+  ],
+  "faq": {
+    "heading": "Frequently asked questions",
+    "intro": "Quick answers to the questions Western Sydney homeowners ask us most.",
+    "items": [
+      {
+        "id": "faq-1",
+        "question": "Are you fully licensed and insured?",
+        "answer": "Yes. Voltvale Electrical holds NSW Electrical Licence No. 248861C and carries full public liability insurance. Every job is completed to Australian standards and we supply a certificate of electrical safety where required."
+      },
+      {
+        "id": "faq-2",
+        "question": "Do you charge a call-out fee?",
+        "answer": "Our emergency call-out starts from $99. For quoted work, we provide a fixed price upfront and there's no separate call-out fee once you proceed."
+      },
+      {
+        "id": "faq-3",
+        "question": "How fast can you come out for an emergency?",
+        "answer": "For genuine emergencies across Penrith and Western Sydney, we aim to have a licensed electrician on the road to you within the hour, 24 hours a day."
+      },
+      {
+        "id": "faq-4",
+        "question": "Do you give free quotes?",
+        "answer": "Yes — for installs and larger jobs like solar, EV chargers, switchboards and rewiring, we provide a free, no-obligation fixed-price quote."
+      },
+      {
+        "id": "faq-5",
+        "question": "What areas do you service?",
+        "answer": "We cover Penrith, Blacktown, Parramatta, Castle Hill and the surrounding Western Sydney and Hills suburbs. If you're not sure whether we reach you, just give us a call."
+      },
+      {
+        "id": "faq-6",
+        "question": "Do you offer a warranty on your work?",
+        "answer": "Absolutely. All our workmanship is guaranteed, and installed products carry their manufacturer warranties, which we'll explain before you go ahead."
+      }
+    ],
+    "seo": {
+      "title": "FAQ | Voltvale Electrical — Electricians Penrith & Western Sydney",
+      "description": "Answers to common questions about our licensed electrical services across Penrith and Western Sydney — licensing, call-out fees, response times and quotes.",
+      "schema_org_type": "FAQPage"
+    }
+  },
+  "about": {
+    "heading": "About Voltvale Electrical",
+    "body": "Voltvale Electrical has kept Western Sydney homes and businesses safely powered for over 14 years. What started as one licensed electrician and a ute is now a trusted local team — but our promise hasn't changed: turn up on time, quote before we start, do safe and tidy work, and treat your place like our own.\n\nWe're at our best on the everyday jobs that keep families safe and comfortable — switchboard upgrades, emergency faults, lighting, rewiring — and on the new wave of work powering the region's future: solar, home batteries and EV chargers.",
+    "photo_url": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80",
+    "years_in_business": 14,
+    "licence": "NSW Electrical Lic. No. 248861C",
+    "values": [
+      {
+        "id": "v1",
+        "title": "Safety first, always",
+        "body": "Electricity is unforgiving. We never cut corners — every job is done to Australian standards and left safe and compliant.",
+        "icon": "ShieldCheck"
+      },
+      {
+        "id": "v2",
+        "title": "Upfront, fixed pricing",
+        "body": "You'll always know the price before we start. No hourly-rate surprises, no padded invoices.",
+        "icon": "DollarSign"
+      },
+      {
+        "id": "v3",
+        "title": "On time, every time",
+        "body": "We respect your time. We turn up in the window we promise, and we keep you posted if anything changes.",
+        "icon": "Clock"
+      },
+      {
+        "id": "v4",
+        "title": "Local and accountable",
+        "body": "We live and work in Western Sydney. Our reputation here is everything, and it shows in our 410+ reviews.",
+        "icon": "MapPin"
+      }
+    ],
+    "seo": {
+      "title": "About Voltvale Electrical | Licensed Electricians Western Sydney",
+      "description": "Meet Voltvale Electrical — a local, licensed team keeping Western Sydney safely powered for 14+ years. Safety-first, fixed pricing, on time every time.",
+      "schema_org_type": "Electrician"
+    }
+  },
+  "preview": {
+    "countdown_enabled": true,
+    "countdown_to": "2026-07-31T23:59:59+10:00",
+    "countdown_label": "$50-off offer ends in"
+  },
+  "overrides": {}
+}

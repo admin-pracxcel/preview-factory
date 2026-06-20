@@ -1,0 +1,30 @@
+{
+  "comment": "Ordered build steps the lead agent works through. gate=true means stop and ask the human (visual quality, niche choice, money/credentials). The lead also reads MISSION.md/state.md; this is the machine-readable spine.",
+  "steps": [
+    { "id": "C-trades-checkpoint", "phase": "C", "gate": true,
+      "title": "Trades category visual sign-off",
+      "ask": "Review /preview/trades. Does it impress a real electrician/plumber? Approve to proceed, or redirect with specific design feedback." },
+
+    { "id": "D-generator", "phase": "D", "gate": false,
+      "do": "Build generator/index.ts. Prove a realistic GBP payload -> validated SiteProps for trades that PASSES grade.mjs. Flex the schema if real data needs it, then re-grade." },
+    { "id": "D-generator-checkpoint", "phase": "D", "gate": true,
+      "title": "Generation quality sign-off",
+      "ask": "Review a generated trades site (not the hand-authored example). Is the copy good enough to ship? Approve to mass-produce remaining categories, or redirect." },
+
+    { "id": "C-allied-health", "phase": "C", "gate": false, "do": "Build allied-health category (AHPRA-compliant). Grade must pass." },
+    { "id": "C-beauty", "phase": "C", "gate": false, "do": "Build beauty-aesthetics category (gallery + booking). Grade must pass." },
+    { "id": "C-fitness", "phase": "C", "gate": false, "do": "Build fitness-wellness category (timetable + IG). Grade must pass." },
+    { "id": "C-categories-checkpoint", "phase": "C", "gate": true,
+      "title": "Remaining categories visual sign-off",
+      "ask": "Review the three new categories. Approve or redirect per category." },
+
+    { "id": "E-funnel", "phase": "E", "gate": false, "do": "Build funnel pages per customer-journey.md (landing, building, preview, customise, expired, welcome)." },
+    { "id": "E-funnel-checkpoint", "phase": "E", "gate": true,
+      "title": "Funnel feel sign-off",
+      "ask": "Review the funnel end to end. Approve or redirect." },
+
+    { "id": "F-backend", "phase": "F", "gate": false, "do": "Write n8n workflow JSONs, supabase-schema.sql, deployment-checklist.md (specs only, no live calls)." },
+
+    { "id": "G-handoff", "phase": "G", "gate": false, "do": "Write what-human-must-do.md, then create autopilot/state/DONE and stop." }
+  ]
+}

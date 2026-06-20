@@ -1,0 +1,25 @@
+{
+  "$comment": "Belt-and-suspenders permissions for when you use the interactive Claude Code CLI in this repo. The autopilot supervisor enforces the same rules via hooks in autopilot/guards.mjs, which apply even if these are bypassed.",
+  "permissions": {
+    "allow": [
+      "Read", "Glob", "Grep",
+      "Edit", "Write",
+      "Bash(npm:*)", "Bash(npx:*)", "Bash(node:*)", "Bash(pnpm:*)", "Bash(yarn:*)",
+      "Bash(tsc:*)", "Bash(next:*)", "Bash(eslint:*)", "Bash(prettier:*)",
+      "Bash(git add:*)", "Bash(git commit:*)", "Bash(git status:*)", "Bash(git diff:*)",
+      "Bash(git checkout:*)", "Bash(git switch:*)", "Bash(git stash:*)",
+      "Bash(mkdir:*)", "Bash(cp:*)", "Bash(mv:*)", "Bash(ls:*)", "Bash(cat:*)",
+      "Bash(find:*)", "Bash(grep:*)", "Bash(rg:*)", "Bash(jq:*)"
+    ],
+    "deny": [
+      "Write(.env)", "Write(./.env)", "Edit(.env)",
+      "Write(.claude/**)", "Edit(.claude/**)",
+      "Write(autopilot/!(state)/**)", "Edit(autopilot/!(state)/**)",
+      "Bash(stripe:*)", "Bash(vercel:*)", "Bash(gcloud:*)", "Bash(aws:*)",
+      "Bash(curl:*)", "Bash(wget:*)", "Bash(ssh:*)", "Bash(scp:*)", "Bash(rsync:*)",
+      "Bash(git push:*)", "Bash(npm publish:*)", "Bash(npm login:*)",
+      "Bash(supabase db push:*)", "Bash(sudo:*)", "Bash(rm -rf:*)"
+    ]
+  },
+  "settingSources": ["project"]
+}

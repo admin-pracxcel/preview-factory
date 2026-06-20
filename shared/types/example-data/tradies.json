@@ -1,0 +1,187 @@
+{
+  "business": {
+    "name": "Ironbark Plumbing & Gas",
+    "tagline": "Licensed plumbers you can count on, day or night",
+    "phone": "0412 884 220",
+    "email": "jobs@ironbarkplumbing.com.au",
+    "suburb": "Newcastle",
+    "state": "NSW",
+    "abn": "54 113 902 776"
+  },
+  "branding": {
+    "primary_color": "#15314b",
+    "secondary_color": "#0c1f30",
+    "accent_color": "#f4622d",
+    "logo_url": "",
+    "hero_image_url": "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&w=1600&q=80",
+    "font_heading": "Inter"
+  },
+  "hero": {
+    "headline": "Blocked drains, burst pipes, no hot water? We'll be there today.",
+    "subheadline": "Fast, fully licensed plumbing and gas across Newcastle and the Hunter. Upfront pricing, no call-out surprises, 24/7 emergency service.",
+    "cta_primary": { "label": "Call 0412 884 220", "href": "tel:+61412884220" },
+    "cta_secondary": { "label": "Get a free quote", "href": "#contact" }
+  },
+  "services": [
+    {
+      "id": "svc-emergency",
+      "title": "24/7 Emergency Plumbing",
+      "description": "Burst pipes, major leaks and flooding handled around the clock, with a plumber on the road within the hour.",
+      "icon": "Siren",
+      "starting_price": "From $99 call-out"
+    },
+    {
+      "id": "svc-drains",
+      "title": "Blocked Drains",
+      "description": "CCTV drain inspections and high-pressure jet clearing to fix blockages fast and stop them coming back.",
+      "icon": "Waves",
+      "starting_price": "From $180"
+    },
+    {
+      "id": "svc-hotwater",
+      "title": "Hot Water Systems",
+      "description": "Repair, replacement and installation of gas, electric, solar and heat-pump hot water units.",
+      "icon": "Flame",
+      "starting_price": "From $250"
+    },
+    {
+      "id": "svc-gas",
+      "title": "Gas Fitting",
+      "description": "Licensed gas installations, leak detection and compliance certificates for cooktops, heaters and hot water.",
+      "icon": "Wrench"
+    },
+    {
+      "id": "svc-bathroom",
+      "title": "Bathroom & Kitchen Renos",
+      "description": "Full rough-in and fit-off for renovations, plus tap, toilet and vanity upgrades done to code.",
+      "icon": "Hammer",
+      "starting_price": "Free quote"
+    },
+    {
+      "id": "svc-maintenance",
+      "title": "Maintenance & Compliance",
+      "description": "Backflow testing, leak audits and scheduled maintenance for homes, landlords and strata.",
+      "icon": "ShieldCheck"
+    }
+  ],
+  "about": {
+    "heading": "Local, licensed and on time, every time",
+    "body": "Ironbark Plumbing & Gas has been keeping Hunter homes and businesses running for over 18 years. We're a family-run team of licensed tradespeople who turn up when we say we will, clean up after ourselves, and quote the job before we start so there are no nasty surprises. From a dripping tap to a full bathroom reno, we treat your place like it's our own.",
+    "photo_url": "https://images.unsplash.com/photo-1581244277943-fe4a9c777189?auto=format&fit=crop&w=1200&q=80",
+    "years_in_business": 18,
+    "licence": "NSW Lic. No. 284116C"
+  },
+  "service_area": {
+    "heading": "Proudly serving Newcastle & the Hunter",
+    "intro": "If your suburb isn't listed, give us a call — chances are we cover it too.",
+    "suburbs": [
+      "Newcastle",
+      "Hamilton",
+      "Merewether",
+      "Charlestown",
+      "Lake Macquarie",
+      "Maitland",
+      "Cessnock",
+      "Cardiff",
+      "Adamstown",
+      "New Lambton",
+      "Kotara",
+      "Belmont"
+    ]
+  },
+  "gallery": [
+    {
+      "id": "g1",
+      "image_url": "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=900&q=80",
+      "caption": "Hot water unit replacement, Merewether"
+    },
+    {
+      "id": "g2",
+      "image_url": "https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=900&q=80",
+      "caption": "Full bathroom rough-in, Hamilton"
+    },
+    {
+      "id": "g3",
+      "image_url": "https://images.unsplash.com/photo-1556909212-d5b604d0c90d?auto=format&fit=crop&w=900&q=80",
+      "caption": "Kitchen mixer upgrade, Kotara"
+    },
+    {
+      "id": "g4",
+      "image_url": "https://images.unsplash.com/photo-1521207418485-99c705420785?auto=format&fit=crop&w=900&q=80",
+      "caption": "Emergency burst-pipe repair, Maitland"
+    },
+    {
+      "id": "g5",
+      "image_url": "https://images.unsplash.com/photo-1542013936693-884638332954?auto=format&fit=crop&w=900&q=80",
+      "caption": "Gas cooktop install, Charlestown"
+    },
+    {
+      "id": "g6",
+      "image_url": "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80",
+      "caption": "CCTV drain inspection, Cardiff"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "t1",
+      "quote": "Had a burst pipe at 11pm and they were here within 40 minutes. Sorted it, cleaned up and the price was exactly what they quoted. Absolute lifesavers.",
+      "author": "Rebecca M.",
+      "location": "Merewether",
+      "rating": 5
+    },
+    {
+      "id": "t2",
+      "quote": "Replaced our old hot water system the same day we called. Friendly, tidy and clearly explained our options. Wouldn't use anyone else now.",
+      "author": "Daniel & Priya S.",
+      "location": "Hamilton",
+      "rating": 5
+    },
+    {
+      "id": "t3",
+      "quote": "Used them for our bathroom reno rough-in. On time every day, great communication and the work passed inspection first go.",
+      "author": "Tom H.",
+      "location": "Maitland",
+      "rating": 5
+    }
+  ],
+  "social_proof": {
+    "heading": "Why locals trust us",
+    "items": [
+      { "id": "sp1", "value": "Fully licensed & insured", "icon": "BadgeCheck" },
+      { "id": "sp2", "value": "4.9★ from 320+ reviews", "icon": "Star" },
+      { "id": "sp3", "value": "Same-day service", "icon": "Clock" },
+      { "id": "sp4", "value": "Upfront fixed pricing", "icon": "DollarSign" }
+    ]
+  },
+  "contact": {
+    "heading": "Get in touch",
+    "phone": "0412 884 220",
+    "email": "jobs@ironbarkplumbing.com.au",
+    "address": "Unit 4, 22 Maitland Rd, Islington NSW 2296",
+    "hours": [
+      { "label": "Mon – Fri", "value": "7:00am – 5:00pm" },
+      { "label": "Saturday", "value": "8:00am – 2:00pm" },
+      { "label": "Sunday", "value": "Emergency only" },
+      { "label": "Emergencies", "value": "24 hours, 7 days" }
+    ],
+    "cta": { "label": "Request a free quote", "href": "tel:+61412884220" }
+  },
+  "offer": {
+    "headline": "$50 off your first booking",
+    "description": "Mention this website when you call and we'll take $50 off any job over $250 booked this month.",
+    "price": "$50 off",
+    "code": "WEB50",
+    "cta": { "label": "Claim this offer", "href": "tel:+61412884220" }
+  },
+  "seo": {
+    "title": "Ironbark Plumbing & Gas | 24/7 Licensed Plumbers Newcastle",
+    "description": "Fast, licensed plumbing and gas fitting across Newcastle and the Hunter. Blocked drains, hot water, burst pipes and renovations. Upfront pricing, 24/7 emergency service.",
+    "schema_org_type": "Plumber"
+  },
+  "preview": {
+    "countdown_enabled": true,
+    "countdown_to": "2026-07-31T23:59:59+10:00",
+    "countdown_label": "$50-off offer ends in"
+  },
+  "overrides": {}
+}
