@@ -1,7 +1,7 @@
 # Project State
 
 Last updated: 2026-06-20
-Current phase: D — GATE WRITTEN. Generator proven end-to-end. Gate file written: autopilot/state/gates/D-generator-checkpoint.json — awaiting human review of generator/output/clearflow-plumbing.json before proceeding to mass-produce remaining categories.
+Current phase: D — GATE WRITTEN (visual review). D-generator-checkpoint gate answered/redirected → resolved. New gate: autopilot/state/gates/D-generator-visual-review.json. Plumber preview route added at /preview/plumber. Awaiting human visual sign-off before category mass-production.
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
