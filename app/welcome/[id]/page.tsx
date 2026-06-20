@@ -1,21 +1,23 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ExternalLink, MessageSquare, TrendingUp, Mail, RefreshCw } from "lucide-react";
+import { useParams } from "next/navigation";
+import {
+  ExternalLink,
+  Share2,
+  Palette,
+  CheckCircle2,
+  Copy,
+  Check,
+  MessageSquare,
+} from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
-/*  Welcome page                                                                */
-/*                                                                              */
-/*  Shown after a successful Stripe checkout. The site is now permanently live */
-/*  on a subdomain. This page confirms the URL, explains SMS editing, and sets */
-/*  expectations for the first 30 days.                                         */
+/*  Helpers                                                                     */
 /* -------------------------------------------------------------------------- */
 
-interface PageProps {
-  params: Promise<{ id: string }>;
-}
-
-/** Derive a human-readable subdomain from the lead/subscription id. */
 function deriveSubdomain(id: string): string {
-  // Strip any lead_ prefix and timestamp to get a clean slug
   const clean = id
     .replace(/^lead_\d+_/, "")
     .replace(/[^a-z0-9-]/gi, "-")
@@ -24,129 +26,290 @@ function deriveSubdomain(id: string): string {
   return clean || "your-business";
 }
 
-export default async function WelcomePage({ params }: PageProps) {
-  const { id } = await params;
+/* -------------------------------------------------------------------------- */
+/*  Animated star burst (CSS only)                                              */
+/* -------------------------------------------------------------------------- */
+
+function StarBurst() {
+  return (
+    <div className="relative flex items-center justify-center w-32 h-32 mx-auto mb-2">
+      {/* Rotating ring */}
+      <div className="absolute inset-0 rounded-full border-4 border-green-500/20 animate-spin" style={{ animationDuration: "8s" }} />
+      <div className="absolute inset-2 rounded-full border-2 border-green-400/15 animate-spin" style={{ animationDuration: "5s", animationDirection: "reverse" }} />
+      {/* Green circle */}
+      <div className="w-20 h-20 rounded-full bg-green-500/15 border-2 border-green-500/40 flex items-center justify-center shadow-lg shadow-green-900/30">
+        <CheckCircle2 className="w-10 h-10 text-green-400" />
+      </div>
+      {/* Floating dots */}
+      {[0, 60, 120, 180, 240, 300].map((deg) => (
+        <div
+          key={deg}
+          className="absolute w-2 h-2 rounded-full bg-green-400/60"
+          style={{
+            transform: `rotate(${deg}deg) translateX(52px)`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Copy button                                                                 */
+/* -------------------------------------------------------------------------- */
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Fallback: select the text
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-700 text-slate-400 hover:text-white hover:border-slate-500 text-xs font-medium transition-colors shrink-0"
+    >
+      {copied ? (
+        <>
+          <Check className="w-3.5 h-3.5 text-green-400" />
+          Copied
+        </>
+      ) : (
+        <>
+          <Copy className="w-3.5 h-3.5" />
+          Copy
+        </>
+      )}
+    </button>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Timeline                                                                    */
+/* -------------------------------------------------------------------------- */
+
+const TIMELINE = [
+  {
+    period: "Today",
+    event: "Your site is live on your permanent URL",
+    sub: "Share it anywhere — Google, socials, business cards.",
+    colour: "bg-green-400",
+  },
+  {
+    period: "Day 3",
+    event: "Google discovers and indexes your site",
+    sub: "Our sitemap submission speeds up crawling significantly.",
+    colour: "bg-blue-400",
+  },
+  {
+    period: "Week 2",
+    event: "First organic rankings appear",
+    sub: "Suburb-specific pages start ranking for local searches.",
+    colour: "bg-indigo-400",
+  },
+  {
+    period: "Month 1",
+    event: "Monthly performance report in your inbox",
+    sub: "Plain-English breakdown of calls, clicks and rankings.",
+    colour: "bg-purple-400",
+  },
+];
+
+/* -------------------------------------------------------------------------- */
+/*  Page (client component for share + clipboard)                              */
+/* -------------------------------------------------------------------------- */
+
+export default function WelcomePage() {
+  const params = useParams();
+  const id =
+    typeof params.id === "string"
+      ? params.id
+      : Array.isArray(params.id)
+      ? params.id[0]
+      : "unknown";
+
   const subdomain = deriveSubdomain(id);
   const siteUrl = `https://${subdomain}.mysitehq.com.au`;
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  async function handleShare() {
+    if (!mounted) return;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "My new business website",
+          text: "Check out my new site — built in under 60 seconds:",
+          url: siteUrl,
+        });
+      } catch {
+        // cancelled
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(siteUrl);
+      } catch {
+        // ignore
+      }
+    }
+  }
 
   return (
     <div className="flex flex-col flex-1 min-h-screen bg-slate-950 text-white">
       {/* Header */}
       <header className="px-6 py-5 max-w-2xl mx-auto w-full">
-        <div className="text-lg font-semibold text-white">Preview Factory</div>
+        <div className="text-lg font-bold text-white">Preview Factory</div>
       </header>
 
-      {/* Main */}
-      <main className="flex flex-1 flex-col items-center px-6 py-10">
+      <main className="flex flex-1 flex-col items-center px-6 py-8">
         <div className="w-full max-w-xl flex flex-col gap-8">
 
-          {/* Hero section */}
+          {/* Hero */}
           <div className="text-center flex flex-col gap-3">
-            <div className="mx-auto mb-2 w-14 h-14 rounded-2xl bg-green-500/10 border border-green-500/20 flex items-center justify-center">
-              <span className="text-2xl">&#10003;</span>
-            </div>
-            <h1 className="text-4xl font-bold tracking-tight">
+            <StarBurst />
+            <h1 className="text-4xl sm:text-5xl font-black tracking-tight">
               Your site is live.
             </h1>
             <p className="text-slate-400 text-lg">
-              It is now permanently published at the address below.
+              It is permanently published at the address below.
             </p>
           </div>
 
           {/* URL card */}
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4">
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">
               Your permanent web address
             </p>
             <div className="flex items-center gap-3 bg-slate-800 rounded-xl px-4 py-3">
               <span className="flex-1 text-blue-400 font-mono text-sm break-all">
                 {siteUrl}
               </span>
+              <CopyButton text={siteUrl} />
             </div>
             <a
               href={siteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-semibold text-sm transition-colors"
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold text-sm transition-colors"
             >
               <ExternalLink className="w-4 h-4" />
               Visit your site
             </a>
           </div>
 
-          {/* SMS editing section */}
+          {/* Action cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {/* Visit */}
+            <a
+              href={siteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center gap-3 bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-600 transition-colors text-center"
+            >
+              <div className="w-10 h-10 rounded-xl bg-blue-600/15 flex items-center justify-center">
+                <ExternalLink className="w-5 h-5 text-blue-400" />
+              </div>
+              <span className="text-sm font-semibold text-white">Visit your site</span>
+            </a>
+
+            {/* Share */}
+            <button
+              type="button"
+              onClick={handleShare}
+              className="flex flex-col items-center gap-3 bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-600 transition-colors text-center"
+            >
+              <div className="w-10 h-10 rounded-xl bg-green-600/15 flex items-center justify-center">
+                <Share2 className="w-5 h-5 text-green-400" />
+              </div>
+              <span className="text-sm font-semibold text-white">Share with a friend</span>
+            </button>
+
+            {/* Update logo */}
+            <Link
+              href={`/preview/${id}`}
+              className="flex flex-col items-center gap-3 bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-600 transition-colors text-center"
+            >
+              <div className="w-10 h-10 rounded-xl bg-purple-600/15 flex items-center justify-center">
+                <Palette className="w-5 h-5 text-purple-400" />
+              </div>
+              <span className="text-sm font-semibold text-white">Update your logo</span>
+            </Link>
+          </div>
+
+          {/* SMS editing */}
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <MessageSquare className="w-5 h-5 text-blue-400 shrink-0" />
-              <h2 className="text-base font-semibold text-white">
-                How to update your site
+              <h2 className="text-base font-bold text-white">
+                Update your site anytime
               </h2>
             </div>
             <p className="text-slate-300 text-sm leading-relaxed">
-              Text your change to{" "}
+              Text your changes to{" "}
               <a
                 href="sms:+611800000000"
-                className="text-white font-semibold hover:text-blue-400 transition-colors"
+                className="text-white font-bold hover:text-blue-400 transition-colors"
               >
                 +61 XXX XXX XXX
               </a>
-              . We will update your site within 2 hours.
+              . We will update your site within 2 hours. No logins. No portals.
             </p>
             <div className="bg-slate-800 rounded-xl p-4">
-              <p className="text-xs text-slate-500 font-medium mb-2">Example messages</p>
-              <ul className="flex flex-col gap-1.5 text-xs text-slate-400">
-                <li>&ldquo;Update my phone number to 0412 345 678&rdquo;</li>
-                <li>&ldquo;Add carpet cleaning to my services&rdquo;</li>
-                <li>&ldquo;Change my trading hours to Mon-Fri 7am-5pm&rdquo;</li>
+              <p className="text-xs text-slate-500 font-semibold mb-3 uppercase tracking-wide">
+                Example messages
+              </p>
+              <ul className="flex flex-col gap-2 text-xs text-slate-400">
+                {[
+                  "Update my phone number to 0412 345 678",
+                  "Add carpet cleaning to my services",
+                  "Change my trading hours to Mon-Fri 7am-5pm",
+                ].map((msg) => (
+                  <li key={msg} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1 shrink-0" />
+                    &ldquo;{msg}&rdquo;
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
 
-          {/* What happens next */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4">
-            <h2 className="text-base font-semibold text-white">What happens next</h2>
-            <ul className="flex flex-col gap-4">
-              <li className="flex items-start gap-3">
-                <TrendingUp className="w-5 h-5 text-green-400 shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-slate-200">
-                    SEO takes 2 to 4 weeks to kick in
-                  </p>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Google crawls new sites within a few days. Rankings build
-                    steadily over the first month.
-                  </p>
+          {/* What happens next timeline */}
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col gap-5">
+            <h2 className="text-base font-bold text-white">What happens next</h2>
+            <div className="flex flex-col gap-0">
+              {TIMELINE.map((item, i) => (
+                <div key={item.period} className="flex gap-4">
+                  {/* Dot + line */}
+                  <div className="flex flex-col items-center">
+                    <div className={`w-3 h-3 rounded-full shrink-0 mt-1 ${item.colour}`} />
+                    {i < TIMELINE.length - 1 && (
+                      <div className="w-px flex-1 bg-slate-800 my-1" />
+                    )}
+                  </div>
+                  {/* Content */}
+                  <div className={`pb-5 ${i < TIMELINE.length - 1 ? "" : ""}`}>
+                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-0.5">
+                      {item.period}
+                    </p>
+                    <p className="text-sm font-semibold text-slate-200">{item.event}</p>
+                    <p className="text-xs text-slate-500 mt-1">{item.sub}</p>
+                  </div>
                 </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-slate-200">
-                    Check your monthly report in your inbox
-                  </p>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    We send a plain-English performance report each month:
-                    calls, clicks, and rankings.
-                  </p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <RefreshCw className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-slate-200">
-                    Reply to the welcome SMS to make changes
-                  </p>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Any time you need to update your site, just reply to the SMS
-                    we sent you. No logins required.
-                  </p>
-                </div>
-              </li>
-            </ul>
+              ))}
+            </div>
           </div>
 
-          {/* Support footer */}
-          <div className="text-center text-sm text-slate-500">
+          {/* Footer links */}
+          <div className="text-center flex flex-col gap-2 text-sm text-slate-500">
             <p>
               Need help?{" "}
               <a
@@ -157,13 +320,9 @@ export default async function WelcomePage({ params }: PageProps) {
               </a>{" "}
               or reply to your welcome SMS.
             </p>
-          </div>
-
-          {/* Back link */}
-          <div className="text-center">
             <Link
               href="/"
-              className="text-xs text-slate-600 hover:text-slate-400 transition-colors"
+              className="text-xs text-slate-700 hover:text-slate-400 transition-colors"
             >
               Back to Preview Factory
             </Link>
