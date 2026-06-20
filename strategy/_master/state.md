@@ -1,7 +1,7 @@
 # Project State
 
 Last updated: 2026-06-20
-Current phase: E — Phase E funnel infrastructure complete. Gate C-categories-checkpoint-2 approved and moved to answered/. All 6 funnel pages built. GRADER PASS (4 sites, tsc clean). Gate E-funnel-checkpoint WRITTEN — awaiting human funnel review.
+Current phase: E — Phase E funnel REBUILT (v2, commit 6fc9895). Gate E-funnel-checkpoint redirected (no images, no niche split). Full premium rebuild complete: niche-specific landing pages (4 categories), sub-niche dropdowns, hero images, testimonials, HowItWorks, preview browser mockups, improved building/preview/expired/welcome pages. GRADER PASS (4 sites, tsc clean). Gate E-funnel-checkpoint-2 WRITTEN — awaiting human visual sign-off.
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
@@ -61,19 +61,24 @@ Cleanups still pending (non-destructive so far): legacy single-page `templates/t
 - [ ] D1-D4 complete
 
 ## Phase E: Funnel infrastructure
-Phase E complete (2026-06-20):
-  - app/page.tsx: landing page — dark navy, 3-field form (business name, niche dropdown, suburb), n8n webhook stub, trust strip. GRADER PASS / tsc clean.
-  - app/building/page.tsx: animated loading sequence — 5 phases with checkmarks, mock GBP data, inline phone capture mid-sequence, auto-navigate to /preview/[id].
-  - app/preview/[id]/page.tsx: countdown (3-hour, localStorage-persisted), mobile fullscreen iframe + sticky CTA, desktop phone mockup + CustomisePanel. Share via navigator.share / clipboard. Save stub to Stripe.
-  - app/components/CustomisePanel.tsx: 3 controls (colour swatches + hex, logo drag-drop upload, hero image 3-tab picker).
-  - app/expired/[id]/page.tsx: expiry recovery CTA with trust strip.
-  - app/welcome/[id]/page.tsx: permanent URL display, SMS edit instructions, what-happens-next section.
-  Gate E-funnel-checkpoint.json WRITTEN — awaiting human funnel review.
-- [x] E1: landing page
-- [x] E2: building page
-- [x] E3: preview page
-- [x] E4: customise panel
-- [x] E5: expired + welcome pages
+Phase E v1 (commit 43fc900): initial 6-page build — REJECTED (no images, no niche split, not premium enough).
+Phase E v2 complete (2026-06-20, commit 6fc9895):
+  - app/page.tsx: white master landing — 2x2 niche category tiles (Trades/Allied Health/Beauty/Fitness) with Unsplash background images, stats bar, HowItWorks, Testimonials, feature grid, blue CTA band.
+  - app/for/trades/, app/for/allied-health/, app/for/beauty/, app/for/fitness/: 4 niche landing pages each with full-viewport hero image + overlay, sub-niche dropdown (9 options each), niche copy, live iframe browser mockup, HowItWorks, Testimonials (3 per niche), FAQ accordion, bottom repeat form.
+  - app/components/NicheForm.tsx: shared form (sub-niche select, business name, suburb, submit with n8n stub).
+  - app/components/NicheLanding.tsx: shared niche landing template component.
+  - app/components/HowItWorks.tsx: 3-step explainer with numbered pills, icons, cards.
+  - app/components/Testimonials.tsx: star ratings + quote cards, configurable items.
+  - app/building/page.tsx: improved — ambient glow, GBP result card with icons, checklist reveal, build stage cycling progress bar.
+  - app/preview/[id]/page.tsx: improved — struck-through price, urgency countdown, Stripe lock note, mobile customise toggle.
+  - app/expired/[id]/page.tsx: improved — animated clock ring, preview thumbnail, 3-point checklist card.
+  - app/welcome/[id]/page.tsx: improved — animated star burst, copy URL button, action cards grid, SMS example, timeline.
+  Gate E-funnel-checkpoint-2.json WRITTEN — awaiting human visual sign-off.
+- [x] E1: landing page (v2 with category tiles + images)
+- [x] E2: building page (improved)
+- [x] E3: preview page (improved)
+- [x] E4: customise panel (unchanged)
+- [x] E5: expired + welcome pages (improved)
 - [ ] E6: Supabase realtime (stubbed with setTimeout; real channel wired in prod)
 
 ## Phase F: Backend specs
