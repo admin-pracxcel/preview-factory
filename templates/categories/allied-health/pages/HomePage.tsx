@@ -86,7 +86,7 @@ export function HomePage({ site, basePath }: { site: SiteProps; basePath: string
         />
       )}
 
-      {home.gallery?.length ? <GalleryGrid items={home.gallery} /> : null}
+      {home.gallery?.length ? <GalleryGrid items={home.gallery} heading="Our clinic" subheading="Treatment rooms and facilities at our Chatswood practice." /> : null}
       {home.testimonials?.length ? <TestimonialsSection items={home.testimonials} /> : null}
 
       <ContactSection

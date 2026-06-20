@@ -5,6 +5,7 @@
  * AHPRA-compliant: no cure/guarantee claims in copy framing.
  * No before/after health outcome claims.
  */
+import Image from "next/image";
 import type { SiteProps, ServicePage } from "@/shared/types/site-props";
 import {
   SiteShell,
@@ -90,6 +91,18 @@ export function ServiceDetailPage({
             </p>
           )}
           <p className="whitespace-pre-line text-lg leading-relaxed text-zinc-700">{page.intro}</p>
+
+          {page.hero_image && (
+            <div className="relative mt-10 aspect-[16/7] overflow-hidden rounded-2xl shadow-lg">
+              <Image
+                src={page.hero_image}
+                alt={page.title}
+                fill
+                sizes="(max-width: 896px) 100vw, 896px"
+                className="object-cover"
+              />
+            </div>
+          )}
 
           {page.benefits.length > 0 && (
             <div className="mt-10">
