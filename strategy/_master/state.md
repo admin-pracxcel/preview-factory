@@ -1,7 +1,7 @@
 # Project State
 
 Last updated: 2026-06-20
-Current phase: F — Phase F backend specs complete (commit 7e6fa3c). Gate F-backend-checkpoint WRITTEN — awaiting human spec review before Phase G handoff.
+Current phase: COMPLETE — all phases A through G done. autopilot/state/DONE written.
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
@@ -92,7 +92,13 @@ Phase F complete (2026-06-20, commit 7e6fa3c):
 - [x] F3: deployment-checklist.md
 
 ## Phase G: Human handoff
-- [ ] G1: what-human-must-do.md
+Phase G complete (2026-06-20, commit c521524):
+  - strategy/_master/what-human-must-do.md: 273-line founder-specific checklist.
+    Separated by Before / During / After developer handoff.
+    Covers: ABN registration, domain registration (.com.au, ABN required), Stripe account + bank connection, Meta Business Manager, business email, pricing decisions, ad creative, funnel testing, Meta ads launch, first-two-weeks monitoring.
+    Distinguishes founder-only tasks (identity/legal/financial) from developer tasks (all technical).
+    Includes common failure modes and what NOT to do.
+- [x] G1: what-human-must-do.md
 
 ## Notes
 **Audit 2026-06-19 (initial state capture):**
