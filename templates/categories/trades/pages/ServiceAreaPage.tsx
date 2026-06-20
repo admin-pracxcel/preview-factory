@@ -4,7 +4,9 @@ import {
   SiteShell,
   Breadcrumbs,
   PageHero,
+  ContentSections,
   BenefitsList,
+  FaqList,
   CtaBand,
   RelatedLinks,
   href,
@@ -59,15 +61,25 @@ export function ServiceAreaPage({
       <PageHero
         eyebrow={`${page.suburb}${page.state ? ", " + page.state : ""}`}
         title={page.headline}
+        subtitle={page.intro}
       />
 
       <section className="py-14 sm:py-20">
-        <div className="mx-auto max-w-4xl px-4">
+        <div className="mx-auto max-w-4xl px-4 space-y-10">
           <p className="whitespace-pre-line text-lg leading-relaxed text-zinc-700">{page.body}</p>
+
+          {/* Long-form content blocks specific to this service × suburb combination */}
+          {page.sections.length > 0 && (
+            <ContentSections blocks={page.sections} />
+          )}
+
           {page.benefits.length > 0 && (
-            <div className="mt-10">
-              <BenefitsList items={page.benefits} heading={`Why locals in ${page.suburb} choose us`} />
-            </div>
+            <BenefitsList items={page.benefits} heading={`Why locals in ${page.suburb} choose us`} />
+          )}
+
+          {/* Service-area-specific FAQs */}
+          {page.faqs.length > 0 && (
+            <FaqList items={page.faqs} heading={`${page.service_title} in ${page.suburb} — FAQ`} />
           )}
         </div>
       </section>

@@ -1,10 +1,10 @@
 /**
- * Site-wide layout: themed shell, sticky header, footer, breadcrumbs, mobile
- * call bar and JSON-LD renderer. Server components (pure markup); they embed
- * the client CountdownBanner where interactivity is needed.
+ * Site-wide layout: themed shell, sticky header with dropdown nav, footer,
+ * breadcrumbs, mobile call bar and JSON-LD renderer. Server components (pure
+ * markup); they embed the client CountdownBanner where interactivity is needed.
  */
 import Image from "next/image";
-import { Phone, ChevronRight } from "lucide-react";
+import { Phone, ChevronRight, ChevronDown } from "lucide-react";
 import type { SiteProps } from "@/shared/types/site-props";
 import { resolveTheme } from "./theme";
 import { href, telHref, currentYear } from "./helpers";
@@ -13,16 +13,47 @@ import { CountdownBanner } from "./client";
 export interface NavItem {
   label: string;
   href: string;
+  /** When present, render as a dropdown menu. */
+  children?: Array<{ label: string; href: string }>;
 }
 
-/** Derive a robust nav from whichever pages/sections a site actually has. */
+/**
+ * Derive a robust nav from whichever pages/sections a site actually has.
+ * Service and location collections become dropdown menus; scalar pages
+ * (About, FAQ, Contact) remain flat links.
+ */
 export function deriveNav(site: SiteProps, basePath: string): NavItem[] {
   const base = href(basePath);
   const items: NavItem[] = [];
-  if (site.services.length || site.home.services.length)
+
+  // Services — dropdown linking to each service-detail page (max 8 items).
+  if (site.services.length) {
+    items.push({
+      label: "Services",
+      href: `${base}#services`,
+      children: site.services.slice(0, 8).map((s) => ({
+        label: s.title,
+        href: href(basePath, "services", s.slug),
+      })),
+    });
+  } else if (site.home.services.length) {
     items.push({ label: "Services", href: `${base}#services` });
-  if (site.locations.length || site.home.service_area?.suburbs?.length)
+  }
+
+  // Areas — dropdown linking to each location page (max 8 items).
+  if (site.locations.length) {
+    items.push({
+      label: "Areas",
+      href: `${base}#areas`,
+      children: site.locations.slice(0, 8).map((l) => ({
+        label: l.suburb,
+        href: href(basePath, "locations", l.slug),
+      })),
+    });
+  } else if (site.home.service_area?.suburbs?.length) {
     items.push({ label: "Areas", href: `${base}#areas` });
+  }
+
   if (site.home.testimonials?.length)
     items.push({ label: "Reviews", href: `${base}#reviews` });
   if (site.about) items.push({ label: "About", href: href(basePath, "about") });
@@ -61,6 +92,7 @@ function Header({
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-[var(--primary)] text-white shadow-sm">
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+        {/* Logo / business name */}
         <a href={href(basePath)} className="flex min-w-0 items-center gap-2.5">
           {logo ? (
             <Image
@@ -80,20 +112,49 @@ function Header({
           </span>
         </a>
 
-        <div className="flex items-center gap-6">
-          <ul className="hidden items-center gap-6 text-sm font-medium text-white/80 lg:flex">
-            {nav.map((l) => (
-              <li key={l.href + l.label}>
-                <a className="transition-colors hover:text-white" href={l.href}>
-                  {l.label}
-                </a>
-              </li>
-            ))}
+        <div className="flex items-center gap-2">
+          {/* Desktop nav with dropdown support */}
+          <ul className="hidden items-center gap-0.5 text-sm font-medium text-white/80 lg:flex">
+            {nav.map((l) =>
+              l.children?.length ? (
+                /* Dropdown item — CSS-only hover, no JS needed */
+                <li key={l.href + l.label} className="group relative">
+                  <span className="flex cursor-default select-none items-center gap-1 rounded-md px-3 py-2 transition-colors hover:bg-white/10 hover:text-white">
+                    {l.label}
+                    <ChevronDown className="h-3.5 w-3.5 opacity-60 transition-transform group-hover:rotate-180" />
+                  </span>
+                  {/* Dropdown panel */}
+                  <ul className="invisible absolute left-0 top-full z-50 min-w-[200px] translate-y-1 rounded-xl border border-white/10 bg-[var(--primary)] py-1.5 opacity-0 shadow-2xl transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                    {l.children.map((c) => (
+                      <li key={c.href}>
+                        <a
+                          href={c.href}
+                          className="block px-4 py-2 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                        >
+                          {c.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ) : (
+                /* Flat nav link */
+                <li key={l.href + l.label}>
+                  <a
+                    className="block rounded-md px-3 py-2 transition-colors hover:bg-white/10 hover:text-white"
+                    href={l.href}
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ),
+            )}
           </ul>
+
           {phone && (
             <a
               href={telHref(phone)}
-              className="flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-bold text-white shadow-md transition-transform hover:brightness-110 active:scale-95"
+              className="ml-4 flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-bold text-white shadow-md transition-transform hover:brightness-110 active:scale-95"
             >
               <Phone className="h-4 w-4" strokeWidth={2.5} />
               <span className="hidden sm:inline">{phone}</span>
