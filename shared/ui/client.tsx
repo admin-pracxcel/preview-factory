@@ -70,12 +70,15 @@ function getTimeLeft(target: string): TimeLeft | null {
 
 /** Thin promo countdown bar shown at the very top during the preview window. */
 export function CountdownBanner({ label, target }: { label?: string; target?: string }) {
-  const [left, setLeft] = useState<TimeLeft | null>(() =>
-    target ? getTimeLeft(target) : null,
-  );
+  // Always start null on both server and client so SSR HTML and hydrated HTML
+  // match exactly. The real value is computed once the component mounts, then
+  // updated every second. This avoids hydration mismatches from Date.now()
+  // returning different values during SSR vs client-side hydration.
+  const [left, setLeft] = useState<TimeLeft | null>(null);
 
   useEffect(() => {
     if (!target) return;
+    setLeft(getTimeLeft(target)); // immediate first tick on mount
     const id = setInterval(() => setLeft(getTimeLeft(target)), 1000);
     return () => clearInterval(id);
   }, [target]);
