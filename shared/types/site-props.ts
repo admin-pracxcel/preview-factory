@@ -120,6 +120,8 @@ export const locationPageSchema = z.object({
   slug: z.string(),
   suburb: z.string(),
   state: z.string().optional(),
+  /** Optional page headline (e.g. "Plumber in Southbank"). */
+  headline: z.string().optional(),
   /** Lead paragraph for the suburb page. */
   intro: z.string(),
   body: z.string().optional(),
@@ -128,6 +130,12 @@ export const locationPageSchema = z.object({
   landmarks: z.array(z.string()).default([]),
   /** Titles (or slugs) of services highlighted for this suburb. */
   services_offered: z.array(z.string()).default([]),
+  /** Bullet benefits / inclusions for this location. */
+  benefits: z.array(z.string()).default([]),
+  /** Long-form content blocks that build out the page body. */
+  sections: z.array(contentBlockSchema).default([]),
+  /** Location-specific FAQs (also feed FAQPage JSON-LD). */
+  faqs: z.array(faqItemSchema).default([]),
   seo: pageSeoSchema,
 });
 export type LocationPage = z.infer<typeof locationPageSchema>;
@@ -142,8 +150,14 @@ export const serviceAreaPageSchema = z.object({
   suburb: z.string(),
   state: z.string().optional(),
   headline: z.string(),
+  /** Lead paragraph for this service-in-area page. */
+  intro: z.string().optional(),
   body: z.string(),
   benefits: z.array(z.string()).default([]),
+  /** Long-form content blocks that build out the page body. */
+  sections: z.array(contentBlockSchema).default([]),
+  /** Service-area-specific FAQs. */
+  faqs: z.array(faqItemSchema).default([]),
   seo: pageSeoSchema,
 });
 export type ServiceAreaPage = z.infer<typeof serviceAreaPageSchema>;
