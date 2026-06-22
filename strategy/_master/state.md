@@ -1,23 +1,24 @@
 # Project State
 
 Last updated: 2026-06-22
-Current phase: H — Real GBP intake + multi-tenant preview (IN PROGRESS)
+Current phase: I — Preview to checkout to provision (BUILT, awaiting gate)
 
 Human directive 2026-06-22: Added phases H–M (product pipeline: GBP intake, checkout, lead capture, client dashboard, edit-request engine, outreach engine). Building one phase at a time with grader gate after each.
 
-Phase H status: BUILT — grader PASS, gate H-checkpoint.json written. Awaiting human sign-off.
+## Phase H: Real GBP intake + multi-tenant preview — COMPLETE (approved 2026-06-22)
+- [x] H1–H8 all complete
+- [x] H-CHECKPOINT: approved by human
+Commits: 9446438, 420223f
 
-## Phase H: Real GBP intake + multi-tenant preview
-- [x] H1: lib/tenant-store.ts (file-based, Supabase-ready)
-- [x] H2: lib/places-client.ts (Google Places API + fixture fallback)
-- [x] H3: lib/generator-api.ts (API-safe wrapper, no process.exit, fixture fallback)
-- [x] H4: app/api/intake/route.ts (POST endpoint)
-- [x] H5: app/api/tenant/[id]/route.ts (GET endpoint)
-- [x] H6: app/preview/site/[tenantId]/[[...slug]]/page.tsx (universal tenant renderer)
-- [x] H7: app/preview/[id]/page.tsx updated (iframe → /preview/site/${id})
-- [x] H8: scripts/h-prove.mjs — fixture proof PASSED
-- [ ] H-CHECKPOINT: awaiting human sign-off
-Commit: 9446438
+## Phase I: Preview to checkout to provision — BUILT, awaiting gate
+- [x] I1: lib/publish.ts — publishTenant() marks status=published, records publishedAt
+- [x] I2: lib/stripe-client.ts — createCheckoutSession() + verifyWebhookSignature() (pure fetch, no npm)
+- [x] I3: app/api/checkout/route.ts — POST creates Stripe session; mock URL if key not set
+- [x] I4: app/api/checkout/mock-success/route.ts — GET simulates paid checkout, redirects to /welcome/<id>
+- [x] I5: app/api/webhooks/stripe/route.ts — verifies signature, handles checkout.session.completed → publishTenant
+- [x] I6: app/preview/[id]/page.tsx — "Save my site" button now POSTs to /api/checkout, redirects to checkoutUrl
+- [ ] I-CHECKPOINT: awaiting human sign-off
+Commit: f04134e
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
