@@ -1,7 +1,7 @@
 # Project State
 
 Last updated: 2026-06-22
-Current phase: I — Preview to checkout to provision (BUILT, awaiting gate)
+Current phase: J — Lead capture (BUILT, awaiting gate)
 
 Human directive 2026-06-22: Added phases H–M (product pipeline: GBP intake, checkout, lead capture, client dashboard, edit-request engine, outreach engine). Building one phase at a time with grader gate after each.
 
@@ -10,15 +10,27 @@ Human directive 2026-06-22: Added phases H–M (product pipeline: GBP intake, ch
 - [x] H-CHECKPOINT: approved by human
 Commits: 9446438, 420223f
 
-## Phase I: Preview to checkout to provision — BUILT, awaiting gate
+## Phase I: Preview to checkout to provision — COMPLETE (approved 2026-06-22)
+Commit: f04134e
+
+## Phase J: Lead capture — BUILT, awaiting gate
 - [x] I1: lib/publish.ts — publishTenant() marks status=published, records publishedAt
 - [x] I2: lib/stripe-client.ts — createCheckoutSession() + verifyWebhookSignature() (pure fetch, no npm)
 - [x] I3: app/api/checkout/route.ts — POST creates Stripe session; mock URL if key not set
 - [x] I4: app/api/checkout/mock-success/route.ts — GET simulates paid checkout, redirects to /welcome/<id>
 - [x] I5: app/api/webhooks/stripe/route.ts — verifies signature, handles checkout.session.completed → publishTenant
 - [x] I6: app/preview/[id]/page.tsx — "Save my site" button now POSTs to /api/checkout, redirects to checkoutUrl
-- [ ] I-CHECKPOINT: awaiting human sign-off
+- [x] I1–I6 all complete
+- [x] I-CHECKPOINT: approved by human
 Commit: f04134e
+
+- [x] J1: lib/leads-store.ts (file-based, Supabase-ready)
+- [x] J2: app/api/leads/route.ts (POST: save + n8n fire-and-forget)
+- [x] J3: shared/ui/lead-capture.tsx (LeadCaptureForm + TrackedPhoneLink client components)
+- [x] J4: shared/ui/sections.tsx ContactSection updated (tenantId prop, TrackedPhoneLink, LeadCaptureForm in right column)
+- [x] J5: All 4 category HomePages updated (tenantId derived from basePath, passed to ContactSection)
+- [ ] J-CHECKPOINT: awaiting human sign-off
+Commit: d70d6b2
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
