@@ -43,7 +43,7 @@ Commit: d70d6b2
 - [x] K-CHECKPOINT: approved 2026-06-22
 Commits: e6c8d80, 5675ab2
 
-## Phase L: Edit-request engine — BUILT, awaiting gate
+## Phase L: Edit-request engine — COMPLETE (approved 2026-06-22)
 - [x] L1: lib/edit-engine.ts — applyEditRequest(): Claude mutation, Zod validation, retry, fixture fallback
 - [x] L2: app/api/edit-request/route.ts — extended: pending→processing→preview with proposedSiteProps; returns previewUrl
 - [x] L3: app/api/edit-request/[id]/route.ts — GET status endpoint
@@ -53,8 +53,18 @@ Commits: e6c8d80, 5675ab2
 - [x] app/preview/site/[tenantId]/[[...slug]]/page.tsx — ?editRequest=<id> renders proposed SiteProps with banner
 - [x] lib/edit-requests-store.ts — added "error" status + proposedSiteProps field
 - [x] app/dashboard/[tenantId]/ui.tsx — success state shows "Review proposed change" link (previewUrl from API)
-- [ ] L-CHECKPOINT: awaiting human sign-off
+- [x] L-CHECKPOINT: approved 2026-06-22
 Commit: 058e385
+
+## Phase M: Outreach engine — BUILT, awaiting gate
+- [x] M1: scripts/outreach.mjs — Places API text search by niche+suburb (fixture fallback); 5 niche pools built in
+- [x] M2: Per business: run intake pipeline → adapt fixture SiteProps (or real Claude) → write tenant to data/tenants/
+- [x] M3: Output CSV to data/outreach/run-<timestamp>/results.csv (business_name, preview_url, tenant_id, phone, status)
+- [x] M4: n8n stub: if N8N_OUTREACH_WEBHOOK_URL set → POST payload; else write data/outreach/run-*/n8n-stub-payload.json
+- [x] --fixture flag forces instant fixture generation without ANTHROPIC_API_KEY spend
+- [x] Fixture proof: 2 plumber sites generated in Fitzroy + Richmond, CSV and n8n stub verified
+- [ ] M-CHECKPOINT: awaiting human sign-off
+Commit: 49466a3
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
