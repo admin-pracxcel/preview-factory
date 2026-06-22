@@ -1,7 +1,11 @@
 # Project State
 
-Last updated: 2026-06-20
-Current phase: COMPLETE — all phases A through G done. Phase E v3 approved 2026-06-20. autopilot/state/DONE written.
+Last updated: 2026-06-22
+Current phase: H — Real GBP intake + multi-tenant preview (IN PROGRESS)
+
+Human directive 2026-06-22: Added phases H–M (product pipeline: GBP intake, checkout, lead capture, client dashboard, edit-request engine, outreach engine). Building one phase at a time with grader gate after each.
+
+Phase H status: IN PROGRESS
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.

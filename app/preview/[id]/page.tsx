@@ -157,7 +157,9 @@ function PreviewPageInner() {
     }
   }
 
-  const iframeSrc = "/preview/trades";
+  // Point the iframe at the per-tenant universal renderer.
+  // Falls back to the trades example if the id looks like a static category slug.
+  const iframeSrc = `/preview/site/${id}`;
   const urgency = timeLeft < 30 * 60 * 1000;
 
   /* ---------------------------------------------------------------------- */

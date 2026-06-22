@@ -67,6 +67,51 @@ Cowork cannot do: ABN registration, Stripe account verification, n8n deployment,
 G1. Output `strategy/_master/what-human-must-do.md` listing all offline work in execution order
 END.
 
+## Phase H: Real GBP intake + multi-tenant preview
+H1. `lib/tenant-store.ts` — file-based per-tenant store (local JSON, Supabase-ready interface)
+H2. `lib/places-client.ts` — Google Places API client (key from env, fixture fallback)
+H3. `lib/generator-api.ts` — generator wrapper for API use (throws instead of process.exit, fixture if no key)
+H4. `app/api/intake/route.ts` — POST endpoint: place ID or business name → GBP fetch → generate → store tenant → return previewUrl
+H5. `app/api/tenant/[id]/route.ts` — GET endpoint: return tenant SiteProps
+H6. `app/preview/site/[tenantId]/[[...slug]]/page.tsx` — universal tenant renderer (dispatches by category)
+H7. Update `app/preview/[id]/page.tsx` — iframe src → `/preview/site/${id}` (dynamic, not hardcoded trades)
+H8. `scripts/h-prove.mjs` — end-to-end fixture proof (writes a tenant, checks the API, logs the preview URL)
+CHECKPOINT H: grader passes + human reviews preview URL served from fixture
+
+## Phase I: Preview to checkout to provision
+I1. Read tenant SiteProps from store in preview page (already done in H)
+I2. Connect Stripe Checkout (test-mode key from env, skip if not set)
+I3. Webhook handler at `/api/webhooks/stripe/route.ts` — mark tenant published
+I4. Publish flow: copy tenant SiteProps to `public/sites/<id>/site.json`, update status
+I5. Route paid user to `/welcome/[id]`
+CHECKPOINT I: human tests full checkout flow (no real charges)
+
+## Phase J: Lead capture
+J1. Add `/api/leads/route.ts` — POST: store lead, fire n8n webhook
+J2. Wire all five category contact forms + call-click tracking to this endpoint
+J3. Test with a submitted form on the trades preview
+CHECKPOINT J: human verifies lead appears in data store and n8n fires
+
+## Phase K: Client dashboard
+K1. `app/dashboard/[tenantId]/page.tsx` — post-payment view: site status, live URL
+K2. Stripe Customer Portal link (billing management)
+K3. Captured leads table
+K4. Submit-edit-request form (plain English)
+CHECKPOINT K: human reviews dashboard layout
+
+## Phase L: Edit-request engine
+L1. `app/api/edit-request/route.ts` — take plain-English request, mutate SiteProps via Claude, validate against Zod schema
+L2. Preview updated site before publishing
+L3. Owner-approval step: POST `/api/edit-request/[id]/approve` → publish
+CHECKPOINT L: human tests an edit request end to end
+
+## Phase M: Outreach engine
+M1. `scripts/outreach.mjs` — Places API text search by niche + suburb, batch fetch businesses
+M2. For each business: run intake pipeline → store tenant → generate preview URL
+M3. Output a CSV of preview links ready for outreach
+M4. n8n stub: webhook to trigger outreach send
+CHECKPOINT M: human reviews outreach batch output (fixture run, no real sends)
+
 ## Checkpoint behaviour
 At each checkpoint:
 1. Stop all further work
