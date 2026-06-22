@@ -34,6 +34,12 @@ export interface TenantRecord {
   status: TenantStatus;
   /** Google place_id if the intake used the Places API; undefined for fixture. */
   placeId?: string;
+  /** ISO 8601 timestamp set when the site is published. */
+  publishedAt?: string;
+  /** Stripe Checkout session ID associated with the payment. */
+  stripeSessionId?: string;
+  /** Stripe customer ID for billing management. */
+  stripeCustomerId?: string;
 }
 
 /* ------------------------------------------------------------------ file store */

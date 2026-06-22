@@ -130,9 +130,29 @@ function PreviewPageInner() {
 
   const dismissToast = useCallback(() => setToast(null), []);
 
-  function handleSave() {
-    console.log("Save my site clicked for preview:", id);
-    alert("Redirecting to Stripe... (stub)");
+  const [checkingOut, setCheckingOut] = useState(false);
+
+  async function handleSave() {
+    if (checkingOut) return;
+    setCheckingOut(true);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tenantId: id }),
+      });
+      if (!res.ok) {
+        const err = (await res.json()) as { error?: string };
+        setToast(err.error ?? "Checkout failed. Please try again.");
+        return;
+      }
+      const data = (await res.json()) as { checkoutUrl: string };
+      window.location.href = data.checkoutUrl;
+    } catch {
+      setToast("Could not start checkout. Check your connection.");
+    } finally {
+      setCheckingOut(false);
+    }
   }
 
   async function handleShare() {
@@ -208,10 +228,10 @@ function PreviewPageInner() {
         <button
           type="button"
           onClick={handleSave}
-          className="w-full py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold text-base shadow-lg shadow-blue-900/40 transition-colors"
+          disabled={checkingOut}
+          className="w-full py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:opacity-60 text-white font-bold text-base shadow-lg shadow-blue-900/40 transition-colors"
         >
-          Save my site &mdash; $49/mo
-          <span className="ml-2 line-through text-blue-300 font-normal text-sm">$149</span>
+          {checkingOut ? "Taking you to checkout…" : <>Save my site &mdash; $49/mo<span className="ml-2 line-through text-blue-300 font-normal text-sm">$149</span></>}
         </button>
         <div className="flex items-center justify-center gap-1.5 mt-2">
           <Lock className="w-3 h-3 text-slate-500" />
@@ -252,10 +272,10 @@ function PreviewPageInner() {
             <button
               type="button"
               onClick={handleSave}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white text-sm font-bold transition-colors shadow-lg shadow-blue-900/30"
+              disabled={checkingOut}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:opacity-60 text-white text-sm font-bold transition-colors shadow-lg shadow-blue-900/30"
             >
-              Save my site &mdash; $49/mo
-              <span className="line-through text-blue-300 font-normal text-xs ml-1">$149</span>
+              {checkingOut ? "Taking you to checkout…" : <>Save my site &mdash; $49/mo<span className="line-through text-blue-300 font-normal text-xs ml-1">$149</span></>}
             </button>
             <div className="flex items-center gap-1 mt-1">
               <Lock className="w-3 h-3 text-slate-600" />
