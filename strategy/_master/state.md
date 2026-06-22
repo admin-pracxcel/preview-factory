@@ -1,7 +1,7 @@
 # Project State
 
 Last updated: 2026-06-22
-Current phase: J — Lead capture (BUILT, awaiting gate)
+Current phase: K — Client dashboard (BUILT, awaiting gate)
 
 Human directive 2026-06-22: Added phases H–M (product pipeline: GBP intake, checkout, lead capture, client dashboard, edit-request engine, outreach engine). Building one phase at a time with grader gate after each.
 
@@ -29,8 +29,19 @@ Commit: f04134e
 - [x] J3: shared/ui/lead-capture.tsx (LeadCaptureForm + TrackedPhoneLink client components)
 - [x] J4: shared/ui/sections.tsx ContactSection updated (tenantId prop, TrackedPhoneLink, LeadCaptureForm in right column)
 - [x] J5: All 4 category HomePages updated (tenantId derived from basePath, passed to ContactSection)
-- [ ] J-CHECKPOINT: awaiting human sign-off
+- [x] J-CHECKPOINT: approved by human
 Commit: d70d6b2
+
+## Phase K: Client dashboard — BUILT, awaiting gate
+- [x] K1: app/dashboard/[tenantId]/page.tsx — server component; shows status, live URL, leads table, edit request history
+- [x] K2: app/api/billing/portal/route.ts — Stripe Customer Portal session (mock if no key/customer)
+- [x] K3: Leads table — last 20 leads with name, phone, email, source, date
+- [x] K4: app/api/edit-request/route.ts — POST: stores plain-English request as "pending"
+- [x] app/dashboard/[tenantId]/ui.tsx — CopyButton, BillingButton, EditRequestForm (client components)
+- [x] lib/edit-requests-store.ts — edit request CRUD (file-based, Phase L uses this)
+- [x] app/welcome/[id]/page.tsx — "My dashboard" action card links to /dashboard/[id]
+- [ ] K-CHECKPOINT: awaiting human sign-off
+Commit: e6c8d80
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
