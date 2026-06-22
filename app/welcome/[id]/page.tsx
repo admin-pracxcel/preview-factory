@@ -235,15 +235,15 @@ export default function WelcomePage() {
               <span className="text-white font-semibold text-sm">Share with a friend</span>
             </button>
 
-            {/* Update logo */}
+            {/* Dashboard */}
             <Link
-              href={`/preview/${id}`}
+              href={`/dashboard/${id}`}
               className="flex flex-col items-center gap-3 bg-white/5 border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-colors text-center"
             >
               <div className="w-10 h-10 rounded-xl bg-purple-900/40 flex items-center justify-center">
                 <Palette className="w-5 h-5 text-purple-400" />
               </div>
-              <span className="text-white font-semibold text-sm">Update your logo</span>
+              <span className="text-white font-semibold text-sm">My dashboard</span>
             </Link>
           </div>
 
