@@ -32,7 +32,7 @@ Commit: f04134e
 - [x] J-CHECKPOINT: approved by human
 Commit: d70d6b2
 
-## Phase K: Client dashboard — BUILT, awaiting gate
+## Phase K: Client dashboard — COMPLETE (approved 2026-06-22)
 - [x] K1: app/dashboard/[tenantId]/page.tsx — server component; shows status, live URL, leads table, edit request history
 - [x] K2: app/api/billing/portal/route.ts — Stripe Customer Portal session (mock if no key/customer)
 - [x] K3: Leads table — last 20 leads with name, phone, email, source, date
@@ -40,8 +40,21 @@ Commit: d70d6b2
 - [x] app/dashboard/[tenantId]/ui.tsx — CopyButton, BillingButton, EditRequestForm (client components)
 - [x] lib/edit-requests-store.ts — edit request CRUD (file-based, Phase L uses this)
 - [x] app/welcome/[id]/page.tsx — "My dashboard" action card links to /dashboard/[id]
-- [ ] K-CHECKPOINT: awaiting human sign-off
-Commit: e6c8d80
+- [x] K-CHECKPOINT: approved 2026-06-22
+Commits: e6c8d80, 5675ab2
+
+## Phase L: Edit-request engine — BUILT, awaiting gate
+- [x] L1: lib/edit-engine.ts — applyEditRequest(): Claude mutation, Zod validation, retry, fixture fallback
+- [x] L2: app/api/edit-request/route.ts — extended: pending→processing→preview with proposedSiteProps; returns previewUrl
+- [x] L3: app/api/edit-request/[id]/route.ts — GET status endpoint
+- [x] L4: app/api/edit-request/[id]/approve/route.ts — applies proposedSiteProps to tenant, marks applied
+- [x] L5: app/api/edit-request/[id]/reject/route.ts — marks rejected
+- [x] shared/ui/edit-preview-banner.tsx — fixed bottom bar: PREVIEW label + changeSummary + Approve/Reject buttons
+- [x] app/preview/site/[tenantId]/[[...slug]]/page.tsx — ?editRequest=<id> renders proposed SiteProps with banner
+- [x] lib/edit-requests-store.ts — added "error" status + proposedSiteProps field
+- [x] app/dashboard/[tenantId]/ui.tsx — success state shows "Review proposed change" link (previewUrl from API)
+- [ ] L-CHECKPOINT: awaiting human sign-off
+Commit: 058e385
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
