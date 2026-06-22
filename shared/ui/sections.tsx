@@ -20,6 +20,7 @@ import {
   Tag,
   CheckCircle2,
 } from "lucide-react";
+import { LeadCaptureForm, TrackedPhoneLink } from "@/shared/ui/lead-capture";
 import type { Home, ContentBlock, FaqItem } from "@/shared/types/site-props";
 import type {
   Testimonial,
@@ -484,6 +485,7 @@ export function ContactSection({
   address,
   hours,
   cta,
+  tenantId,
 }: {
   heading?: string;
   phone?: string;
@@ -491,12 +493,15 @@ export function ContactSection({
   address?: string;
   hours?: { label: string; value: string }[];
   cta?: Cta;
+  /** When set, enables enquiry form + call-click tracking tied to this tenant. */
+  tenantId?: string;
 }) {
   return (
     <section id="contact" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4">
         <div className="overflow-hidden rounded-3xl bg-[var(--secondary)] text-white shadow-xl">
           <div className="grid gap-10 p-8 sm:p-12 lg:grid-cols-2">
+            {/* Left column — contact details */}
             <Reveal>
               <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
                 {heading ?? "Get in touch"}
@@ -506,15 +511,17 @@ export function ContactSection({
               </p>
               <div className="mt-8 space-y-4">
                 {phone && (
-                  <a
+                  <TrackedPhoneLink
                     href={telHref(phone)}
+                    tenantId={tenantId}
+                    phone={phone}
                     className="flex items-center gap-3 text-lg font-semibold transition-colors hover:text-[var(--accent)]"
                   >
                     <span className="grid h-11 w-11 place-items-center rounded-full bg-white/10">
                       <Phone className="h-5 w-5 text-[var(--accent)]" />
                     </span>
                     {phone}
-                  </a>
+                  </TrackedPhoneLink>
                 )}
                 {email && (
                   <a
@@ -547,24 +554,33 @@ export function ContactSection({
               )}
             </Reveal>
 
-            {hours?.length ? (
-              <Reveal delay={0.1}>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                  <h3 className="flex items-center gap-2 text-lg font-bold">
-                    <Clock className="h-5 w-5 text-[var(--accent)]" />
-                    Opening hours
-                  </h3>
-                  <dl className="mt-4 divide-y divide-white/10">
-                    {hours.map((h) => (
-                      <div key={h.label} className="flex items-center justify-between py-2.5 text-sm">
-                        <dt className="font-medium text-white/80">{h.label}</dt>
-                        <dd className="font-semibold">{h.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              </Reveal>
-            ) : null}
+            {/* Right column — hours + enquiry form */}
+            <Reveal delay={0.1}>
+              <div className="space-y-6">
+                {hours?.length ? (
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                    <h3 className="flex items-center gap-2 text-lg font-bold">
+                      <Clock className="h-5 w-5 text-[var(--accent)]" />
+                      Opening hours
+                    </h3>
+                    <dl className="mt-4 divide-y divide-white/10">
+                      {hours.map((h) => (
+                        <div
+                          key={h.label}
+                          className="flex items-center justify-between py-2.5 text-sm"
+                        >
+                          <dt className="font-medium text-white/80">{h.label}</dt>
+                          <dd className="font-semibold">{h.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                ) : null}
+
+                {/* Enquiry form — shown on real tenant sites */}
+                <LeadCaptureForm tenantId={tenantId} />
+              </div>
+            </Reveal>
           </div>
         </div>
       </div>

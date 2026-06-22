@@ -25,6 +25,9 @@ export function HomePage({ site, basePath }: { site: SiteProps; basePath: string
   const { heroImage } = resolveTheme(site.branding, site.overrides);
   const phone = home.contact?.phone || business.phone || "";
   const email = home.contact?.email || business.email || "";
+  const tenantId = basePath.startsWith("/preview/site/")
+    ? basePath.replace("/preview/site/", "")
+    : undefined;
 
   const locations = site.locations.map((l) => ({ slug: l.slug, suburb: l.suburb }));
 
@@ -96,6 +99,7 @@ export function HomePage({ site, basePath }: { site: SiteProps; basePath: string
         address={home.contact?.address}
         hours={home.contact?.hours}
         cta={home.contact?.cta}
+        tenantId={tenantId}
       />
     </SiteShell>
   );
