@@ -14,6 +14,7 @@ import {
   readdirSync,
 } from "node:fs";
 import { join } from "node:path";
+import type { SiteProps } from "@/shared/types/site-props";
 
 /* --------------------------------------------------------------------- types */
 
@@ -22,7 +23,8 @@ export type EditRequestStatus =
   | "processing" // Phase L engine is mutating SiteProps
   | "preview"    // mutation complete, awaiting owner approval
   | "applied"    // owner approved, site published with change
-  | "rejected";  // owner rejected the change
+  | "rejected"   // owner rejected the change
+  | "error";     // processing failed
 
 export interface EditRequest {
   id: string;
@@ -35,6 +37,8 @@ export interface EditRequest {
   resolvedAt?: string;
   /** Brief summary of what changed (set by Phase L engine). */
   changeSummary?: string;
+  /** The proposed updated SiteProps — present when status is "preview". */
+  proposedSiteProps?: SiteProps;
 }
 
 /* ------------------------------------------------------------------ store */

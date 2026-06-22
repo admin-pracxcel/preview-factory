@@ -13,18 +13,24 @@
  *   /preview/site/<tenantId>/faq              → FAQ page
  *   /preview/site/<tenantId>/about            → about page
  *
+ * Phase L: if ?editRequest=<id> is present and the edit request is in
+ * "preview" status, the proposed SiteProps are used instead of the stored
+ * tenant SiteProps, and an EditPreviewBanner is overlaid at the bottom.
+ *
  * This is a server component — it reads from the local file store directly.
  */
 
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTenant } from "@/lib/tenant-store";
+import { getEditRequest } from "@/lib/edit-requests-store";
 import { sitePropsSchema } from "@/shared/types/site-props";
 import type { SiteProps } from "@/shared/types/site-props";
 import { renderTradesPage, tradesPageMetadata } from "@/templates/categories/trades";
 import { renderAlliedHealthPage, alliedHealthPageMetadata } from "@/templates/categories/allied-health";
 import { renderBeautyPage, beautyPageMetadata } from "@/templates/categories/beauty-aesthetics";
 import { renderFitnessPage, fitnessPageMetadata } from "@/templates/categories/fitness-wellness";
+import { EditPreviewBanner } from "@/shared/ui/edit-preview-banner";
 
 /* ----------------------------------------------------------------------- types */
 
@@ -73,30 +79,75 @@ function pageMetadata(
   }
 }
 
+/**
+ * Resolve the effective SiteProps: if an editRequestId is provided and the
+ * edit request is in "preview" state with valid proposedSiteProps, return
+ * those; otherwise fall back to tenant.siteProps.
+ */
+function resolveProposedSite(
+  tenant: { siteProps: SiteProps },
+  editRequestId: string | undefined
+): { site: SiteProps; isPreview: boolean; editReqId: string; changeSummary: string; request: string } | { site: SiteProps; isPreview: false } {
+  if (!editRequestId) return { site: tenant.siteProps, isPreview: false };
+
+  const editReq = getEditRequest(editRequestId);
+  if (
+    !editReq ||
+    editReq.status !== "preview" ||
+    !editReq.proposedSiteProps
+  ) {
+    return { site: tenant.siteProps, isPreview: false };
+  }
+
+  const parsed = sitePropsSchema.safeParse(editReq.proposedSiteProps);
+  if (!parsed.success) {
+    return { site: tenant.siteProps, isPreview: false };
+  }
+
+  return {
+    site: parsed.data,
+    isPreview: true,
+    editReqId: editReq.id,
+    changeSummary: editReq.changeSummary ?? "Proposed change",
+    request: editReq.request,
+  };
+}
+
 /* -------------------------------------------------------------------- routes */
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<RouteParams>;
+  searchParams: Promise<{ editRequest?: string }>;
 }): Promise<Metadata> {
   const { tenantId, slug = [] } = await params;
+  const { editRequest: editRequestId } = await searchParams;
+
   const tenant = getTenant(tenantId);
   if (!tenant) return { title: "Not Found" };
 
   const parseResult = sitePropsSchema.safeParse(tenant.siteProps);
   if (!parseResult.success) return { title: tenant.name };
 
-  const meta = pageMetadata(tenant.category, parseResult.data, slug);
+  // Use proposed site props for metadata if in preview mode
+  const resolved = resolveProposedSite(tenant, editRequestId);
+  const site = resolved.site;
+
+  const meta = pageMetadata(tenant.category, site, slug);
   return { title: meta.title, description: meta.description };
 }
 
 export default async function TenantPreviewPage({
   params,
+  searchParams,
 }: {
   params: Promise<RouteParams>;
+  searchParams: Promise<{ editRequest?: string }>;
 }): Promise<React.ReactElement> {
   const { tenantId, slug = [] } = await params;
+  const { editRequest: editRequestId } = await searchParams;
 
   const tenant = getTenant(tenantId);
   if (!tenant) notFound();
@@ -116,8 +167,25 @@ export default async function TenantPreviewPage({
     );
   }
 
-  const site = parseResult.data;
-  const page = renderPage(tenant.category, site, slug, tenantId);
+  // Resolve effective site props (may be proposed edit preview)
+  const resolved = resolveProposedSite(tenant, editRequestId);
+
+  const page = renderPage(tenant.category, resolved.site, slug, tenantId);
   if (!page) notFound();
+
+  if (resolved.isPreview) {
+    return (
+      <>
+        <EditPreviewBanner
+          editRequestId={resolved.editReqId}
+          changeSummary={resolved.changeSummary}
+          request={resolved.request}
+          tenantId={tenantId}
+        />
+        {page}
+      </>
+    );
+  }
+
   return page;
 }
