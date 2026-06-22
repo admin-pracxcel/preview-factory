@@ -5,7 +5,19 @@ Current phase: H — Real GBP intake + multi-tenant preview (IN PROGRESS)
 
 Human directive 2026-06-22: Added phases H–M (product pipeline: GBP intake, checkout, lead capture, client dashboard, edit-request engine, outreach engine). Building one phase at a time with grader gate after each.
 
-Phase H status: IN PROGRESS
+Phase H status: BUILT — grader PASS, gate H-checkpoint.json written. Awaiting human sign-off.
+
+## Phase H: Real GBP intake + multi-tenant preview
+- [x] H1: lib/tenant-store.ts (file-based, Supabase-ready)
+- [x] H2: lib/places-client.ts (Google Places API + fixture fallback)
+- [x] H3: lib/generator-api.ts (API-safe wrapper, no process.exit, fixture fallback)
+- [x] H4: app/api/intake/route.ts (POST endpoint)
+- [x] H5: app/api/tenant/[id]/route.ts (GET endpoint)
+- [x] H6: app/preview/site/[tenantId]/[[...slug]]/page.tsx (universal tenant renderer)
+- [x] H7: app/preview/[id]/page.tsx updated (iframe → /preview/site/${id})
+- [x] H8: scripts/h-prove.mjs — fixture proof PASSED
+- [ ] H-CHECKPOINT: awaiting human sign-off
+Commit: 9446438
 
 Phase D complete (2026-06-20):
   - generator/run.mjs: ESM runner, streaming Claude API calls, Zod mini-schema + grader-mirror validation, retry-once on failure. Grader PASS on first attempt.
