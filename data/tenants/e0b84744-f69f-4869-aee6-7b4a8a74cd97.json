@@ -1,0 +1,506 @@
+{
+  "id": "e0b84744-f69f-4869-aee6-7b4a8a74cd97",
+  "name": "The Little Barbershop - Sydney",
+  "niche": "Barber Shop",
+  "category": "beauty-aesthetics",
+  "siteProps": {
+    "business": {
+      "name": "The Little Barbershop - Sydney",
+      "phone": "(02) 9332 3399"
+    },
+    "branding": {
+      "primary_color": "#9d2b4c",
+      "secondary_color": "#3d3d3d",
+      "accent_color": "#d4a853",
+      "hero_image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZNuWo008RX6IqEn8fyY3HrIBof8f5dfRvoIdrIZE1TdWNVhJHb41eNSb-GFyV9q-rMwjhmVTyKX-fKxY6XR_kzctgoYYxzIo0MfGszDR-f9YYZROhddqH35LMd_kUT1FgNzKq5ItaFoh1royQ=s4800-w1600-h1600"
+    },
+    "home": {
+      "hero": {
+        "headline": "Premium barber shop in Woolloomooloo",
+        "subheadline": "Expert fades, cuts, and beard grooming for Sydney",
+        "cta_primary": {
+          "label": "Book now",
+          "href": "/booking"
+        },
+        "cta_secondary": {
+          "label": "Call (02) 9332 3399",
+          "href": "tel:(02)93323399"
+        }
+      },
+      "services": [
+        {
+          "id": "svc-fades-cuts",
+          "title": "Fades & Cuts",
+          "description": "Sharp, clean fades and precision haircuts tailored to your style",
+          "icon": "Scissors"
+        },
+        {
+          "id": "svc-beard",
+          "title": "Beard Grooming",
+          "description": "Professional beard trimming, shaping, and hot towel treatment",
+          "icon": "Wind"
+        },
+        {
+          "id": "svc-styling",
+          "title": "Hair Styling & Colouring",
+          "description": "Creative styling and professional hair colouring services",
+          "icon": "Paintbrush"
+        },
+        {
+          "id": "svc-clipper",
+          "title": "Clipper Cuts",
+          "description": "Clean, classic clipper cuts for a sharp, timeless look",
+          "icon": "Zap"
+        }
+      ],
+      "about": {
+        "heading": "Sydney's trusted barber shop",
+        "body": "The Little Barbershop brings expert craftsmanship and genuine care to every cut. Located in Woolloomooloo, we've built our reputation on attention to detail and a relaxed, welcoming atmosphere.\n\nWhether you're after a sharp fade, a full restyle, or quality beard work, our team—Adrian and Maria—take the time to understand what works for you. We listen, we advise, and we deliver cuts you'll look forward to maintaining."
+      },
+      "service_area": {
+        "heading": "Serving Sydney",
+        "suburbs": [
+          "Woolloomooloo",
+          "Darlinghurst",
+          "Potts Point",
+          "Kings Cross",
+          "Surry Hills",
+          "Newtown",
+          "Redfern",
+          "Paddington",
+          "East Sydney",
+          "Zetland",
+          "Ultimo",
+          "Moore Park"
+        ]
+      },
+      "gallery": [
+        {
+          "id": "gallery-1",
+          "image_url": "https://images.pexels.com/photos/34702982/pexels-photo-34702982.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Classic fade with tapered sides",
+          "alt": "Sharp fade haircut with clean lines"
+        },
+        {
+          "id": "gallery-2",
+          "image_url": "https://images.pexels.com/photos/10775080/pexels-photo-10775080.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Textured crop with movement",
+          "alt": "Textured crop hairstyle for modern look"
+        },
+        {
+          "id": "gallery-3",
+          "image_url": "https://images.pexels.com/photos/3998414/pexels-photo-3998414.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Professional beard trim and shape",
+          "alt": "Freshly groomed beard with defined lines"
+        },
+        {
+          "id": "gallery-4",
+          "image_url": "https://images.pexels.com/photos/13714797/pexels-photo-13714797.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Long hair consultation and styling",
+          "alt": "Long styled haircut with texture and shape"
+        },
+        {
+          "id": "gallery-5",
+          "image_url": "https://images.pexels.com/photos/6007400/pexels-photo-6007400.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Hot towel shave and beard work",
+          "alt": "Professional hot towel shave service"
+        },
+        {
+          "id": "gallery-6",
+          "image_url": "https://images.pexels.com/photos/12706272/pexels-photo-12706272.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Mid-fade with line-up detail",
+          "alt": "Mid-length fade with precise line-up"
+        }
+      ],
+      "testimonials": [
+        {
+          "id": "review-neil",
+          "quote": "I've had about 4 haircuts here now and I really enjoy the experience. Adrian is chatty but not intrusive, and I look forward to catching up every month. The space is relaxed and spacious, very different from the cramped and noisy barber shops I used to go to. Prices are ok too. See you again next month lads.",
+          "author": "Neil Evans",
+          "rating": 5
+        },
+        {
+          "id": "review-nitin",
+          "quote": "First time going - will go back. Exceptional service and attention to detail. Friendly staff and chilled atmosphere. Maria did a terrific job with my cut and beard trim. Would definitely recommend. Thanks for a great experience.",
+          "author": "Nitin Thomas",
+          "rating": 5
+        },
+        {
+          "id": "review-charlie",
+          "quote": "Been putting off a trim for months, but came after a recommendation from a friend who also has long thick hair. Very glad I did, Maria was lovely and did a great job! Will definitely be back.",
+          "author": "Charlie Davies",
+          "rating": 5
+        },
+        {
+          "id": "review-andrey",
+          "quote": "I've been getting skin fades pretty much since COVID and decided it was time for a change and go for a longer hairstyle. I hadn't had a haircut for several weeks, so I wasn't quite sure what would work best. The barber took the time to talk me through different options, explained what would suit my hair and face shape, and guided me through the whole process with real confidence and expertise. I never felt rushed, and the advice was spot on. Super grateful for their professionalism and skill — walked out feeling fresh and confident with a style that actually works for me. Highly recommend.",
+          "author": "Andrey Khanenkov",
+          "rating": 5
+        },
+        {
+          "id": "review-miguel",
+          "quote": "Highly recommended. I came to get my hair cut after a year without one. I showed them reference photos, and they gave me advice and guidance every step of the way. I was very happy. Excellent service and friendly staff.",
+          "author": "Miguel Sanchez",
+          "rating": 5
+        }
+      ],
+      "social_proof": {
+        "items": [
+          {
+            "id": "proof-reviews",
+            "value": "5",
+            "label": "5-star reviews",
+            "icon": "Star"
+          },
+          {
+            "id": "proof-clients",
+            "value": "100+",
+            "label": "Satisfied clients",
+            "icon": "Heart"
+          },
+          {
+            "id": "proof-experience",
+            "value": "10+",
+            "label": "Years of expertise",
+            "icon": "Sparkle"
+          }
+        ]
+      },
+      "contact": {
+        "phone": "(02) 9332 3399",
+        "hours": [
+          {
+            "label": "Monday",
+            "value": "9:00am – 6:00pm"
+          },
+          {
+            "label": "Tuesday",
+            "value": "9:00am – 6:00pm"
+          },
+          {
+            "label": "Wednesday",
+            "value": "9:00am – 6:00pm"
+          },
+          {
+            "label": "Thursday",
+            "value": "9:00am – 6:00pm"
+          },
+          {
+            "label": "Friday",
+            "value": "9:00am – 7:00pm"
+          },
+          {
+            "label": "Saturday",
+            "value": "8:00am – 5:00pm"
+          },
+          {
+            "label": "Sunday",
+            "value": "Closed"
+          }
+        ]
+      }
+    },
+    "services": [
+      {
+        "slug": "fades-cuts",
+        "title": "Fades & Cuts",
+        "summary": "Sharp, clean fades and precision haircuts tailored to your style",
+        "icon": "Scissors",
+        "intro": "Get the perfect fade or custom haircut at The Little Barbershop. Our barbers specialize in clean fades, textured cuts, and classic styles. Whether you're after a skin fade, mid-fade, or full restyle, we listen to your needs and deliver results you'll love.",
+        "benefits": [
+          "Expert fade work with sharp, clean lines",
+          "Precision cuts tailored to your hair type and face shape",
+          "Expert consultation on styles that suit you"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-svc-fades-1",
+            "question": "What's the difference between a skin fade and a mid-fade?",
+            "answer": "A skin fade tapers down to the shortest length possible near the edges, while a mid-fade leaves slightly more length in the lower section. Both create sharp definition—it's about how short you want to go at the sides."
+          },
+          {
+            "id": "faq-svc-fades-2",
+            "question": "How often should I get a fade?",
+            "answer": "Most fades look fresh for 2–3 weeks, depending on how fast your hair grows and how defined you want the lines to stay. Regular clients come in every 3–4 weeks to keep the shape crisp."
+          }
+        ],
+        "seo": {
+          "title": "Fades & Haircuts in Woolloomooloo | The Little Barbershop"
+        },
+        "hero_image": "https://lh3.googleusercontent.com/place-photos/AJRVUZNNGu5CfYjlR76FXeyR68DNvIIPB8mjcjEirre6KgxxyaBUg89aZ-G-zvsNIHvoNAUNeY6oXaXCHmm9xETxLGhxbnaGW2c0_yKUzhIP5UuodPouhxMbmVOCX0Hfi2UVusPFOULkzQUjeeThhlY=s4800-w1600-h1600"
+      },
+      {
+        "slug": "beard-grooming",
+        "title": "Beard Grooming",
+        "summary": "Professional beard trimming, shaping, and hot towel treatment",
+        "icon": "Wind",
+        "intro": "Keep your beard looking sharp with expert trimming and shaping at The Little Barbershop. We offer precision beard work, hot towel treatments, and guidance on maintaining the style you want between visits.",
+        "benefits": [
+          "Professional beard trim and shape with attention to detail",
+          "Hot towel service for a premium grooming experience",
+          "Aftercare advice to keep your beard healthy and groomed"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-svc-beard-1",
+            "question": "Do you offer hot towel shaves?",
+            "answer": "Yes, we offer hot towel treatment as part of beard grooming. It softens the beard, opens your pores, and gives you a luxe barber experience. Ask about adding it to your beard trim."
+          },
+          {
+            "id": "faq-svc-beard-2",
+            "question": "How do I maintain my beard between visits?",
+            "answer": "Trim the edges every 2–3 weeks to keep the shape clean. Wash regularly with beard shampoo, apply a light oil or balm, and keep it combed. We can advise on the best routine when you visit."
+          }
+        ],
+        "seo": {
+          "title": "Professional Beard Grooming in Woolloomooloo | The Little Barbershop"
+        },
+        "hero_image": "https://lh3.googleusercontent.com/place-photos/AJRVUZOLWHFCAtV8WgvAo5LdgjFcD_dcvjxACwWeHzYmaYz3ZKkOgB3-sGao01iq9A6movf_xwq8TL69t_Mt4A5IQIZ_gR_JxP6RKndueG_SRAJtEisoxkK7Pu5fC-__SpOziiuB2posmCwuxexkJA=s4800-w1600-h1600"
+      },
+      {
+        "slug": "hair-styling-colouring",
+        "title": "Hair Styling & Colouring",
+        "summary": "Creative styling and professional hair colouring services",
+        "icon": "Paintbrush",
+        "intro": "Transform your look with professional styling and colouring at The Little Barbershop. Our team offers creative colour work, restyle consultations, and guidance on maintaining vibrant colour between appointments.",
+        "benefits": [
+          "Professional hair colouring with quality products",
+          "Creative styling advice and execution",
+          "Colour care tips to keep your new look vibrant"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-svc-colour-1",
+            "question": "How long does colour typically last?",
+            "answer": "Most colour lasts 4–6 weeks before it starts fading, depending on the shade, your hair, and how often you wash. We can recommend a touch-up schedule and maintenance routine when you book."
+          },
+          {
+            "id": "faq-svc-colour-2",
+            "question": "Can you cover grey hair?",
+            "answer": "Yes, absolutely. We use professional-grade colour products designed to cover grey effectively. The exact approach depends on how much grey you have and what colour you're aiming for—we'll discuss the best option in your consultation."
+          }
+        ],
+        "seo": {
+          "title": "Hair Colouring & Styling in Woolloomooloo | The Little Barbershop"
+        },
+        "hero_image": "https://lh3.googleusercontent.com/place-photos/AJRVUZMlVY4yYq_TcSl1ZD3WBi281A0aglAJkFqMd9Sh7LV-gdhibIV8rkSkhb7_1XfC-eAN3tGfQrzy1CrLCP27Lp7EEl7JpRXpExvx4nIGn5oPbKFLw5h_i-pPifDon76m-aje56p-QRk1ZBgHjQ=s4800-w1600-h1600"
+      },
+      {
+        "slug": "clipper-cuts",
+        "title": "Clipper Cuts",
+        "summary": "Clean, classic clipper cuts for a sharp, timeless look",
+        "icon": "Zap",
+        "intro": "Get a crisp clipper cut at The Little Barbershop. We specialise in clean, well-proportioned clipper work—from full clipper crops to precise clipper fades. Quick, sharp, and timeless.",
+        "benefits": [
+          "Fast, precise clipper work for busy professionals",
+          "Variety of clipper lengths to suit your style",
+          "Clean, sharp finishes every time"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-svc-clipper-1",
+            "question": "What's the fastest service you offer?",
+            "answer": "A standard clipper cut takes about 20–30 minutes. If you're in a hurry, let us know when you book and we can work efficiently. Walk-ins are welcome, but booking ahead helps us get you in quickly."
+          },
+          {
+            "id": "faq-svc-clipper-2",
+            "question": "What clipper lengths do you use?",
+            "answer": "We work with standard clipper grades, typically from #0.5 (very short) to #3 or longer. We'll discuss what length suits your hair and style preference—most clients choose a 1–2 length for everyday wear."
+          }
+        ],
+        "seo": {
+          "title": "Clipper Cuts in Woolloomooloo | The Little Barbershop"
+        },
+        "hero_image": "https://lh3.googleusercontent.com/place-photos/AJRVUZNsc4kkGROpzJFQbiHEBfRB1j2UMzLhd3_6HfaTDOHkRT9fKnqa3D4i1rUrmBeq4ua9vqZxe_tzuJGQiY9DPUImyNwW_aLBESe9rCUEW6CFxUYOf3K6lcEZCXDTrr6DDe6IDWYG7VaPwnXfYQ=s4800-w1600-h1334"
+      }
+    ],
+    "locations": [
+      {
+        "slug": "woolloomooloo",
+        "suburb": "Woolloomooloo",
+        "state": "NSW",
+        "intro": "Visit The Little Barbershop in Woolloomooloo, located on Cathedral Street. We're a neighbourhood barber serving the local community with expert cuts, beard work, and colouring. Walk-ins welcome, or book online for your preferred time.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Convenient location on Cathedral Street in Woolloomooloo",
+          "Relaxed, spacious barber shop atmosphere",
+          "Expert local team who know the neighbourhood"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-loc-woolloo-1",
+            "question": "Can I park near the shop?",
+            "answer": "Yes, there's street parking available on Cathedral Street and surrounding roads. The shop is easy to find, just off the main strip."
+          }
+        ],
+        "seo": {
+          "title": "Barber Shop in Woolloomooloo | The Little Barbershop"
+        },
+        "hero_image": "https://lh3.googleusercontent.com/place-photos/AJRVUZO7WVNgap-J3aKQUtNmsAOEgkC_mjXhMY9d9Y4Xb7jRaAtqYtjuMlDKgQ4PbGfbeelrt61ZmEuXQHpLbRZ3YdvffBlC-xZX_bFTahKX2Mk4VBDADKJWYnnbOImpDJ95qb-K6eKgjA-BmLht=s4800-w1600-h1600"
+      },
+      {
+        "slug": "darlinghurst",
+        "suburb": "Darlinghurst",
+        "state": "NSW",
+        "intro": "The Little Barbershop is just a short trip from Darlinghurst. Many of our Darlinghurst neighbours come in for cuts and beard work. We're easy to get to and worth the visit for a quality barber experience.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Easy access from Darlinghurst to our Woolloomooloo location",
+          "Neighbourhood-friendly, welcoming barber shop",
+          "Expert service for the Darlinghurst community"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-loc-darling-1",
+            "question": "How long does it take to get to your shop from Darlinghurst?",
+            "answer": "From central Darlinghurst, it's roughly 5–10 minutes by car or public transport. Parking is available near the shop."
+          }
+        ],
+        "seo": {
+          "title": "Barber Shop Serving Darlinghurst | The Little Barbershop"
+        },
+        "hero_image": "https://lh3.googleusercontent.com/place-photos/AJRVUZO0tkqHIl_Dj8b-h16Hd-80DPshZb-SX6bMip4jqCkcdNR8iIfZFdDVSdBXYU-AeG11GePEqhjLv5oGhbrzLJMm2cetq7tekIsX7oHI20DlKkT3Gz-1fj5e7I3IL8vukp4I4vVtOClwGmBKp_Q=s4800-w1600-h1600"
+      },
+      {
+        "slug": "surry-hills",
+        "suburb": "Surry Hills",
+        "state": "NSW",
+        "intro": "The Little Barbershop welcomes clients from Surry Hills. Whether you're after a sharp fade, stylish restyle, or beard work, our team delivers the cuts you want. Visit us in nearby Woolloomooloo for a relaxed, professional barber experience.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Expert barber service for Surry Hills locals",
+          "Just minutes away in Woolloomooloo",
+          "Friendly, spacious shop atmosphere"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-loc-surry-1",
+            "question": "Do you take bookings from Surry Hills customers?",
+            "answer": "Absolutely. Book online or call us. We welcome clients from all over Sydney, including Surry Hills. Regular customers love the relaxed vibe and quality of work."
+          }
+        ],
+        "seo": {
+          "title": "Barber Shop for Surry Hills | The Little Barbershop Woolloomooloo"
+        },
+        "hero_image": "https://images.pexels.com/photos/33448216/pexels-photo-33448216.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      },
+      {
+        "slug": "potts-point",
+        "suburb": "Potts Point",
+        "state": "NSW",
+        "intro": "Potts Point residents are welcome at The Little Barbershop in Woolloomooloo. We're a neighbourhood barber offering everything from fades and cuts to beard grooming and colour work. Book your appointment today.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Professional barber service for Potts Point",
+          "Convenient location with good parking",
+          "Expert team trained in all barber services"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-loc-potts-1",
+            "question": "What are your opening hours?",
+            "answer": "Monday to Friday 9am–6pm, Friday until 7pm, Saturday 8am–5pm, and we're closed Sundays. Book ahead or drop in when you're free."
+          }
+        ],
+        "seo": {
+          "title": "Barber Shop for Potts Point | The Little Barbershop"
+        },
+        "hero_image": "https://images.pexels.com/photos/3356174/pexels-photo-3356174.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      }
+    ],
+    "service_areas": [],
+    "faq": {
+      "items": [
+        {
+          "id": "faq-site-1",
+          "question": "How do I book an appointment?",
+          "answer": "You can book online through our website, call us at (02) 9332 3399, or drop in when it's convenient. We welcome walk-ins, but booking ahead gives you your preferred time slot."
+        },
+        {
+          "id": "faq-site-2",
+          "question": "What payment methods do you accept?",
+          "answer": "We accept cash and card payments. Ask us about any current specials when you visit."
+        },
+        {
+          "id": "faq-site-3",
+          "question": "Do you offer gift vouchers?",
+          "answer": "Yes, gift vouchers are available. Contact us directly at (02) 9332 3399 to arrange vouchers for friends or family."
+        },
+        {
+          "id": "faq-site-4",
+          "question": "Are you wheelchair accessible?",
+          "answer": "Yes, our shop is accessible. If you have any specific needs, give us a call ahead so we can make sure everything is set up for your visit."
+        },
+        {
+          "id": "faq-site-5",
+          "question": "What's your cancellation policy?",
+          "answer": "We ask for 24 hours' notice if you need to cancel or reschedule. Short notice cancellations may incur a fee. Contact us as soon as you know so we can offer the slot to another client."
+        },
+        {
+          "id": "faq-site-6",
+          "question": "Do you offer walk-in services?",
+          "answer": "Walk-ins are always welcome, but waits may vary depending on how busy we are. Book ahead to guarantee your time and avoid the queue."
+        }
+      ],
+      "seo": {
+        "title": "Frequently Asked Questions | The Little Barbershop"
+      }
+    },
+    "about": {
+      "heading": "The Little Barbershop — Woolloomooloo's neighbourhood barber",
+      "body": "The Little Barbershop has been a fixture in Woolloomooloo, built on craft, care, and genuine connection with our clients. We're not a chain or a rush-through shop. Adrian and Maria take time with every cut, listen to what you want, and deliver the results you're after.\n\nWe've cut hair for locals who come in monthly, walk-ins who found us by word-of-mouth, and people who travel across Sydney because they trust our work. Our shop is relaxed and spacious—no cramped chairs, no high-pressure upsell. Just skilled barbers, good conversation, and a service you'll look forward to.\n\nWhether you're after a sharp fade, a full restyle, quality beard work, or colour, we bring the same attention to detail and genuine care to every service. That's the little barbershop difference.",
+      "values": [
+        {
+          "id": "value-craft",
+          "title": "Craft",
+          "body": "Every cut, fade, and beard trim is done with attention to detail. We take time, use quality tools, and deliver work we're proud of.",
+          "icon": "Scissors"
+        },
+        {
+          "id": "value-connection",
+          "title": "Connection",
+          "body": "We remember our regulars, take the time to chat, and build genuine relationships with our clients. The shop is a place to relax and be heard.",
+          "icon": "Heart"
+        },
+        {
+          "id": "value-local",
+          "title": "Local",
+          "body": "We're part of the Woolloomooloo community. We know the neighbourhood, we care about our clients, and we're proud to be a trusted local barber.",
+          "icon": "Sparkle"
+        }
+      ],
+      "seo": {
+        "title": "About The Little Barbershop | Sydney Barber"
+      },
+      "photo_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZNKYzIBqD_skVNpl_jNftRbl4UIlp0OXpmX1nklps6T4PisHaENZ4pM7VTRWRsHFXOFfv0m01FjKyI7l-DHKCTYWd34cHUCgpSfNNOqosjYf0x2LBEPjqT8kWuWOBt02BAcWtCHXrV2fXKJ3A=s4800-w1600-h1334"
+    },
+    "seo": {
+      "title": "The Little Barbershop - Sydney | Fades, Cuts & Beard Grooming in Woolloomooloo",
+      "description": "Premium barber shop in Woolloomooloo, Sydney. Expert fades, cuts, and beard grooming. Book your appointment today.",
+      "schema_org_type": "LocalBusiness"
+    },
+    "preview": {},
+    "overrides": {
+      "primary_color": "#1e293b",
+      "accent_color": "#b91c1c",
+      "logo_url": "",
+      "hero_image_url": "https://images.pexels.com/photos/9146943/pexels-photo-9146943.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+      "secondary_color": "#2d4469",
+      "chrome_theme": "dark"
+    }
+  },
+  "createdAt": "2026-06-30T04:23:52.139Z",
+  "status": "preview"
+}

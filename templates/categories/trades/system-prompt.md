@@ -13,13 +13,13 @@ Produce ONE JSON object matching `SiteProps`:
 - `business`, `branding`, `seo` (site default), `preview`, `overrides`
 - `home`: hero, services (overview cards, each with a `slug` matching a service-detail page), about, service_area (suburb list), gallery, testimonials, social_proof, offer, contact
   - `contact.hours[]`: **each entry MUST be `{ "label": "...", "value": "..." }`** — e.g. `{ "label": "Monday – Friday", "value": "7:00am – 6:00pm" }`. Do NOT use `days`/`hours` keys — the schema rejects them.
-- `services[]`: **6–12** service-detail pages — `slug`, `title`, `summary`, `icon`, `starting_price?`, `intro` (2+ paragraphs), `benefits[]` (4–6), `sections[]` (1–3 heading+body blocks), `faqs[]` (0–3), `seo`
-- `locations[]`: **8–20** suburb pages — `slug`, `suburb`, `state`, `intro`, `body`, `landmarks[]`, `services_offered[]` (service slugs), `seo`
-- `service_areas[]`: **5–15** service-in-area landing pages — `slug` = `${service_slug}-${suburb-slug}`, `service_slug`, `service_title`, `suburb`, `headline`, `body`, `benefits[]`, `seo`
-- `faq`: site-wide FAQ (`items[]`, `seo`)
-- `about`: rich about page (`body`, `photo_url?`, `years_in_business?`, `licence?`, `values[]`, `seo`)
+- `services[]`: exactly 4 service-detail pages — `slug`, `title`, `summary`, `icon`, `intro` (1 short paragraph, 40–60 words), `benefits[]` (3 items), `faqs[]` (2 items), `seo`. Skip `sections[]`.
+- `locations[]`: exactly 4 suburb pages — `slug`, `suburb`, `state`, `intro` (1 short paragraph, 40–60 words), `benefits[]` (3 items), `faqs[]` (1 item), `seo`. Skip `sections[]` and `body`.
+- `service_areas[]`: empty array `[]`.
+- `faq`: site-wide FAQ (`items[]` — 4–6 items, `seo`)
+- `about`: rich about page (`heading`, `body`, `values[]` 3 items, `seo`)
 
-Total target: **20–40 indexable pages**. Every page needs a unique, keyword-aware `seo.title` and `seo.description`. Interlink naturally (services ↔ areas ↔ locations).
+This is a PREVIEW. Sub-3-minute generation. Quality of the HOMEPAGE matters most.
 
 ## Hard rules
 

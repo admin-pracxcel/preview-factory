@@ -1,0 +1,527 @@
+{
+  "id": "d1f2c27b-9318-4054-b880-8ea095622f16",
+  "name": "The Body Project",
+  "niche": "Osteopath",
+  "category": "allied-health",
+  "siteProps": {
+    "business": {
+      "name": "The Body Project",
+      "phone": "(02) 9884 8758"
+    },
+    "branding": {
+      "primary_color": "#1e7b7e",
+      "secondary_color": "#0d5459",
+      "accent_color": "#d97706",
+      "hero_image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZOYx1oJh2k3khopk03npS2YwrGyTuOUyW2b_436fD0PP2gq4OR0YQCnvSACpBGqHwOIHydVdrJUTadpUi2ny7Y0ENnl8IqD8fbTyMd7tBJTbo7bEU89XKslACsVvdWM_Pb4dBUUgRRoXlAL1tQ=s4800-w1600-h1600"
+    },
+    "home": {
+      "hero": {
+        "headline": "Expert osteopathic care in Chatswood",
+        "subheadline": "Professional manual therapy and holistic treatment for pain management, injury recovery, and improved wellbeing",
+        "cta_primary": {
+          "label": "Book an appointment",
+          "href": "/contact"
+        },
+        "cta_secondary": {
+          "label": "Learn more",
+          "href": "#services"
+        }
+      },
+      "services": [
+        {
+          "id": "service-manual-therapy",
+          "title": "Manual Therapy",
+          "description": "Evidence-based hands-on treatment including joint mobilisation, soft tissue release, and manipulation to improve mobility and reduce pain.",
+          "icon": "Activity",
+          "slug": "manual-therapy"
+        },
+        {
+          "id": "service-sports-injury",
+          "title": "Sports Injury Management",
+          "description": "Assessment and treatment of sports-related injuries with a focus on safe return to activity and injury prevention strategies.",
+          "icon": "PersonStanding",
+          "slug": "sports-injury"
+        },
+        {
+          "id": "service-postural",
+          "title": "Postural Assessment & Ergonomics",
+          "description": "Comprehensive postural evaluation and ergonomic advice to address the underlying causes of pain and dysfunction.",
+          "icon": "Briefcase",
+          "slug": "postural-assessment"
+        },
+        {
+          "id": "service-occupational",
+          "title": "Workplace Injury Management",
+          "description": "Treatment and management of work-related injuries with support for early return to work and occupational health.",
+          "icon": "ShieldCheck",
+          "slug": "workplace-injury"
+        }
+      ],
+      "about": {
+        "heading": "About The Body Project",
+        "body": "The Body Project is committed to providing professional, evidence-based osteopathic care to the Chatswood community and surrounding areas. Our approach combines manual therapy with holistic assessment to address the root causes of pain and dysfunction, rather than simply treating symptoms.\n\nWe work with patients of all ages and activity levels, from office workers managing postural strain to athletes recovering from injury. Our goal is to support your body's natural healing processes and help you regain confidence in your movement and everyday activities.\n\nChristian brings years of experience and a genuine commitment to patient care. He takes time to understand your medical history, lifestyle, and goals at every session, ensuring treatment is tailored to your individual needs.",
+        "photo_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZMj_SmToyHjhi4Z6b_iyvtZfauvZD4iY9iWkFzYcuzt5N17mPDyqj-UAtZ-cG9qxf1126K5KgEmj_igc7IUlKcj_DzTqCdDbn9wN4NAC14-x1Eh7e808qEUWq4AxOBIfljXHSDknLjaN9Y6wtk=s4800-w1600-h1600",
+        "values": [
+          {
+            "id": "value-evidence",
+            "title": "Evidence-based",
+            "body": "Our treatment is grounded in current research and best practice in osteopathy.",
+            "icon": "BadgeCheck"
+          },
+          {
+            "id": "value-holistic",
+            "title": "Holistic approach",
+            "body": "We consider the whole person — body, lifestyle, and health goals — not just isolated symptoms.",
+            "icon": "Brain"
+          },
+          {
+            "id": "value-care",
+            "title": "Patient-centred",
+            "body": "Your comfort, progress, and wellbeing are our priority at every step.",
+            "icon": "Stethoscope"
+          }
+        ]
+      },
+      "service_area": {
+        "heading": "Areas we service",
+        "intro": "We're conveniently located in Chatswood, close to the railway station and parking. We also welcome patients from surrounding suburbs.",
+        "suburbs": [
+          "Chatswood",
+          "Willoughby",
+          "St Leonards",
+          "Lane Cove",
+          "Naremburn",
+          "Neutral Bay"
+        ]
+      },
+      "gallery": [
+        {
+          "id": "gallery-reception",
+          "image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZN-NSOeNOXermJDHkqw6weMDr5XJkZ8YaYQ8GgMXNBAj0Q5HmPpq2BsYYUveTMosht42Tw0AOCgr3Dxv-Qk37Djrd709gjlgTVK-LOIKVhLcZ7akK0LbLM82cJYsMjYDj7z1t5Oy87JfhyKD6g=s4800-w1042-h845",
+          "caption": "Welcoming reception area",
+          "alt": "The Body Project reception"
+        },
+        {
+          "id": "gallery-treatment",
+          "image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZMUcK0LccmsPyVPgq0Z7NYcBtrL9bOwgILMCkgg9B2HCsfP559ps5ipwTf6Tcahx6pXcNTqB8dbe2hZUUQ2lefA9763u1E5Ubl2c7fo1HFkcSvRHYjlTSaAd7yKjgku7fZsUtPEI8nbbNSn=s4800-w470-h445",
+          "caption": "Professional treatment room",
+          "alt": "Treatment room at The Body Project"
+        },
+        {
+          "id": "gallery-consultation",
+          "image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZOMN7xoGN_W40sDVaGEykNTPI0HUU73gnbo5V6bHlKqhGO9MKOn_eglLW2ZbIHkZ_3dB6hVW9TD78tu6RVBnHMcNPfuZ3cLLM3vw9wXZFbAmDPsW4sSeJ3pXnbNX22jg1-5Wy64Tzkt8IuKyg=s4800-w813-h813",
+          "caption": "Personalised consultation",
+          "alt": "Patient consultation at The Body Project"
+        },
+        {
+          "id": "gallery-clinic",
+          "image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZOZt3vJ1QvIhsMSKm6lx0nSOZIWGkgNqRsMN33_Xrntq53yS0V-af2soINcPNauUkAlC0SqRNNfUzm5jLXZ28BybSYwysFXHFxZJIi0J1JYGNz_vsY86Sme_Vr-HE2kTLubxIR3R6VMMBPk=s4800-w1559-h1600",
+          "caption": "Modern, clean clinic space",
+          "alt": "The Body Project clinic interior"
+        }
+      ],
+      "testimonials": [
+        {
+          "id": "testimonial-natasha",
+          "quote": "I highly recommend Christian. He's very knowledgeable and I really appreciate his holistic approach. He always responds promptly to questions, even after the appointment — that shows genuine care and attention.",
+          "author": "Natasha H"
+        },
+        {
+          "id": "testimonial-juliet",
+          "quote": "Christian takes time to discuss your medical history and lifestyle at every session. He never rushes and makes you feel very comfortable. I thoroughly trust and recommend Christian and The Body Project.",
+          "author": "Juliet Jacobsen"
+        },
+        {
+          "id": "testimonial-darrel",
+          "quote": "Christian has an easy-going personality and is extremely professional. The clinic is conveniently located near Chatswood station and easy to access. I've recommended him to all my friends.",
+          "author": "Darrel Claasz"
+        }
+      ],
+      "social_proof": {
+        "heading": "Trusted by the Chatswood community",
+        "items": [
+          {
+            "id": "proof-reviews",
+            "value": "5 stars",
+            "label": "Google reviews",
+            "icon": "Star"
+          },
+          {
+            "id": "proof-patients",
+            "value": "100%",
+            "label": "Patient satisfaction",
+            "icon": "HeartPulse"
+          },
+          {
+            "id": "proof-ahpra",
+            "value": "AHPRA registered",
+            "label": "Fully qualified practitioner",
+            "icon": "BadgeCheck"
+          }
+        ]
+      },
+      "contact": {
+        "heading": "Get in touch",
+        "phone": "(02) 9884 8758",
+        "address": "Level 4/6 Help St, Chatswood NSW 2067, Australia",
+        "hours": [
+          {
+            "label": "Monday",
+            "value": "8:00am – 6:00pm"
+          },
+          {
+            "label": "Tuesday",
+            "value": "8:00am – 6:00pm"
+          },
+          {
+            "label": "Wednesday",
+            "value": "8:00am – 6:00pm"
+          },
+          {
+            "label": "Thursday",
+            "value": "8:00am – 6:00pm"
+          },
+          {
+            "label": "Friday",
+            "value": "8:00am – 6:00pm"
+          },
+          {
+            "label": "Saturday",
+            "value": "9:00am – 2:00pm"
+          },
+          {
+            "label": "Sunday",
+            "value": "Closed"
+          }
+        ]
+      }
+    },
+    "services": [
+      {
+        "slug": "manual-therapy",
+        "title": "Manual Therapy",
+        "summary": "Hands-on osteopathic treatment including joint mobilisation and soft tissue release.",
+        "icon": "Activity",
+        "hero_image": "https://lh3.googleusercontent.com/place-photos/AJRVUZMYmh2AiBa0FPa7c6h9YAZQzSebSM9dXybSZDQzyJoLKmVc2TdV7KG7BFHBQ5Zm78ULCd7_9C8h9CLTkmMmOoy4OCjONX3k4IhvOCCvVpF4WdQnnkCk39h81ZRhtBTxENCSGTsvINPxvjuydCXpRTfPjQ=s4800-w1180-h1600",
+        "intro": "Manual therapy is the cornerstone of osteopathic treatment at The Body Project. Christian uses evidence-based hands-on techniques including joint mobilisation and targeted soft tissue release to address the root causes of pain and restricted movement, working holistically to restore mobility and function.",
+        "benefits": [
+          "Improved joint mobility and flexibility",
+          "Reduced muscle tension and pain",
+          "Better postural alignment and movement patterns"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-manual-therapy-1",
+            "question": "What happens during a manual therapy session?",
+            "answer": "Your first session at The Body Project involves a thorough assessment of your posture, movement, and medical history. Christian then uses hands-on techniques tailored to your needs—including joint mobilisation, muscle release, and stretching—to address restrictions and improve function. Sessions typically last 45–60 minutes."
+          },
+          {
+            "id": "faq-manual-therapy-2",
+            "question": "Is manual therapy painful?",
+            "answer": "Manual therapy should feel firm but not cause sharp pain. Christian works within your comfort range and communicates throughout treatment. You may feel some muscle soreness for a day or two afterward, similar to exercise, but this is temporary and a sign the body is responding to treatment."
+          }
+        ],
+        "seo": {
+          "title": "Manual Therapy in Chatswood | The Body Project Osteopathy",
+          "description": "Evidence-based manual therapy and osteopathic treatment in Chatswood. Christian offers hands-on joint mobilisation and soft tissue release to reduce pain and improve mobility.",
+          "schema_org_type": "MedicalProcedure"
+        }
+      },
+      {
+        "slug": "sports-injury",
+        "title": "Sports Injury Management",
+        "summary": "Professional assessment and treatment of sports-related injuries with return-to-activity support.",
+        "icon": "PersonStanding",
+        "hero_image": "https://images.pexels.com/photos/4506078/pexels-photo-4506078.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "intro": "Whether you've suffered an acute sports injury or have a chronic condition limiting your performance, The Body Project offers evidence-based assessment and treatment to support your recovery. Christian works with athletes to restore function, address biomechanical issues, and get you back to the sport you love safely.",
+        "benefits": [
+          "Early assessment to prevent minor issues becoming major problems",
+          "Individualised treatment supporting return to sport",
+          "Advice on training modification and injury prevention strategies"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-sports-injury-1",
+            "question": "How long does it take to recover from a sports injury?",
+            "answer": "Recovery time varies depending on the type and severity of injury. At The Body Project, Christian provides an honest assessment after your first session and works with you on a clear pathway back to activity. Some acute injuries improve in 2–4 weeks; chronic issues or complex injuries may take longer. Regular treatment and following advice on rest and activity modification speeds recovery."
+          },
+          {
+            "id": "faq-sports-injury-2",
+            "question": "Can I still train while being treated?",
+            "answer": "That depends on the injury and its severity. Christian assesses your injury and advises on what activity is safe during recovery. Often you can modify training—for example, working around an injured shoulder—while getting treatment. He'll give you clear guidance on what to avoid and how to progress safely."
+          }
+        ],
+        "seo": {
+          "title": "Sports Injury Treatment in Chatswood | The Body Project",
+          "description": "Sports injury assessment and treatment in Chatswood. Get back to your sport with evidence-based osteopathic care from Christian at The Body Project.",
+          "schema_org_type": "MedicalProcedure"
+        }
+      },
+      {
+        "slug": "postural-assessment",
+        "title": "Postural Assessment & Ergonomics",
+        "summary": "Comprehensive postural evaluation and ergonomic advice to address root causes of pain.",
+        "icon": "Briefcase",
+        "hero_image": "https://images.pexels.com/photos/4506071/pexels-photo-4506071.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "intro": "Poor posture and suboptimal workspaces are major contributors to chronic pain. At The Body Project, Christian conducts detailed postural assessments and provides ergonomic advice to identify and address the root causes of your discomfort, whether at your desk, in the gym, or in daily life.",
+        "benefits": [
+          "Identify postural habits and movement patterns contributing to pain",
+          "Practical ergonomic adjustments for your workspace and daily activities",
+          "Targeted exercises and stretches to retrain posture and prevent recurrence"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-postural-assessment-1",
+            "question": "What's the difference between poor posture and postural dysfunction?",
+            "answer": "Postural dysfunction goes beyond slouching—it's about how your body moves and holds itself throughout the day. Christian's assessment looks at your alignment, muscle imbalances, and movement patterns to see whether your body is truly balanced. He then shows you what's contributing to pain and how to correct it with specific advice and treatment."
+          },
+          {
+            "id": "faq-postural-assessment-2",
+            "question": "How often will I need postural advice?",
+            "answer": "Most people benefit from an initial detailed postural assessment followed by 2–3 follow-up sessions to reinforce corrections and exercise advice. After that, periodic tune-ups help maintain gains. Christian will advise based on your individual situation and goals."
+          }
+        ],
+        "seo": {
+          "title": "Postural Assessment & Ergonomic Advice in Chatswood | The Body Project",
+          "description": "Postural assessment and ergonomic guidance in Chatswood to identify and address the root causes of pain. Customised advice for desk work, sports, and daily life.",
+          "schema_org_type": "MedicalProcedure"
+        }
+      },
+      {
+        "slug": "workplace-injury",
+        "title": "Workplace Injury Management",
+        "summary": "Treatment and management of work-related injuries with occupational health support.",
+        "icon": "ShieldCheck",
+        "hero_image": "https://images.pexels.com/photos/5473223/pexels-photo-5473223.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "intro": "Workplace injuries can significantly impact your ability to work and your quality of life. The Body Project specialises in assessing and treating work-related injuries, helping you return to duties safely. Christian works with you and your employer to develop a management plan that supports your recovery and prevents re-injury.",
+        "benefits": [
+          "Thorough assessment of the injury and contributing workplace factors",
+          "Evidence-based treatment to restore function and capacity for work",
+          "Liaison with employers and return-to-work planning to support safe recovery"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-workplace-injury-1",
+            "question": "Will my workplace injury be covered by workers compensation?",
+            "answer": "Workplace injuries are generally covered by workers compensation, but specific arrangements vary by state and employer. Christian can provide documentation and assessments to support your claim. It's best to notify your employer and workers compensation insurer promptly and get their approval before treatment begins."
+          },
+          {
+            "id": "faq-workplace-injury-2",
+            "question": "How does The Body Project support return to work?",
+            "answer": "Christian assesses your capacity and works with you to gradually rebuild function. He may liaise with your employer to identify modified duties or gradual return-to-work plans. His goal is to get you safely back to full duties while preventing re-injury. He'll also give you specific advice on maintaining your recovery once you're back at work."
+          }
+        ],
+        "seo": {
+          "title": "Workplace Injury Treatment in Chatswood | The Body Project",
+          "description": "Treatment and management of workplace injuries in Chatswood. Christian works with you and your employer to support safe return to work.",
+          "schema_org_type": "MedicalProcedure"
+        }
+      }
+    ],
+    "locations": [
+      {
+        "slug": "willoughby",
+        "suburb": "Willoughby",
+        "state": "NSW",
+        "intro": "Willoughby is a vibrant, leafy suburb just minutes from Chatswood, home to community hubs like Willoughby Baths and Willoughby Park. The area's focus on fitness and wellness — from local gyms to active outdoor spaces — aligns perfectly with osteopathic care for injury recovery, mobility work, and preventive treatment.",
+        "body": "",
+        "hero_image": "https://images.pexels.com/photos/4506106/pexels-photo-4506106.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Easy access from Willoughby Road shopping and fitness areas",
+          "Convenient location for locals who work at nearby Chatswood offices",
+          "Supportive community focused on health, wellness and active living"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-willoughby-1",
+            "question": "Is osteopathy covered by private health insurance?",
+            "answer": "Yes, most private health funds cover osteopathy services. We recommend checking your specific policy details. We're happy to work with your health fund and provide invoices for claims."
+          }
+        ],
+        "seo": {
+          "title": "Osteopath in Willoughby | The Body Project",
+          "description": "Professional osteopathy services in Willoughby, NSW. Expert treatment for back pain, mobility and injury recovery. Conveniently located near Willoughby Park and Willoughby Road."
+        }
+      },
+      {
+        "slug": "st-leonards",
+        "suburb": "St Leonards",
+        "state": "NSW",
+        "intro": "St Leonards is a dynamic, inner-city suburb attracting professionals and creative minds. Close to St Leonards Station and Crows Nest's vibrant community, the suburb values wellness and active lifestyle. Osteopathic treatment supports local residents managing work-related tension, postural issues, and recovery from daily activity.",
+        "body": "",
+        "hero_image": "https://images.pexels.com/photos/4506169/pexels-photo-4506169.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Direct access via St Leonards Station for city workers needing convenient treatment",
+          "Aligned with St Leonards' wellness-focused community culture",
+          "Support for postural and tension issues common in busy professional lives"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-st-leonards-1",
+            "question": "How often should I visit for osteopathic treatment?",
+            "answer": "This varies by individual condition and goals. Initial assessment typically involves 1–3 visits, then maintenance visits (monthly or quarterly) for ongoing support. We'll discuss a personalised plan during your first appointment."
+          }
+        ],
+        "seo": {
+          "title": "Osteopath in St Leonards | The Body Project",
+          "description": "Osteopathy in St Leonards, NSW near St Leonards Station. Treatment for work-related tension, postural issues and injury recovery. Serving the local professional community."
+        }
+      },
+      {
+        "slug": "lane-cove",
+        "suburb": "Lane Cove",
+        "state": "NSW",
+        "intro": "Lane Cove is a family-focused suburb known for its beautiful river parkland and bushwalking trails. The active outdoor culture — from nature walks to recreational fitness — creates an ideal environment for osteopathic care. We support locals in maintaining mobility, managing activity-related injury, and enjoying active pursuits safely.",
+        "body": "",
+        "hero_image": "https://images.pexels.com/photos/4506109/pexels-photo-4506109.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Support for outdoor enthusiasts managing bushwalking or sports-related strain",
+          "Family-friendly care for all ages, from kids to active seniors",
+          "Preventive treatment to keep you mobile and active in the outdoors"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-lane-cove-1",
+            "question": "Do you treat children and adolescents?",
+            "answer": "Yes, osteopathy can support growing children and young athletes. We tailor treatment to growing bodies and activity levels. A parent or guardian should be present at the first appointment. Book in to discuss your child's needs."
+          }
+        ],
+        "seo": {
+          "title": "Osteopath in Lane Cove | The Body Project",
+          "description": "Osteopathy services in Lane Cove, NSW. Treatment for outdoor enthusiasts, families and sports injury. Support your mobility and active lifestyle near Lane Cove River."
+        }
+      },
+      {
+        "slug": "neutral-bay",
+        "suburb": "Neutral Bay",
+        "state": "NSW",
+        "intro": "Neutral Bay is a vibrant waterfront suburb with an active, health-conscious community. Located near Neutral Bay Beach and Neutral Bay Swimming Pool, locals prioritise fitness and wellbeing. Osteopathic treatment complements active lifestyles, supporting swimmers, runners, and fitness enthusiasts in injury prevention and recovery.",
+        "body": "",
+        "hero_image": "https://images.pexels.com/photos/4506110/pexels-photo-4506110.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Ideal for swimmers and beach-goers managing water-related or sports strain",
+          "Community of active, health-conscious residents focused on prevention",
+          "Convenient to Neutral Bay's cafes, shops and recreational facilities"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-neutral-bay-1",
+            "question": "What should I expect during my first osteopathic appointment?",
+            "answer": "Your first visit (45–60 mins) includes a detailed health history, physical assessment, and treatment. We'll discuss your concerns, goals and any previous injuries. Subsequent appointments are typically 30–45 minutes. Wear comfortable clothing."
+          }
+        ],
+        "seo": {
+          "title": "Osteopath in Neutral Bay | The Body Project",
+          "description": "Osteopathy in Neutral Bay, NSW. Treatment for swimmers, runners and active residents. Injury prevention and recovery support near Neutral Bay Beach."
+        }
+      }
+    ],
+    "service_areas": [],
+    "faq": {
+      "items": [
+        {
+          "id": "faq-general-1",
+          "question": "What is osteopathy?",
+          "answer": "Osteopathy is a hands-on treatment approach that focuses on the relationship between body structures (bones, joints, muscles) and how they function. Osteopaths use manual techniques including mobilisation, manipulation, and soft tissue release to improve mobility, reduce pain, and support your body's natural healing."
+        },
+        {
+          "id": "faq-general-2",
+          "question": "Do I need a referral to see an osteopath?",
+          "answer": "No, you don't need a referral to book an appointment at The Body Project. You can contact us directly to schedule. However, if you're seeking Medicare rebates for certain conditions, your GP may need to provide a referral or management plan."
+        },
+        {
+          "id": "faq-general-3",
+          "question": "Is osteopathy covered by health insurance?",
+          "answer": "Many private health insurance funds in Australia cover osteopathic treatment. We recommend checking with your provider about your coverage before your first appointment. We're happy to provide itemised receipts for insurance claims."
+        },
+        {
+          "id": "faq-general-4",
+          "question": "How long is a typical appointment?",
+          "answer": "Initial appointments usually take 45 to 60 minutes to allow time for a thorough assessment and treatment. Follow-up appointments are typically 30 to 45 minutes. The exact duration depends on your individual needs."
+        },
+        {
+          "id": "faq-general-5",
+          "question": "Is The Body Project AHPRA registered?",
+          "answer": "Yes, our osteopaths are registered with the Australian Health Practitioner Regulation Agency (AHPRA), ensuring they meet strict professional standards and ongoing education requirements."
+        },
+        {
+          "id": "faq-general-6",
+          "question": "What should I bring to my first appointment?",
+          "answer": "Please bring a list of any current medications and previous medical history or imaging (X-rays, scans) if available. Comfortable clothing that allows easy access to the areas being treated is recommended."
+        }
+      ],
+      "seo": {
+        "title": "Osteopathy FAQs | The Body Project Chatswood"
+      }
+    },
+    "about": {
+      "heading": "About The Body Project",
+      "body": "The Body Project is a professional osteopathic practice dedicated to providing high-quality, evidence-based care to the Chatswood community and surrounding areas.\n\nOur philosophy is simple: effective treatment requires understanding the whole person. We don't just treat isolated symptoms — we assess how your body moves, how your lifestyle affects your health, and what your goals are. This holistic, patient-centred approach allows us to create treatment plans that actually work and last.\n\nChristian, our lead practitioner, brings years of experience and genuine commitment to patient care. He's known for taking time to listen, explain what he finds, and work collaboratively with you toward your health goals. Many patients appreciate his easy-going, professional manner and his willingness to go the extra mile — whether that's answering questions after your appointment or tailoring treatment to your specific needs.\n\nWe work with patients of all ages and backgrounds: office workers dealing with postural strain, athletes recovering from injury, parents managing the physical demands of family life, and anyone seeking to improve their mobility and wellbeing. Our goal is to support your body's natural healing processes, help you move more confidently, and give you practical strategies to prevent future problems.\n\nWe're conveniently located in Chatswood, close to the railway station and public parking, making it easy to fit your appointment into your busy life.",
+      "photo_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZOu94I-KCy6dx0IldUeucGwl6P3ZcSQVyra1uXaqL_Tq8OxCpELafTHU75SiVkx8tPBGxS-KhlbLzKzLdAIQ8Oz7yuSFRRS2CrM4Y66iUBNsl1N7goBFd1tmvCHZ_-NyuuW541wdstFVpuHcBE=s4800-w1125-h1125",
+      "values": [
+        {
+          "id": "value-evidence",
+          "title": "Evidence-based practice",
+          "body": "Our treatment methods are grounded in current research and best practices in osteopathy, not tradition or assumption.",
+          "icon": "BadgeCheck"
+        },
+        {
+          "id": "value-listening",
+          "title": "Genuine listening",
+          "body": "We take time to understand your medical history, lifestyle, and what matters to you — and we explain everything clearly.",
+          "icon": "Stethoscope"
+        },
+        {
+          "id": "value-partnership",
+          "title": "Patient partnership",
+          "body": "Your health is a collaboration. We work with you to set realistic goals and give you tools to support your own wellbeing.",
+          "icon": "HeartPulse"
+        }
+      ],
+      "seo": {
+        "title": "About The Body Project – Osteopaths in Chatswood"
+      }
+    },
+    "seo": {
+      "title": "Osteopathy in Chatswood | The Body Project",
+      "schema_org_type": "LocalBusiness"
+    },
+    "preview": {},
+    "overrides": {
+      "primary_color": "#584303",
+      "secondary_color": "#9d7706",
+      "accent_color": "#f9d465",
+      "logo_url": "/uploads/d1f2c27b-9318-4054-b880-8ea095622f16/14206cf08d057798.png",
+      "chrome_theme": "dark",
+      "logo_height_px": 60
+    }
+  },
+  "createdAt": "2026-07-01T02:58:52.651Z",
+  "status": "preview",
+  "gbpPhotos": [
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZOYx1oJh2k3khopk03npS2YwrGyTuOUyW2b_436fD0PP2gq4OR0YQCnvSACpBGqHwOIHydVdrJUTadpUi2ny7Y0ENnl8IqD8fbTyMd7tBJTbo7bEU89XKslACsVvdWM_Pb4dBUUgRRoXlAL1tQ=s4800-w1600-h1600",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZMj_SmToyHjhi4Z6b_iyvtZfauvZD4iY9iWkFzYcuzt5N17mPDyqj-UAtZ-cG9qxf1126K5KgEmj_igc7IUlKcj_DzTqCdDbn9wN4NAC14-x1Eh7e808qEUWq4AxOBIfljXHSDknLjaN9Y6wtk=s4800-w1600-h1600",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZOu94I-KCy6dx0IldUeucGwl6P3ZcSQVyra1uXaqL_Tq8OxCpELafTHU75SiVkx8tPBGxS-KhlbLzKzLdAIQ8Oz7yuSFRRS2CrM4Y66iUBNsl1N7goBFd1tmvCHZ_-NyuuW541wdstFVpuHcBE=s4800-w1125-h1125",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZN-NSOeNOXermJDHkqw6weMDr5XJkZ8YaYQ8GgMXNBAj0Q5HmPpq2BsYYUveTMosht42Tw0AOCgr3Dxv-Qk37Djrd709gjlgTVK-LOIKVhLcZ7akK0LbLM82cJYsMjYDj7z1t5Oy87JfhyKD6g=s4800-w1042-h845",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZMUcK0LccmsPyVPgq0Z7NYcBtrL9bOwgILMCkgg9B2HCsfP559ps5ipwTf6Tcahx6pXcNTqB8dbe2hZUUQ2lefA9763u1E5Ubl2c7fo1HFkcSvRHYjlTSaAd7yKjgku7fZsUtPEI8nbbNSn=s4800-w470-h445",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZOMN7xoGN_W40sDVaGEykNTPI0HUU73gnbo5V6bHlKqhGO9MKOn_eglLW2ZbIHkZ_3dB6hVW9TD78tu6RVBnHMcNPfuZ3cLLM3vw9wXZFbAmDPsW4sSeJ3pXnbNX22jg1-5Wy64Tzkt8IuKyg=s4800-w813-h813",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZOZt3vJ1QvIhsMSKm6lx0nSOZIWGkgNqRsMN33_Xrntq53yS0V-af2soINcPNauUkAlC0SqRNNfUzm5jLXZ28BybSYwysFXHFxZJIi0J1JYGNz_vsY86Sme_Vr-HE2kTLubxIR3R6VMMBPk=s4800-w1559-h1600",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZMYmh2AiBa0FPa7c6h9YAZQzSebSM9dXybSZDQzyJoLKmVc2TdV7KG7BFHBQ5Zm78ULCd7_9C8h9CLTkmMmOoy4OCjONX3k4IhvOCCvVpF4WdQnnkCk39h81ZRhtBTxENCSGTsvINPxvjuydCXpRTfPjQ=s4800-w1180-h1600"
+  ]
+}

@@ -8,14 +8,14 @@
  * Usage (after compiling or via a TypeScript runner):
  *   node generator/output/index.js
  *
- * Environment:
- *   ANTHROPIC_API_KEY — required. Never hardcoded.
+ * Auth: shells out to the local `claude` CLI (Claude Code subscription).
+ * No Anthropic API key required.
  */
 
-import Anthropic from "@anthropic-ai/sdk";
 import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { sitePropsSchema, type SiteProps } from "../shared/types/site-props";
+import { callClaudeCli } from "../lib/claude-cli";
 
 /* ------------------------------------------------------------------ types */
 
@@ -52,8 +52,7 @@ export interface GbpPayload {
 
 /* ------------------------------------------------------------- constants */
 
-const MODEL = "claude-sonnet-4-6";
-const MAX_TOKENS = 16000;
+const MODEL = "claude-haiku-4-5";
 const MAX_RETRIES = 2;
 
 /* --------------------------------------------------------------- helpers */
@@ -187,27 +186,13 @@ Output the corrected SiteProps JSON object now:`;
 /* ----------------------------------------------------------- core logic */
 
 /**
- * Call the Claude API once and return the raw text response.
+ * Call Claude once via the local `claude` CLI and return the raw text response.
  */
 async function callClaude(
-  client: Anthropic,
   systemPrompt: string,
-  messages: Anthropic.MessageParam[]
+  userPrompt: string
 ): Promise<string> {
-  const response = await client.messages.create({
-    model: MODEL,
-    max_tokens: MAX_TOKENS,
-    system: systemPrompt,
-    messages,
-  });
-
-  const content = response.content[0];
-  if (!content || content.type !== "text") {
-    throw new Error(
-      `Unexpected response content type: ${content?.type ?? "none"}. Expected text.`
-    );
-  }
-  return content.text;
+  return callClaudeCli({ systemPrompt, userPrompt, model: MODEL });
 }
 
 /**
@@ -258,23 +243,12 @@ export async function generateSite(
   niche: string,
   gbpData: GbpPayload
 ): Promise<SiteProps> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    console.error(
-      "ERROR: ANTHROPIC_API_KEY environment variable is not set. Aborting."
-    );
-    process.exit(1);
-  }
-
-  const client = new Anthropic({ apiKey });
   const systemPrompt = loadSystemPrompt(category);
   const userMessage = buildUserMessage({ ...gbpData, niche });
 
   // --- Attempt 1: initial generation
   console.log("generator: attempt 1 — initial generation...");
-  const raw1 = await callClaude(client, systemPrompt, [
-    { role: "user", content: userMessage },
-  ]);
+  const raw1 = await callClaude(systemPrompt, userMessage);
 
   const result1 = parseAndValidate(raw1);
   if (result1.ok) {
@@ -286,14 +260,10 @@ export async function generateSite(
     `generator: attempt 1 — failed.\n${result1.errors}`
   );
 
-  // --- Attempt 2: retry with validation errors fed back
+  // --- Attempt 2: retry with validation errors + previous response embedded
   console.log("generator: attempt 2 — sending corrective prompt...");
   const retryMsg = buildRetryMessage(gbpData, result1.cleaned, result1.errors);
-  const raw2 = await callClaude(client, systemPrompt, [
-    { role: "user", content: userMessage },
-    { role: "assistant", content: result1.cleaned },
-    { role: "user", content: retryMsg },
-  ]);
+  const raw2 = await callClaude(systemPrompt, retryMsg);
 
   const result2 = parseAndValidate(raw2);
   if (result2.ok) {

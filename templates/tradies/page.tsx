@@ -678,12 +678,12 @@ export default function TradiesTemplate({ props }: { props: TemplateProps }) {
                     {email && (
                       <a
                         href={`mailto:${email}`}
-                        className="flex items-center gap-3 text-base font-medium transition-colors hover:text-[var(--accent)]"
+                        className="flex w-full min-w-0 items-center gap-3 text-base font-medium transition-colors hover:text-[var(--accent)]"
                       >
-                        <span className="grid h-11 w-11 place-items-center rounded-full bg-white/10">
+                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10">
                           <Mail className="h-5 w-5 text-[var(--accent)]" />
                         </span>
-                        {email}
+                        <span className="min-w-0 flex-1 break-all">{email}</span>
                       </a>
                     )}
                     {contact?.address && (

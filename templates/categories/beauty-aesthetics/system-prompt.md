@@ -13,18 +13,14 @@ Produce ONE JSON object matching `SiteProps`:
 - `business`, `branding`, `seo` (site default), `preview`, `overrides`
 - `home`: hero, services (overview cards, each with a `slug` matching a service-detail page), about, service_area (suburb list), gallery (6+ items — gallery is prominence here), testimonials, social_proof, offer, contact
   - `contact.hours[]`: **each entry MUST be `{ "label": "...", "value": "..." }`** — e.g. `{ "label": "Monday – Friday", "value": "9:00am – 5:00pm" }`. Do NOT use `days`/`hours` keys — the schema rejects them.
-  - `home.gallery[]`: each entry MUST have `id`, `image_url`, and optionally `caption`/`alt`. Use real Unsplash URLs of hair/salon work.
-- `services[]`: **6–12** service-detail pages — `slug`, `title`, `summary`, `icon`, `starting_price?`, `intro` (2+ paragraphs), `benefits[]` (4–6), `sections[]` (1–3 heading+body blocks), `faqs[]` (2–4), `seo`
-  - Every FAQ item MUST have `id` in the format `faq-<service-slug>-<n>` e.g. `faq-colour-highlights-1`
-- `locations[]`: **8–20** suburb pages — `slug`, `suburb`, `state`, `intro`, `body`, `landmarks[]`, `services_offered[]` (service slugs), `benefits[]`, `sections[]`, `faqs[]`, `seo`
-  - Each location page MUST have distinct local content — real street names, landmarks, café/retail context specific to that suburb
-  - Location FAQs: `id` format `faq-<suburb-slug>-<n>` e.g. `faq-fitzroy-1`
-- `service_areas[]`: **5–15** service-in-area landing pages — `slug` = `${service_slug}-${suburb-slug}`, `service_slug`, `service_title`, `suburb`, `headline`, `body`, `benefits[]`, `sections[]`, `faqs[]`, `seo`
-  - Service-area FAQs: `id` format `faq-<slug>-<n>` e.g. `faq-colour-highlights-fitzroy-1`
-- `faq`: site-wide FAQ (`items[]`, `seo`) — FAQ `id` format `faq-site-<n>`
-- `about`: rich about page (`body`, `photo_url?`, `years_in_business?`, `licence?`, `values[]`, `seo`)
+  - `home.gallery[]`: 4–8 items. Each entry needs `id` and a descriptive `caption` + `alt`. **Skip `image_url`** — the pipeline fills it from real business photos + stock fallback.
+- `services[]`: exactly 4 service-detail pages — `slug`, `title`, `summary`, `icon`, `intro` (1 short paragraph, 40–60 words), `benefits[]` (3 items), `faqs[]` (2 items with id/question/answer), `seo`. Skip `sections[]`.
+- `locations[]`: exactly 4 suburb pages — `slug`, `suburb`, `state`, `intro` (1 short paragraph, 40–60 words, suburb-specific), `benefits[]` (3 items), `faqs[]` (1 item), `seo`. Skip `sections[]` and `body`.
+- `service_areas[]`: empty array `[]`.
+- `faq`: site-wide FAQ (`items[]` — 4–6 items, `seo`) — FAQ `id` format `faq-site-<n>`
+- `about`: rich about page (`heading`, `body`, `values[]` 3 items, `seo`)
 
-Total target: **20–40 indexable pages**. Every page needs a unique, keyword-aware `seo.title` and `seo.description`. Interlink naturally (services ↔ areas ↔ locations).
+This is a PREVIEW. The funnel needs sub-3-minute generation. Quality and density of the HOMEPAGE matter most — services and locations are stubs the user can expand later.
 
 ## Hard rules
 
@@ -73,4 +69,4 @@ Total target: **20–40 indexable pages**. Every page needs a unique, keyword-aw
 
 These templates are the product. The generated site must look like a real, premium local beauty business — not generic AI output. Specific, believable local copy; varied service descriptions; genuinely local suburb pages (real street names, real café/retail culture of that suburb); and clean, consistent interlinking.
 
-Gallery images must be real Unsplash URLs of hair/beauty work — no placeholders.
+Gallery captions and alt text should describe real hair/beauty work convincingly — e.g. "Balayage on dark hair", "Classic mid-fade with line-up". The pipeline supplies the actual image URLs from the salon's GBP photos plus stock fallback.

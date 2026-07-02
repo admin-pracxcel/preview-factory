@@ -10,7 +10,9 @@ import {
   galleryItemSchema,
   testimonialSchema,
   socialProofSchema,
+  socialProofItemSchema,
   contactSchema,
+  hoursSchema,
   offerSchema,
   seoSchema,
   previewSchema,
@@ -213,6 +215,140 @@ export const sitePropsSchema = z.object({
 });
 
 export type SiteProps = z.infer<typeof sitePropsSchema>;
+
+/* ------------------------------------------ generation-only strict schema */
+
+/**
+ * Generation-time schema with stricter minimums. Drives the JSON Schema sent
+ * to the LLM via `--json-schema` so structured output enforces these counts at
+ * the API level. The runtime parse uses the permissive `sitePropsSchema` so
+ * older tenant records (saved before these rules) continue to render.
+ *
+ * Differences from `sitePropsSchema`:
+ * - `home.gallery`: required, 4–8 items (was optional)
+ * - `home.social_proof.items`: required, 3–6 items (was optional, no min)
+ * - `home.service_area.suburbs`: required, 4–12 strings (was 0+)
+ * - `home.about`: required (was optional)
+ * - `home.contact`: required (was optional)
+ * - `about` page: required (was optional)
+ * - `about.values`: required, 3–6 items
+ * - Image URL fields stay optional — the image-assembler populates them
+ *   post-generation; the LLM no longer invents URLs.
+ */
+const generationGallerySchema = z.array(galleryItemSchema.extend({
+  // The assembler fills image_url after generation — LLM may omit.
+  image_url: z.string().optional(),
+})).min(4).max(6);
+
+// In generation: every social-proof item MUST have a meaningful label —
+// otherwise the renderer shows "5" with a star icon and nothing else.
+const generationSocialProofItemSchema = socialProofItemSchema.extend({
+  label: z.string(),
+});
+const generationSocialProofSchema = socialProofSchema.extend({
+  items: z.array(generationSocialProofItemSchema).min(3).max(4),
+});
+
+const generationServiceAreaSchema = serviceAreaSchema.extend({
+  suburbs: z.array(z.string()).min(4).max(6),
+});
+
+const generationContactSchema = contactSchema.extend({
+  hours: z.array(hoursSchema).min(7).max(7),
+});
+
+const generationHomeAboutSchema = aboutSchema.extend({
+  heading: z.string(),
+  // Surface values on the homepage too — they're required on the about page.
+  values: z.array(aboutValueSchema).min(3).max(3),
+});
+
+const generationAboutPageSchema = aboutPageSchema.extend({
+  heading: z.string(),
+  values: z.array(aboutValueSchema).min(3).max(3),
+});
+
+const generationHomeSchema = homeSchema.extend({
+  gallery: generationGallerySchema,
+  social_proof: generationSocialProofSchema,
+  service_area: generationServiceAreaSchema,
+  about: generationHomeAboutSchema,
+  contact: generationContactSchema,
+});
+
+export const sitePropsGenerationSchema = sitePropsSchema.extend({
+  home: generationHomeSchema,
+  about: generationAboutPageSchema,
+  // Hard caps to bound generation time. Preview only needs a few of each.
+  services: z.array(servicePageSchema).min(4).max(4),
+  locations: z.array(locationPageSchema).min(4).max(4),
+  service_areas: z.array(serviceAreaPageSchema).max(0),
+});
+
+/* ------------------------------------------ phased generation schemas */
+
+/**
+ * Phase A — homepage + skeleton stubs. The LLM produces full home/about/faq,
+ * plus 4 service stubs (slug + title + summary + icon) and 4 location stubs
+ * (slug + suburb + state). Detail content for each page is filled in by
+ * phase B/C calls. This split keeps any single call under ~12K output chars.
+ */
+const serviceStubSchema = z.object({
+  slug: z.string(),
+  title: z.string(),
+  summary: z.string(),
+  icon: z.string().optional(),
+});
+
+const locationStubSchema = z.object({
+  slug: z.string(),
+  suburb: z.string(),
+  state: z.string().optional(),
+});
+
+export const phaseAGenerationSchema = sitePropsSchema.extend({
+  home: generationHomeSchema,
+  about: generationAboutPageSchema,
+  services: z.array(serviceStubSchema).min(4).max(4),
+  locations: z.array(locationStubSchema).min(4).max(4),
+  service_areas: z.array(serviceAreaPageSchema).max(0),
+});
+
+/**
+ * Phase B — detail content for each of the 4 service stubs from phase A.
+ * The LLM gets the business context + the stubs, and produces an array of
+ * detail blocks keyed by the same slugs.
+ */
+const serviceDetailSchema = z.object({
+  slug: z.string(),
+  intro: z.string(),
+  benefits: z.array(z.string()).min(3).max(3),
+  faqs: z.array(faqItemSchema).min(2).max(2),
+  seo: pageSeoSchema,
+});
+
+export const phaseBGenerationSchema = z.object({
+  services: z.array(serviceDetailSchema).min(4).max(4),
+});
+
+/**
+ * Phase C — detail content for each of the 4 location stubs from phase A.
+ */
+const locationDetailSchema = z.object({
+  slug: z.string(),
+  intro: z.string(),
+  benefits: z.array(z.string()).min(3).max(3),
+  faqs: z.array(faqItemSchema).min(1).max(1),
+  seo: pageSeoSchema,
+});
+
+export const phaseCGenerationSchema = z.object({
+  locations: z.array(locationDetailSchema).min(4).max(4),
+});
+
+export type PhaseAResult = z.infer<typeof phaseAGenerationSchema>;
+export type PhaseBResult = z.infer<typeof phaseBGenerationSchema>;
+export type PhaseCResult = z.infer<typeof phaseCGenerationSchema>;
 
 /* ---------------------------------------------------------------- routing */
 

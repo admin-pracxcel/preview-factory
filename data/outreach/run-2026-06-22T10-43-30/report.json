@@ -1,0 +1,48 @@
+{
+  "run_id": "2026-06-22T10-43-30",
+  "niche": "plumber",
+  "suburbs": [
+    "Fitzroy",
+    "Richmond"
+  ],
+  "state": "VIC",
+  "max_per_suburb": 2,
+  "base_url": "http://localhost:3000",
+  "fixture_mode": {
+    "places": true,
+    "generator": false
+  },
+  "summary": {
+    "total_searched": 4,
+    "total_generated": 2,
+    "total_errors": 0
+  },
+  "results": [
+    {
+      "business_name": "Fitzroy Plumbing Co",
+      "niche": "plumber",
+      "suburb": "Fitzroy",
+      "state": "VIC",
+      "phone": "03 9111 2222",
+      "tenant_id": "ddf2297b-a82a-4fc8-af34-bce546753788",
+      "preview_url": "http://localhost:3000/preview/site/ddf2297b-a82a-4fc8-af34-bce546753788",
+      "source": "fixture",
+      "generated_at": "2026-06-22T10:43:30.282Z",
+      "status": "generated",
+      "error": ""
+    },
+    {
+      "business_name": "Richmond Hot Water Specialists",
+      "niche": "plumber",
+      "suburb": "Richmond",
+      "state": "VIC",
+      "phone": "03 9333 4444",
+      "tenant_id": "bc18313c-0d54-40b6-ae53-ac5933f9def9",
+      "preview_url": "http://localhost:3000/preview/site/bc18313c-0d54-40b6-ae53-ac5933f9def9",
+      "source": "fixture",
+      "generated_at": "2026-06-22T10:43:30.282Z",
+      "status": "generated",
+      "error": ""
+    }
+  ]
+}

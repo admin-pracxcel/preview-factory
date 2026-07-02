@@ -34,6 +34,17 @@ import { Reveal, Stars } from "./client";
 type Cta = { label: string; href: string };
 type SuburbLink = { slug: string; suburb: string };
 
+/**
+ * Grid column classes chosen from item count so grids never end with a lonely
+ * card in the last row. Rule: 2 or 4 items → 2 columns; 3, 5, or more → 3
+ * columns. Mobile stays 1 column; sm stays 2. Used by every card grid on the
+ * homepage so the layout adapts to whatever the generator produced.
+ */
+function gridColsForCount(count: number): string {
+  const useTwo = count === 2 || count === 4;
+  return useTwo ? "sm:grid-cols-2 lg:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3";
+}
+
 /* -------------------------------------------------------------------- hero */
 
 export function Hero({
@@ -56,7 +67,7 @@ export function Hero({
   return (
     <section className="relative isolate overflow-hidden bg-[var(--secondary)] text-white">
       {heroImage && (
-        <Image src={heroImage} alt="" fill priority sizes="100vw" className="object-cover" />
+        <Image data-customise="hero" src={heroImage} alt="" fill priority sizes="100vw" className="object-cover" />
       )}
       <div className="absolute inset-0 -z-0 bg-gradient-to-br from-[var(--secondary)]/95 via-[var(--primary)]/85 to-[var(--primary)]/60" />
 
@@ -77,7 +88,7 @@ export function Hero({
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
               href={ctaPrimary.href}
-              className="flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-4 text-base font-bold text-white shadow-lg transition-transform hover:brightness-110 active:scale-95"
+              className="flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-4 text-base font-bold text-[var(--accent-fg)] shadow-lg transition-transform hover:brightness-110 active:scale-95"
             >
               <Phone className="h-5 w-5" strokeWidth={2.5} />
               {ctaPrimary.label}
@@ -103,10 +114,15 @@ export function Hero({
               return (
                 <li
                   key={item.id}
-                  className="flex items-center gap-2 text-sm font-semibold text-white/90"
+                  className="flex items-start gap-2 text-sm text-white/90"
                 >
-                  <Icon className="h-4 w-4 shrink-0 text-[var(--accent)]" strokeWidth={2.5} />
-                  <span>{item.value}</span>
+                  <Icon className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)]" strokeWidth={2.5} />
+                  <span className="flex flex-col leading-tight">
+                    <span className="font-semibold">{item.value}</span>
+                    {item.label && (
+                      <span className="text-xs font-normal text-white/60">{item.label}</span>
+                    )}
+                  </span>
                 </li>
               );
             })}
@@ -169,7 +185,7 @@ export function OfferBand({
 }) {
   return (
     <Reveal>
-      <section className="bg-[var(--primary)] text-white">
+      <section className="bg-[var(--primary)] text-[var(--primary-fg)]">
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 px-4 py-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-3">
             <Tag className="mt-0.5 h-6 w-6 shrink-0 text-[var(--accent)]" strokeWidth={2.5} />
@@ -190,7 +206,7 @@ export function OfferBand({
           {cta && (
             <a
               href={cta.href}
-              className="shrink-0 rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-bold text-white shadow-md transition-transform hover:brightness-110 active:scale-95"
+              className="shrink-0 rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-bold text-[var(--accent-fg)] shadow-md transition-transform hover:brightness-110 active:scale-95"
             >
               {cta.label}
             </a>
@@ -225,13 +241,13 @@ export function ServicesGrid({
           {subheading && <p className="mt-3 text-zinc-600">{subheading}</p>}
         </Reveal>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={`grid gap-5 ${gridColsForCount(services.length)}`}>
           {services.map((svc, i) => {
             const Icon = resolveIcon(svc.icon);
             const link = svc.slug ? href(basePath, "services", svc.slug) : undefined;
             const inner = (
               <article className="group h-full rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-lg">
-                <div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-[var(--primary)] text-white transition-colors group-hover:bg-[var(--accent)]">
+                <div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-[var(--primary)] text-[var(--primary-fg)] transition-colors group-hover:bg-[var(--accent)] group-hover:text-[var(--accent-fg)]">
                   <Icon className="h-6 w-6" strokeWidth={2} />
                 </div>
                 <h3 className="text-lg font-bold text-zinc-900">{svc.title}</h3>
@@ -280,6 +296,7 @@ export function AboutSection({
   licence,
   abn,
   businessName,
+  values,
 }: {
   heading?: string;
   body: string;
@@ -288,51 +305,73 @@ export function AboutSection({
   licence?: string;
   abn?: string;
   businessName: string;
+  values?: Array<{ id: string; title: string; body: string; icon?: string }>;
 }) {
   return (
     <section id="about" className="scroll-mt-20 py-16 sm:py-24">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 lg:grid-cols-2">
-        {photoUrl && (
-          <Reveal>
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl">
-              <Image
-                src={photoUrl}
-                alt={heading ?? `About ${businessName}`}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
-              {typeof yearsInBusiness === "number" && (
-                <div className="absolute bottom-4 left-4 rounded-xl bg-[var(--accent)] px-4 py-3 text-white shadow-lg">
-                  <span className="block text-2xl font-black leading-none">{yearsInBusiness}+</span>
-                  <span className="text-xs font-semibold uppercase tracking-wide">
-                    Years experience
-                  </span>
-                </div>
+      <div className="mx-auto max-w-6xl px-4">
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          {photoUrl && (
+            <Reveal>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl">
+                <Image
+                  src={photoUrl}
+                  alt={heading ?? `About ${businessName}`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                />
+                {typeof yearsInBusiness === "number" && (
+                  <div className="absolute bottom-4 left-4 rounded-xl bg-[var(--accent)] px-4 py-3 text-[var(--accent-fg)] shadow-lg">
+                    <span className="block text-2xl font-black leading-none">{yearsInBusiness}+</span>
+                    <span className="text-xs font-semibold uppercase tracking-wide">
+                      Years experience
+                    </span>
+                  </div>
+                )}
+              </div>
+            </Reveal>
+          )}
+          <Reveal delay={0.1}>
+            <h2 className="text-3xl font-extrabold tracking-tight text-[var(--primary)] sm:text-4xl">
+              {heading ?? `About ${businessName}`}
+            </h2>
+            <p className="mt-4 whitespace-pre-line leading-relaxed text-zinc-600">{body}</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {licence && (
+                <span className="inline-flex items-center gap-2 rounded-full bg-zinc-100 px-4 py-2 text-sm font-semibold text-zinc-700">
+                  <BadgeCheck className="h-4 w-4 text-[var(--accent)]" />
+                  {licence}
+                </span>
+              )}
+              {abn && (
+                <span className="inline-flex items-center gap-2 rounded-full bg-zinc-100 px-4 py-2 text-sm font-semibold text-zinc-700">
+                  <ShieldCheck className="h-4 w-4 text-[var(--accent)]" />
+                  ABN {abn}
+                </span>
               )}
             </div>
           </Reveal>
-        )}
-        <Reveal delay={0.1}>
-          <h2 className="text-3xl font-extrabold tracking-tight text-[var(--primary)] sm:text-4xl">
-            {heading ?? `About ${businessName}`}
-          </h2>
-          <p className="mt-4 whitespace-pre-line leading-relaxed text-zinc-600">{body}</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            {licence && (
-              <span className="inline-flex items-center gap-2 rounded-full bg-zinc-100 px-4 py-2 text-sm font-semibold text-zinc-700">
-                <BadgeCheck className="h-4 w-4 text-[var(--accent)]" />
-                {licence}
-              </span>
-            )}
-            {abn && (
-              <span className="inline-flex items-center gap-2 rounded-full bg-zinc-100 px-4 py-2 text-sm font-semibold text-zinc-700">
-                <ShieldCheck className="h-4 w-4 text-[var(--accent)]" />
-                ABN {abn}
-              </span>
-            )}
+        </div>
+
+        {values && values.length > 0 && (
+          <div className={`mt-12 grid gap-6 ${gridColsForCount(values.length)}`}>
+            {values.map((v, i) => {
+              const Icon = resolveIcon(v.icon);
+              return (
+                <Reveal key={v.id} delay={(i % 3) * 0.05}>
+                  <div className="h-full rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+                    <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[var(--accent)]/10">
+                      <Icon className="h-5 w-5 text-[var(--accent)]" />
+                    </span>
+                    <h3 className="mt-4 text-lg font-bold text-[var(--primary)]">{v.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-zinc-600">{v.body}</p>
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
-        </Reveal>
+        )}
       </div>
     </section>
   );
@@ -357,20 +396,20 @@ export function ServiceAreaSection({
   // Prefer linked location pages where they exist; fall back to plain chips.
   const linkBySuburb = new Map((locations ?? []).map((l) => [l.suburb.toLowerCase(), l.slug]));
   return (
-    <section id="areas" className="scroll-mt-20 bg-[var(--primary)] py-16 text-white sm:py-20">
+    <section id="areas" className="scroll-mt-20 bg-[var(--chrome-bg)] py-16 text-[var(--chrome-fg)] sm:py-20">
       <div className="mx-auto max-w-6xl px-4 text-center">
         <Reveal>
           <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
             {heading ?? "Areas we service"}
           </h2>
-          {intro && <p className="mx-auto mt-3 max-w-2xl text-white/80">{intro}</p>}
+          {intro && <p className="mx-auto mt-3 max-w-2xl opacity-80">{intro}</p>}
         </Reveal>
         <Reveal delay={0.1}>
           <ul className="mt-8 flex flex-wrap justify-center gap-2.5">
             {suburbs.map((suburb) => {
               const slug = linkBySuburb.get(suburb.toLowerCase());
               const chip = (
-                <span className="flex items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-white/90 transition-colors hover:bg-white/10">
+                <span className="flex items-center gap-1.5 rounded-full border border-current/15 bg-current/5 px-4 py-2 text-sm font-medium opacity-90 transition-colors hover:bg-current/10">
                   <MapPin className="h-3.5 w-3.5 text-[var(--accent)]" />
                   {suburb}
                 </span>
@@ -409,11 +448,19 @@ export function GalleryGrid({
           </h2>
           {subheading && <p className="mt-3 text-zinc-600">{subheading}</p>}
         </Reveal>
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+        <div
+          className={
+            items.length === 2 || items.length === 4
+              ? "grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-2"
+              : "grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3"
+          }
+        >
           {items.map((item, i) => (
             <Reveal key={item.id} delay={(i % 3) * 0.05}>
               <figure className="group relative aspect-square overflow-hidden rounded-xl bg-zinc-100 shadow-sm">
                 <Image
+                  data-customise="gallery"
+                  data-gallery-index={i}
                   src={item.image_url}
                   alt={item.alt ?? item.caption ?? "Completed work"}
                   fill
@@ -444,6 +491,8 @@ export function TestimonialsSection({
   heading?: string;
 }) {
   if (!items.length) return null;
+  // Always show three testimonials — trims longer lists so the grid stays full.
+  const shown = items.slice(0, 3);
   return (
     <section id="reviews" className="scroll-mt-20 bg-zinc-50 py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4">
@@ -453,7 +502,7 @@ export function TestimonialsSection({
           </h2>
         </Reveal>
         <div className="grid gap-5 md:grid-cols-3">
-          {items.map((t, i) => (
+          {shown.map((t, i) => (
             <Reveal key={t.id} delay={i * 0.05}>
               <blockquote className="flex h-full flex-col rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
                 <Quote className="h-7 w-7 text-[var(--accent)]" />
@@ -499,17 +548,17 @@ export function ContactSection({
   return (
     <section id="contact" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="overflow-hidden rounded-3xl bg-[var(--secondary)] text-white shadow-xl">
-          <div className="grid gap-10 p-8 sm:p-12 lg:grid-cols-2">
-            {/* Left column — contact details */}
+        <div className="overflow-hidden rounded-3xl bg-[var(--primary)] text-[var(--primary-fg)] shadow-xl">
+          <div className="p-8 sm:p-12">
+            {/* Top row — heading + full-width contact details */}
             <Reveal>
               <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
                 {heading ?? "Get in touch"}
               </h2>
-              <p className="mt-3 text-white/80">
+              <p className="mt-3 max-w-2xl text-white/80">
                 Call us or send a message — we&apos;ll get straight back to you.
               </p>
-              <div className="mt-8 space-y-4">
+              <div className="mt-8 flex flex-wrap gap-4 sm:gap-8">
                 {phone && (
                   <TrackedPhoneLink
                     href={telHref(phone)}
@@ -526,12 +575,12 @@ export function ContactSection({
                 {email && (
                   <a
                     href={`mailto:${email}`}
-                    className="flex items-center gap-3 text-base font-medium transition-colors hover:text-[var(--accent)]"
+                    className="flex w-full min-w-0 items-center gap-3 text-base font-medium transition-colors hover:text-[var(--accent)]"
                   >
-                    <span className="grid h-11 w-11 place-items-center rounded-full bg-white/10">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10">
                       <Mail className="h-5 w-5 text-[var(--accent)]" />
                     </span>
-                    {email}
+                    <span className="min-w-0 flex-1 break-all">{email}</span>
                   </a>
                 )}
                 {address && (
@@ -546,7 +595,7 @@ export function ContactSection({
               {cta && (
                 <a
                   href={cta.href}
-                  className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-4 text-base font-bold text-white shadow-lg transition-transform hover:brightness-110 active:scale-95"
+                  className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-4 text-base font-bold text-[var(--accent-fg)] shadow-lg transition-transform hover:brightness-110 active:scale-95"
                 >
                   <Phone className="h-5 w-5" strokeWidth={2.5} />
                   {cta.label}
@@ -554,33 +603,37 @@ export function ContactSection({
               )}
             </Reveal>
 
-            {/* Right column — hours + enquiry form */}
-            <Reveal delay={0.1}>
-              <div className="space-y-6">
+            {/* Bottom row — opening hours (left) + enquiry form (right), equal height */}
+            {(hours?.length || tenantId) && (
+              <div className="mt-10 grid items-stretch gap-6 lg:grid-cols-2">
                 {hours?.length ? (
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                    <h3 className="flex items-center gap-2 text-lg font-bold">
-                      <Clock className="h-5 w-5 text-[var(--accent)]" />
-                      Opening hours
-                    </h3>
-                    <dl className="mt-4 divide-y divide-white/10">
-                      {hours.map((h) => (
-                        <div
-                          key={h.label}
-                          className="flex items-center justify-between py-2.5 text-sm"
-                        >
-                          <dt className="font-medium text-white/80">{h.label}</dt>
-                          <dd className="font-semibold">{h.value}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </div>
+                  <Reveal className="h-full">
+                    <div className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/5 p-6">
+                      <h3 className="flex items-center gap-2 text-lg font-bold">
+                        <Clock className="h-5 w-5 text-[var(--accent)]" />
+                        Opening hours
+                      </h3>
+                      <dl className="mt-4 flex-1 divide-y divide-white/10">
+                        {hours.map((h) => (
+                          <div
+                            key={h.label}
+                            className="flex items-center justify-between py-2.5 text-sm"
+                          >
+                            <dt className="font-medium text-white/80">{h.label}</dt>
+                            <dd className="font-semibold">{h.value}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+                  </Reveal>
                 ) : null}
-
-                {/* Enquiry form — shown on real tenant sites */}
-                <LeadCaptureForm tenantId={tenantId} />
+                <Reveal delay={0.1} className="h-full">
+                  <div className="h-full [&>form]:flex [&>form]:h-full [&>form]:flex-col">
+                    <LeadCaptureForm tenantId={tenantId} />
+                  </div>
+                </Reveal>
               </div>
-            </Reveal>
+            )}
           </div>
         </div>
       </div>
@@ -681,7 +734,7 @@ export function CtaBand({
         </div>
         <a
           href={cta.href}
-          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-4 text-base font-bold text-white shadow-lg transition-transform hover:brightness-110 active:scale-95"
+          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-4 text-base font-bold text-[var(--accent-fg)] shadow-lg transition-transform hover:brightness-110 active:scale-95"
         >
           <Phone className="h-5 w-5" strokeWidth={2.5} />
           {cta.label}
@@ -706,7 +759,7 @@ export function RelatedLinks({
         <h2 className="mb-8 text-2xl font-extrabold tracking-tight text-[var(--primary)] sm:text-3xl">
           {heading}
         </h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={`grid gap-4 ${gridColsForCount(links.length)}`}>
           {links.map((l) => (
             <a
               key={l.href + l.label}

@@ -10,6 +10,14 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "**.cloudinary.com" },
       { protocol: "https", hostname: "**.amazonaws.com" },
       { protocol: "https", hostname: "**.googleusercontent.com" },
+      // Pexels — used by the CustomisePanel stock-image search and the
+      // image-assembler's Pexels fallback.
+      { protocol: "https", hostname: "images.pexels.com" },
+      // Google Places photo CDN — used by image-assembler when a business
+      // has GBP photos. URLs come back as places.googleapis.com redirects
+      // resolved to lh3.googleusercontent.com (covered above) but the
+      // pre-resolved photoUri may also use this host.
+      { protocol: "https", hostname: "places.googleapis.com" },
     ],
   },
 };

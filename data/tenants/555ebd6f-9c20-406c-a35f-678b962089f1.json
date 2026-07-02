@@ -1,0 +1,502 @@
+{
+  "id": "555ebd6f-9c20-406c-a35f-678b962089f1",
+  "name": "Muscle Therapy Australia",
+  "niche": "Massage Therapist",
+  "category": "allied-health",
+  "siteProps": {
+    "business": {
+      "name": "Muscle Therapy Australia",
+      "phone": "(02) 9233 5769",
+      "state": "NSW"
+    },
+    "branding": {
+      "primary_color": "#1b5c6e",
+      "secondary_color": "#0f3a42",
+      "accent_color": "#d97706",
+      "hero_image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZOyDgPYDWQ4_cBSmQ-I2YWrTVLUWlxisgSyn052hoHv9tReNQ73e_jDFihG0Vowf0S_cJJFhBjCMCQYGU4VMmh1I5jAgN4HmRagxmx2Z_n7l5_mT31cZMUuERxguDJLnSRvoBCA35rD6svp=s4800-w1600-h1333"
+    },
+    "home": {
+      "hero": {
+        "headline": "Expert Massage Therapy in Sydney CBD",
+        "subheadline": "Experienced massage therapists specialising in deep tissue, sports massage, and myofascial release",
+        "cta_primary": {
+          "label": "Book an Appointment",
+          "href": "/book"
+        },
+        "cta_secondary": {
+          "label": "Learn More",
+          "href": "/about"
+        }
+      },
+      "services": [
+        {
+          "id": "svc-deep-tissue",
+          "title": "Deep Tissue Massage",
+          "description": "Targeted massage using firm pressure to address muscle tension and chronic pain.",
+          "icon": "Waves"
+        },
+        {
+          "id": "svc-sports",
+          "title": "Sports Massage",
+          "description": "Specialised massage designed for athletes and active individuals to improve performance and aid recovery.",
+          "icon": "Activity"
+        },
+        {
+          "id": "svc-myofascial",
+          "title": "Myofascial Release",
+          "description": "Advanced technique targeting connective tissue to address chronic pain and restricted movement.",
+          "icon": "BadgeCheck"
+        },
+        {
+          "id": "svc-relaxation",
+          "title": "Relaxation Massage",
+          "description": "Therapeutic massage using gentle pressure to promote relaxation, reduce stress, and enhance wellbeing.",
+          "icon": "Stethoscope"
+        }
+      ],
+      "about": {
+        "heading": "About Muscle Therapy Australia",
+        "body": "Muscle Therapy Australia is a dedicated massage therapy clinic serving the Sydney CBD and surrounding areas. Our experienced therapists provide personalised treatment focused on understanding your needs and delivering effective results.\n\nWe specialise in deep tissue massage, sports massage, and myofascial release techniques. Our approach combines professional expertise with a commitment to creating a comfortable, trusting therapeutic environment for every session.",
+        "photo_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZOWTs2HjvWfFmCdsgpAg9uGTE7b8xENarliAVDfzcFBrHYGwNfncJh3dBOdPHtjaxqK-8mYOgK_3KYUv5e0qPFM0BqHJeOQQZjquV8pf_twlAc3g5JueATyiGBzrYLI-_0OmkzaLifCnWDmKLk=s4800-w1600-h1600"
+      },
+      "service_area": {
+        "heading": "Service Areas",
+        "suburbs": [
+          "Sydney CBD",
+          "North Sydney",
+          "Surry Hills",
+          "Paddington",
+          "Glebe",
+          "Barangaroo",
+          "The Rocks",
+          "Woolloomooloo"
+        ]
+      },
+      "gallery": [
+        {
+          "id": "gallery-1",
+          "image_url": "https://images.pexels.com/photos/18120174/pexels-photo-18120174.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Professional massage therapy treatment room",
+          "alt": "Modern treatment room at Muscle Therapy Australia with massage table and peaceful ambiance"
+        },
+        {
+          "id": "gallery-2",
+          "image_url": "https://images.pexels.com/photos/7235064/pexels-photo-7235064.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Therapeutic massage in progress",
+          "alt": "Therapist performing targeted massage on client"
+        },
+        {
+          "id": "gallery-3",
+          "image_url": "https://images.pexels.com/photos/37719545/pexels-photo-37719545.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Sydney CBD clinic entrance",
+          "alt": "Professional clinic entrance on Pitt Street, Sydney"
+        },
+        {
+          "id": "gallery-4",
+          "image_url": "https://images.pexels.com/photos/6628601/pexels-photo-6628601.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Relaxation and recovery space",
+          "alt": "Comfortable waiting area and consultation space"
+        },
+        {
+          "id": "gallery-5",
+          "image_url": "https://images.pexels.com/photos/7233272/pexels-photo-7233272.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Therapy equipment and tools",
+          "alt": "Professional massage equipment and tools used in treatment"
+        },
+        {
+          "id": "gallery-6",
+          "image_url": "https://images.pexels.com/photos/5888078/pexels-photo-5888078.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Massage bed and treatment area",
+          "alt": "Comfortable massage bed in treatment room"
+        }
+      ],
+      "testimonials": [
+        {
+          "id": "testimonial-eva28",
+          "quote": "Mark spent every minute of the session working on my issues. I came out feeling better than I have in a really long time. Mark worked on multiple areas of my body and relieved me of so much chronic pain.",
+          "author": "Eva",
+          "rating": 5
+        },
+        {
+          "id": "testimonial-sue",
+          "quote": "A full-on session with Mark in the best way. My bursitis in my shoulder has relieved immensely as well as my jaw. I look forward to more sessions where I'm confident Mark's treatment will work its magic.",
+          "author": "Sue Mulcahy",
+          "rating": 5
+        },
+        {
+          "id": "testimonial-lakpa",
+          "quote": "I had a myofascial release session with Matthew for chronic back pain and it really helped. He took time to understand the cause and used effective techniques. Matthew also showed me exercises to help manage pain between sessions.",
+          "author": "Lakpa Sherpa",
+          "rating": 5
+        },
+        {
+          "id": "testimonial-stephany",
+          "quote": "I arrived with back and shoulder pain and left completely pain-free and feeling very relieved. Highly recommend it.",
+          "author": "Stephany Campos",
+          "rating": 5
+        }
+      ],
+      "social_proof": {
+        "items": [
+          {
+            "id": "proof-rating",
+            "value": "5 stars",
+            "label": "Client review rating",
+            "icon": "ShieldCheck"
+          },
+          {
+            "id": "proof-experience",
+            "value": "10+",
+            "label": "Years of professional experience",
+            "icon": "Clock"
+          },
+          {
+            "id": "proof-specialties",
+            "value": "4",
+            "label": "Treatment specialties",
+            "icon": "Briefcase"
+          }
+        ]
+      },
+      "contact": {
+        "phone": "(02) 9233 5769",
+        "hours": [
+          {
+            "label": "Monday",
+            "value": "8am – 6pm"
+          },
+          {
+            "label": "Tuesday",
+            "value": "8am – 6pm"
+          },
+          {
+            "label": "Wednesday",
+            "value": "8am – 6pm"
+          },
+          {
+            "label": "Thursday",
+            "value": "8am – 6pm"
+          },
+          {
+            "label": "Friday",
+            "value": "8am – 6pm"
+          },
+          {
+            "label": "Saturday",
+            "value": "10am – 4pm"
+          },
+          {
+            "label": "Sunday",
+            "value": "Closed"
+          }
+        ]
+      }
+    },
+    "services": [
+      {
+        "slug": "deep-tissue-massage",
+        "title": "Deep Tissue Massage",
+        "summary": "Targeted deep tissue massage using firm pressure to address muscle tension and chronic pain.",
+        "icon": "Waves",
+        "intro": "Deep tissue massage is ideal for those with tight, tense muscles or chronic pain patterns. Our therapists use controlled, firm pressure to reach deeper muscle layers, helping to release tension and improve mobility.",
+        "benefits": [
+          "Relieves chronic muscle tension and tightness",
+          "Improves blood flow and oxygen delivery to muscles",
+          "Helps address postural imbalances and pain"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-deep-tissue-1",
+            "question": "Is deep tissue massage painful?",
+            "answer": "Deep tissue massage uses firmer pressure, but it shouldn't be painful. Our therapists work within your comfort level and communicate throughout the session. You should always feel in control and comfortable."
+          },
+          {
+            "id": "faq-deep-tissue-2",
+            "question": "How long does it take to see results?",
+            "answer": "Many clients feel relief after their first session, though chronic conditions may benefit from a series of treatments. Typically, 4–6 sessions show significant improvement. Your therapist will discuss your individual goals."
+          }
+        ],
+        "seo": {
+          "title": "Deep Tissue Massage in Sydney CBD | Muscle Therapy Australia",
+          "description": "Professional deep tissue massage in Sydney CBD. Address chronic pain and muscle tension with targeted treatment from experienced therapists."
+        },
+        "hero_image": "https://images.pexels.com/photos/7235064/pexels-photo-7235064.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      },
+      {
+        "slug": "sports-massage",
+        "title": "Sports Massage",
+        "summary": "Specialised massage designed for athletes and active individuals to improve performance and aid recovery.",
+        "icon": "Activity",
+        "intro": "Sports massage is tailored for athletes and active people looking to enhance performance and prevent injury. Our therapists use sport-specific techniques to support your training and recovery goals.",
+        "benefits": [
+          "Enhances athletic performance and flexibility",
+          "Aids recovery after intense training or competition",
+          "Helps prevent sports-related injuries"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-sports-1",
+            "question": "When should I get sports massage?",
+            "answer": "Sports massage is beneficial before and after training or competition. Pre-event massage enhances performance and warms up muscles, while post-event massage aids recovery and reduces soreness. Regular maintenance massage also helps prevent injury."
+          },
+          {
+            "id": "faq-sports-2",
+            "question": "Do I need to be an athlete to get sports massage?",
+            "answer": "No. While designed with athletes in mind, sports massage techniques benefit anyone active—gym-goers, runners, weekend warriors, or anyone with activity-related muscle tension. Tell your therapist about your activities and goals."
+          }
+        ],
+        "seo": {
+          "title": "Sports Massage in Sydney | Muscle Therapy Australia",
+          "description": "Sports massage to boost performance and speed recovery. Ideal for athletes and active individuals in Sydney CBD and surrounding areas."
+        },
+        "hero_image": "https://images.pexels.com/photos/37719545/pexels-photo-37719545.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      },
+      {
+        "slug": "myofascial-release",
+        "title": "Myofascial Release",
+        "summary": "Advanced technique targeting connective tissue to address chronic pain and restricted movement.",
+        "icon": "BadgeCheck",
+        "intro": "Myofascial release targets the fascia—connective tissue surrounding muscles—to address restrictions and chronic pain. This technique is highly effective for complex pain patterns that may not respond to other treatments.",
+        "benefits": [
+          "Releases chronic fascial restrictions and pain patterns",
+          "Improves range of motion and mobility",
+          "Complements other therapies for stubborn pain issues"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-myofascial-1",
+            "question": "What is fascia and why does it matter?",
+            "answer": "Fascia is a continuous web of connective tissue surrounding muscles, bones, and organs. When it becomes tight or restricted, it can cause pain and limit movement. Myofascial release restores mobility and relieves pain by addressing these restrictions."
+          },
+          {
+            "id": "faq-myofascial-2",
+            "question": "How is myofascial release different from regular massage?",
+            "answer": "While regular massage works on muscles, myofascial release targets connective tissue. The technique involves sustained pressure and slow release, allowing fascia to unwind gradually. It's particularly effective for complex pain patterns and chronic conditions."
+          }
+        ],
+        "seo": {
+          "title": "Myofascial Release in Sydney | Muscle Therapy Australia",
+          "description": "Expert myofascial release for chronic pain and restricted movement. Book a session with our experienced therapists in Sydney CBD."
+        },
+        "hero_image": "https://images.pexels.com/photos/6628601/pexels-photo-6628601.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      },
+      {
+        "slug": "relaxation-massage",
+        "title": "Relaxation Massage",
+        "summary": "Therapeutic massage using gentle pressure to promote relaxation, reduce stress, and enhance wellbeing.",
+        "icon": "Stethoscope",
+        "intro": "Relaxation massage uses gentle, flowing techniques to ease tension, calm the nervous system, and promote overall wellbeing. Perfect for stress relief and creating a sense of calm in your life.",
+        "benefits": [
+          "Reduces stress and promotes relaxation",
+          "Improves sleep quality and overall rest",
+          "Enhances emotional wellbeing and sense of calm"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-relaxation-1",
+            "question": "What's the difference between relaxation and therapeutic massage?",
+            "answer": "Relaxation massage focuses on gentle, soothing techniques to calm the mind and body, while therapeutic massage addresses specific issues or pain. Both are valuable—relaxation massage is ideal for stress and general wellbeing."
+          },
+          {
+            "id": "faq-relaxation-2",
+            "question": "How often should I get relaxation massage?",
+            "answer": "This depends on your stress levels and goals. Some clients find monthly sessions beneficial for ongoing stress management, while others prefer quarterly visits or weekly sessions during high-stress periods."
+          }
+        ],
+        "seo": {
+          "title": "Relaxation Massage in Sydney CBD | Muscle Therapy Australia",
+          "description": "Gentle relaxation massage to reduce stress and promote wellbeing in Sydney. Book a therapeutic session today."
+        },
+        "hero_image": "https://images.pexels.com/photos/7233272/pexels-photo-7233272.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      }
+    ],
+    "locations": [
+      {
+        "slug": "massage-therapy-surry-hills",
+        "suburb": "Surry Hills",
+        "state": "NSW",
+        "intro": "Muscle Therapy Australia provides professional massage therapy services to Surry Hills residents, just minutes from our Sydney CBD clinic on Pitt Street. We specialise in deep tissue, sports massage, and myofascial release.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Easy access from Surry Hills and surrounding eastern suburbs",
+          "Experienced therapists with deep expertise",
+          "Professional clinic environment focused on your comfort"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-surry-hills-1",
+            "question": "How far is the clinic from Surry Hills?",
+            "answer": "Our clinic is located in Sydney CBD, about 1–2 km from Surry Hills—a short drive, bus ride, or taxi away. Book online or call to arrange your appointment."
+          }
+        ],
+        "seo": {
+          "title": "Massage Therapy in Surry Hills | Muscle Therapy Australia",
+          "description": "Professional massage therapy serving Surry Hills. Visit our Sydney CBD clinic for deep tissue, sports massage, and myofascial release."
+        },
+        "hero_image": "https://images.pexels.com/photos/5888078/pexels-photo-5888078.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      },
+      {
+        "slug": "massage-therapy-paddington",
+        "suburb": "Paddington",
+        "state": "NSW",
+        "intro": "Located near Paddington, our Sydney CBD clinic offers convenient access to quality massage therapy. We specialise in deep tissue, sports massage, and myofascial release for Paddington residents and visitors.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Convenient clinic location near Paddington",
+          "Expert therapists addressing your specific concerns",
+          "Comfortable, professional treatment environment"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-paddington-1",
+            "question": "How far is the clinic from Paddington?",
+            "answer": "Our clinic is in Sydney CBD, about 2 km from Paddington—a short drive or taxi ride away. We're easily accessible by car or public transport from Paddington."
+          }
+        ],
+        "seo": {
+          "title": "Massage Therapy in Paddington | Muscle Therapy Australia",
+          "description": "Convenient massage therapy for Paddington residents. Expert therapists in Sydney CBD offering deep tissue, sports, and myofascial release."
+        },
+        "hero_image": "https://images.pexels.com/photos/19388385/pexels-photo-19388385.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      },
+      {
+        "slug": "massage-therapy-north-sydney",
+        "suburb": "North Sydney",
+        "state": "NSW",
+        "intro": "Muscle Therapy Australia is readily accessible to North Sydney residents via the Sydney Harbour Bridge. Our expert team provides targeted massage therapy for muscle tension, sports injuries, and relaxation.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Easy access from North Sydney across the bridge",
+          "Professional therapists with years of experience",
+          "Comprehensive range of massage techniques available"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-north-sydney-1",
+            "question": "Is parking available near the clinic?",
+            "answer": "Our clinic is on Pitt Street in Sydney CBD. Street parking and nearby commercial car parks are available. Train and bus stops are also convenient for public transport access."
+          }
+        ],
+        "seo": {
+          "title": "Massage Therapy in North Sydney | Muscle Therapy Australia",
+          "description": "Professional massage therapy for North Sydney. Visit our central Sydney clinic for deep tissue, sports massage, and myofascial release services."
+        },
+        "hero_image": "https://images.pexels.com/photos/5888067/pexels-photo-5888067.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      },
+      {
+        "slug": "massage-therapy-glebe",
+        "suburb": "Glebe",
+        "state": "NSW",
+        "intro": "Our Sydney CBD clinic serves the Glebe community with expert massage therapy. Whether you're dealing with chronic pain, sports injuries, or stress relief, our experienced therapists are here to help.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Professional massage therapy for all conditions",
+          "Experienced therapists focused on your recovery",
+          "Flexible booking to suit your schedule"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-glebe-1",
+            "question": "Can I book online for an appointment?",
+            "answer": "Yes, you can book online for convenience. We also accept phone bookings on (02) 9233 5769. Same-day or next-day appointments may be available—contact us to check."
+          }
+        ],
+        "seo": {
+          "title": "Massage Therapy in Glebe | Muscle Therapy Australia",
+          "description": "Quality massage therapy for Glebe residents. Professional deep tissue, sports massage, and myofascial release at our Sydney CBD clinic."
+        },
+        "hero_image": "https://images.pexels.com/photos/6628611/pexels-photo-6628611.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+      }
+    ],
+    "service_areas": [],
+    "faq": {
+      "items": [
+        {
+          "id": "faq-general-1",
+          "question": "How long is a typical massage session?",
+          "answer": "Most sessions are 60 minutes, though we offer 30-minute and 90-minute options. Your first appointment may include a brief consultation, so arrive 5–10 minutes early."
+        },
+        {
+          "id": "faq-general-2",
+          "question": "What should I wear to my appointment?",
+          "answer": "Wear comfortable, loose clothing. You'll be draped appropriately during treatment. Most massage is done skin-to-skin for full effectiveness, so our therapists use professional draping to maintain your comfort and privacy."
+        },
+        {
+          "id": "faq-general-3",
+          "question": "Do I need a referral from my doctor?",
+          "answer": "No referral is required to book a massage therapy appointment. However, if you have a specific condition or injury, consulting your GP beforehand is a good idea."
+        },
+        {
+          "id": "faq-general-4",
+          "question": "How much does a massage session cost?",
+          "answer": "Pricing varies based on session length and therapist. We recommend calling (02) 9233 5769 or booking online to view current pricing and availability."
+        },
+        {
+          "id": "faq-general-5",
+          "question": "Can I claim massage therapy with my health insurance?",
+          "answer": "Many private health insurance plans cover massage therapy. We recommend checking with your insurer about your coverage and rebate eligibility. We can provide invoices for claims if needed."
+        }
+      ],
+      "seo": {
+        "title": "Frequently Asked Questions | Muscle Therapy Australia",
+        "description": "Common questions about massage therapy, booking, and treatment. Get answers from Muscle Therapy Australia in Sydney."
+      }
+    },
+    "about": {
+      "heading": "About Muscle Therapy Australia",
+      "body": "Muscle Therapy Australia is a dedicated massage therapy clinic based in the heart of Sydney CBD. Since our opening, we've been committed to providing professional, evidence-based massage therapy to help clients manage pain, improve mobility, and enhance their overall wellbeing.\n\nOur team of experienced massage therapists specialises in deep tissue massage, sports massage, myofascial release, and relaxation techniques. We work closely with each client to understand their specific needs, goals, and preferences, developing a personalised treatment plan that delivers real results.\n\nWe believe in creating a professional, comfortable environment where every client feels valued and supported. Our clinic is clean, welcoming, and focused entirely on your recovery and wellbeing. Whether you're dealing with chronic pain, recovering from injury, training for sport, or simply seeking stress relief, we're here to help.",
+      "values": [
+        {
+          "id": "value-expertise",
+          "title": "Expert Care",
+          "body": "Our therapists bring deep knowledge and years of hands-on experience. Each treatment is delivered with skill, attention to detail, and a commitment to evidence-based practice.",
+          "icon": "Briefcase"
+        },
+        {
+          "id": "value-personalisation",
+          "title": "Personalised Treatment",
+          "body": "We don't believe in one-size-fits-all therapy. Every client receives a customised approach tailored to their specific condition, goals, and preferences.",
+          "icon": "PersonStanding"
+        },
+        {
+          "id": "value-environment",
+          "title": "Professional Environment",
+          "body": "Our clinic is designed to be a calm, welcoming space where you can relax and focus on your recovery. Professional care, comfortable treatment rooms, and attentive service are our standard.",
+          "icon": "ShieldCheck"
+        }
+      ],
+      "seo": {
+        "title": "About Muscle Therapy Australia | Professional Massage Therapy in Sydney",
+        "description": "Learn about Muscle Therapy Australia, our experienced therapists, and our commitment to professional massage therapy in Sydney CBD."
+      },
+      "photo_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZPXu3RQYlA_WVBXBu_8oGR4lNGMZKK4BpVe5ROqCGaYEIvdCHRjfh5Tj5Wwt-_-crB-PSTdLFD3pVOFYA0EJK6F7BZYsf37lGWlE82wHSrbcY28IWLiSEfjXPhsWOBIoud5Wmg3PKL9u9ErCw=s4800-w1600-h1600"
+    },
+    "seo": {
+      "title": "Massage Therapy in Sydney CBD | Muscle Therapy Australia",
+      "description": "Professional massage therapy in Sydney CBD. Deep tissue, sports massage, and myofascial release. Book your session today.",
+      "schema_org_type": "LocalBusiness"
+    },
+    "preview": {},
+    "overrides": {
+      "logo_url": "/uploads/555ebd6f-9c20-406c-a35f-678b962089f1/a4e03962e4bbd111.png",
+      "primary_color": "#d97706",
+      "accent_color": "#b91c1c",
+      "secondary_color": "#804604",
+      "chrome_theme": "light"
+    }
+  },
+  "createdAt": "2026-06-30T05:53:30.268Z",
+  "status": "preview"
+}

@@ -9,6 +9,8 @@ import type { SiteProps } from "@/shared/types/site-props";
 import { resolveTheme } from "./theme";
 import { href, telHref, currentYear } from "./helpers";
 import { CountdownBanner } from "./client";
+import { CustomisationListener } from "./customisation-listener";
+import { MobileNav } from "./mobile-nav";
 
 export interface NavItem {
   label: string;
@@ -90,46 +92,52 @@ function Header({
 }) {
   const phone = sitePhone(site);
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-[var(--primary)] text-white shadow-sm">
+    <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--chrome-bg)] text-[var(--chrome-fg)] shadow-sm">
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         {/* Logo / business name */}
         <a href={href(basePath)} className="flex min-w-0 items-center gap-2.5">
           {logo ? (
             <Image
+              data-customise="logo"
               src={logo}
               alt={`${site.business.name} logo`}
-              width={40}
-              height={40}
-              className="h-9 w-auto object-contain"
+              width={240}
+              height={240}
+              className="w-auto object-contain"
+              style={{ height: "var(--logo-height, 36px)" }}
             />
           ) : (
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-[var(--accent)] text-sm font-black">
+            <span data-customise="logo-fallback" className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-[var(--accent)] text-sm font-black text-[var(--accent-fg)]">
               {site.business.name.charAt(0)}
             </span>
           )}
-          <span className="truncate text-base font-extrabold tracking-tight sm:text-lg">
+          <span
+            data-customise="business-name"
+            className="truncate text-base font-extrabold tracking-tight sm:text-lg"
+            style={logo ? { display: "none" } : undefined}
+          >
             {site.business.name}
           </span>
         </a>
 
         <div className="flex items-center gap-2">
           {/* Desktop nav with dropdown support */}
-          <ul className="hidden items-center gap-0.5 text-sm font-medium text-white/80 lg:flex">
+          <ul className="hidden items-center gap-0.5 text-sm font-medium lg:flex">
             {nav.map((l) =>
               l.children?.length ? (
                 /* Dropdown item — CSS-only hover, no JS needed */
                 <li key={l.href + l.label} className="group relative">
-                  <span className="flex cursor-default select-none items-center gap-1 rounded-md px-3 py-2 transition-colors hover:bg-white/10 hover:text-white">
+                  <span className="flex cursor-default select-none items-center gap-1 rounded-md px-3 py-2 opacity-80 transition-colors hover:bg-black/5 hover:text-[var(--accent)] hover:opacity-100">
                     {l.label}
                     <ChevronDown className="h-3.5 w-3.5 opacity-60 transition-transform group-hover:rotate-180" />
                   </span>
                   {/* Dropdown panel */}
-                  <ul className="invisible absolute left-0 top-full z-50 min-w-[200px] translate-y-1 rounded-xl border border-white/10 bg-[var(--primary)] py-1.5 opacity-0 shadow-2xl transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                  <ul className="invisible absolute left-0 top-full z-50 min-w-[200px] translate-y-1 rounded-xl border border-black/10 bg-[var(--chrome-bg)] py-1.5 opacity-0 shadow-2xl transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                     {l.children.map((c) => (
                       <li key={c.href}>
                         <a
                           href={c.href}
-                          className="block px-4 py-2 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                          className="block px-4 py-2 text-sm text-[var(--chrome-fg)] opacity-80 transition-colors hover:bg-black/5 hover:opacity-100"
                         >
                           {c.label}
                         </a>
@@ -141,7 +149,7 @@ function Header({
                 /* Flat nav link */
                 <li key={l.href + l.label}>
                   <a
-                    className="block rounded-md px-3 py-2 transition-colors hover:bg-white/10 hover:text-white"
+                    className="block rounded-md px-3 py-2 opacity-80 transition-colors hover:bg-black/5 hover:text-[var(--accent)] hover:opacity-100"
                     href={l.href}
                   >
                     {l.label}
@@ -154,13 +162,15 @@ function Header({
           {phone && (
             <a
               href={telHref(phone)}
-              className="ml-4 flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-bold text-white shadow-md transition-transform hover:brightness-110 active:scale-95"
+              className="ml-2 flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-bold text-[var(--accent-fg)] shadow-md transition-transform hover:brightness-110 active:scale-95 lg:ml-4"
             >
               <Phone className="h-4 w-4" strokeWidth={2.5} />
               <span className="hidden sm:inline">{phone}</span>
               <span className="sm:hidden">Call</span>
             </a>
           )}
+
+          <MobileNav nav={nav} />
         </div>
       </nav>
     </header>
@@ -171,10 +181,12 @@ function Footer({
   site,
   basePath,
   nav,
+  logo,
 }: {
   site: SiteProps;
   basePath: string;
   nav: NavItem[];
+  logo: string;
 }) {
   const phone = sitePhone(site);
   const { business } = site;
@@ -183,16 +195,33 @@ function Footer({
   const locationLinks = site.locations.slice(0, 6);
 
   return (
-    <footer className="bg-[var(--primary)] text-white">
+    <footer className="bg-[var(--chrome-bg)] text-[var(--chrome-fg)] border-t border-current/10">
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="text-lg font-extrabold tracking-tight">{business.name}</p>
+            {logo ? (
+              <Image
+                data-customise="footer-logo"
+                src={logo}
+                alt={`${business.name} logo`}
+                width={240}
+                height={240}
+                className="w-auto object-contain"
+                style={{ height: "var(--logo-height, 36px)" }}
+              />
+            ) : null}
+            <p
+              data-customise="footer-business-name"
+              className="text-lg font-extrabold tracking-tight"
+              style={logo ? { display: "none" } : undefined}
+            >
+              {business.name}
+            </p>
             {business.tagline && (
-              <p className="mt-1 max-w-sm text-sm text-white/70">{business.tagline}</p>
+              <p className="mt-1 max-w-sm text-sm opacity-70">{business.tagline}</p>
             )}
             {(business.suburb || business.state) && (
-              <p className="mt-2 text-sm text-white/60">
+              <p className="mt-2 text-sm opacity-60">
                 {[business.suburb, business.state].filter(Boolean).join(", ")}
               </p>
             )}
@@ -200,12 +229,12 @@ function Footer({
 
           {serviceLinks.length > 0 && (
             <nav aria-label="Services">
-              <p className="text-sm font-bold uppercase tracking-wide text-white/80">Services</p>
-              <ul className="mt-3 space-y-2 text-sm text-white/70">
+              <p className="text-sm font-bold uppercase tracking-wide opacity-80">Services</p>
+              <ul className="mt-3 space-y-2 text-sm">
                 {serviceLinks.map((s) => (
                   <li key={s.slug}>
                     <a
-                      className="transition-colors hover:text-white"
+                      className="opacity-70 transition-opacity hover:opacity-100"
                       href={href(basePath, "services", s.slug)}
                     >
                       {s.title}
@@ -218,12 +247,12 @@ function Footer({
 
           {locationLinks.length > 0 && (
             <nav aria-label="Areas served">
-              <p className="text-sm font-bold uppercase tracking-wide text-white/80">Areas</p>
-              <ul className="mt-3 space-y-2 text-sm text-white/70">
+              <p className="text-sm font-bold uppercase tracking-wide opacity-80">Areas</p>
+              <ul className="mt-3 space-y-2 text-sm">
                 {locationLinks.map((l) => (
                   <li key={l.slug}>
                     <a
-                      className="transition-colors hover:text-white"
+                      className="opacity-70 transition-opacity hover:opacity-100"
                       href={href(basePath, "locations", l.slug)}
                     >
                       {l.suburb}
@@ -235,18 +264,18 @@ function Footer({
           )}
 
           <nav aria-label="Footer">
-            <p className="text-sm font-bold uppercase tracking-wide text-white/80">Company</p>
-            <ul className="mt-3 space-y-2 text-sm text-white/70">
+            <p className="text-sm font-bold uppercase tracking-wide opacity-80">Company</p>
+            <ul className="mt-3 space-y-2 text-sm">
               {nav.map((l) => (
                 <li key={l.href + l.label}>
-                  <a className="transition-colors hover:text-white" href={l.href}>
+                  <a className="opacity-70 transition-opacity hover:opacity-100" href={l.href}>
                     {l.label}
                   </a>
                 </li>
               ))}
               {phone && (
                 <li>
-                  <a className="transition-colors hover:text-white" href={telHref(phone)}>
+                  <a className="opacity-70 transition-opacity hover:opacity-100" href={telHref(phone)}>
                     Call us
                   </a>
                 </li>
@@ -255,7 +284,7 @@ function Footer({
           </nav>
         </div>
 
-        <div className="mt-8 flex flex-col gap-1 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-1 border-t border-current/10 pt-6 text-xs opacity-50 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {currentYear()} {business.name}. All rights reserved.
           </p>
@@ -276,10 +305,10 @@ function MobileCallBar({ site }: { site: SiteProps }) {
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-black/10 bg-white/95 p-3 shadow-[0_-4px_20px_rgba(0,0,0,0.12)] backdrop-blur md:hidden">
         <a
           href={phone ? telHref(phone) : cta!.href}
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-6 py-3.5 text-base font-bold text-white shadow-md active:scale-[0.98]"
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-6 py-3.5 text-base font-bold text-[var(--accent-fg)] shadow-md active:scale-[0.98]"
         >
           <Phone className="h-5 w-5" strokeWidth={2.5} />
-          {phone ? `Call ${site.business.name.split(" ")[0]}` : cta!.label}
+          {phone ? "Call Now" : cta!.label}
         </a>
       </div>
       <div className="h-20 md:hidden" aria-hidden />
@@ -331,6 +360,7 @@ export function SiteShell({
   const nav = deriveNav(site, basePath);
   return (
     <div
+      data-theme-root
       style={theme.vars}
       className="flex min-h-screen flex-col bg-white font-sans text-zinc-900 antialiased"
     >
@@ -342,8 +372,9 @@ export function SiteShell({
       )}
       <Header site={site} basePath={basePath} nav={nav} logo={theme.logo} />
       <div className="flex-1">{children}</div>
-      <Footer site={site} basePath={basePath} nav={nav} />
+      <Footer site={site} basePath={basePath} nav={nav} logo={theme.logo} />
       <MobileCallBar site={site} />
+      <CustomisationListener />
     </div>
   );
 }

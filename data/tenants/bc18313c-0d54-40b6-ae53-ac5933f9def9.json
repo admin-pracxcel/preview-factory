@@ -1,0 +1,1055 @@
+{
+  "id": "bc18313c-0d54-40b6-ae53-ac5933f9def9",
+  "name": "Richmond Hot Water Specialists",
+  "niche": "plumber",
+  "category": "trades",
+  "siteProps": {
+    "business": {
+      "name": "Richmond Hot Water Specialists",
+      "phone": "03 9333 4444",
+      "email": "info@clearflowplumbing.com.au",
+      "suburb": "Richmond",
+      "state": "VIC",
+      "address": "Richmond, VIC"
+    },
+    "branding": {
+      "primary_color": "#0f2a55",
+      "secondary_color": "#07193a",
+      "accent_color": "#e85d04",
+      "logo_url": "",
+      "hero_image_url": "https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=1600&q=80",
+      "font_heading": "Inter"
+    },
+    "seo": {
+      "title": "Clearflow Plumbing | Licensed Plumber in Southbank & Melbourne",
+      "description": "Clearflow Plumbing — 24/7 emergency plumber serving Southbank, South Melbourne, Richmond and the CBD fringe. No call-out fee 7am–6pm weekdays. Call 03 9012 4567."
+    },
+    "home": {
+      "hero": {
+        "headline": "Plumber in Richmond — Richmond Hot Water Specialists",
+        "subheadline": "Hot water systems, gas fitting, and general plumbing across Richmond.",
+        "cta_primary": {
+          "label": "Call Now — 03 9012 4567",
+          "href": "tel:0390124567"
+        }
+      },
+      "services": [
+        {
+          "id": "svc-1",
+          "slug": "blocked-drains",
+          "title": "Blocked Drains",
+          "description": "Camera inspections and hydro-jet clearing to get your drains flowing fast — same-day service available.",
+          "icon": "Droplets",
+          "starting_price": "$150"
+        },
+        {
+          "id": "svc-2",
+          "slug": "burst-pipes-emergency-repairs",
+          "title": "Burst Pipes & Emergency Repairs",
+          "description": "24/7 rapid response for burst pipes and plumbing emergencies. We're on site fast to stop the damage.",
+          "icon": "Siren",
+          "starting_price": "$200"
+        },
+        {
+          "id": "svc-3",
+          "slug": "hot-water-systems",
+          "title": "Hot Water Systems",
+          "description": "Supply, install and repair of electric, gas, heat pump and continuous flow hot water systems.",
+          "icon": "Flame",
+          "starting_price": "$180"
+        },
+        {
+          "id": "svc-4",
+          "slug": "gas-fitting",
+          "title": "Gas Fitting & Appliance Installation",
+          "description": "Licensed gas fitting for heaters, cooktops, BBQs and new gas line installation — done safely.",
+          "icon": "Wind",
+          "starting_price": "$160"
+        },
+        {
+          "id": "svc-5",
+          "slug": "bathroom-renovations",
+          "title": "Bathroom Renovations & Re-piping",
+          "description": "Full bathroom plumbing for renovations — shower, vanity, toilet relocation and rough-in work.",
+          "icon": "Sparkle",
+          "starting_price": "$500"
+        },
+        {
+          "id": "svc-6",
+          "slug": "general-plumbing-maintenance",
+          "title": "General Plumbing Maintenance",
+          "description": "Tap replacements, cistern repairs, stormwater, sewer lines and rough-in for new builds and renos.",
+          "icon": "Wrench",
+          "starting_price": "$120"
+        }
+      ],
+      "about": {
+        "heading": "11 Years Keeping Melbourne's Pipes Flowing",
+        "body": "Clearflow Plumbing has been solving plumbing problems for Melbourne households and businesses since 2013. Our licensed team works across the inner south and CBD fringe — from Southbank apartments to South Melbourne terrace houses. We show up on time, we fix it right, and we clean up before we leave.",
+        "cta": {
+          "label": "About Us",
+          "href": "/about"
+        }
+      },
+      "service_area": {
+        "heading": "We Service Melbourne's Inner South & CBD Fringe",
+        "suburbs": [
+          "Southbank",
+          "South Melbourne",
+          "Port Melbourne",
+          "Richmond",
+          "Prahran",
+          "St Kilda",
+          "Albert Park",
+          "Fitzroy",
+          "Collingwood",
+          "South Yarra",
+          "Windsor",
+          "Elwood",
+          "Carlton",
+          "North Melbourne"
+        ]
+      },
+      "gallery": [
+        {
+          "id": "gal-1",
+          "image_url": "https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=800&q=80",
+          "caption": "Blocked drain hydro-jet clearing in South Melbourne"
+        },
+        {
+          "id": "gal-2",
+          "image_url": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=800&q=80",
+          "caption": "Hot water system installation — Southbank apartment"
+        },
+        {
+          "id": "gal-3",
+          "image_url": "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=800&q=80",
+          "caption": "Bathroom renovation rough-in plumbing, Richmond"
+        },
+        {
+          "id": "gal-4",
+          "image_url": "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&w=800&q=80",
+          "caption": "Tap and mixer replacement, Prahran residence"
+        },
+        {
+          "id": "gal-5",
+          "image_url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80",
+          "caption": "Gas fitting for kitchen cooktop, Port Melbourne"
+        },
+        {
+          "id": "gal-6",
+          "image_url": "https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&w=800&q=80",
+          "caption": "Burst pipe emergency repair, St Kilda apartment"
+        }
+      ],
+      "testimonials": [
+        {
+          "id": "t-1",
+          "author": "Sarah L.",
+          "rating": 5,
+          "quote": "Called Clearflow at 10pm for a burst pipe under the kitchen sink. They were on the door in 45 minutes and had everything fixed before midnight. Incredibly professional and the price was fair. Won't use anyone else.",
+          "location": "Southbank"
+        },
+        {
+          "id": "t-2",
+          "author": "Marcus T.",
+          "rating": 5,
+          "quote": "Had a blocked drain that three other plumbers couldn't fix. Clearflow brought a camera and found a root intrusion near the boundary. Sorted it same day. Excellent work and very tidy.",
+          "location": "South Melbourne"
+        },
+        {
+          "id": "t-3",
+          "author": "Priya and James K.",
+          "rating": 5,
+          "quote": "We used Clearflow for our bathroom renovation in South Melbourne — new shower, vanity rough-in and toilet relocation. Turned up on time every day, finished on schedule, and the finish was perfect. Highly recommend.",
+          "location": "South Melbourne"
+        },
+        {
+          "id": "t-4",
+          "author": "David F.",
+          "rating": 4,
+          "quote": "Good service for hot water system replacement. They quoted on the spot, came back the next morning, and the new unit has been running perfectly. Minor delay on the arrival time but they called ahead.",
+          "location": "Richmond"
+        }
+      ],
+      "social_proof": {
+        "heading": "Melbourne's Trusted Local Plumber",
+        "items": [
+          {
+            "id": "sp-1",
+            "value": "11 Years in Business",
+            "icon": "Clock"
+          },
+          {
+            "id": "sp-2",
+            "value": "24/7 Emergency Response",
+            "icon": "Siren"
+          },
+          {
+            "id": "sp-3",
+            "value": "No Call-Out Fee (7am–6pm Weekdays)",
+            "icon": "DollarSign"
+          },
+          {
+            "id": "sp-4",
+            "value": "Licensed & Fully Insured",
+            "icon": "ShieldCheck"
+          }
+        ]
+      },
+      "offer": {
+        "headline": "Free Call-Out — Weekdays 7am to 6pm",
+        "description": "Book any plumbing job Monday to Friday between 7am and 6pm and pay zero call-out fee. Get an on-the-spot quote with no obligation.",
+        "price": "$0 Call-Out Fee",
+        "code": "CLEARFLOW-FREE",
+        "cta": {
+          "label": "Book Your Free Call-Out",
+          "href": "/contact"
+        }
+      },
+      "contact": {
+        "heading": "Contact Clearflow Plumbing",
+        "phone": "03 9012 4567",
+        "email": "info@clearflowplumbing.com.au",
+        "address": "Level 2, 101 Southbank Blvd, Southbank VIC 3006",
+        "hours": [
+          {
+            "label": "Monday – Friday",
+            "value": "7:00am – 6:00pm (No call-out fee)"
+          },
+          {
+            "label": "Saturday",
+            "value": "8:00am – 4:00pm"
+          },
+          {
+            "label": "Sunday",
+            "value": "9:00am – 2:00pm"
+          },
+          {
+            "label": "Emergencies",
+            "value": "24/7 — call anytime"
+          }
+        ]
+      }
+    },
+    "services": [
+      {
+        "slug": "blocked-drains",
+        "title": "Blocked Drains",
+        "summary": "Fast, lasting blocked drain clearing using CCTV camera inspection and high-pressure hydro-jetting — same-day service across inner Melbourne.",
+        "icon": "Droplets",
+        "starting_price": "$150",
+        "intro": "A blocked drain is more than an inconvenience — left untreated it can cause water damage, foul odours, and costly structural problems. Clearflow Plumbing uses professional CCTV drain cameras to locate exactly where and why your drain is blocked before we touch a single tool. That means no guesswork, no unnecessary digging, and no repeat call-backs.\n\nOnce we've identified the blockage — whether it's grease build-up, tree root intrusion, collapsed pipe, or foreign objects — we use a high-pressure hydro-jet to blast it clear. For root intrusions we also carry root-cutting heads to cut back growth and buy you time before relining becomes necessary. We clear stormwater, sewer, kitchen, and bathroom drains across the entire inner Melbourne area, with same-day availability Monday to Saturday.",
+        "benefits": [
+          "CCTV camera inspection identifies the exact cause before any work begins",
+          "High-pressure hydro-jetting clears blockages other plumbers miss",
+          "Same-day service available across inner Melbourne",
+          "We clean up completely before we leave — no mess, no odour"
+        ],
+        "sections": [
+          {
+            "heading": "What Causes Blocked Drains in Melbourne's Inner Suburbs?",
+            "body": "Melbourne's older inner suburbs — Fitzroy, Collingwood, South Melbourne, Richmond — have ageing clay and cast-iron sewer pipes that are particularly prone to tree root intrusion. The native and ornamental street trees planted throughout these neighbourhoods are notorious for seeking moisture in old pipe joints. Newer apartment buildings in Southbank and Docklands deal with a different problem: heavy grease and food waste from restaurants and shared kitchens blocking common waste lines. We've seen it all, and we carry the specialist equipment to handle both. Regular annual drain camera inspections are the best way to catch problems early and avoid emergency call-outs."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "bd-faq-1",
+            "question": "How quickly can you respond to a blocked drain emergency?",
+            "answer": "For emergencies we aim to be on site within 60 minutes anywhere in the inner Melbourne area, 24 hours a day. During standard business hours (7am–6pm weekdays) we typically arrive within 30–45 minutes and there is no call-out fee."
+          },
+          {
+            "id": "bd-faq-2",
+            "question": "Will you need to dig up my garden to clear the blocked drain?",
+            "answer": "Not usually. Our CCTV camera system lets us pinpoint the exact location and nature of the blockage. In the vast majority of cases we can clear blocked drains with hydro-jetting through an access point without any excavation. If a pipe has collapsed or cracked, we'll show you the camera footage and quote for the minimal excavation required."
+          }
+        ],
+        "seo": {
+          "title": "Blocked Drain Plumber Melbourne | Clearflow Plumbing",
+          "description": "Fast blocked drain clearing in Melbourne's inner south. CCTV camera inspection and hydro-jetting. Same-day service — call Clearflow on 03 9012 4567."
+        }
+      },
+      {
+        "slug": "burst-pipes-emergency-repairs",
+        "title": "Burst Pipes & Emergency Repairs",
+        "summary": "24/7 emergency plumber for burst pipes, leaks and urgent plumbing failures — rapid response across inner Melbourne to minimise water damage.",
+        "icon": "Siren",
+        "starting_price": "$200",
+        "intro": "A burst pipe at 2am can flood a home in minutes. When water is pouring through walls, ceilings or floors, you need a plumber who answers the phone and actually shows up fast. Clearflow Plumbing operates 24 hours a day, seven days a week, including all public holidays, with no after-hours surcharge before midnight. Our vans are fully stocked so we can isolate, repair or replace in a single visit.\n\nWe handle everything from pinhole leaks in copper pipes to full burst main lines and pressurised hot water system failures. Once we've made the emergency repair and stopped the water, we assess whether the affected section needs replacement and whether building damage needs professional drying. We'll also photograph all damage to support your insurance claim if required.",
+        "benefits": [
+          "On site within 60 minutes anywhere in inner Melbourne — day or night",
+          "Vans fully stocked with copper, PEX and poly fittings for immediate repair",
+          "No after-hours surcharge before midnight — fair, transparent pricing",
+          "Damage documentation to support home and contents insurance claims"
+        ],
+        "sections": [
+          {
+            "heading": "How We Handle a Burst Pipe Emergency",
+            "body": "When you call us, we'll guide you through shutting off the water at the isolation valve or main stopcock while we drive to you. On arrival we assess the break, isolate the affected line, and make the repair using the correct materials for your pipe type — whether that's copper soldering, push-fit PEX fittings, or threaded galvanised fittings in older homes. For concealed pipes inside walls or under slabs, we use pipe locators to find the run before cutting. We always pressure-test the repair before we leave and provide a written report covering the cause, the fix, and any further work recommended."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "bp-faq-1",
+            "question": "What should I do while waiting for the emergency plumber to arrive?",
+            "answer": "Turn off the water at the nearest isolation valve — usually under the sink or behind the toilet — or at the main meter at the front of the property. If water is near electrical outlets or the switchboard, do not touch and turn off power at the mains. Move valuables and furniture away from spreading water. Our team will advise you over the phone when you call."
+          },
+          {
+            "id": "bp-faq-2",
+            "question": "Does home insurance cover burst pipe repairs?",
+            "answer": "Most home and contents policies in Australia cover damage caused by a sudden and accidental burst pipe, but not the pipe repair itself. We can provide photos, a written cause-and-effect report, and a detailed invoice that your insurer will need. Call your insurer as soon as the emergency is under control."
+          }
+        ],
+        "seo": {
+          "title": "Emergency Plumber Melbourne 24/7 | Burst Pipes | Clearflow Plumbing",
+          "description": "24/7 emergency plumber in Melbourne. Burst pipes, leaks and urgent plumbing repairs — on site within 60 minutes. Call Clearflow now: 03 9012 4567."
+        }
+      },
+      {
+        "slug": "hot-water-systems",
+        "title": "Hot Water Systems",
+        "summary": "Supply, installation and repair of electric, gas, heat pump and continuous flow hot water systems — same-day quotes and next-day installation available.",
+        "icon": "Flame",
+        "starting_price": "$180",
+        "intro": "Cold showers are not something you want to put up with. Whether your hot water system has failed overnight, is simply underperforming, or you're ready to upgrade to a more energy-efficient model, Clearflow Plumbing can have you back in hot water fast. We work with all major brands including Rheem, Rinnai, Dux, AquaMAX and Bosch, and we carry the most common residential tank sizes on our vans for same-day swaps.\n\nOur team is experienced across every hot water technology — traditional electric storage tanks, gas instantaneous and continuous flow units, solar-boosted systems, and air-source heat pumps. We'll assess your household size, gas or electricity tariff, and available roof space or yard area to recommend the system that gives you the best combination of upfront cost, running cost, and reliability. We handle the full installation including plumbing, gas or electrical connections (gas side), and commissioning.",
+        "benefits": [
+          "All brands and technologies — electric, gas, heat pump, continuous flow",
+          "Same-day quotes and next-day installation in most inner Melbourne suburbs",
+          "Transparent fixed pricing — you know the total cost before we start",
+          "Old unit disconnected and removed as part of every installation"
+        ],
+        "sections": [
+          {
+            "heading": "Choosing the Right Hot Water System for Your Melbourne Home",
+            "body": "Inner Melbourne homes range from compact Southbank apartments to large South Yarra family homes, and the right hot water system depends on your setup. Apartments usually suit instantaneous gas or continuous flow electric units because they save space and never run out. Townhouses and free-standing homes with outside space are great candidates for heat pump hot water systems, which can cut running costs by up to 70% compared to electric storage tanks. Gas storage remains popular in older homes already connected to the gas network. We'll walk you through the options, including any available government rebates under the Victorian Energy Upgrades program, and provide a written quote covering all materials and labour."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "hw-faq-1",
+            "question": "How long does a hot water system installation take?",
+            "answer": "A straight swap of a storage tank hot water system — same location, same fuel type — typically takes two to three hours including disconnecting the old unit and commissioning the new one. Switching fuel types (e.g. electric to gas) or relocating the unit takes longer and may require additional trades such as a licensed electrician for hard-wired units."
+          },
+          {
+            "id": "hw-faq-2",
+            "question": "Are there rebates available for heat pump hot water systems in Victoria?",
+            "answer": "Yes. The Victorian Energy Upgrades (VEU) program offers significant point-of-sale discounts on eligible heat pump hot water systems for households that currently have electric storage hot water. The rebate is applied directly to your invoice — you don't need to claim it separately. We can confirm your eligibility when we provide your quote."
+          }
+        ],
+        "seo": {
+          "title": "Hot Water System Installation & Repair Melbourne | Clearflow Plumbing",
+          "description": "Electric, gas, heat pump and continuous flow hot water systems. Same-day quotes in Melbourne's inner south. Call Clearflow Plumbing: 03 9012 4567."
+        }
+      },
+      {
+        "slug": "gas-fitting",
+        "title": "Gas Fitting & Appliance Installation",
+        "summary": "Licensed gas fitting for new connections, appliance installation, gas leaks and testing — safe, compliant work across inner Melbourne.",
+        "icon": "Flame",
+        "starting_price": "$160",
+        "intro": "Gas work must be carried out by a licensed gasfitter — it's not a DIY job and it's not something to cut corners on. Clearflow Plumbing holds a full Victorian gas fitting licence, covering Type A appliances, gas pipework, and pressure testing. We install, service and repair all gas appliances including cooktops, ovens, space heaters, gas log fires, BBQ bayonets and outdoor heaters.\n\nIf you can smell gas, leave the building immediately, do not use any electrical switches, and call 1800 GAS LEAK (the gas emergency line) and then call us. If you need a new gas line run to a kitchen, laundry or outdoor entertaining area — or if you're connecting a new gas appliance — we can quote on the full scope including excavation, pipework, pressure testing, and Compliance Certificate issue.",
+        "benefits": [
+          "Licensed gasfitter — Type A appliances and gas pipework",
+          "Gas leak detection and pressure testing using calibrated equipment",
+          "Compliance Certificates issued for all gas installations",
+          "Outdoor BBQ bayonets, heater points and new gas line extensions"
+        ],
+        "sections": [
+          {
+            "heading": "Gas Appliance Installation in Melbourne Apartments and Homes",
+            "body": "Melbourne's inner suburbs have a high proportion of homes on reticulated natural gas, and demand for gas fitting has remained strong despite the shift toward electrification. Common jobs we handle include installing new gas cooktops when kitchen renovations replace old electric models, connecting freestanding ranges, running new bayonet points for outdoor heaters in courtyards, and commissioning gas log fires for living rooms. We also handle replacement of older ducted gas heating systems at the gas fitting scope — connecting to the existing pipework and pressure testing before the heating contractor completes the installation. All work is inspected and a Certificate of Compliance is provided as required by law."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "gf-faq-1",
+            "question": "Can I install my own gas appliance and just have a plumber connect it?",
+            "answer": "In Victoria, only a licensed gasfitter can connect a gas appliance to the gas supply. You can unbox and position a new cooktop or heater yourself, but the connection to the gas point, the pressure test, and the commissioning must be carried out by a licensed professional who will then issue a Certificate of Compliance."
+          },
+          {
+            "id": "gf-faq-2",
+            "question": "How do I know if I have a gas leak?",
+            "answer": "The most obvious sign is the smell of mercaptan — the rotten-egg odorant added to natural gas. Other signs include a hissing sound near appliances or pipes, dead vegetation over an underground line, or unexplained high gas bills. If you suspect a gas leak, leave the property immediately without operating any switches, then call the gas emergency number and contact us."
+          }
+        ],
+        "seo": {
+          "title": "Licensed Gas Fitter Melbourne | Appliance Installation | Clearflow Plumbing",
+          "description": "Licensed gas fitting and appliance installation in Melbourne's inner south. Gas leaks, cooktops, heaters, BBQ bayonets. Call 03 9012 4567."
+        }
+      },
+      {
+        "slug": "bathroom-renovations",
+        "title": "Bathroom Renovations & Re-piping",
+        "summary": "Complete bathroom plumbing for renovations — shower, vanity, toilet relocation, rough-in and re-piping — on time and to a high finish.",
+        "icon": "Sparkle",
+        "starting_price": "$500",
+        "intro": "The plumbing scope is often the most disruptive part of a bathroom renovation, and getting it wrong costs far more to fix later. Clearflow Plumbing works directly with homeowners, builders and interior designers to deliver the plumbing component of bathroom renovations on schedule and to a standard that makes the tiler and cabinetmaker's job easy. We handle full rough-in for new builds, re-piping of existing bathrooms, and relocation of waste and supply lines to suit new layouts.\n\nWe quote a fixed price for the plumbing scope before any walls are opened. That means no nasty surprises on your renovation budget. Our team are experienced with the tile-in shower systems, wall-hung vanities, back-to-wall and freestanding bath installations, and concealed cistern toilet suites that are standard in contemporary Melbourne bathroom renovations. We co-ordinate with your builder or project manager and attend site at agreed stages to keep the project moving.",
+        "benefits": [
+          "Fixed-price quotes before work starts — no scope creep surprises",
+          "Experienced with contemporary formats: tile-in showers, wall-hung vanities, concealed cisterns",
+          "Toilet relocation, waste re-routing and supply re-piping in a single scope",
+          "Co-ordinated scheduling with your builder or trades project manager"
+        ],
+        "sections": [
+          {
+            "heading": "What's Included in Our Bathroom Renovation Plumbing Scope",
+            "body": "Our bathroom renovation package covers every plumbing element from wall opening to final connection and pressure test. That includes: capping off and re-routing existing hot and cold supply lines to new fixture positions; installing new waste and overflow systems for showers, baths and vanities; fitting new toilet pans, cisterns and seat connections; connecting tapware and mixers supplied by you or us; installing and testing heated towel rails where a plumbed connection is specified; and completing a final pressure test with sign-off before tiling begins. We also pull the required plumbing permits where the local council or VBA requires them, and issue all Certificates of Compliance on completion."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "br-faq-1",
+            "question": "Do I need a plumbing permit for a bathroom renovation in Victoria?",
+            "answer": "Yes, most bathroom renovation work that involves altering or relocating drain waste vent (DWV) or water supply lines requires a Plumbing Permit in Victoria. As your licensed plumber, Clearflow Plumbing manages the permit application and inspection through the VBA (Victorian Building Authority) as part of our service. You won't need to deal with that yourself."
+          },
+          {
+            "id": "br-faq-2",
+            "question": "How long does the plumbing part of a bathroom renovation take?",
+            "answer": "The rough-in stage — re-routing pipes, installing new waste lines, setting out for new fixtures — typically takes one to two days depending on the complexity of the layout changes. The final fix (connecting tapware, toilets and fittings after tiling is complete) takes another half day. We schedule both stages to fit your overall renovation timeline."
+          }
+        ],
+        "seo": {
+          "title": "Bathroom Renovation Plumbing Melbourne | Clearflow Plumbing",
+          "description": "Bathroom renovation plumbing in Melbourne — rough-in, re-piping, toilet relocation, shower and vanity installation. Fixed-price quotes. Call 03 9012 4567."
+        }
+      },
+      {
+        "slug": "general-plumbing-maintenance",
+        "title": "General Plumbing Maintenance",
+        "summary": "Tap replacements, toilet repairs, stormwater and sewer drain maintenance, and new home rough-in — reliable everyday plumbing for inner Melbourne homes.",
+        "icon": "Wrench",
+        "starting_price": "$120",
+        "intro": "Not every plumbing job is an emergency, but that doesn't make it less important. A dripping tap wastes thousands of litres of water a year. A running toilet can add hundreds of dollars to your water bill. A stormwater drain blocked with leaf litter will overflow into your garden or basement at the first heavy rain. Clearflow Plumbing handles the full range of everyday plumbing maintenance jobs quickly and at fair, upfront prices.\n\nWe replace worn tap washers, ceramic disc cartridges and mixer valves; repair and overhaul toilet cisterns and fill valves; clear and maintain stormwater and sewer drain lines; install new fixtures and appliances; and carry out rough-in plumbing for new homes, extensions and renovations. If you're a landlord in the inner south, we offer responsive maintenance for rental properties with fast turnaround to meet your obligations under the Residential Tenancies Act.",
+        "benefits": [
+          "Upfront fixed pricing — you approve the price before work starts",
+          "Dripping taps, running toilets, dripping showers repaired same or next day",
+          "Stormwater and sewer line inspections and maintenance",
+          "Responsive rental property service for landlords and property managers"
+        ],
+        "sections": [
+          {
+            "heading": "Planned Maintenance Saves Money on Plumbing Bills",
+            "body": "The majority of plumbing emergencies we attend could have been prevented with a simple annual check. A tap that's been dripping for six months will eventually fail completely, often at the worst possible time. A cistern that's been running has probably already wasted $200 in water charges. Stormwater lines blocked with silt and tree debris become a flood risk as soon as storm season arrives. We offer an annual plumbing health check for inner Melbourne homeowners and landlords that covers inspection of all tap and mixer cartridges, toilet cistern components, hot water system anode and temperature, stormwater gully traps, and under-sink connections. You'll get a written report and priority booking for any remedial work identified."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "gm-faq-1",
+            "question": "How much does it cost to replace a tap washer or cartridge?",
+            "answer": "Tap washer and cartridge replacements start from $120 including labour and parts for a standard tap. Mixer cartridge replacement costs a little more depending on the brand and cartridge type. We always provide a fixed price before starting — there are no hidden labour charges on top."
+          },
+          {
+            "id": "gm-faq-2",
+            "question": "Can you service my rental property quickly if a tenant reports a plumbing fault?",
+            "answer": "Yes. We work with a number of property managers and landlords across the inner south and CBD fringe. We can attend rental properties directly with the tenant's approval and report back to you with photos, diagnosis and a fixed-price quote before proceeding with any work. For urgent faults we aim for same-day or next-day attendance."
+          }
+        ],
+        "seo": {
+          "title": "General Plumbing Maintenance Melbourne | Clearflow Plumbing",
+          "description": "Tap repairs, toilet maintenance, stormwater drains and rough-in plumbing in Melbourne. Upfront pricing. Call Clearflow Plumbing: 03 9012 4567."
+        }
+      }
+    ],
+    "locations": [
+      {
+        "slug": "southbank",
+        "suburb": "Southbank",
+        "state": "VIC",
+        "headline": "Plumber in Southbank",
+        "intro": "Southbank is one of Melbourne's most densely developed apartment precincts, home to thousands of residents in high-rise towers along the Yarra River. The plumbing demands here are unique — shared riser systems, high-pressure water supplies serving upper floors, commercial kitchens on ground floors creating grease-trap and blocked-drain issues, and older basement car parks prone to stormwater flooding. Clearflow Plumbing is based right here in Southbank and responds faster than any other plumber to jobs in this precinct.",
+        "body": "From the apartment towers on City Road to the boutique buildings behind the Arts Centre, we understand the building systems, body corporate requirements, and after-hours access needs of Southbank residents and building managers. We're the plumber Southbank strata committees call when they need a reliable contractor who knows high-rise work.",
+        "landmarks": [
+          "Crown Melbourne",
+          "Arts Centre Melbourne",
+          "Southbank Boulevard",
+          "Eureka Tower"
+        ],
+        "services_offered": [
+          "blocked-drains",
+          "burst-pipes-emergency-repairs",
+          "hot-water-systems"
+        ],
+        "benefits": [
+          "Based in Southbank — fastest response times in the precinct",
+          "Experienced with strata and high-rise building systems",
+          "24/7 emergency plumber with no after-hours surcharge before midnight"
+        ],
+        "sections": [
+          {
+            "heading": "Common Plumbing Jobs in Southbank Apartments",
+            "body": "Southbank's apartment stock ranges from 1990s concrete towers near the casino to modern glass buildings on Southbank Boulevard and Kavanagh Street. Older towers often have copper riser systems showing signs of age — pinhole leaks, failing isolation valves, and pressure fluctuations between floors. Newer buildings deal more with blocked kitchen waste lines and failing instantaneous hot water units. The Crown complex and Arts Centre precinct generate significant commercial plumbing demand. We respond to Southbank jobs around the clock and have the lift access and OHS induction documentation required by most building managers."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "loc-southbank-faq-1",
+            "question": "Do you work in Southbank apartment buildings that require OHS inductions?",
+            "answer": "Yes. Our plumbers carry the required safety documentation and can complete site-specific inductions for Southbank apartment buildings and commercial properties. Contact us in advance for complex buildings and we'll ensure we're site-ready before attending."
+          }
+        ],
+        "seo": {
+          "title": "Plumber in Southbank VIC | Clearflow Plumbing",
+          "description": "Licensed plumber in Southbank. Blocked drains, burst pipes, hot water and emergency repairs for apartments and buildings. Call 03 9012 4567."
+        }
+      },
+      {
+        "slug": "south-melbourne",
+        "suburb": "South Melbourne",
+        "state": "VIC",
+        "headline": "Plumber in South Melbourne",
+        "intro": "South Melbourne is a mixed suburb of Victorian terrace houses, converted warehouses, modern townhouses and low-rise apartment buildings. This diversity in housing stock creates a wide range of plumbing challenges — old clay sewer lines under terrace houses, copper pipes in 1970s apartments that are reaching end of life, and the high-traffic drains of the South Melbourne Market precinct. Clearflow Plumbing has been serving South Melbourne homeowners, renters and businesses for over a decade and understands the suburb's ageing infrastructure.",
+        "body": "The suburb's proximity to our Southbank base means we're typically on site in South Melbourne within 20–30 minutes for standard jobs and even faster for emergencies. We've worked on dozens of bathroom and kitchen renovations in the Victorian terrace houses along Bank Street and Cecil Street, and handle the blocked drain and hot water calls that are a constant reality in older South Melbourne homes.",
+        "landmarks": [
+          "South Melbourne Market",
+          "Albert Park Lake",
+          "Clarendon Street",
+          "Emerald Hill"
+        ],
+        "services_offered": [
+          "blocked-drains",
+          "bathroom-renovations",
+          "general-plumbing-maintenance"
+        ],
+        "benefits": [
+          "20–30 minute response from our Southbank base",
+          "Specialist knowledge of South Melbourne's Victorian-era pipe systems",
+          "Experienced with terrace house renovations and heritage-sensitive work"
+        ],
+        "sections": [
+          {
+            "heading": "Blocked Drains and Old Pipes in South Melbourne Terraces",
+            "body": "The Victorian terrace houses that define streets like Napier Street, Dorcas Street, and Park Street in South Melbourne were built with earthenware clay sewer pipes that are now well over 100 years old. These pipes crack, shift with the soil, and attract root intrusion from the plane trees and elms lining South Melbourne's footpaths. A CCTV camera inspection is the only way to accurately diagnose what's happening underground. We carry out drain camera inspections regularly in South Melbourne and can often clear root intrusions the same day using our hydro-jet — avoiding the need for costly excavation."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "loc-south-melbourne-faq-1",
+            "question": "Can you reline old clay sewer pipes under my South Melbourne terrace?",
+            "answer": "Yes. Where tree roots or pipe degradation is causing repeated blockages, pipe relining is often more cost-effective than full excavation and replacement. We carry out camera assessments to confirm the pipe is suitable for relining and can quote on the full job including excavation if that's needed."
+          }
+        ],
+        "seo": {
+          "title": "Plumber in South Melbourne VIC | Clearflow Plumbing",
+          "description": "Local plumber in South Melbourne. Blocked drains, bathroom renovations and general maintenance for terrace houses and apartments. Call 03 9012 4567."
+        }
+      },
+      {
+        "slug": "richmond",
+        "suburb": "Richmond",
+        "state": "VIC",
+        "headline": "Plumber in Richmond",
+        "intro": "Richmond is one of Melbourne's most densely populated inner suburbs, with a mix of Victorian terraces, post-war flats, converted warehouses, and new apartment developments clustered around Swan Street, Bridge Road and Church Street. The suburb's older housing stock means plumbing issues like root-intruded sewer lines, failing hot water systems, and deteriorating tap fittings are common, while the ongoing redevelopment activity creates strong demand for renovation and rough-in plumbing. Clearflow Plumbing services the entire Richmond area with fast response times.",
+        "body": "We handle everything from emergency burst pipe call-outs in Richmond's older terrace houses to bathroom renovation rough-ins for the townhouse developments going up throughout the suburb. Our experience with Richmond's mix of property types — from the social housing towers in the north to the renovated Victorians on Punt Road — means we bring the right tools and knowledge to every job.",
+        "landmarks": [
+          "Melbourne Cricket Ground (MCG)",
+          "Swan Street",
+          "Bridge Road",
+          "Yarra River"
+        ],
+        "services_offered": [
+          "hot-water-systems",
+          "blocked-drains",
+          "gas-fitting"
+        ],
+        "benefits": [
+          "Experienced with Richmond's mix of residential, commercial and rental properties",
+          "Prompt response to emergency hot water and burst pipe jobs",
+          "Gas fitting for Richmond's restaurant and hospitality businesses"
+        ],
+        "sections": [
+          {
+            "heading": "Hot Water and Drain Issues on Swan Street and Beyond",
+            "body": "Richmond's busy Swan Street restaurant strip generates significant commercial plumbing demand — grease traps, blocked kitchen drains, and gas appliance connections for commercial kitchens are regular jobs for us in this part of the suburb. Moving into the residential streets behind — Lennox Street, Highett Street, Coppin Street — the demand shifts to terrace house maintenance: blocked drains, hot water failures, leaking roofs directing water to downpipes and stormwater lines. Richmond's stormwater infrastructure is also ageing, and we're regularly called to clear stormwater drains blocked with silt and debris after heavy rain."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "loc-richmond-faq-1",
+            "question": "Do you service commercial kitchens and restaurants in Richmond?",
+            "answer": "Yes. We carry out gas fitting, grease trap maintenance, blocked drain clearing and hot water system service for commercial kitchens and hospitality businesses throughout Richmond and the surrounding inner suburbs. We can schedule after-hours work to minimise disruption to your service."
+          }
+        ],
+        "seo": {
+          "title": "Plumber in Richmond VIC | Clearflow Plumbing",
+          "description": "Licensed plumber in Richmond. Hot water systems, blocked drains and gas fitting for homes, rentals and businesses. Call 03 9012 4567."
+        }
+      },
+      {
+        "slug": "port-melbourne",
+        "suburb": "Port Melbourne",
+        "state": "VIC",
+        "headline": "Plumber in Port Melbourne",
+        "intro": "Port Melbourne is a rapidly evolving bayside suburb with a diverse housing mix — from the Edwardian workers' cottages around Station Pier and Williamstown Road, to the contemporary townhouses and apartment developments of the Beacon Cove estate along the waterfront. This variety in building age and type means Port Melbourne residents encounter a wide spectrum of plumbing issues, from ageing copper supply lines and clay sewer pipes in older homes to high-specification bathroom installations in new builds. Clearflow Plumbing covers all of Port Melbourne with knowledgeable, reliable service.",
+        "body": "The proximity to the bay and the salt air environment in Port Melbourne also contributes to faster corrosion of exposed plumbing fixtures and pipework than you'd see further inland. We recommend more frequent inspection of outdoor taps, garden irrigation connections and hot water system anode rods for Port Melbourne homeowners to extend the life of their systems.",
+        "landmarks": [
+          "Station Pier",
+          "Beacon Cove Estate",
+          "Bay Street",
+          "Port Melbourne Beach"
+        ],
+        "services_offered": [
+          "hot-water-systems",
+          "bathroom-renovations",
+          "general-plumbing-maintenance"
+        ],
+        "benefits": [
+          "Familiar with both heritage cottages and modern Beacon Cove homes",
+          "Corrosion-aware maintenance advice for bayside properties",
+          "Fast response to hot water failures and blocked drain emergencies"
+        ],
+        "sections": [
+          {
+            "heading": "New Builds and Renovations in Beacon Cove and Bay Street",
+            "body": "Beacon Cove is one of Melbourne's most architecturally consistent residential estates, built in the 1990s and 2000s along the Port Melbourne foreshore. These homes now require a first wave of maintenance — hot water systems approaching replacement age, tapware and mixer cartridges wearing out, and first-time bathroom renovations as owners modernise the interiors. On Bay Street and the surrounding commercial strip, we handle blocked drains, gas fitting for cafes and restaurants, and hot water repairs for the retail and hospitality businesses that give the suburb its village feel. We also carry out rough-in plumbing for the new townhouse developments regularly appearing throughout the suburb."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "loc-port-melbourne-faq-1",
+            "question": "How often should I get my plumbing checked in a bayside home?",
+            "answer": "We recommend an annual plumbing inspection for Port Melbourne homes, particularly for outdoor fixtures and hot water system components exposed to the salt-air environment. Early identification of corrosion on anode rods, mixer cartridges, or exposed pipework can prevent costly failures."
+          }
+        ],
+        "seo": {
+          "title": "Plumber in Port Melbourne VIC | Clearflow Plumbing",
+          "description": "Licensed plumber in Port Melbourne. Hot water, bathroom renovations and maintenance for bayside homes and businesses. Call 03 9012 4567."
+        }
+      },
+      {
+        "slug": "st-kilda",
+        "suburb": "St Kilda",
+        "state": "VIC",
+        "headline": "Plumber in St Kilda",
+        "intro": "St Kilda is one of Melbourne's most characterful suburbs — Edwardian mansions converted into flats, 1950s and 60s residential blocks, Art Deco apartments along the Esplanade, and new boutique developments scattered throughout. The ageing apartment stock is particularly prone to plumbing failures as shared water risers and common waste pipes approach or exceed their design life. Clearflow Plumbing services St Kilda residents, strata managers and landlords with rapid response and thorough workmanship on every job.",
+        "body": "The high proportion of rental properties and holiday apartments in St Kilda means we work frequently with property managers who need reliable, documented maintenance. We understand the urgency of keeping rental properties in habitable condition and turn around diagnosis and quote quickly so that work can be approved and completed with minimal tenant disruption.",
+        "landmarks": [
+          "Luna Park",
+          "St Kilda Esplanade",
+          "Acland Street",
+          "St Kilda Pier"
+        ],
+        "services_offered": [
+          "hot-water-systems",
+          "general-plumbing-maintenance",
+          "burst-pipes-emergency-repairs"
+        ],
+        "benefits": [
+          "Experienced with St Kilda strata, rental and body corporate work",
+          "Responsive maintenance documentation for property managers",
+          "Specialists in ageing apartment block plumbing systems"
+        ],
+        "sections": [
+          {
+            "heading": "Older Apartment Blocks and Shared Plumbing Systems in St Kilda",
+            "body": "The mid-century apartment blocks that line Fitzroy Street, Barkly Street, and the streets between Acland Street and the Esplanade often have shared hot water systems and ageing galvanised steel pipes that are well past replacement age. These pipes corrode internally, reducing flow, discolouring the water, and eventually failing. We carry out full hot water riser replacements and can work with strata committees to stage the work floor by floor to minimise disruption. For individual apartments, we handle bathroom and kitchen re-piping, tap and mixer replacements, and toilet cistern overhauls as part of a rolling maintenance program."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "loc-st-kilda-faq-1",
+            "question": "Can you help our strata committee plan and carry out a pipe replacement program?",
+            "answer": "Absolutely. We work with strata committees to inspect shared plumbing systems, provide written condition reports, and develop a staged maintenance or replacement plan that fits the body corporate's budget and minimises disruption to residents. Contact us to arrange an initial site assessment."
+          }
+        ],
+        "seo": {
+          "title": "Plumber in St Kilda VIC | Clearflow Plumbing",
+          "description": "Licensed plumber in St Kilda. Hot water, blocked drains and emergency repairs for apartments, rentals and strata buildings. Call 03 9012 4567."
+        }
+      },
+      {
+        "slug": "prahran",
+        "suburb": "Prahran",
+        "state": "VIC",
+        "headline": "Plumber in Prahran",
+        "intro": "Prahran sits between South Yarra and Windsor and is home to a lively mix of residents in Victorian terrace houses, converted retail spaces and contemporary apartments. The Chapel Street corridor runs through the heart of the suburb, bringing with it significant hospitality and retail plumbing demand alongside the residential workload. Clearflow Plumbing serves Prahran with the full range of plumbing services — from emergency drain clearing to bathroom renovation rough-ins — with reliable response times from our Southbank base.",
+        "body": "Prahran's terrace houses and older flats frequently need drain inspections, tap overhauls and hot water system upgrades. Meanwhile the suburb's cafes, bars and restaurants along Chapel Street generate ongoing demand for commercial gas fitting, blocked drain clearing and grease trap maintenance. We handle both sides of this market, tailoring our scheduling to the needs of each customer.",
+        "landmarks": [
+          "Chapel Street",
+          "Prahran Market",
+          "Grattan Gardens",
+          "Commercial Road"
+        ],
+        "services_offered": [
+          "gas-fitting",
+          "bathroom-renovations",
+          "blocked-drains"
+        ],
+        "benefits": [
+          "Fast response from Southbank to Prahran — typically 30 minutes",
+          "Commercial gas fitting for Chapel Street hospitality businesses",
+          "Experienced with Victorian terrace renovation plumbing"
+        ],
+        "sections": [
+          {
+            "heading": "Bathroom Renovations and Kitchen Upgrades in Prahran Homes",
+            "body": "Prahran's Victorian and Edwardian terrace houses are being renovated at a steady rate as owner-occupiers upgrade to contemporary bathrooms and kitchens while retaining the character of the original architecture. This typically involves re-routing drain waste vent lines that were installed decades ago in configurations that no longer suit modern layouts, upgrading from old lead and copper supply lines to flexible PEX piping, and creating new rough-in positions for relocated toilets, showers and vanities. We also handle kitchen sink and dishwasher connections, and the gas line extensions that many Prahran homeowners add when renovating kitchens and outdoor entertaining areas."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "loc-prahran-faq-1",
+            "question": "Do you carry out after-hours plumbing for restaurants on Chapel Street?",
+            "answer": "Yes. We can schedule gas fitting, blocked drain clearing and hot water repairs outside of your trading hours to avoid disrupting your service. Call us to discuss a time that works for your business."
+          }
+        ],
+        "seo": {
+          "title": "Plumber in Prahran VIC | Clearflow Plumbing",
+          "description": "Licensed plumber in Prahran. Gas fitting, bathroom renovations and blocked drains for homes and businesses. Call 03 9012 4567."
+        }
+      },
+      {
+        "slug": "fitzroy",
+        "suburb": "Fitzroy",
+        "state": "VIC",
+        "headline": "Plumber in Fitzroy",
+        "intro": "Fitzroy is Melbourne's oldest inner suburb and its terrace houses, bluestone cottages and converted warehouses sit above some of the city's oldest sewer and stormwater infrastructure. Clay sewer pipes, lead supply stacks in the oldest dwellings, and century-old cast-iron drain lines are common findings when we carry out camera inspections in Fitzroy. The suburb's strong rental market and the high number of share houses also generate frequent maintenance calls for blocked drains, failing hot water systems and leaking taps. Clearflow Plumbing serves Fitzroy and North Fitzroy with in-depth knowledge of the area's ageing pipe systems.",
+        "body": "Smith Street and Brunswick Street are Fitzroy's two commercial spines, and we carry out gas fitting, drain maintenance and hot water service for the bars, restaurants and retail businesses along both streets. The residential streets off these corridors — Gore Street, George Street, Napier Street — are packed with terraces and flats that generate steady plumbing maintenance work throughout the year.",
+        "landmarks": [
+          "Brunswick Street",
+          "Smith Street",
+          "Edinburgh Gardens",
+          "Fitzroy Town Hall"
+        ],
+        "services_offered": [
+          "blocked-drains",
+          "gas-fitting",
+          "general-plumbing-maintenance"
+        ],
+        "benefits": [
+          "Deep knowledge of Fitzroy's century-old pipe infrastructure",
+          "Root intrusion specialists — camera, hydro-jet and pipe relining",
+          "Gas fitting for Fitzroy's Smith Street and Brunswick Street hospitality venues"
+        ],
+        "sections": [
+          {
+            "heading": "Root Intrusion and Drain Camera Inspections in Fitzroy",
+            "body": "Fitzroy's streets are lined with large Moreton Bay figs, elms and plane trees that add to the suburb's distinctive character but are a constant source of drain problems. The root systems of these trees are aggressive and will find and enter any crack or joint in an old clay sewer pipe. We've found root balls the size of a basketball in drain lines under Fitzroy properties, blocking the full bore of a 100mm pipe. Our camera inspection service shows you exactly what's in your drain, and our hydro-jetting and root-cutting equipment can clear it the same day. For pipes that have been compromised to the point of collapse, we quote for pipe relining as a less disruptive alternative to full excavation."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "loc-fitzroy-faq-1",
+            "question": "How do I know if my Fitzroy terrace has lead plumbing?",
+            "answer": "Homes built before the 1950s in Fitzroy may have lead supply pipes, particularly on the internal stack from the meter to the house. A visual inspection of visible pipework — grey, soft metal with a dull finish — is the first indicator. We can carry out a full inspection and quote on re-piping with modern copper or PEX if lead is found."
+          }
+        ],
+        "seo": {
+          "title": "Plumber in Fitzroy VIC | Clearflow Plumbing",
+          "description": "Licensed plumber in Fitzroy. Blocked drains, root intrusion, gas fitting and maintenance for Fitzroy's terrace houses and businesses. Call 03 9012 4567."
+        }
+      },
+      {
+        "slug": "albert-park",
+        "suburb": "Albert Park",
+        "state": "VIC",
+        "headline": "Plumber in Albert Park",
+        "intro": "Albert Park is one of Melbourne's most desirable inner suburbs, built around the Albert Park Lake and the Grand Prix circuit, with tree-lined streets of intact Victorian and Edwardian houses commanding some of the highest property values in the city. Owners invest significantly in maintaining and upgrading these homes, and the plumbing work in Albert Park reflects that — from complete bathroom renovations with high-specification fixtures to hot water system upgrades using the latest heat pump technology. Clearflow Plumbing works with Albert Park homeowners who expect quality workmanship and a clean, professional job.",
+        "body": "The proximity to Port Melbourne and South Melbourne means we're on site in Albert Park quickly for both planned maintenance and emergency call-outs. We've completed bathroom and kitchen renovations in many of the double-fronted Victorians along Dundas Place and Beaconsfield Parade, and handle the regular maintenance needs of both owner-occupied and rental properties throughout the suburb.",
+        "landmarks": [
+          "Albert Park Lake",
+          "Albert Park Grand Prix Circuit",
+          "Beaconsfield Parade",
+          "Dundas Place"
+        ],
+        "services_offered": [
+          "hot-water-systems",
+          "bathroom-renovations",
+          "general-plumbing-maintenance"
+        ],
+        "benefits": [
+          "Premium quality workmanship for Albert Park's high-value homes",
+          "Heat pump hot water installation with Victorian government rebate assistance",
+          "Experienced with high-specification bathroom and kitchen renovations"
+        ],
+        "sections": [
+          {
+            "heading": "Heat Pump Hot Water and Energy Upgrades in Albert Park",
+            "body": "Albert Park homeowners are increasingly interested in reducing the running costs of their homes and taking advantage of Victorian government rebates on energy-efficient appliances. Heat pump hot water systems are the most popular upgrade we're installing in Albert Park at the moment — they use ambient air to heat water rather than burning gas or running a large electric element, cutting hot water energy costs by up to 70% compared to an electric storage tank. Albert Park's double-storey Victorian homes typically have outdoor space on the side or rear of the property for the heat pump unit, and the existing electrical supply is usually adequate. We assess your specific setup, confirm your rebate eligibility, and provide a fixed-price quote covering all plumbing, electrical connections at the plumbing scope, and commissioning."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "loc-albert-park-faq-1",
+            "question": "Can I get a heat pump hot water system installed in my Albert Park Victorian terrace?",
+            "answer": "In most cases, yes. Heat pump units need a modest amount of outdoor space — typically around 1 square metre — in an area with reasonable airflow. The side passage or rear courtyard of an Albert Park terrace is usually suitable. We'll assess your property and confirm eligibility before quoting."
+          }
+        ],
+        "seo": {
+          "title": "Plumber in Albert Park VIC | Clearflow Plumbing",
+          "description": "Licensed plumber in Albert Park. Hot water upgrades, bathroom renovations and maintenance for Victorian homes. Call 03 9012 4567."
+        }
+      }
+    ],
+    "service_areas": [
+      {
+        "slug": "blocked-drains-south-melbourne",
+        "service_slug": "blocked-drains",
+        "service_title": "Blocked Drains",
+        "suburb": "South Melbourne",
+        "state": "VIC",
+        "headline": "Blocked Drains in South Melbourne",
+        "intro": "South Melbourne's mix of Victorian terrace houses, converted warehouses and newer apartment buildings sits above ageing clay and cast-iron sewer infrastructure. Tree root intrusion from the suburb's mature street trees is the most common cause of blocked drains, and Clearflow Plumbing uses CCTV drain cameras and hydro-jet clearing to resolve it — often the same day you call.",
+        "body": "From the residential streets around Clarendon Street and Bank Street to the commercial drains serving the South Melbourne Market precinct, we clear all types of blocked drains in South Melbourne quickly and without unnecessary excavation. Our team is familiar with the sewer layouts typical of this suburb's Victorian-era construction and can diagnose problems faster than a plumber coming in cold. We offer a no call-out fee between 7am and 6pm on weekdays, making us the cost-effective first call for South Melbourne blocked drain problems.",
+        "benefits": [
+          "CCTV camera inspection pinpoints the exact blockage location",
+          "Hydro-jet clearing removes roots, grease and debris in one visit",
+          "No call-out fee weekdays 7am–6pm",
+          "Same-day response across South Melbourne"
+        ],
+        "sections": [
+          {
+            "heading": "Drain Camera Inspections for South Melbourne Properties",
+            "body": "A blocked drain in a South Melbourne terrace house might be a simple grease or hair blockage at the trap — or it could be a root-filled section of clay pipe 15 metres underground near the boundary. The only way to know for certain is a drain camera inspection. We push a high-resolution CCTV camera through the drain from the nearest access point and record the footage, which we show you on a monitor in real time. You can see exactly what's blocking your drain, where it is, and what clearing or repair it needs. This transparency means you're never paying for guesswork."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "sa-bd-sm-faq-1",
+            "question": "How much does blocked drain clearing cost in South Melbourne?",
+            "answer": "Blocked drain clearing starts from $150 for a standard blockage accessible through an existing cleanout. CCTV inspection is quoted separately and starts from $220. We provide a fixed price before any work begins."
+          },
+          {
+            "id": "sa-bd-sm-faq-2",
+            "question": "Do you clear blocked drains in South Melbourne Market's commercial kitchens?",
+            "answer": "Yes. We handle commercial drain blockages in South Melbourne's retail and food businesses, including the South Melbourne Market precinct. We can schedule clearing outside of trading hours to minimise disruption."
+          }
+        ],
+        "seo": {
+          "title": "Blocked Drains South Melbourne | Clearflow Plumbing",
+          "description": "Blocked drain clearing in South Melbourne — CCTV inspection and hydro-jetting. Same-day service, no call-out fee weekdays. Call 03 9012 4567."
+        }
+      },
+      {
+        "slug": "burst-pipes-emergency-repairs-richmond",
+        "service_slug": "burst-pipes-emergency-repairs",
+        "service_title": "Burst Pipes & Emergency Repairs",
+        "suburb": "Richmond",
+        "state": "VIC",
+        "headline": "Emergency Plumber for Burst Pipes in Richmond",
+        "intro": "When a pipe bursts in a Richmond terrace or apartment, water spreads fast through old floorboards, party walls and ceilings. Clearflow Plumbing responds to burst pipe emergencies in Richmond within 60 minutes, day or night. We're fully equipped to isolate, repair and report on arrival — stopping damage before it spreads.",
+        "body": "Richmond's housing stock spans everything from tight Victorian terraces on Lennox Street to modern apartment towers near Punt Road. Each building type presents different pipe access challenges — exposed copper under timber floors in terraces, concealed PEX lines in slab-on-ground apartments. Our emergency plumbers carry pipe locators and a full range of fittings so we can handle whatever we find. For Richmond rental properties, we co-ordinate directly with property managers and provide written damage reports for insurance claims.",
+        "benefits": [
+          "60-minute emergency response to Richmond any time of day or night",
+          "Pipe locators and full fittings stock for immediate repair",
+          "No after-hours surcharge before midnight",
+          "Written damage reports for home and contents insurance claims"
+        ],
+        "sections": [
+          {
+            "heading": "Why Richmond Homes Are Prone to Burst Pipes",
+            "body": "Richmond's Victorian and Edwardian terrace houses have copper and lead supply pipes that in many cases are 50 to 100 years old. These pipes corrode from the inside out, and the failure often comes without warning — a pinhole leak that becomes a full split overnight, or a joint that lets go under the vibration of a water hammer event. Older galvanised steel pipes in 1950s and 60s flat blocks have the same problem: internal corrosion reduces the bore and eventually the pipe wall fails. Regular hot water pressure changes — particularly when a tempering valve fails — can also stress joints to breaking point. Our emergency plumbers in Richmond are experienced with all of these pipe types and repair scenarios."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "sa-bp-ri-faq-1",
+            "question": "How quickly can you reach Richmond for a burst pipe emergency?",
+            "answer": "From our Southbank base, we can typically reach Richmond in 20–30 minutes for an emergency call. We aim to be on site within 60 minutes anywhere in our service area, and Richmond is one of our closest suburbs."
+          },
+          {
+            "id": "sa-bp-ri-faq-2",
+            "question": "Will my landlord's insurance cover a burst pipe in my Richmond rental?",
+            "answer": "Landlord insurance policies typically cover damage to the property caused by a burst pipe. As the tenant, you should notify your property manager immediately. We can attend, carry out the repair, and provide documentation for the insurance claim. Your contents insurance covers your own belongings."
+          }
+        ],
+        "seo": {
+          "title": "Emergency Plumber Richmond | Burst Pipes | Clearflow Plumbing",
+          "description": "24/7 burst pipe and emergency plumbing in Richmond VIC. On site within 60 minutes. Call Clearflow Plumbing now: 03 9012 4567."
+        }
+      },
+      {
+        "slug": "hot-water-systems-port-melbourne",
+        "service_slug": "hot-water-systems",
+        "service_title": "Hot Water Systems",
+        "suburb": "Port Melbourne",
+        "state": "VIC",
+        "headline": "Hot Water System Installation in Port Melbourne",
+        "intro": "Hot water failures in Port Melbourne — whether in the Edwardian cottages around Station Pier or the modern townhouses of Beacon Cove — need a fast, knowledgeable response. Clearflow Plumbing supplies and installs all types of hot water systems in Port Melbourne, with same-day quotes and next-day installation in most cases.",
+        "body": "Port Melbourne's bayside location means hot water system components can corrode faster than in inland suburbs. Anode rods in storage tank systems should be inspected every three to five years to prevent tank wall corrosion. We also see more mineral scaling in hot water pipes in Port Melbourne due to the local water supply characteristics. Our installation service covers all brands and technologies — Rheem, Rinnai, Dux, Bosch and AquaMAX — and we'll recommend the system that best suits your home's size, gas or electricity connection, and outdoor space for a heat pump unit.",
+        "benefits": [
+          "Same-day hot water quotes in Port Melbourne — next-day installation available",
+          "All brands: Rheem, Rinnai, Dux, Bosch, AquaMAX",
+          "Heat pump installations with Victorian Energy Upgrades rebate assistance",
+          "Bayside corrosion awareness — anode checks and scale management"
+        ],
+        "sections": [
+          {
+            "heading": "Replacing an Ageing Hot Water System in a Beacon Cove Home",
+            "body": "Beacon Cove was built primarily in the 1990s and early 2000s, which means the original hot water systems installed in many homes are now reaching or exceeding their typical 10–15 year service life. A tank that's starting to rust externally, produce discoloured water, or run out of hot water faster than it used to is telling you replacement is imminent. We carry out hot water system replacements in Beacon Cove regularly and can recommend modern equivalents that are quieter, more efficient and better suited to today's energy tariffs. For homeowners interested in reducing running costs, heat pump systems are an excellent choice for the standalone homes and larger townhouses in this estate — and they may be eligible for a Victorian government rebate."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "sa-hw-pm-faq-1",
+            "question": "How long will my new hot water system last in Port Melbourne?",
+            "answer": "A quality gas or electric storage tank typically lasts 10–15 years. Heat pump systems can last 15+ years with regular servicing. In Port Melbourne's bayside environment we recommend an anode rod check every 3–5 years to maximise tank life."
+          },
+          {
+            "id": "sa-hw-pm-faq-2",
+            "question": "Can you remove and dispose of my old hot water system?",
+            "answer": "Yes. Removal and environmentally appropriate disposal of your old hot water unit is included in every hot water system installation we carry out. You don't need to arrange separate disposal."
+          }
+        ],
+        "seo": {
+          "title": "Hot Water Systems Port Melbourne | Clearflow Plumbing",
+          "description": "Hot water system supply and installation in Port Melbourne. Electric, gas and heat pump. Same-day quotes. Call 03 9012 4567."
+        }
+      },
+      {
+        "slug": "gas-fitting-prahran",
+        "service_slug": "gas-fitting",
+        "service_title": "Gas Fitting & Appliance Installation",
+        "suburb": "Prahran",
+        "state": "VIC",
+        "headline": "Gas Fitting in Prahran",
+        "intro": "Prahran's Victorian terrace houses and the hospitality businesses along Chapel Street both rely on natural gas for heating and cooking. Clearflow Plumbing carries out all licensed gas fitting work in Prahran — from connecting a new gas cooktop in a renovated terrace kitchen to running new gas lines for outdoor heating in restaurant courtyards. All work is carried out to Australian Standard and a Certificate of Compliance is issued on completion.",
+        "body": "Gas fitting in Prahran's mix of residential and commercial properties requires both technical skill and scheduling flexibility. For homeowners, we book gas appliance installation and connection jobs during business hours at a time that suits you. For the restaurants, bars and cafes on Chapel Street and Commercial Road, we carry out gas work outside of trading hours to avoid disrupting your service. Our licensed gasfitters carry pressure testing equipment and all required fitting types for natural gas work in residential and light commercial applications.",
+        "benefits": [
+          "Licensed gasfitter — residential and commercial natural gas work",
+          "Outdoor heater bayonets and new gas line extensions",
+          "After-hours gas fitting for Chapel Street hospitality businesses",
+          "Certificate of Compliance issued for every gas installation"
+        ],
+        "sections": [
+          {
+            "heading": "New Gas Lines and Outdoor Heater Points in Prahran Homes",
+            "body": "Many Prahran homeowners are extending their living space outdoors — adding alfresco dining areas, courtyard kitchens and outdoor entertainment zones behind their terrace houses. A key part of these projects is running a new gas line from the meter to a bayonet point or fixed outdoor heater connection. We quote for the full scope: trenching if required, gas pipe installation, bayonet fitting, pressure test and compliance certification. We also install gas log fires in living rooms, connect freestanding gas ovens and ranges in renovated kitchens, and carry out gas leak testing and repair. All work on Chapel Street and surrounding commercial areas can be scheduled outside of trading hours."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "sa-gf-pr-faq-1",
+            "question": "How long does it take to install a new gas line for an outdoor heater in Prahran?",
+            "answer": "A new gas line from the meter to an outdoor bayonet point in a Prahran terrace typically takes two to four hours depending on the pipe run distance and whether any trenching is required through the courtyard or side passage. We'll give you a fixed time and price estimate when we quote."
+          },
+          {
+            "id": "sa-gf-pr-faq-2",
+            "question": "Can I use a gas patio heater without a fixed connection in Prahran?",
+            "answer": "Yes, portable LPG patio heaters don't require a plumber. However, a fixed natural gas heater connected to the reticulated gas supply must be installed and connected by a licensed gasfitter. Fixed heaters are more convenient and have lower running costs than LPG cylinders."
+          }
+        ],
+        "seo": {
+          "title": "Gas Fitting Prahran | Outdoor Heaters & Appliances | Clearflow Plumbing",
+          "description": "Licensed gas fitting in Prahran — cooktops, outdoor heaters, gas lines and appliance connections. Call Clearflow Plumbing: 03 9012 4567."
+        }
+      },
+      {
+        "slug": "bathroom-renovations-fitzroy",
+        "service_slug": "bathroom-renovations",
+        "service_title": "Bathroom Renovations & Re-piping",
+        "suburb": "Fitzroy",
+        "state": "VIC",
+        "headline": "Bathroom Renovation Plumbing in Fitzroy",
+        "intro": "Fitzroy's Victorian terrace houses and Edwardian dwellings are being renovated at pace as owner-occupiers invest in bringing their heritage properties up to contemporary standards. The bathrooms in these older homes often have original fittings, lead or galvanised supply pipes, and cast-iron waste lines that need to be replaced as part of any meaningful renovation. Clearflow Plumbing provides fixed-price bathroom renovation plumbing in Fitzroy for homeowners who want the job done right the first time.",
+        "body": "We've worked on bathroom renovations throughout Fitzroy — from compact ensuites carved out of bedrooms in terraces on George Street and Napier Street, to full bathroom overhauls in the larger double-fronted homes on Gore Street and Cecil Street. Our scope covers everything from stripping out the old fitments and supply connections through to final fixture connections, pressure testing and compliance documentation. We work closely with tilers, carpenters and building designers to make sure the plumbing rough-in is exactly right before any surfaces are finished.",
+        "benefits": [
+          "Fixed-price quotes for Fitzroy bathroom renovation plumbing",
+          "Re-piping expertise for homes with old lead, galvanised or mixed pipework",
+          "Experienced with tight terrace house wall cavities and heritage constraints",
+          "Compliance Certificates and plumbing permits managed for you"
+        ],
+        "sections": [
+          {
+            "heading": "Re-piping Old Fitzroy Homes During a Bathroom Renovation",
+            "body": "When a Fitzroy homeowner opens the walls for a bathroom renovation, they often find plumbing that tells the story of multiple previous renovations — a mix of lead, copper, galvanised steel and polybutylene pipes, connected with makeshift fittings at various points over decades. Rather than patching into this patchwork, we recommend using the renovation as an opportunity to re-pipe the affected section from a proper isolation point using modern cross-linked polyethylene (PEX) or copper tube. PEX is flexible, highly durable, resistant to corrosion and well suited to the tight wall cavities common in Fitzroy terrace houses. The cost of re-piping a bathroom during an existing renovation is far lower than returning to do it separately later, and it gives you peace of mind about the plumbing behind your new tiles."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "sa-br-fi-faq-1",
+            "question": "Do I need to re-pipe my whole Fitzroy terrace during a bathroom renovation?",
+            "answer": "Not necessarily. We assess the condition of the existing supply and waste pipes and recommend re-piping only the sections that are in poor condition or that can't be practically reused with the new layout. We'll show you exactly what we're recommending and why before you commit."
+          },
+          {
+            "id": "sa-br-fi-faq-2",
+            "question": "How long does bathroom renovation plumbing take in a Fitzroy terrace?",
+            "answer": "The rough-in stage in a typical Fitzroy terrace bathroom takes one to two days. The final fix — connecting the tapware, shower head, toilet and accessories — takes around half a day once the tiler has finished. We coordinate with your builder or project manager to schedule both stages at the right points in the renovation sequence."
+          }
+        ],
+        "seo": {
+          "title": "Bathroom Renovation Plumbing Fitzroy | Clearflow Plumbing",
+          "description": "Bathroom renovation plumbing in Fitzroy — rough-in, re-piping and fixture installation for Victorian terrace houses. Call 03 9012 4567."
+        }
+      }
+    ],
+    "faq": {
+      "heading": "Frequently Asked Questions — Clearflow Plumbing",
+      "items": [
+        {
+          "id": "faq-1",
+          "question": "Do you charge a call-out fee?",
+          "answer": "There is no call-out fee for jobs booked Monday to Friday between 7am and 6pm. Weekend and after-hours call-outs attract a standard call-out fee, which we'll confirm when you book. For after-hours emergencies, there is no surcharge before midnight."
+        },
+        {
+          "id": "faq-2",
+          "question": "Are you available for plumbing emergencies 24 hours a day?",
+          "answer": "Yes. Clearflow Plumbing operates 24/7 for plumbing emergencies including burst pipes, gas leaks, blocked drains causing property damage, and hot water failures. Call 03 9012 4567 any time and we'll dispatch the nearest available plumber."
+        },
+        {
+          "id": "faq-3",
+          "question": "What areas do you service?",
+          "answer": "We service Melbourne's inner south and CBD fringe suburbs including Southbank, South Melbourne, Port Melbourne, Richmond, Prahran, St Kilda, Albert Park, Fitzroy, Collingwood, South Yarra, Windsor, Carlton, Elwood and North Melbourne. Contact us if your suburb isn't listed — we may still be able to help."
+        },
+        {
+          "id": "faq-4",
+          "question": "Are you a licensed and insured plumber?",
+          "answer": "Yes. Clearflow Plumbing holds Victorian Plumbing Licence No. 51234 and carries comprehensive public liability insurance. We issue Certificates of Compliance for all regulated plumbing work. You can ask to see our licence documentation at any time."
+        },
+        {
+          "id": "faq-5",
+          "question": "How do I get a quote for a plumbing job?",
+          "answer": "For most jobs, call us on 03 9012 4567 or email info@clearflowplumbing.com.au with a description of the work. For straightforward jobs like tap replacements or hot water system swaps, we can often quote over the phone. For larger jobs like bathroom renovations or re-piping, we'll visit the site and provide a written fixed-price quote at no charge."
+        }
+      ],
+      "seo": {
+        "title": "Plumbing FAQ | Clearflow Plumbing Melbourne",
+        "description": "Common questions about Clearflow Plumbing's services, pricing, call-out fees, and service area in Melbourne's inner south. Call 03 9012 4567."
+      }
+    },
+    "about": {
+      "heading": "About Clearflow Plumbing — Melbourne's Local Plumbing Experts",
+      "body": "Clearflow Plumbing was founded in 2013 with one goal: to be the plumber in Melbourne's inner south that people actually trust. After more than a decade and thousands of jobs across Southbank, South Melbourne, Richmond, Port Melbourne and beyond, we're proud to say we've built that reputation through old-fashioned reliability — showing up when we say we will, doing the work properly, and charging a fair price.\n\nOur team of licensed plumbers and gasfitters is based in Southbank, putting us within 20–30 minutes of most inner Melbourne jobs without the travel overhead that inflates prices when you call a plumber based in the outer suburbs. We invest in the right equipment — CCTV drain cameras, hydro-jet cleaners, pipe locators, gas pressure testing gear — because diagnosing a problem properly the first time is the only way to fix it properly the first time.\n\nWe work for homeowners, renters, landlords, property managers and small businesses. We speak plainly, show you what we've found, quote before we work, and clean up when we're done. We've been around long enough to know that repeat customers and word-of-mouth referrals are the only marketing that matters — and we've earned both.",
+      "photo_url": "",
+      "years_in_business": 11,
+      "licence": "VIC Plumbing Lic. No. 51234",
+      "values": [
+        {
+          "id": "val-1",
+          "title": "Show Up On Time",
+          "body": "We give you a real arrival window and we stick to it. If we're delayed, we call ahead — always.",
+          "icon": "Clock"
+        },
+        {
+          "id": "val-2",
+          "title": "Diagnose Before We Quote",
+          "body": "We don't guess. We use cameras, pressure tests and pipe locators to find the real problem before we put a price on it.",
+          "icon": "ShieldCheck"
+        },
+        {
+          "id": "val-3",
+          "title": "Fixed Price, No Surprises",
+          "body": "You approve the price before we start. The quote is the bill — no hidden call-out charges or after-hours markups before midnight.",
+          "icon": "DollarSign"
+        },
+        {
+          "id": "val-4",
+          "title": "Leave It Cleaner Than We Found It",
+          "body": "Every Clearflow plumber cleans up their work area completely before leaving. Pipe shavings, old fittings, used tape — all gone.",
+          "icon": "Sparkle"
+        }
+      ],
+      "seo": {
+        "title": "About Clearflow Plumbing | Licensed Melbourne Plumber Since 2013",
+        "description": "Clearflow Plumbing — licensed plumbers based in Southbank serving Melbourne's inner south since 2013. Honest pricing, 24/7 emergency response. Learn more."
+      }
+    },
+    "preview": {
+      "countdown_enabled": true,
+      "countdown_to": "2026-08-31T23:59:59+10:00",
+      "countdown_label": "Free call-out offer ends in"
+    },
+    "overrides": {}
+  },
+  "createdAt": "2026-06-22T10:43:30.282Z",
+  "status": "preview"
+}

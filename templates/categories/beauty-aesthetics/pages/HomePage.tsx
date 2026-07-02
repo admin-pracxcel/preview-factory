@@ -86,6 +86,7 @@ export function HomePage({ site, basePath }: { site: SiteProps; basePath: string
           licence={home.about.licence}
           abn={business.abn}
           businessName={business.name}
+          values={home.about.values}
         />
       )}
 

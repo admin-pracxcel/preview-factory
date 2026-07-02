@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useParams } from "next/navigation";
-import { Share2, X, Lock, ChevronDown } from "lucide-react";
-import CustomisePanel from "@/app/components/CustomisePanel";
+import { Share2, X, Lock, ChevronDown, Smartphone, Monitor } from "lucide-react";
+import CustomisePanel, { type CustomisationState } from "@/app/components/CustomisePanel";
+import { derivePrimary, deriveSecondary } from "@/lib/color";
 
 /* -------------------------------------------------------------------------- */
 /*  Constants                                                                   */
@@ -112,6 +113,113 @@ function PreviewPageInner() {
   const [toast, setToast] = useState<string | null>(null);
   const [panelOpen, setPanelOpen] = useState(false);
   const [businessName, setBusinessName] = useState("Your Business");
+  const [viewMode, setViewMode] = useState<"mobile" | "desktop">("mobile");
+
+  // Customisation state. Initial values come from /api/tenants/[id]/customise.
+  const [customisation, setCustomisation] = useState<CustomisationState | null>(null);
+  const [niche, setNiche] = useState<string>("");
+  const mobileIframeRef = useRef<HTMLIFrameElement>(null);
+  const desktopIframeRef = useRef<HTMLIFrameElement>(null);
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Fetch initial customisation state on mount.
+  useEffect(() => {
+    if (!id || id === "unknown") return;
+    (async () => {
+      try {
+        const res = await fetch(`/api/tenants/${id}/customise`);
+        if (!res.ok) return;
+        const data = (await res.json()) as {
+          primary_color: string;
+          accent_color: string;
+          logo_url: string;
+          hero_image_url: string;
+          chrome_theme: "light" | "dark";
+          logo_height_px: number;
+          niche: string;
+        };
+        setCustomisation({
+          // Brand colour drives accents only — load it from the accent slot.
+          brandColor: data.accent_color || data.primary_color,
+          chromeTheme: data.chrome_theme ?? "light",
+          logoUrl: data.logo_url,
+          logoHeightPx: data.logo_height_px ?? 36,
+          heroUrl: data.hero_image_url,
+        });
+        setNiche(data.niche);
+      } catch {
+        // Panel just won't render until state loads.
+      }
+    })();
+  }, [id]);
+
+  /** Push the latest customisation into both iframes (whichever is mounted). */
+  const broadcast = useCallback((payload: { primary?: string; secondary?: string; accent?: string; chromeTheme?: "light" | "dark"; logoUrl?: string; logoHeightPx?: number; heroUrl?: string }) => {
+    for (const ref of [mobileIframeRef, desktopIframeRef]) {
+      const win = ref.current?.contentWindow;
+      if (win) win.postMessage({ type: "apply-customisation", payload }, "*");
+    }
+  }, []);
+
+  /** Debounced persist to backend. */
+  const scheduleSave = useCallback((body: Record<string, string | number>) => {
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = setTimeout(async () => {
+      try {
+        await fetch(`/api/tenants/${id}/customise`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+      } catch {
+        // Silent — next change will retry.
+      }
+    }, 800);
+  }, [id]);
+
+  const handleBrandColorChange = useCallback((hex: string) => {
+    // Brand picker drives a monochromatic palette: accent = user pick;
+    // primary = same hue, much darker (for headings/icons); secondary = same
+    // hue, mid lightness (for hero overlay and offer band).
+    const primary = derivePrimary(hex);
+    const secondary = deriveSecondary(hex);
+    setCustomisation((c) => c && { ...c, brandColor: hex });
+    broadcast({ accent: hex, primary, secondary });
+    scheduleSave({ accent_color: hex, primary_color: primary, secondary_color: secondary });
+  }, [broadcast, scheduleSave]);
+
+  const handleLogoChange = useCallback((url: string) => {
+    setCustomisation((c) => c && { ...c, logoUrl: url });
+    broadcast({ logoUrl: url });
+    scheduleSave({ logo_url: url });
+  }, [broadcast, scheduleSave]);
+
+  const handleHeroChange = useCallback((url: string) => {
+    setCustomisation((c) => c && { ...c, heroUrl: url });
+    broadcast({ heroUrl: url });
+    scheduleSave({ hero_image_url: url });
+  }, [broadcast, scheduleSave]);
+
+  const handleChromeThemeChange = useCallback((theme: "light" | "dark") => {
+    setCustomisation((c) => c && { ...c, chromeTheme: theme });
+    broadcast({ chromeTheme: theme });
+    scheduleSave({ chrome_theme: theme });
+  }, [broadcast, scheduleSave]);
+
+  const handleLogoHeightChange = useCallback((px: number) => {
+    setCustomisation((c) => c && { ...c, logoHeightPx: px });
+    broadcast({ logoHeightPx: px });
+    scheduleSave({ logo_height_px: px });
+  }, [broadcast, scheduleSave]);
+
+  const handleGalleryChange = useCallback((urls: string[]) => {
+    // Gallery is already persisted by the /api/.../gallery endpoint the panel
+    // called — we just need to mirror it into the live iframe.
+    for (const ref of [mobileIframeRef, desktopIframeRef]) {
+      const win = ref.current?.contentWindow;
+      if (win) win.postMessage({ type: "apply-customisation", payload: { galleryUrls: urls } }, "*");
+    }
+  }, []);
 
   useEffect(() => {
     expiryRef.current = getExpiryTimestamp(id);
@@ -216,6 +324,7 @@ function PreviewPageInner() {
       {/* Fullscreen iframe */}
       <div className="flex-1 relative overflow-hidden">
         <iframe
+          ref={mobileIframeRef}
           src={iframeSrc}
           title="Your website preview"
           className="absolute inset-0 w-full h-full border-0"
@@ -259,6 +368,35 @@ function PreviewPageInner() {
           </div>
         </div>
         <div className="flex items-center gap-3">
+          {/* Viewport toggle: mobile phone mockup vs full-width desktop */}
+          <div className="flex items-center rounded-xl border border-slate-700 p-0.5">
+            <button
+              type="button"
+              onClick={() => setViewMode("mobile")}
+              aria-pressed={viewMode === "mobile"}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                viewMode === "mobile"
+                  ? "bg-slate-700 text-white"
+                  : "text-slate-400 hover:text-white"
+              }`}
+            >
+              <Smartphone className="w-3.5 h-3.5" />
+              Mobile
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode("desktop")}
+              aria-pressed={viewMode === "desktop"}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                viewMode === "desktop"
+                  ? "bg-slate-700 text-white"
+                  : "text-slate-400 hover:text-white"
+              }`}
+            >
+              <Monitor className="w-3.5 h-3.5" />
+              Desktop
+            </button>
+          </div>
           <CountdownBox timeLeft={timeLeft} urgency={urgency} />
           <button
             type="button"
@@ -287,9 +425,9 @@ function PreviewPageInner() {
 
       {/* Content area */}
       <div className="flex flex-1 overflow-hidden gap-6 px-8 py-6">
-        {/* Phone mockup + label */}
-        <div className="flex-1 flex flex-col items-center justify-center gap-4">
-          {/* Above-mockup label */}
+        {/* Preview area — phone mockup or desktop frame depending on toggle */}
+        <div className="flex-1 flex flex-col items-center justify-center gap-4 min-w-0">
+          {/* Above-preview label */}
           <div className="text-center">
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-1">
               This is your new website
@@ -297,25 +435,53 @@ function PreviewPageInner() {
             <p className="text-lg font-bold text-white">{businessName}</p>
           </div>
 
-          {/* Phone frame */}
-          <div
-            className="relative bg-slate-800 rounded-[3rem] border-[6px] border-slate-700 shadow-2xl overflow-hidden"
-            style={{ width: "340px", height: "680px" }}
-          >
-            {/* Notch */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-6 bg-slate-800 rounded-b-2xl z-10" />
-            {/* Status bar */}
-            <div className="absolute top-0 left-0 right-0 h-7 bg-slate-800/80 z-10" />
-            {/* Iframe */}
-            <iframe
-              src={iframeSrc}
-              title="Your website preview"
-              className="absolute inset-0 w-full h-full border-0"
-              sandbox="allow-scripts allow-same-origin allow-forms allow-top-navigation"
-            />
-          </div>
-          {/* Home indicator */}
-          <div className="w-28 h-1.5 rounded-full bg-slate-700" />
+          {viewMode === "mobile" ? (
+            <>
+              {/* Phone frame */}
+              <div
+                className="relative bg-slate-800 rounded-[3rem] border-[6px] border-slate-700 shadow-2xl overflow-hidden"
+                style={{ width: "340px", height: "680px" }}
+              >
+                {/* Notch */}
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-6 bg-slate-800 rounded-b-2xl z-10" />
+                {/* Status bar */}
+                <div className="absolute top-0 left-0 right-0 h-7 bg-slate-800/80 z-10" />
+                {/* Iframe */}
+                <iframe
+                  ref={desktopIframeRef}
+                  src={iframeSrc}
+                  title="Your website preview"
+                  className="absolute inset-0 w-full h-full border-0"
+                  sandbox="allow-scripts allow-same-origin allow-forms allow-top-navigation"
+                />
+              </div>
+              {/* Home indicator */}
+              <div className="w-28 h-1.5 rounded-full bg-slate-700" />
+            </>
+          ) : (
+            /* Desktop frame — browser chrome + full-width iframe */
+            <div className="w-full max-w-5xl flex-1 flex flex-col bg-slate-800 rounded-xl border border-slate-700 shadow-2xl overflow-hidden">
+              {/* Browser chrome */}
+              <div className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 border-b border-slate-700 shrink-0">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                </div>
+                <div className="ml-3 flex-1 px-3 py-1 rounded-md bg-slate-900/60 text-xs text-slate-400 font-mono truncate">
+                  {businessName.toLowerCase().replace(/\s+/g, "")}.com.au
+                </div>
+              </div>
+              {/* Iframe */}
+              <iframe
+                ref={desktopIframeRef}
+                src={iframeSrc}
+                title="Your website preview"
+                className="flex-1 w-full border-0 bg-white"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-top-navigation"
+              />
+            </div>
+          )}
         </div>
 
         {/* Customise panel */}
@@ -328,7 +494,23 @@ function PreviewPageInner() {
                 : "Your preview is active. Customise then save."}
             </p>
           </div>
-          <CustomisePanel />
+          {customisation ? (
+            <CustomisePanel
+              tenantId={id}
+              state={customisation}
+              defaultPexelsQuery={niche}
+              onBrandColorChange={handleBrandColorChange}
+              onChromeThemeChange={handleChromeThemeChange}
+              onLogoHeightChange={handleLogoHeightChange}
+              onLogoChange={handleLogoChange}
+              onHeroChange={handleHeroChange}
+              onGalleryChange={handleGalleryChange}
+            />
+          ) : (
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-sm text-slate-400">
+              Loading customisation…
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -355,7 +537,23 @@ function PreviewPageInner() {
           </button>
         </div>
         <div className="p-4">
-          <CustomisePanel />
+          {customisation ? (
+            <CustomisePanel
+              tenantId={id}
+              state={customisation}
+              defaultPexelsQuery={niche}
+              onBrandColorChange={handleBrandColorChange}
+              onChromeThemeChange={handleChromeThemeChange}
+              onLogoHeightChange={handleLogoHeightChange}
+              onLogoChange={handleLogoChange}
+              onHeroChange={handleHeroChange}
+              onGalleryChange={handleGalleryChange}
+            />
+          ) : (
+            <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-sm text-slate-400">
+              Loading customisation…
+            </div>
+          )}
         </div>
       </div>
     </div>

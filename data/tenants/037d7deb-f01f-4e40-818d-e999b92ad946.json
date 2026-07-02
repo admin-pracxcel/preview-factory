@@ -1,0 +1,541 @@
+{
+  "id": "037d7deb-f01f-4e40-818d-e999b92ad946",
+  "name": "West Coast Solar",
+  "niche": "Other trade",
+  "category": "trades",
+  "siteProps": {
+    "business": {
+      "name": "West Coast Solar",
+      "phone": "(08) 6385 3777"
+    },
+    "branding": {
+      "primary_color": "#0052A3",
+      "secondary_color": "#2ECC40",
+      "accent_color": "#FFA500",
+      "hero_image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZP25GGmnXQc9v8Xn-Nx2KZjilHoOwQ4DmGSVuzo71n4JYmtXOx4U716_ZuopV6MEqbIGqia8S7SHzIEc7APxOfwN5ejvvc-hl3sKfeNQM8aQvSUcY7sxP-ursm2cfA7O3fDEgGBA9phsgcg5A=s4800-w1600-h1440"
+    },
+    "home": {
+      "hero": {
+        "headline": "Professional Solar Installation in Leeming",
+        "subheadline": "High-quality solar systems and battery storage from WA's trusted local installer",
+        "cta_primary": {
+          "label": "Call Now",
+          "href": "tel:0863853777"
+        },
+        "cta_secondary": {
+          "label": "Get a Quote",
+          "href": "#contact"
+        }
+      },
+      "services": [
+        {
+          "id": "solar-installation",
+          "title": "Solar Panel Installation",
+          "description": "Custom-designed residential solar systems with high-quality panels and professional installation.",
+          "icon": "Sun"
+        },
+        {
+          "id": "battery-storage",
+          "title": "Battery Storage Systems",
+          "description": "Add or upgrade battery storage to maximise your solar energy usage and achieve energy independence.",
+          "icon": "BatteryCharging"
+        },
+        {
+          "id": "system-upgrades",
+          "title": "Solar System Upgrades",
+          "description": "Expand your existing system with additional panels, battery capacity, or smart monitoring technology.",
+          "icon": "Zap"
+        },
+        {
+          "id": "maintenance",
+          "title": "Solar Maintenance & Monitoring",
+          "description": "Keep your system performing at peak efficiency with professional cleaning, monitoring, and support.",
+          "icon": "Wrench"
+        }
+      ],
+      "about": {
+        "heading": "About West Coast Solar",
+        "body": "West Coast Solar is a locally-owned solar installation company based in Leeming, Western Australia. Led by Wade, our team brings years of experience and genuine expertise to every project. We specialise in residential solar panel systems and battery storage, handling everything from design and installation to paperwork and rebate schemes.\n\nOur commitment to quality is reflected in the work we do. Every installation is carried out to the highest standards, with meticulous attention to detail and professional workmanship. We work closely with our customers throughout the process, ensuring they understand their system and feel confident in their investment in clean energy.",
+        "photo_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZMLv_In8n13nXdd0D82uq0CP-HwbioVzuHvucmIlUJkbGB6RXrnGw7W3ISp9mKU2QS89tLIG1IYA1cgIcPg07KPnSN7Gsf4fOIvY4IKQmZ9TwX0AneAWy-FyluoICME5bHMLaMP1j8rs-t5kVE=s4800-w1600-h1440",
+        "values": [
+          {
+            "id": "value-quality",
+            "title": "Quality Workmanship",
+            "body": "Professional installation with meticulous attention to detail and pride in every job.",
+            "icon": "ShieldCheck"
+          },
+          {
+            "id": "value-local",
+            "title": "Locally Owned",
+            "body": "Family-run business based in Leeming, serving Perth's southern suburbs.",
+            "icon": "Sun"
+          },
+          {
+            "id": "value-support",
+            "title": "Full Support",
+            "body": "We handle rebates, paperwork, and provide ongoing support throughout your system's life.",
+            "icon": "Lightbulb"
+          }
+        ]
+      },
+      "service_area": {
+        "heading": "Areas We Service",
+        "intro": "We install solar systems and battery storage across Perth's southern suburbs.",
+        "suburbs": [
+          "Leeming",
+          "Melville",
+          "Myaree",
+          "Applecross",
+          "Bateman",
+          "Attadale"
+        ]
+      },
+      "gallery": [
+        {
+          "id": "gallery-1",
+          "image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZOqP2R6Fqadt2xMNT7wh6_qzqV-70EyYxJSJ1hNIwLbHj4TEoXYGRsp64nWCM1bnawK2mjFgsJIEiu_qvrDJcst6PLvAk2pIEMJTQpoAEO5SMKQf9E00LTM5--t6gSITOHF4-asl9c5fCNCBU84bWOD=s4800-w1600-h1600",
+          "caption": "Residential solar panel installation on Leeming home",
+          "alt": "6.6kW solar panel system installed on tiled roof"
+        },
+        {
+          "id": "gallery-2",
+          "image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZP5NPceOOPgaZ6BOj1UoHQ4uIqjlzrMQD2IrF8tJzwcfQCvpsJyp9QHJUg_fc_mzQ43q7hQbfKh6TWAzqvj-FHUcfEFfsqwvBvMd4WykRnfuFc9Ku7FLY-cQrh8KP7u4H4zyMhh0yJUYTxtKWA=s4800-w1600-h1440",
+          "caption": "Battery storage system setup for energy independence",
+          "alt": "Home battery storage unit installed in garage"
+        },
+        {
+          "id": "gallery-3",
+          "image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZOHHIxm7PCxJ7mEbmvY3Qmtm1cmPUr91thKFGyuxLRpFGMzV3ZlpHFkvrUQgVrb7ZzY0-sHaAGXOjvWeNSTiDxCtodPxmpKgdPz5gxx2tJzLMKsiLw0j2cR1rjTkpWE3qnOpHdrSAveP57w6Q=s4800-w1600-h1536",
+          "caption": "Professional installation work in progress",
+          "alt": "Solar installer working on roof-mounted panels"
+        },
+        {
+          "id": "gallery-4",
+          "image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZO0RBCcXCcnaV4sous2E1me1RXaOcHwuYyea6twUHWkJa61elk24RJYQ9YcjX8I6T3wNce1l2TTY0-KvgEfzpbo-YC5Klp2rA-wJGXGSqJM9lvM8S6wZEi5c-2Dv0sHRhlTfHOZ_H1FgPhwrg=s4800-w1440-h1600",
+          "caption": "Completed solar and battery system with monitoring",
+          "alt": "Finished solar installation with clean, neat wiring and equipment"
+        },
+        {
+          "id": "gallery-5",
+          "image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZPkOghD9m15-DJkEmnOCgPVtKErIrpW4nR_KJiyE-nz_U7P66bYVFFANsow9nObhwNbPuHTG1boI2QRDnd4RLV5pIFfGZ8lay_jpEUJ_PewhIPqoNxXqsf0p1Al8sYnEP9TujMt7AE_cERbzQ=s4800-w1600-h1600",
+          "caption": "Solar panels generating clean energy for local families",
+          "alt": "Solar panels on residential home roof, bright sunny day"
+        }
+      ],
+      "testimonials": [
+        {
+          "id": "testimonial-1",
+          "quote": "Wade and his team were professional, punctual and clearly took pride in their work. The craftsmanship was outstanding—everything was installed neatly and to a very high standard.",
+          "author": "Paul Le"
+        },
+        {
+          "id": "testimonial-2",
+          "quote": "Wade is very contactable and will call back with assistance quickly. He tracks down a solution to any issue and follows up with manufacturers on your behalf.",
+          "author": "Cam Burnett"
+        },
+        {
+          "id": "testimonial-3",
+          "quote": "Wade was extremely professional, efficient, and clearly passionate about his work. The whole solar panel and battery installation process was smooth and well organised.",
+          "author": "Oliver Ting"
+        },
+        {
+          "id": "testimonial-4",
+          "quote": "We are on our second system now with Wade. He is a wealth of knowledge when it comes to solar systems and batteries. Highly recommend for all your solar and battery needs.",
+          "author": "Jamie Dunn"
+        }
+      ],
+      "social_proof": {
+        "heading": "Trusted by Perth's Southern Suburbs",
+        "items": [
+          {
+            "id": "google-rating",
+            "value": "5.0★ on Google",
+            "label": "112 reviews",
+            "icon": "Star"
+          },
+          {
+            "id": "proof-1",
+            "value": "Locally owned and operated",
+            "label": "Based in Leeming",
+            "icon": "Sun"
+          },
+          {
+            "id": "proof-2",
+            "value": "Owner-led installation team",
+            "label": "Wade's personal expertise",
+            "icon": "ShieldCheck"
+          },
+          {
+            "id": "proof-3",
+            "value": "Trusted by repeat customers",
+            "label": "Quality systems that last",
+            "icon": "Sparkle"
+          }
+        ]
+      },
+      "contact": {
+        "heading": "Get in Touch",
+        "phone": "(08) 6385 3777",
+        "address": "2 Athel Ct, Leeming WA 6149, Australia",
+        "hours": [
+          {
+            "label": "Monday",
+            "value": "7:00am – 5:00pm"
+          },
+          {
+            "label": "Tuesday",
+            "value": "7:00am – 5:00pm"
+          },
+          {
+            "label": "Wednesday",
+            "value": "7:00am – 5:00pm"
+          },
+          {
+            "label": "Thursday",
+            "value": "7:00am – 5:00pm"
+          },
+          {
+            "label": "Friday",
+            "value": "7:00am – 5:00pm"
+          },
+          {
+            "label": "Saturday",
+            "value": "8:00am – 1:00pm"
+          },
+          {
+            "label": "Sunday",
+            "value": "Closed"
+          }
+        ],
+        "cta": {
+          "label": "Call Now",
+          "href": "tel:0863853777"
+        }
+      }
+    },
+    "services": [
+      {
+        "slug": "solar-panel-installation",
+        "title": "Solar Panel Installation",
+        "summary": "Professional installation of high-quality residential solar systems designed for your home.",
+        "hero_image": "https://images.pexels.com/photos/29206488/pexels-photo-29206488.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "intro": "West Coast Solar installs high-quality residential solar systems tailored to your home's energy needs. Based in Leeming, Wade and his team handle everything from initial design through to installation and rebate paperwork. Systems typically range from 5kW to 10kW, delivering immediate savings and long-term value.",
+        "benefits": [
+          "Reduce your electricity bills immediately with clean, renewable energy from day one.",
+          "Expert installation from Wade ensures every system is installed to the highest standard.",
+          "Competitive pricing plus assistance with government rebates and paperwork."
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-solar-panel-installation-1",
+            "question": "How long does a solar installation typically take?",
+            "answer": "Most residential installations are completed in one to two days, depending on system size and roof complexity. Wade's team works efficiently while maintaining our high standards for workmanship and safety."
+          },
+          {
+            "id": "faq-solar-panel-installation-2",
+            "question": "What size system do I need?",
+            "answer": "System size depends on your annual electricity usage, roof orientation, and shading. We conduct a free site assessment and recommend a size that balances your budget and energy goals."
+          }
+        ],
+        "seo": {
+          "title": "Solar Panel Installation in Leeming | West Coast Solar",
+          "description": "Professional solar panel installation from West Coast Solar in Leeming. Expert installation, competitive pricing, and rebate assistance. Get your free quote today.",
+          "schema_org_type": "LocalBusiness"
+        }
+      },
+      {
+        "slug": "battery-storage-systems",
+        "title": "Battery Storage Systems",
+        "summary": "Add energy storage to your solar system for 24/7 power independence and maximum savings.",
+        "hero_image": "https://images.pexels.com/photos/37177070/pexels-photo-37177070.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "intro": "Add energy storage to your solar system and enjoy power independence 24/7. West Coast Solar installs premium battery systems in Leeming and surrounding suburbs, with capacities from 10kW up to 20kW+. Store the energy you generate during the day and use it when you need it most.",
+        "benefits": [
+          "Maximize savings by using your own stored energy instead of buying from the grid at peak rates.",
+          "Protect against blackouts and enjoy energy independence even when the power goes down.",
+          "Pair with your existing solar system or install as a standalone energy solution."
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-battery-storage-systems-1",
+            "question": "Can I add batteries to my existing solar system?",
+            "answer": "Yes. West Coast Solar retrofits battery storage to most existing solar installations. We assess your current setup and recommend the right capacity to complement your system."
+          },
+          {
+            "id": "faq-battery-storage-systems-2",
+            "question": "How much does battery storage cost?",
+            "answer": "Battery costs vary depending on capacity and the specific system you choose. We provide a free quote based on your energy needs and budget."
+          }
+        ],
+        "seo": {
+          "title": "Battery Storage Systems in Leeming | West Coast Solar",
+          "description": "Add battery storage to your solar system in Leeming. West Coast Solar installs premium home battery systems with expert support. Get a free quote.",
+          "schema_org_type": "LocalBusiness"
+        }
+      },
+      {
+        "slug": "solar-system-upgrades",
+        "title": "Solar System Upgrades",
+        "summary": "Expand your existing solar system with additional capacity and the latest monitoring technology.",
+        "hero_image": "https://images.pexels.com/photos/38171111/pexels-photo-38171111.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "intro": "Expand your solar system with additional panels and the latest monitoring technology. If your existing setup no longer meets your needs, West Coast Solar upgrades your capacity and improves performance. Our Leeming team can scale systems from 5kW to 15kW+ in days.",
+        "benefits": [
+          "Increase your power generation to match higher energy demands or lower your payback period.",
+          "Upgrade inverters and monitoring to get real-time visibility of your system performance.",
+          "Leverage the latest panel technology for better efficiency and durability."
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-solar-system-upgrades-1",
+            "question": "Is it worth upgrading my older solar system?",
+            "answer": "If your system is over 5–7 years old, newer panels are more efficient and modern inverters offer better monitoring. We assess your current setup and show you the ROI of an upgrade."
+          },
+          {
+            "id": "faq-solar-system-upgrades-2",
+            "question": "Can you upgrade just the inverter without adding panels?",
+            "answer": "Yes. If your panels are still performing well, upgrading the inverter improves efficiency and gives you better data on energy production and use."
+          }
+        ],
+        "seo": {
+          "title": "Solar System Upgrades in Leeming | West Coast Solar",
+          "description": "Upgrade your solar system with additional capacity and modern monitoring. West Coast Solar scales systems for more savings. Free site assessment available.",
+          "schema_org_type": "LocalBusiness"
+        }
+      },
+      {
+        "slug": "solar-maintenance-monitoring",
+        "title": "Solar Maintenance & Monitoring",
+        "summary": "Keep your system performing optimally with professional cleaning, servicing, and customer support.",
+        "hero_image": "https://images.pexels.com/photos/32358153/pexels-photo-32358153.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "intro": "Keep your solar system running at peak efficiency with professional cleaning and monitoring from West Coast Solar. Dust, debris, and bird droppings reduce output—our Leeming team cleans panels and checks all components to ensure your system performs as expected, year after year.",
+        "benefits": [
+          "Keep system output high by removing dirt and debris that blocks sunlight from reaching panels.",
+          "Catch performance issues early with regular inspections and monitoring alerts.",
+          "Extend the lifespan of your equipment through preventive maintenance and professional care."
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-solar-maintenance-monitoring-1",
+            "question": "How often should I have my solar panels cleaned?",
+            "answer": "In Perth's climate, we recommend cleaning every 6–12 months depending on dust and wildlife activity. A clean system generates up to 25% more power than a dirty one."
+          },
+          {
+            "id": "faq-solar-maintenance-monitoring-2",
+            "question": "Do you provide ongoing monitoring of my system's performance?",
+            "answer": "Yes. We install monitoring systems that track your energy production in real-time. If output drops unexpectedly, we investigate and fix the issue quickly."
+          }
+        ],
+        "seo": {
+          "title": "Solar Panel Maintenance & Monitoring in Leeming | West Coast Solar",
+          "description": "Solar panel cleaning and monitoring services in Leeming. West Coast Solar keeps your system efficient and performing at peak output. Call for a service quote.",
+          "schema_org_type": "LocalBusiness"
+        }
+      }
+    ],
+    "locations": [
+      {
+        "slug": "leeming",
+        "suburb": "Leeming",
+        "state": "WA",
+        "intro": "Leeming is a thriving residential suburb with established tree-lined streets and modern homes perfect for solar investment. Proximity to Leeming Centre and easy freeway access make it a growing hub for families. West Coast Solar specialises in upgrading Leeming homes with efficient solar and battery systems.",
+        "body": "",
+        "hero_image": "https://images.pexels.com/photos/6309756/pexels-photo-6309756.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Reduce energy bills while supporting growing families in this fast-paced suburb",
+          "Battery backup ensures power during outages on Leeming's growing electricity grid",
+          "10+ years of proven solar expertise serving Leeming homes with professional installation"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-leeming-1",
+            "question": "How much can I save on electricity bills in Leeming?",
+            "answer": "A typical 6.6kW solar system in Leeming generates significant surplus in summer months. With battery storage added, you can store that energy for evening use, cutting grid electricity by 50–80%. Exact savings depend on system size, roof orientation, and consumption patterns. Wade offers a free assessment tailored to your Leeming home."
+          }
+        ],
+        "seo": {
+          "title": "Solar Panels & Battery Storage in Leeming | West Coast Solar",
+          "description": "Expert solar and battery installations in Leeming, WA. Professional service from Wade and the West Coast Solar team. Free consultation."
+        }
+      },
+      {
+        "slug": "melville",
+        "suburb": "Melville",
+        "state": "WA",
+        "intro": "Melville's charming character homes and riverside location make it ideal for solar upgrades that increase property value. Many Melville residents are investing in battery storage to reduce energy costs and gain independence. West Coast Solar brings expert installation and reliable service to this established inner suburb.",
+        "body": "",
+        "hero_image": "https://images.pexels.com/photos/21751094/pexels-photo-21751094.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Premium installations enhance riverside property value and curb appeal",
+          "Energy independence means stable power costs even as rates climb in established suburbs",
+          "Expert support for character homes—careful installation respects original architecture"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-melville-1",
+            "question": "Will solar installation affect the character of my Melville home?",
+            "answer": "Modern solar panels are sleek and unobtrusive. We work with Melville homeowners to position panels for minimal visual impact—often on rear or north-facing roofs hidden from street view. Battery storage sits neatly in a garage or under-house space. Our goal is energy independence without compromising your home's heritage charm."
+          }
+        ],
+        "seo": {
+          "title": "Solar Installation & Battery Backup in Melville | West Coast Solar",
+          "description": "Riverside homes deserve premium solar. West Coast Solar installs high-quality systems across Melville. Increase property value and reduce bills."
+        }
+      },
+      {
+        "slug": "myaree",
+        "suburb": "Myaree",
+        "state": "WA",
+        "intro": "Myaree blends residential comfort with convenient access to shopping and services along Myaree Drive. Both homeowners and small commercial properties benefit from West Coast Solar's tailored solar and battery solutions. Energy independence in Myaree starts with a free consultation from our experienced local team.",
+        "body": "",
+        "hero_image": "https://images.pexels.com/photos/27952874/pexels-photo-27952874.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Tailored systems for both residential and light commercial properties",
+          "Fast installation minimises disruption to your home or business routine",
+          "Access to government rebates and incentives with our expert guidance"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-myaree-1",
+            "question": "Can I install solar on a commercial property in Myaree?",
+            "answer": "Absolutely. West Coast Solar has installed systems at small businesses and light commercial properties across the Perth metro, including Myaree. We tailor designs for energy-intensive operations, maximise tax deductions, and help you recover costs faster. Contact us for a free commercial solar assessment."
+          }
+        ],
+        "seo": {
+          "title": "Solar Systems for Homes & Businesses in Myaree | West Coast Solar",
+          "description": "Solar systems for Myaree homes and businesses. Tailored installations, fast service, rebate assistance. Contact West Coast Solar today."
+        }
+      },
+      {
+        "slug": "applecross",
+        "suburb": "Applecross",
+        "state": "WA",
+        "intro": "Applecross is a prestigious riverside suburb close to Coogee Beach with substantial homes well-suited to premium solar and battery installations. Residents here appreciate quality workmanship and reliable service—exactly what West Coast Solar delivers. We've completed numerous systems across Applecross and stand behind every installation.",
+        "body": "",
+        "hero_image": "https://images.pexels.com/photos/7784533/pexels-photo-7784533.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Luxury installations matching the quality standards of riverside homes",
+          "Battery backup for uninterrupted power in premium Applecross residences",
+          "Dedicated aftercare and monitoring to protect your long-term investment"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-applecross-1",
+            "question": "What if my battery system fails in Applecross?",
+            "answer": "Our batteries come with 10-year manufacturer warranties and we provide remote monitoring 24/7. If any issue arises, our dedicated team responds quickly. You'll never be left in the dark—we stand behind every installation and prioritise aftercare support for Applecross clients."
+          }
+        ],
+        "seo": {
+          "title": "Premium Solar & Battery Solutions in Applecross | West Coast Solar",
+          "description": "Premium solar and battery backup for Applecross riverside properties. Expert installation, 24/7 monitoring, dedicated aftercare support."
+        }
+      }
+    ],
+    "service_areas": [],
+    "faq": {
+      "heading": "Frequently Asked Questions",
+      "items": [
+        {
+          "id": "faq-1",
+          "question": "How much does a solar installation cost?",
+          "answer": "Solar system costs vary based on your home's size, roof condition, and energy needs. We provide free quotes tailored to your situation. Most residential systems range from 5kW to 10kW. Contact us today for a personalised quote."
+        },
+        {
+          "id": "faq-2",
+          "question": "What is the best time to install solar?",
+          "answer": "Solar systems generate electricity year-round in Western Australia, even on cloudy days. However, Perth's abundant sunshine—over 3,200 hours annually—makes any time ideal. We can install on your schedule."
+        },
+        {
+          "id": "faq-3",
+          "question": "Do I need battery storage with my solar system?",
+          "answer": "Battery storage is optional but offers significant benefits. It allows you to use stored solar energy at night, maximise self-consumption, and provides backup during grid outages. We'll help you decide what's right for your home and budget."
+        },
+        {
+          "id": "faq-4",
+          "question": "How long does an installation take?",
+          "answer": "Most residential solar installations are completed in one to two days, depending on system size and roof complexity. We'll provide a clear timeline during your quote consultation."
+        },
+        {
+          "id": "faq-5",
+          "question": "What rebates and incentives are available?",
+          "answer": "Western Australia offers various rebates and incentives for solar installations, including Small-scale Technology Certificates (STCs). We handle all paperwork and rebate applications for you, maximising your savings."
+        },
+        {
+          "id": "faq-6",
+          "question": "What warranty do you offer?",
+          "answer": "We provide comprehensive warranties covering our installation workmanship. Solar panels typically come with 25-year manufacturer warranties. Battery systems have warranties ranging from 10 to 15 years depending on the product."
+        }
+      ],
+      "seo": {
+        "title": "Solar Installation FAQs | West Coast Solar"
+      }
+    },
+    "about": {
+      "heading": "About West Coast Solar",
+      "body": "West Coast Solar is a locally-owned and operated solar installation company based in Leeming, Perth. Founded by Wade, our business is built on a foundation of expertise, professionalism, and genuine care for our customers' experience.\n\nWe specialise in residential solar panel installations and battery storage systems across Perth's southern suburbs. From your initial consultation through to system handover and ongoing support, we manage every step with meticulous attention to detail. Our team handles all the technical work, paperwork, and rebate applications, so you can enjoy the benefits of clean energy without the hassle.\n\nWhat sets us apart is our commitment to quality and customer relationships. Wade personally oversees each installation, ensuring the work meets our high standards. We take pride in our craftsmanship—every panel is mounted neatly, every connection is secure, and every system is thoroughly tested. Our repeat customers and strong local reputation reflect our dedication to delivering exceptional results that families can rely on for years to come.",
+      "photo_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZMccHhH-BcdR1so3WtYK3o5p1fqZkCWqLmLXliI7DgoErPzNSDaxAx6THh10GTDG_uzsct62VjHy_3XkeeAuZxOR4i76TuHVna4rsO7ITRmnKe0T60auuA6GxgID-vcrXv3FjuD1VMJWl0uNr8=s4800-w600-h400",
+      "values": [
+        {
+          "id": "value-quality",
+          "title": "Quality Craftsmanship",
+          "body": "Professional installation with meticulous attention to detail. Every system is built to last.",
+          "icon": "ShieldCheck"
+        },
+        {
+          "id": "value-customer-care",
+          "title": "Customer-First Approach",
+          "body": "We handle all paperwork, rebates, and support so you can focus on enjoying your clean energy.",
+          "icon": "Wrench"
+        },
+        {
+          "id": "value-expertise",
+          "title": "Local Expertise",
+          "body": "Owner-led experience serving Perth's southern suburbs. Wade brings years of solar expertise to every project.",
+          "icon": "Sun"
+        }
+      ],
+      "seo": {
+        "title": "About West Coast Solar | Leeming Solar Installer"
+      }
+    },
+    "seo": {
+      "title": "West Coast Solar | Solar Panels & Battery Storage in Leeming, Perth",
+      "schema_org_type": "LocalBusiness"
+    },
+    "preview": {},
+    "overrides": {
+      "primary_color": "#5c4c00",
+      "secondary_color": "#a38800",
+      "accent_color": "#ffd712",
+      "logo_url": "/uploads/037d7deb-f01f-4e40-818d-e999b92ad946/778ac1e07ae9029c.png",
+      "logo_height_px": 60,
+      "chrome_theme": "light"
+    }
+  },
+  "createdAt": "2026-07-01T08:28:56.773Z",
+  "status": "preview",
+  "gbpPhotos": [
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZP25GGmnXQc9v8Xn-Nx2KZjilHoOwQ4DmGSVuzo71n4JYmtXOx4U716_ZuopV6MEqbIGqia8S7SHzIEc7APxOfwN5ejvvc-hl3sKfeNQM8aQvSUcY7sxP-ursm2cfA7O3fDEgGBA9phsgcg5A=s4800-w1600-h1440",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZMLv_In8n13nXdd0D82uq0CP-HwbioVzuHvucmIlUJkbGB6RXrnGw7W3ISp9mKU2QS89tLIG1IYA1cgIcPg07KPnSN7Gsf4fOIvY4IKQmZ9TwX0AneAWy-FyluoICME5bHMLaMP1j8rs-t5kVE=s4800-w1600-h1440",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZMccHhH-BcdR1so3WtYK3o5p1fqZkCWqLmLXliI7DgoErPzNSDaxAx6THh10GTDG_uzsct62VjHy_3XkeeAuZxOR4i76TuHVna4rsO7ITRmnKe0T60auuA6GxgID-vcrXv3FjuD1VMJWl0uNr8=s4800-w600-h400",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZOqP2R6Fqadt2xMNT7wh6_qzqV-70EyYxJSJ1hNIwLbHj4TEoXYGRsp64nWCM1bnawK2mjFgsJIEiu_qvrDJcst6PLvAk2pIEMJTQpoAEO5SMKQf9E00LTM5--t6gSITOHF4-asl9c5fCNCBU84bWOD=s4800-w1600-h1600",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZP5NPceOOPgaZ6BOj1UoHQ4uIqjlzrMQD2IrF8tJzwcfQCvpsJyp9QHJUg_fc_mzQ43q7hQbfKh6TWAzqvj-FHUcfEFfsqwvBvMd4WykRnfuFc9Ku7FLY-cQrh8KP7u4H4zyMhh0yJUYTxtKWA=s4800-w1600-h1440",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZOHHIxm7PCxJ7mEbmvY3Qmtm1cmPUr91thKFGyuxLRpFGMzV3ZlpHFkvrUQgVrb7ZzY0-sHaAGXOjvWeNSTiDxCtodPxmpKgdPz5gxx2tJzLMKsiLw0j2cR1rjTkpWE3qnOpHdrSAveP57w6Q=s4800-w1600-h1536",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZO0RBCcXCcnaV4sous2E1me1RXaOcHwuYyea6twUHWkJa61elk24RJYQ9YcjX8I6T3wNce1l2TTY0-KvgEfzpbo-YC5Klp2rA-wJGXGSqJM9lvM8S6wZEi5c-2Dv0sHRhlTfHOZ_H1FgPhwrg=s4800-w1440-h1600",
+    "https://lh3.googleusercontent.com/place-photos/AJRVUZPkOghD9m15-DJkEmnOCgPVtKErIrpW4nR_KJiyE-nz_U7P66bYVFFANsow9nObhwNbPuHTG1boI2QRDnd4RLV5pIFfGZ8lay_jpEUJ_PewhIPqoNxXqsf0p1Al8sYnEP9TujMt7AE_cERbzQ=s4800-w1600-h1600"
+  ]
+}

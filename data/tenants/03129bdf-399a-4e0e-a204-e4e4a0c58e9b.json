@@ -1,0 +1,518 @@
+{
+  "id": "03129bdf-399a-4e0e-a204-e4e4a0c58e9b",
+  "name": "Melbourne CBD Physiotherapy and Sports Medicine Clinic",
+  "niche": "Physiotherapist",
+  "category": "allied-health",
+  "siteProps": {
+    "business": {
+      "name": "Melbourne CBD Physiotherapy and Sports Medicine Clinic",
+      "phone": "(03) 9670 3051"
+    },
+    "branding": {
+      "primary_color": "#0f5f6e",
+      "secondary_color": "#073a42",
+      "accent_color": "#f59e0b",
+      "hero_image_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZO6PnaFGA2iUmz2d0LDeYHYH2t0CO8aghI04ebPt2IfyKBRVnJ47fS4p4MAufQeHImsozcGx9gX3BvbH0HzgZRQxQhBxlg3m9mHx29ILzOdCeX2XshS-IT5HaePEj9lN932ew5et8ETbBcJo9k=s4800-w1600-h1600"
+    },
+    "home": {
+      "hero": {
+        "headline": "Sports and Injury Physiotherapy in Melbourne CBD",
+        "subheadline": "Evidence-based treatment from expert physiotherapists. Get back to the activities you love.",
+        "cta_primary": {
+          "label": "Book an appointment",
+          "href": "/contact"
+        },
+        "cta_secondary": {
+          "label": "Our services",
+          "href": "/services"
+        }
+      },
+      "services": [
+        {
+          "id": "service-sports-injury",
+          "title": "Sports Injury & Performance",
+          "description": "Expert assessment and treatment for sports injuries, with evidence-based rehabilitation to get you back to training safely.",
+          "icon": "Activity"
+        },
+        {
+          "id": "service-back-neck",
+          "title": "Back & Neck Pain",
+          "description": "Comprehensive evaluation and targeted treatment for back and neck pain, with exercises tailored to your specific needs.",
+          "icon": "Stethoscope"
+        },
+        {
+          "id": "service-post-surgical",
+          "title": "Post-Surgical Rehabilitation",
+          "description": "Structured rehabilitation following orthopedic procedures, working in coordination with your surgeon to support your recovery.",
+          "icon": "BadgeCheck"
+        },
+        {
+          "id": "service-workplace",
+          "title": "Workplace Injury & Workers' Comp",
+          "description": "Specialised assessment and management of workplace injuries, with coordination of workplace return-to-work planning.",
+          "icon": "Briefcase"
+        }
+      ],
+      "about": {
+        "heading": "Your trusted physiotherapy partner in Melbourne CBD",
+        "body": "Melbourne CBD Physiotherapy and Sports Medicine Clinic is built on a foundation of evidence-based practice and genuine care for our patients' recovery. Our team of AHPRA-registered physiotherapists combines advanced clinical assessment with hands-on treatment to address the root cause of your injury or pain.\n\nWe work collaboratively with medical professionals, orthopedic surgeons, and other specialists to ensure coordinated, comprehensive care. Whether you're recovering from a sports injury, managing chronic pain, or working toward return-to-work following an accident, we're committed to supporting your rehabilitation journey with clear guidance, personalised treatment, and ongoing communication.",
+        "photo_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZOh8HTkSsyQrFs2h0uMvgl361dp8ojXDYgT2ba9XTOqu4PMQrvwqgEhaO-qMWRz4b0uJgOlp5P6AmaD2ltWcK651-FIBwTJIVVropjpXTukkm3Bd8PcniIu77jh1S707fwejFfnv2aGflwXbz4=s4800-w1600-h1600",
+        "values": [
+          {
+            "id": "value-expertise",
+            "title": "Expert Assessment",
+            "body": "Our physiotherapists conduct thorough, detailed assessments to identify the root cause of your problem and tailor treatment accordingly.",
+            "icon": "BadgeCheck"
+          },
+          {
+            "id": "value-personalised",
+            "title": "Personalised Treatment",
+            "body": "Every patient is unique. We design rehabilitation programs that fit your specific goals, lifestyle, and capacity.",
+            "icon": "PersonStanding"
+          },
+          {
+            "id": "value-evidence",
+            "title": "Evidence-Based Care",
+            "body": "Our approach is grounded in current research and best practice, ensuring you receive the most effective treatment available.",
+            "icon": "ShieldCheck"
+          }
+        ]
+      },
+      "service_area": {
+        "heading": "Areas we serve",
+        "intro": "We treat patients from across Melbourne CBD and surrounding areas. Many of our patients work or live in the CBD and inner suburbs.",
+        "suburbs": [
+          "Melbourne CBD",
+          "Southbank",
+          "Docklands",
+          "West Melbourne",
+          "Fitzroy",
+          "Carlton"
+        ]
+      },
+      "gallery": [
+        {
+          "id": "gallery-1",
+          "image_url": "https://images.pexels.com/photos/20860610/pexels-photo-20860610.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Modern clinic treatment area equipped for comprehensive physiotherapy assessment and hands-on treatment.",
+          "alt": "Bright physiotherapy clinic treatment room with exercise equipment and treatment tables"
+        },
+        {
+          "id": "gallery-2",
+          "image_url": "https://images.pexels.com/photos/20860616/pexels-photo-20860616.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "One-on-one treatment session focusing on manual therapy and patient guidance.",
+          "alt": "Physiotherapist working with patient on manual therapy technique"
+        },
+        {
+          "id": "gallery-3",
+          "image_url": "https://images.pexels.com/photos/5794055/pexels-photo-5794055.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Exercise prescription and patient education ensuring you understand your rehabilitation program.",
+          "alt": "Physiotherapist demonstrating exercise technique to patient"
+        },
+        {
+          "id": "gallery-4",
+          "image_url": "https://images.pexels.com/photos/20860599/pexels-photo-20860599.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "Welcoming reception area where our team coordinates your care and bookings.",
+          "alt": "Professional clinic reception area with comfortable seating"
+        },
+        {
+          "id": "gallery-5",
+          "image_url": "https://images.pexels.com/photos/20860582/pexels-photo-20860582.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+          "caption": "State-of-the-art assessment and treatment equipment supporting evidence-based care.",
+          "alt": "Modern physiotherapy clinic with professional equipment and bright interior"
+        }
+      ],
+      "testimonials": [
+        {
+          "id": "testimonial-1",
+          "quote": "The team showed exceptional care and professionalism. From initial consultation through to coordination with specialists, they were supportive, communicative, and genuinely invested in helping us navigate a challenging situation.",
+          "author": "Tracey MacKenzie"
+        },
+        {
+          "id": "testimonial-2",
+          "quote": "Professional, friendly team with genuine expertise. The service is outstanding, and the clinic creates a welcoming, professional environment. I couldn't recommend them more highly.",
+          "author": "Charlotte Nielsen"
+        },
+        {
+          "id": "testimonial-3",
+          "quote": "Very thorough consultation and clear guidance on exercises. The approach is genuine, with a focus on your wellbeing rather than unnecessary repeat visits. Easy to trust their advice.",
+          "author": "Sonia"
+        }
+      ],
+      "social_proof": {
+        "heading": "Trusted by Melbourne patients",
+        "items": [
+          {
+            "id": "proof-1",
+            "value": "500+",
+            "label": "Patients treated annually",
+            "icon": "HeartPulse"
+          },
+          {
+            "id": "proof-2",
+            "value": "5+",
+            "label": "AHPRA registered physiotherapists",
+            "icon": "BadgeCheck"
+          },
+          {
+            "id": "proof-3",
+            "value": "5★",
+            "label": "Patient satisfaction rating",
+            "icon": "ShieldCheck"
+          }
+        ]
+      },
+      "contact": {
+        "heading": "Get in touch",
+        "phone": "(03) 9670 3051",
+        "address": "Ground Floor/179 Queen St, Melbourne VIC 3000, Australia",
+        "hours": [
+          {
+            "label": "Monday",
+            "value": "7:00am – 6:30pm"
+          },
+          {
+            "label": "Tuesday",
+            "value": "7:00am – 6:30pm"
+          },
+          {
+            "label": "Wednesday",
+            "value": "7:00am – 6:30pm"
+          },
+          {
+            "label": "Thursday",
+            "value": "7:00am – 6:30pm"
+          },
+          {
+            "label": "Friday",
+            "value": "7:00am – 6:30pm"
+          },
+          {
+            "label": "Saturday",
+            "value": "8:00am – 1:00pm"
+          },
+          {
+            "label": "Sunday",
+            "value": "Closed"
+          }
+        ]
+      }
+    },
+    "services": [
+      {
+        "slug": "sports-injury-performance",
+        "title": "Sports Injury & Performance",
+        "summary": "Expert assessment and treatment for sports injuries with evidence-based rehabilitation.",
+        "icon": "Activity",
+        "hero_image": "https://images.pexels.com/photos/20860610/pexels-photo-20860610.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "intro": "Melbourne CBD Physiotherapy uses evidence-based assessment and sport-specific rehabilitation to get you back to peak performance. Whether you're recovering from injury or optimizing athletic capacity, our physiotherapists combine detailed strength analysis with tailored training to address the root cause of pain and dysfunction.",
+        "benefits": [
+          "Sport-specific movement analysis and training to address biomechanical drivers of injury",
+          "Progressive strengthening programs adapted to return-to-sport demands",
+          "Coordination with your coach or sports medicine doctor for integrated care"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-sports-injury-performance-1",
+            "question": "How do we assess sports injuries differently?",
+            "answer": "Sports injuries require sport-specific assessment. We evaluate your injury within the context of your sport—analysing movement patterns, strength imbalances, and functional demands. This might include on-court or on-field movement analysis, coordination with your coach or sports medicine doctor, and structured progressions that replicate your sport's demands. This approach helps us identify root causes, not just treat symptoms."
+          },
+          {
+            "id": "faq-sports-injury-performance-2",
+            "question": "When can I return to sport?",
+            "answer": "Return to sport isn't a fixed timeline—it depends on your injury severity, healing phase, and individual factors. We work with your surgeon (if applicable) and your sport's demands to progressively build strength, mobility and confidence. We use objective measures like strength testing and movement quality to guide decisions, ensuring you're ready and injury risk is minimised."
+          }
+        ],
+        "seo": {
+          "title": "Sports Injury Treatment & Performance Physio in Melbourne CBD",
+          "description": "Expert sports injury assessment and rehabilitation at Melbourne CBD Physiotherapy. Sport-specific treatment and return-to-sport programs for athletes.",
+          "schema_org_type": "MedicalProcedure"
+        }
+      },
+      {
+        "slug": "back-neck-pain",
+        "title": "Back & Neck Pain",
+        "summary": "Comprehensive evaluation and targeted treatment for back and neck pain.",
+        "icon": "Stethoscope",
+        "hero_image": "https://images.pexels.com/photos/20860616/pexels-photo-20860616.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "intro": "Back and neck pain doesn't have to limit your life. At Melbourne CBD Physiotherapy, we conduct thorough assessment to identify the drivers of your symptoms, then deliver targeted treatment combining manual therapy, exercise prescription and ergonomic guidance to support lasting recovery.",
+        "benefits": [
+          "Thorough assessment to identify underlying mechanical, muscular or postural factors",
+          "Targeted manual therapy combined with exercise prescription",
+          "Ergonomic and lifestyle advice to prevent recurrence"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-back-neck-pain-1",
+            "question": "What causes my back or neck pain?",
+            "answer": "Back and neck pain can have many drivers: muscle tension, joint stiffness, poor posture, weak core stabilizers, stress, or specific incidents. We conduct detailed assessment including movement analysis, strength testing and your history to identify what's driving your symptoms. This helps us target treatment effectively rather than treating all back pain the same way."
+          },
+          {
+            "id": "faq-back-neck-pain-2",
+            "question": "Do I need imaging like X-rays or MRI?",
+            "answer": "Not always. Most acute back and neck pain improves with physiotherapy alone. Imaging is helpful when we suspect specific pathology or when recommended by your doctor. We'll advise if imaging is indicated and help coordinate it. Our focus is on what's driving your symptoms functionally, not just what shows on imaging."
+          }
+        ],
+        "seo": {
+          "title": "Back and Neck Pain Physio Treatment in Melbourne CBD",
+          "description": "Comprehensive back and neck pain assessment and treatment at Melbourne CBD Physiotherapy. Targeted rehabilitation for lasting relief.",
+          "schema_org_type": "MedicalProcedure"
+        }
+      },
+      {
+        "slug": "post-surgical-rehabilitation",
+        "title": "Post-Surgical Rehabilitation",
+        "summary": "Structured rehabilitation following orthopedic procedures in coordination with your surgeon.",
+        "icon": "BadgeCheck",
+        "hero_image": "https://images.pexels.com/photos/5794055/pexels-photo-5794055.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "intro": "After orthopedic surgery, structured physiotherapy is critical to your recovery. Our team works closely with your surgeon to design a progressive rehabilitation program tailored to your specific procedure, ensuring you systematically regain strength, mobility and confidence through evidence-based stages of healing and recovery.",
+        "benefits": [
+          "Structured progression aligned with surgical healing and surgeon recommendations",
+          "Careful strength and mobility restoration to prevent complications",
+          "Ongoing communication with your surgical team to optimise outcomes"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-post-surgical-rehabilitation-1",
+            "question": "When can I start physiotherapy after surgery?",
+            "answer": "This depends on your procedure and surgeon's protocol. We liaise closely with your surgical team to follow their recommendations—some patients start gentle movement immediately after surgery, others begin after a specific healing phase. We'll receive your surgeon's instructions and tailor your program to your timeline, ensuring you're challenged enough to progress but not so much that healing is compromised."
+          },
+          {
+            "id": "faq-post-surgical-rehabilitation-2",
+            "question": "How long does recovery typically take?",
+            "answer": "Recovery timelines vary by procedure, age and individual factors. Your surgeon can give a rough estimate; we monitor your progress through strength and mobility benchmarks. We focus on progressing you systematically through healing phases rather than targeting a fixed end date. Communication with your surgeon helps us adjust if needed."
+          }
+        ],
+        "seo": {
+          "title": "Post-Surgical Rehabilitation Physiotherapy in Melbourne CBD",
+          "description": "Structured post-operative rehabilitation following orthopedic surgery. Work with your surgical team for optimal recovery in Melbourne CBD.",
+          "schema_org_type": "MedicalProcedure"
+        }
+      },
+      {
+        "slug": "workplace-injury-workers-comp",
+        "title": "Workplace Injury & Workers' Comp",
+        "summary": "Specialised assessment and management of workplace injuries with return-to-work coordination.",
+        "icon": "Briefcase",
+        "hero_image": "https://images.pexels.com/photos/20860599/pexels-photo-20860599.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "intro": "Workplace injuries need expert assessment and coordinated management for safe recovery. We specialise in workers' compensation claims, functional capacity evaluation and return-to-work planning to help you recover safely, return to your job with confidence and reduce re-injury risk through targeted rehabilitation.",
+        "benefits": [
+          "Functional capacity evaluation to establish safe return-to-work capacity",
+          "Coordination with your employer, medical practitioners and insurer",
+          "Injury prevention and ergonomic modifications to reduce re-injury risk"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-workplace-injury-workers-comp-1",
+            "question": "Do I need a GP referral for workers' comp claims?",
+            "answer": "In Victoria, most workers' compensation schemes accept physiotherapist treatment without a GP referral, though it's wise to notify your GP. Check your specific policy or employer. We're experienced in managing workers' comp claims and can help clarify your entitlements. We handle the paperwork coordination with your insurer and employer."
+          },
+          {
+            "id": "faq-workplace-injury-workers-comp-2",
+            "question": "Will my injury history affect future claims?",
+            "answer": "Pre-existing conditions are typically declared on workers' compensation claims, but they don't automatically disqualify claims or future coverage. What matters is whether the current workplace injury has caused a significant new problem or aggravation. We assess this carefully and help document your injury and recovery. Speak with your insurer for specific policy questions."
+          }
+        ],
+        "seo": {
+          "title": "Workers' Compensation Physiotherapy in Melbourne CBD",
+          "description": "Specialised assessment and management of workplace injuries with return-to-work coordination at Melbourne CBD Physiotherapy.",
+          "schema_org_type": "MedicalProcedure"
+        }
+      }
+    ],
+    "locations": [
+      {
+        "slug": "southbank",
+        "suburb": "Southbank",
+        "state": "VIC",
+        "intro": "Southbank's vibrant arts and dining precinct draws busy professionals, tourists, and active residents to the riverside precinct. Whether you're a gallery regular, keen jogger, or office worker navigating the bustling cultural quarter, Melbourne CBD Physio's Queen Street location is perfectly positioned to support your physical wellbeing and return you to your favourite activities.",
+        "body": "",
+        "hero_image": "https://images.pexels.com/photos/20860582/pexels-photo-20860582.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Walk-in appointments: Skip the commute across the city—physio care steps away from your Southbank location",
+          "Sports injury recovery: Whether you're training for a marathon or recovering from a weekend game, we support your athletic goals",
+          "Office worker relief: Manage repetitive strain, posture-related pain, and workplace injuries with evidence-based treatment"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-southbank-1",
+            "question": "I work in the Southbank office towers—can I fit a physio appointment into my lunch break?",
+            "answer": "Absolutely. Our clinic is directly on Queen Street (Ground Floor/179 Queen St), just a 5–10 minute walk from the major office complexes and Southbank Parklands. We offer flexible scheduling to accommodate busy professionals, and most initial assessments take 45–60 minutes. We recommend booking ahead, but we can often accommodate urgent issues with our team."
+          }
+        ],
+        "seo": {
+          "title": "Physiotherapy in Southbank, Melbourne | Sports Medicine & Injury Treatment",
+          "description": "Melbourne CBD Physio provides expert physiotherapy and sports medicine in Southbank. Walk-in convenient, injury recovery focused, trusted by local professionals and active residents.",
+          "schema_org_type": "MedicalBusiness"
+        }
+      },
+      {
+        "slug": "docklands",
+        "suburb": "Docklands",
+        "state": "VIC",
+        "intro": "Docklands' waterfront community embraces an active lifestyle—from morning runs along Yarra Parklands to weekend sport and social activities. Melbourne CBD Physio's central Queen Street location is an easy walk or short trip from Docklands, making it simple to access expert physiotherapy when training injuries, office strain, or simply getting back to your fitness routine.",
+        "body": "",
+        "hero_image": "https://images.pexels.com/photos/20860576/pexels-photo-20860576.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Easy commute: Walking distance from Docklands—no extra travel time when you need quick, expert care",
+          "Post-run recovery support: Manage training load, prevent overuse injuries, and optimise your running and fitness schedule",
+          "Waterfront-to-clinic convenience: Treat injuries early so you can return to Yarra Parklands running trails faster"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-docklands-1",
+            "question": "I'm training for a half-marathon and live in Docklands—can physio help prevent injury?",
+            "answer": "Yes. A physiotherapist can identify weaknesses, imbalances, and movement patterns that might lead to injury, then design a specific strength and conditioning plan to protect you. We see many Docklands runners and can assess your running gait, build resilience, and adjust your training load—all evidence-based. Early assessment is smart injury prevention."
+          }
+        ],
+        "seo": {
+          "title": "Physiotherapy in Docklands, Melbourne | Running & Training Injury Care",
+          "description": "Melbourne CBD Physio is just a walk from Docklands. Expert injury prevention and treatment for runners, athletes, and active residents. Flexible scheduling near the waterfront.",
+          "schema_org_type": "MedicalBusiness"
+        }
+      },
+      {
+        "slug": "fitzroy",
+        "suburb": "Fitzroy",
+        "state": "VIC",
+        "intro": "Fitzroy's creative, energetic community—home to Brunswick Street's iconic café and retail culture—draws artistic professionals, young families, and locals who value an active, vibrant lifestyle. Melbourne CBD Physio's Queen Street clinic is just a short walk away, providing evidence-based physiotherapy to keep you managing injury and moving through your bustling Fitzroy routine.",
+        "body": "",
+        "hero_image": "https://images.pexels.com/photos/20860587/pexels-photo-20860587.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Brunswick Street location link: Walk south for a 10–15 minute stroll to Queen Street—perfect fit between café hopping and getting care",
+          "Young professional focus: We understand the lifestyle demands of creative work—managing neck tension, postural strain, and repetitive stress",
+          "Community-centric care: Part of Melbourne's inner-north vibe—personalised, attentive service that respects your wellbeing goals"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-fitzroy-1",
+            "question": "I spend a lot of time at a laptop in my Fitzroy home office—can physio help with my neck and shoulder tension?",
+            "answer": "Absolutely. Laptop work often creates forward head posture, tight upper traps, and shoulder strain. A physio assessment will identify your specific postural patterns, and we'll design targeted exercises to strengthen and stretch the right muscles, plus give you workstation advice. Many Fitzroy-based professionals see us for exactly this—and most improve significantly with consistent treatment."
+          }
+        ],
+        "seo": {
+          "title": "Physiotherapy in Fitzroy, Melbourne | Postural & Workplace Injury Care",
+          "description": "Melbourne CBD Physio is a short walk from Brunswick Street. Expert care for postural strain, laptop-related pain, and sports injuries. Fitzroy's trusted local physio clinic.",
+          "schema_org_type": "MedicalBusiness"
+        }
+      },
+      {
+        "slug": "west-melbourne",
+        "suburb": "West Melbourne",
+        "state": "VIC",
+        "intro": "West Melbourne's quiet residential streets, local shops, and gateway position between the CBD and outer suburbs make it a natural home base for commuters, families, and workers balancing activity with urban convenience. Melbourne CBD Physio's Queen Street clinic is just a few blocks away, offering seamless access to expert physiotherapy when you need to manage injury and keep moving.",
+        "body": "",
+        "hero_image": "https://images.pexels.com/photos/20860591/pexels-photo-20860591.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Neighbourhood convenience: Just a walk across town—no need to travel far for expert physio care",
+          "Family-friendly scheduling: We support West Melbourne families managing sports injuries, work strain, and preventative care",
+          "Commuter-focused care: Whether you're heading out to outer suburbs or staying local, we fit treatment around your routine"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-west-melbourne-1",
+            "question": "I live in West Melbourne and commute to the outer suburbs for work—can I book appointments around my schedule?",
+            "answer": "Yes. We offer flexible weekday and evening appointments to suit commuters. Our Ground Floor clinic on Queen Street is just a short walk from West Melbourne residential streets, making it easy to drop in before or after your commute. Many West Melbourne residents book regular appointments that fit their weekly routine."
+          }
+        ],
+        "seo": {
+          "title": "Physiotherapy in West Melbourne, Melbourne | Local Injury & Wellness Care",
+          "description": "Melbourne CBD Physio is just a walk from West Melbourne. Expert physiotherapy for commuters, families, and active residents. Flexible scheduling, local care.",
+          "schema_org_type": "MedicalBusiness"
+        }
+      }
+    ],
+    "service_areas": [],
+    "faq": {
+      "heading": "Frequently asked questions",
+      "items": [
+        {
+          "id": "faq-general-1",
+          "question": "Do I need a referral to see a physiotherapist?",
+          "answer": "No, you don't need a referral to book a physiotherapy appointment. However, if you'd like to claim Medicare rebates through a GP management plan or use private health insurance, a referral from your GP will be needed. We're happy to advise on the best pathway for your situation."
+        },
+        {
+          "id": "faq-general-2",
+          "question": "Will my private health insurance cover my treatment?",
+          "answer": "Many private health insurance funds cover physiotherapy. We can check your coverage at your first appointment or provide you with details to verify with your fund. We can also arrange direct billing to your insurance if that's available on your policy."
+        },
+        {
+          "id": "faq-general-3",
+          "question": "How long does a physiotherapy session usually take?",
+          "answer": "Initial appointments typically take 45–60 minutes to allow for comprehensive assessment. Follow-up sessions are usually 30–45 minutes. The exact duration depends on your injury and treatment needs."
+        },
+        {
+          "id": "faq-general-4",
+          "question": "What can I expect in my first appointment?",
+          "answer": "Your first session will include a detailed history of your injury or condition, physical examination, and assessment. We'll explain our findings clearly and discuss a treatment plan tailored to your goals and circumstances."
+        },
+        {
+          "id": "faq-general-5",
+          "question": "Do you offer treatment for workplace injuries?",
+          "answer": "Yes, we specialise in workplace injury assessment and management. We work with workers' compensation insurance and can provide documentation for your claim. We also coordinate with your employer on return-to-work planning."
+        },
+        {
+          "id": "faq-general-6",
+          "question": "Can I book online?",
+          "answer": "Yes, you can book appointments online through our website. If you prefer to call, our team is happy to help at (03) 9670 3051."
+        }
+      ]
+    },
+    "about": {
+      "heading": "About Melbourne CBD Physiotherapy and Sports Medicine Clinic",
+      "body": "Melbourne CBD Physiotherapy and Sports Medicine Clinic is a patient-centred practice dedicated to evidence-based physiotherapy and sports medicine care. Founded on the principle that every patient deserves thorough assessment, clear communication, and personalised treatment, we serve patients from across Melbourne CBD and the surrounding inner suburbs.\n\nOur team of AHPRA-registered physiotherapists brings years of clinical experience across sports physiotherapy, manual therapy, post-surgical rehabilitation, and workplace injury management. We believe in taking time to understand your unique situation, identifying the root cause of your problem, and designing a rehabilitation program that works for your lifestyle and goals.\n\nWe work collaboratively with GPs, orthopedic surgeons, and other healthcare professionals to ensure you receive coordinated, comprehensive care. Whether you're an athlete returning to sport, someone managing chronic pain, or recovering from surgery or workplace injury, we're committed to supporting you every step of the way.",
+      "photo_url": "https://lh3.googleusercontent.com/place-photos/AJRVUZOpMpx_jVlG6F8rV-DQMlY9utnaafNAggriu52e77ZtpydoNkuK4F9ubUGTtwUOw59--MEJ6Rbgs3MhgnGGe9I7GQ5ug0qnEh9km0D3szClA8mWZ7erB0CGJpXopdET82JNMT3CaeQjixXfBr0ODmgFSA=s4800-w1600-h1600",
+      "values": [
+        {
+          "id": "value-evidence",
+          "title": "Evidence-Based Practice",
+          "body": "We stay current with the latest research and clinical best practice, ensuring our treatment is grounded in science and proven outcomes.",
+          "icon": "ShieldCheck"
+        },
+        {
+          "id": "value-care",
+          "title": "Genuine Care",
+          "body": "Your recovery is our priority. We listen carefully, explain clearly, and adapt our approach based on your individual needs and progress.",
+          "icon": "HeartPulse"
+        },
+        {
+          "id": "value-collaboration",
+          "title": "Collaborative Approach",
+          "body": "We work alongside your GP, specialists, and other healthcare providers to coordinate your care and support your best possible recovery.",
+          "icon": "Briefcase"
+        }
+      ]
+    },
+    "seo": {
+      "title": "Melbourne CBD Physiotherapy | Sports Medicine & Injury Treatment",
+      "description": "Expert physiotherapy and sports medicine clinic in Melbourne CBD. AHPRA-registered physiotherapists specialising in sports injury, back pain, post-surgical rehab, and workplace injury management.",
+      "schema_org_type": "LocalBusiness"
+    },
+    "preview": {},
+    "overrides": {
+      "logo_url": "/uploads/03129bdf-399a-4e0e-a204-e4e4a0c58e9b/cc7319e99f24b735.png",
+      "logo_height_px": 50,
+      "primary_color": "#500c0c",
+      "secondary_color": "#8e1515",
+      "accent_color": "#b91c1c"
+    }
+  },
+  "createdAt": "2026-06-30T09:59:20.611Z",
+  "status": "preview"
+}

@@ -67,7 +67,7 @@ export function AboutPage({ site, basePath }: { site: SiteProps; basePath: strin
                 className="object-cover"
               />
               {typeof about.years_in_business === "number" && (
-                <div className="absolute bottom-4 left-4 rounded-xl bg-[var(--accent)] px-4 py-3 text-white shadow-lg">
+                <div className="absolute bottom-4 left-4 rounded-xl bg-[var(--accent)] px-4 py-3 text-[var(--accent-fg)] shadow-lg">
                   <span className="block text-2xl font-black leading-none">
                     {about.years_in_business}+
                   </span>
@@ -82,7 +82,13 @@ export function AboutPage({ site, basePath }: { site: SiteProps; basePath: strin
 
         {about.values.length > 0 && (
           <div className="mx-auto mt-16 max-w-6xl px-4">
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div
+              className={
+                about.values.length === 2 || about.values.length === 4
+                  ? "grid gap-5 sm:grid-cols-2 lg:grid-cols-2"
+                  : "grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+              }
+            >
               {about.values.map((v) => {
                 const Icon = resolveIcon(v.icon);
                 return (
@@ -90,7 +96,7 @@ export function AboutPage({ site, basePath }: { site: SiteProps; basePath: strin
                     key={v.id}
                     className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm"
                   >
-                    <div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-[var(--primary)] text-white">
+                    <div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-[var(--primary)] text-[var(--primary-fg)]">
                       <Icon className="h-6 w-6" strokeWidth={2} />
                     </div>
                     <h3 className="text-lg font-bold text-zinc-900">{v.title}</h3>

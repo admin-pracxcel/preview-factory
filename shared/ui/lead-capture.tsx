@@ -166,7 +166,7 @@ export function LeadCaptureForm({ tenantId }: LeadCaptureFormProps) {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 text-sm font-bold text-white shadow transition-opacity hover:opacity-90 disabled:opacity-50"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 text-sm font-bold text-[var(--accent-fg)] shadow transition-opacity hover:opacity-90 disabled:opacity-50"
       >
         {status === "loading" ? (
           <>

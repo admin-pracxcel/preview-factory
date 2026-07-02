@@ -1,0 +1,1547 @@
+{
+  "id": "f66308b7-ae3f-43f7-b757-92bf8fa3f019",
+  "name": "Gold Electrical Services Australia",
+  "niche": "Electrician",
+  "category": "trades",
+  "siteProps": {
+    "business": {
+      "name": "Gold Electrical Services Australia",
+      "phone": "1300 000 000",
+      "email": "admin@pracxcel.com.au"
+    },
+    "branding": {
+      "primary_color": "#003366",
+      "secondary_color": "#1a3a52",
+      "accent_color": "#FFB81C"
+    },
+    "home": {
+      "hero": {
+        "headline": "24/7 Emergency Electrician in Sydney",
+        "subheadline": "Fast, reliable electrical service you can trust. Same-day emergency response.",
+        "cta_primary": {
+          "label": "Call Now",
+          "href": "tel:1300000000"
+        },
+        "cta_secondary": {
+          "label": "Book Service",
+          "href": "#contact"
+        }
+      },
+      "services": [
+        {
+          "id": "svc-emergency",
+          "title": "Emergency Electrical Repairs",
+          "description": "24/7 response to electrical faults, power outages, and safety hazards. We're here when you need us most.",
+          "icon": "Zap",
+          "starting_price": "Call for quote"
+        },
+        {
+          "id": "svc-switchboard",
+          "title": "Switchboard Upgrades",
+          "description": "Modern switchboard installation and upgrades for safety, capacity, and compliance with latest electrical standards.",
+          "icon": "Lightbulb",
+          "starting_price": "From $1,500"
+        },
+        {
+          "id": "svc-rewiring",
+          "title": "Rewiring & Renovations",
+          "description": "Complete house rewiring, renovation electrical work, and new circuit installation for extensions and renovations.",
+          "icon": "Sparkle",
+          "starting_price": "From $2,000"
+        },
+        {
+          "id": "svc-lighting",
+          "title": "Lighting Installation",
+          "description": "Indoor and outdoor lighting design and installation. LED upgrades, downlights, and landscape lighting.",
+          "icon": "Sun",
+          "starting_price": "From $300"
+        },
+        {
+          "id": "svc-solar",
+          "title": "Solar & Battery Systems",
+          "description": "Solar panel installation with CEC accreditation. Battery storage systems for energy independence.",
+          "icon": "BatteryCharging",
+          "starting_price": "From $5,000"
+        },
+        {
+          "id": "svc-ev-charger",
+          "title": "EV Charger Installation",
+          "description": "Home and business EV charging station installation. Fast, reliable, professional setup and testing.",
+          "icon": "Zap",
+          "starting_price": "From $1,200"
+        },
+        {
+          "id": "svc-powerpoints",
+          "title": "Power Point Installation",
+          "description": "New power point installation, USB outlets, and smart home electrical integration for modern living.",
+          "icon": "Lightbulb",
+          "starting_price": "From $150"
+        },
+        {
+          "id": "svc-fault-finding",
+          "title": "Fault Finding & Testing",
+          "description": "Electrical fault diagnosis, safety testing, compliance inspections, and detailed reporting.",
+          "icon": "Wrench",
+          "starting_price": "From $250"
+        }
+      ],
+      "about": {
+        "body": "Since first serving Sydney's electrical needs, we've built our reputation on reliability, safety, and professional workmanship. Every job is treated with the same attention to detail, whether it's a simple repair or a complex renovation project."
+      },
+      "service_area": {
+        "suburbs": [
+          "Parramatta",
+          "Penrith",
+          "Central Sydney",
+          "North Sydney",
+          "Inner West",
+          "Eastern Suburbs",
+          "South Sydney",
+          "Hills District",
+          "Sutherland Shire",
+          "Manly Beaches"
+        ]
+      },
+      "gallery": [
+        {
+          "id": "gal-1",
+          "image_url": "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=600&q=80",
+          "caption": "Professional switchboard installation",
+          "alt": "Modern electrical switchboard"
+        },
+        {
+          "id": "gal-2",
+          "image_url": "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&q=80",
+          "caption": "Solar panel installation",
+          "alt": "Solar panels on residential roof"
+        },
+        {
+          "id": "gal-3",
+          "image_url": "https://images.unsplash.com/photo-1621905251388-48416bd8575a?w=600&q=80",
+          "caption": "LED lighting installation",
+          "alt": "Modern LED lighting in kitchen"
+        },
+        {
+          "id": "gal-4",
+          "image_url": "https://images.unsplash.com/photo-1581092162562-40038f51ee83?w=600&q=80",
+          "caption": "EV charger installation",
+          "alt": "Home EV charging station"
+        },
+        {
+          "id": "gal-5",
+          "image_url": "https://images.unsplash.com/photo-1581092918037-0c4c3acd3789?w=600&q=80",
+          "caption": "Emergency electrical work",
+          "alt": "Electrician completing emergency repair"
+        },
+        {
+          "id": "gal-6",
+          "image_url": "https://images.unsplash.com/photo-1581092161562-40038b51bb83?w=600&q=80",
+          "caption": "Power point installation",
+          "alt": "Modern power outlets installed"
+        }
+      ],
+      "testimonials": [
+        {
+          "id": "test-1",
+          "quote": "Gold Electrical came out for an emergency at midnight and fixed our blown switchboard professionally. Highly recommend their 24/7 service.",
+          "author": "James M.",
+          "location": "Parramatta",
+          "rating": 5
+        },
+        {
+          "id": "test-2",
+          "quote": "Had our whole house rewired. Excellent work, very professional team, and they cleaned up after themselves. Great value.",
+          "author": "Sarah T.",
+          "location": "Inner West",
+          "rating": 5
+        },
+        {
+          "id": "test-3",
+          "quote": "Solar installation was seamless. They explained everything and helped us understand our new system. Love our solar setup.",
+          "author": "Michael L.",
+          "location": "Eastern Suburbs",
+          "rating": 5
+        },
+        {
+          "id": "test-4",
+          "quote": "Recently installed EV charger at our home. Quick, professional, and got us connected same day. Fantastic service.",
+          "author": "Emma K.",
+          "location": "North Sydney",
+          "rating": 5
+        },
+        {
+          "id": "test-5",
+          "quote": "Called for fault finding and they identified the issue immediately. Fair pricing and honest advice. Will definitely use again.",
+          "author": "David R.",
+          "location": "Hills District",
+          "rating": 5
+        }
+      ],
+      "social_proof": {
+        "items": [
+          {
+            "id": "proof-1",
+            "value": "24/7",
+            "label": "Emergency Response",
+            "icon": "Zap"
+          },
+          {
+            "id": "proof-2",
+            "value": "Licensed",
+            "label": "Fully Qualified",
+            "icon": "ShieldCheck"
+          },
+          {
+            "id": "proof-3",
+            "value": "Insured",
+            "label": "Public Liability",
+            "icon": "ShieldCheck"
+          },
+          {
+            "id": "proof-4",
+            "value": "Same-Day",
+            "label": "Service Available",
+            "icon": "Zap"
+          }
+        ]
+      },
+      "offer": {
+        "headline": "Get Your Electrical Service Today",
+        "cta": {
+          "label": "Contact Us Now",
+          "href": "#contact"
+        }
+      },
+      "contact": {
+        "phone": "1300 000 000",
+        "email": "admin@pracxcel.com.au",
+        "address": "Sydney, NSW",
+        "hours": [
+          {
+            "label": "Monday – Friday",
+            "value": "7:00am – 6:00pm"
+          },
+          {
+            "label": "Saturday",
+            "value": "8:00am – 4:00pm"
+          },
+          {
+            "label": "Sunday",
+            "value": "By arrangement"
+          },
+          {
+            "label": "24/7 Emergency",
+            "value": "Available anytime"
+          }
+        ]
+      }
+    },
+    "services": [
+      {
+        "slug": "emergency-electrical-repairs",
+        "title": "24/7 Emergency Electrical Repairs in Sydney",
+        "summary": "Immediate response to electrical emergencies. Power outages, faults, and safety hazards sorted fast.",
+        "icon": "Zap",
+        "intro": "Electrical emergencies don't wait for business hours, and neither do we. Gold Electrical Services provides 24/7 emergency electrical repair throughout Sydney. Whether you've experienced a power outage, blown switchboard, tripped circuits, or dangerous electrical faults, our licensed electricians are ready to respond immediately and fix the problem safely.\n\nYour safety is our priority. We arrive equipped with diagnostic tools to quickly identify the fault and provide a safe, lasting solution. From identifying hazardous wiring to replacing damaged components, we handle all emergency electrical work with the expertise and professionalism you deserve.",
+        "benefits": [
+          "Immediate 24/7 response to electrical emergencies",
+          "Licensed and insured electricians",
+          "Fast diagnosis and permanent solutions",
+          "Safety inspections and testing included",
+          "Transparent pricing with no hidden fees",
+          "Peace of mind with professional guarantees"
+        ],
+        "sections": [
+          {
+            "heading": "Common Electrical Emergencies We Handle",
+            "body": "Power outages, tripped circuit breakers, blown switchboards, burnt-out outlets, flickering lights, electrical burning smells, and dangerous shocks or sparks are all emergencies we handle regularly. Our technicians are trained to diagnose complex faults quickly and implement safe, permanent repairs. We prioritise your safety and the protection of your property in every emergency call."
+          },
+          {
+            "heading": "Why Call Gold Electrical for Emergencies",
+            "body": "Our 24/7 availability means you're never left without electrical support. We maintain a network of mobile-equipped electricians ready to respond anywhere in Sydney within the shortest timeframe possible. Every emergency is treated with urgency and professionalism, and we'll explain the issue and solution clearly so you understand what went wrong and how we've fixed it."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "emerg-faq-1",
+            "question": "How quickly can you respond to an emergency?",
+            "answer": "We aim to respond to emergency calls within 1-2 hours depending on your location in Sydney. Call us immediately and we'll dispatch the nearest available electrician."
+          },
+          {
+            "id": "emerg-faq-2",
+            "question": "Is there an extra charge for after-hours emergency calls?",
+            "answer": "Yes, emergency call-out fees apply outside standard hours. We'll provide a clear quote for the call-out fee and any work required before proceeding."
+          },
+          {
+            "id": "emerg-faq-3",
+            "question": "What if the power is completely out?",
+            "answer": "Call us first. We'll troubleshoot over the phone and dispatch an electrician. If it's a wider outage affecting multiple properties, we'll advise you to check with your network provider."
+          }
+        ],
+        "seo": {
+          "title": "24/7 Emergency Electrician Sydney | Immediate Response",
+          "description": "Emergency electrical repairs available 24/7 in Sydney. Fast response, licensed electricians, power outages, faults, and safety hazards. Call now."
+        }
+      },
+      {
+        "slug": "switchboard-upgrades",
+        "title": "Switchboard Upgrades & Installation in Sydney",
+        "summary": "Modern switchboard installation and upgrades for safety, capacity, and electrical compliance.",
+        "icon": "Lightbulb",
+        "intro": "An aging or overloaded switchboard is a safety risk and a limitation on your home's electrical capacity. Modern switchboards provide better protection, higher capacity for additional circuits, and compliance with current Australian electrical standards. Gold Electrical Services specialises in switchboard upgrades and new installations, ensuring your home's electrical system is safe, efficient, and ready for modern demands.\n\nWhether you're upgrading from an old fused switchboard, adding new circuits for renovations, or replacing a faulty board, we handle the entire process professionally. Our electricians will assess your current system, recommend the right solution, and install your new switchboard with full testing and compliance documentation.",
+        "benefits": [
+          "Upgrade from dangerous fused boards to modern circuit breaker systems",
+          "Increased circuit capacity for future-proofing",
+          "Compliance with latest electrical standards and regulations",
+          "Enhanced safety features and surge protection",
+          "Professional installation with full certification",
+          "Peace of mind with proper documentation and guarantees"
+        ],
+        "sections": [
+          {
+            "heading": "Why Upgrade Your Switchboard",
+            "body": "Old switchboards using fuses or outdated designs are less safe and can't handle modern electrical demands. Modern switchboards use circuit breakers that protect your home better, allow easy addition of new circuits, and meet current safety standards. If you're experiencing frequent tripped circuits, considering adding new power points or appliances, or have an old board that needs replacement, an upgrade is the smart choice."
+          },
+          {
+            "heading": "Our Switchboard Upgrade Process",
+            "body": "We start with a detailed assessment of your current system and electrical needs. We'll explain your options and provide a fixed quote. Once approved, we manage the entire upgrade: disconnection, installation of your new board, circuit configuration, full testing, and compliance certification. The work is done safely and professionally, with minimal disruption to your home."
+          },
+          {
+            "heading": "Switchboards for Solar & Future Technologies",
+            "body": "Planning solar installation, battery storage, or EV charging? Your switchboard needs to support these modern systems. We can upgrade your board with the right capacity and additional circuits to integrate these technologies seamlessly. Planning ahead ensures you're ready when you decide to go solar or electric."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "switch-faq-1",
+            "question": "How do I know if my switchboard needs upgrading?",
+            "answer": "Signs include: fuses blowing regularly, circuits tripping frequently, insufficient power outlets, inability to power new appliances, or an old board that looks damaged or is making odd sounds. We can inspect your board and advise."
+          },
+          {
+            "id": "switch-faq-2",
+            "question": "What's the cost of a switchboard upgrade?",
+            "answer": "Costs vary based on your current system and new board specifications, typically ranging from $1,500 to $3,500 for a standard residential upgrade. We provide a fixed quote after inspection."
+          },
+          {
+            "id": "switch-faq-3",
+            "question": "How long does a switchboard upgrade take?",
+            "answer": "Most upgrades take 1-2 days. We'll schedule the work at a time convenient for you and keep you informed throughout. You'll have a modern, compliant system when we're done."
+          }
+        ],
+        "seo": {
+          "title": "Switchboard Upgrade & Installation Sydney | Modern Safety",
+          "description": "Switchboard upgrades and installation in Sydney. Replace old fused boards, increase capacity, ensure compliance. Licensed electricians, fixed pricing."
+        }
+      },
+      {
+        "slug": "rewiring-renovations",
+        "title": "House Rewiring & Electrical Renovations in Sydney",
+        "summary": "Complete rewiring and renovation electrical work for homes and extensions.",
+        "icon": "Sparkle",
+        "intro": "Whether you're renovating your home, adding an extension, or need a complete rewire, proper electrical work is essential for safety and functionality. Gold Electrical Services handles all renovation electrical work professionally—from initial design consultation through to final testing and certification. We've completed hundreds of renovation projects in Sydney, and we understand how to integrate electrical work seamlessly with your building project.\n\nOur electricians work closely with builders and contractors to ensure electrical planning aligns with your design. We'll install all wiring, outlets, switches, and lighting designed for your new spaces, and ensure everything complies with current regulations and building codes.",
+        "benefits": [
+          "Complete rewiring for old homes or full renovations",
+          "Modern cable runs and circuit design",
+          "Seamless integration with your renovation timeline",
+          "New outlets, switches, and lighting as designed",
+          "Full compliance with building codes and regulations",
+          "Professional certification and documentation"
+        ],
+        "sections": [
+          {
+            "heading": "Whole-House Rewiring",
+            "body": "Older homes often have outdated or unsafe wiring that doesn't meet modern standards. Complete rewiring replaces all internal wiring with modern, properly sized cables in properly protected conduits. This is essential for safety, functionality, and insurance compliance. We plan the rewire carefully to minimise disruption, often coordinating with renovation or building work."
+          },
+          {
+            "heading": "Extension & New Room Electrical",
+            "body": "Adding a new room, kitchen, bathroom, or extension? We design and install all electrical circuits, outlets, switches, and lighting for your new spaces. Our electricians coordinate with your builder to run cables before walls are closed, and ensure everything integrates perfectly with your existing system."
+          },
+          {
+            "heading": "Renovation Power & Lighting Design",
+            "body": "We help you plan electrical layouts for your renovation—outlet locations, switch positions, lighting design, and any special requirements like kitchen circuits or bathroom ventilation. Getting this right during renovation saves costly rework later. We'll guide you through options and ensure your electrical design is both functional and compliant."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "renov-faq-1",
+            "question": "Should I rewire my entire house or just add new circuits?",
+            "answer": "It depends on your house age and current condition. We inspect your existing wiring and advise whether a partial upgrade or full rewire is needed for safety and functionality."
+          },
+          {
+            "id": "renov-faq-2",
+            "question": "How do you minimise disruption during rewiring?",
+            "answer": "We plan cable routes carefully and often run new cables alongside existing ones or through roof/floor spaces. If walls need opening, we coordinate with your builder to do this efficiently, and walls are made good afterward."
+          },
+          {
+            "id": "renov-faq-3",
+            "question": "What electrical work needs building approval?",
+            "answer": "Most rewiring and renovation electrical work requires building approval. We manage compliance documentation and coordinate with your local council or building certifier as needed."
+          }
+        ],
+        "seo": {
+          "title": "House Rewiring & Electrical Renovations Sydney | Professional Service",
+          "description": "Complete rewiring and renovation electrical work in Sydney. New extensions, bathrooms, kitchens. Safe, compliant, professionally installed."
+        }
+      },
+      {
+        "slug": "lighting-installation",
+        "title": "Lighting Installation & LED Upgrades in Sydney",
+        "summary": "Indoor, outdoor, and specialty lighting installation. LED upgrades, downlights, and landscape lighting.",
+        "icon": "Sun",
+        "intro": "Good lighting transforms your home—making spaces functional, safe, and beautiful. Gold Electrical Services provides professional lighting installation including modern LED systems, decorative fixtures, downlights, and outdoor landscape lighting. Whether you're upgrading to energy-efficient LED, adding lighting to dark areas, or creating ambient lighting for entertaining, our electricians have the expertise to design and install the perfect lighting solution.\n\nWe combine functionality with design. Every lighting project is planned to work with your home's aesthetics while ensuring proper brightness, colour temperature, and energy efficiency. From kitchen task lighting to garden ambiance, we deliver professional results.",
+        "benefits": [
+          "Modern LED lighting saves energy and cuts electricity bills",
+          "Professional design for functionality and aesthetics",
+          "Indoor and outdoor lighting options",
+          "Dimmable and smart-home compatible systems available",
+          "Safe installation with proper electrical integration",
+          "Expert advice on lighting for every room"
+        ],
+        "sections": [
+          {
+            "heading": "LED Lighting Upgrades",
+            "body": "LED technology offers massive energy savings and superior light quality compared to older incandescent and halogen bulbs. We supply and install quality LED fixtures, downlights, and bulbs throughout your home. LED lighting not only reduces your electricity costs significantly but also improves light quality and lasts far longer than traditional options."
+          },
+          {
+            "heading": "Downlights & Ambient Lighting",
+            "body": "Recessed downlights provide clean, modern lighting for kitchens, bathrooms, living areas, and bedrooms. We install properly spaced downlights with efficient drivers, and can incorporate dimming systems to adjust brightness and create different moods. We also handle feature lighting, accent lights, and ambient options to enhance your home's aesthetics."
+          },
+          {
+            "heading": "Outdoor & Landscape Lighting",
+            "body": "Outdoor lighting improves safety around your home and creates beautiful ambiance for entertaining. We install pathway lights, deck lighting, wall-mounted fixtures, and landscape lighting. All outdoor electrical work is fully waterproofed and safe, with proper cable protection and weather-resistant fittings."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "light-faq-1",
+            "question": "How much will LED lighting save on my electricity bills?",
+            "answer": "LED uses about 75% less energy than incandescent lighting. Savings depend on how many lights you use and electricity prices, but most homes see noticeable reductions in their bills."
+          },
+          {
+            "id": "light-faq-2",
+            "question": "Can I install dimmable lighting?",
+            "answer": "Yes. Modern dimmable LED systems work well with dimmer switches. We can install dimmable lighting in any room, allowing you to adjust brightness and create different atmospheres."
+          },
+          {
+            "id": "light-faq-3",
+            "question": "Are downlights hard to install?",
+            "answer": "Installation depends on your ceiling type and existing wiring. For new installations in accessible ceilings, we can usually complete downlight installation in one day."
+          }
+        ],
+        "seo": {
+          "title": "Lighting Installation & LED Upgrades Sydney | Professional Service",
+          "description": "Lighting installation and LED upgrades in Sydney. Downlights, outdoor lighting, energy-efficient systems. Professional design and installation."
+        }
+      },
+      {
+        "slug": "solar-battery-installation",
+        "title": "Solar Panels & Battery Storage Installation Sydney",
+        "summary": "CEC-accredited solar installation and battery storage systems for energy independence.",
+        "icon": "BatteryCharging",
+        "intro": "Solar energy is a smart investment, reducing your electricity bills and increasing your home's value. Gold Electrical Services installs high-quality solar panel systems with full CEC (Clean Energy Council) accreditation, ensuring your system is professionally designed, safely installed, and eligible for government rebates. We also offer battery storage options, allowing you to store solar energy for use during evening hours and maximise your self-sufficiency.\n\nOur solar experts will assess your roof, energy usage, and budget to design a system perfectly suited to your home. We handle all aspects: design, permitting, installation, testing, and connection to the grid. You'll have a professional, warranted system from day one.",
+        "benefits": [
+          "CEC-accredited professional solar installation",
+          "Significant reduction in electricity bills",
+          "Eligible for government solar rebates and incentives",
+          "Increased home value and appeal",
+          "Battery storage options for energy independence",
+          "Professional warranties and ongoing support"
+        ],
+        "sections": [
+          {
+            "heading": "Professional Solar System Design",
+            "body": "We assess your roof orientation, shading, energy usage, and budget to design the ideal solar system for your home. Our CEC-accredited designers select quality panels and inverters that match your needs. We'll show you energy production estimates and financial returns so you understand the benefits before installation."
+          },
+          {
+            "heading": "Battery Storage for Energy Independence",
+            "body": "A battery storage system stores your solar energy for use when the sun isn't shining—typically in early morning, evening, or on cloudy days. This maximises your self-consumption, reduces reliance on grid energy, and provides backup during outages. We recommend and install quality battery systems that integrate seamlessly with your solar setup."
+          },
+          {
+            "heading": "Grid Connection & Government Rebates",
+            "body": "Your solar system connects safely to the electricity grid, allowing you to export excess energy and import power as needed. We handle all technical requirements and documentation. You'll also be eligible for government solar rebates and Small Technology Certificates (STCs) that reduce your installation costs."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "solar-faq-1",
+            "question": "How much do solar panels cost?",
+            "answer": "Costs vary based on system size, panel quality, and your specific installation. A typical 5kW residential system costs $6,000-$10,000 after government rebates. We provide detailed quotes for your specific situation."
+          },
+          {
+            "id": "solar-faq-2",
+            "question": "How long until my solar pays for itself?",
+            "answer": "Most solar systems pay back within 4-7 years through electricity bill savings. After that, you're generating free electricity. We show you detailed financial projections during consultation."
+          },
+          {
+            "id": "solar-faq-3",
+            "question": "Do I need battery storage?",
+            "answer": "Batteries increase self-consumption and provide backup, but aren't essential. We discuss whether batteries suit your situation and energy usage patterns. Many people benefit from solar without batteries initially."
+          }
+        ],
+        "seo": {
+          "title": "Solar Panels & Battery Installation Sydney | CEC Accredited",
+          "description": "Professional solar panel and battery storage installation in Sydney. CEC accredited, government rebates eligible, expert design and installation."
+        }
+      },
+      {
+        "slug": "ev-charger-installation",
+        "title": "Home & Business EV Charger Installation in Sydney",
+        "summary": "Professional EV charging station installation for homes and businesses.",
+        "icon": "Zap",
+        "intro": "Electric vehicle ownership is growing in Sydney, and home charging makes EV ownership convenient and cost-effective. Gold Electrical Services installs professional home and business EV charging stations (wallboxes) that safely charge your vehicle overnight or during the day. Our licensed electricians assess your electrical system, recommend the right charger for your vehicle and usage, and handle complete installation with testing and connection.\n\nWe work with major EV charger brands and can install Level 1 (standard outlet) or Level 2 (hardwired fast charging) systems. Most Sydney residents benefit from a Level 2 home charger, fully charging overnight and saving significantly on fuel costs compared to petrol vehicles.",
+        "benefits": [
+          "Convenient home charging, no more petrol station visits",
+          "Overnight charging saves time and fuel costs",
+          "Safe, professionally installed hardwired systems",
+          "Compatible with all major EV brands",
+          "Reduces fuel costs compared to petrol vehicles",
+          "Future-proofs your home for EV adoption"
+        ],
+        "sections": [
+          {
+            "heading": "Home EV Charging Solutions",
+            "body": "A home Level 2 charger (7-11kW) fully charges most EVs overnight (8-12 hours depending on battery size). This is far more convenient and economical than relying on public charging. We install the charger in your garage or near your parking area with proper cable management and weatherproofing. Most homes can accommodate a home charger with minimal electrical upgrades."
+          },
+          {
+            "heading": "Commercial & Multi-Unit Charging",
+            "body": "Businesses and apartment buildings are increasingly installing EV chargers to attract customers and staff or provide resident amenities. We design and install multi-charger systems, smart charging management, and load-balancing solutions for commercial installations."
+          },
+          {
+            "heading": "Charger Compatibility & Smart Features",
+            "body": "We install chargers compatible with all EV brands and models. Many modern chargers include smart features like app control, charging schedules, and energy management. We'll recommend chargers that suit your vehicle and lifestyle, and explain all features so you get maximum benefit."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "ev-faq-1",
+            "question": "How much does EV charger installation cost?",
+            "answer": "Wallbox installation typically costs $1,200-$2,500 depending on your location and electrical work needed. We provide a fixed quote after assessment. Factor in ongoing fuel savings—most EV owners save significantly on fuel."
+          },
+          {
+            "id": "ev-faq-2",
+            "question": "Can I install a charger if I rent or don't have a garage?",
+            "answer": "It's ideal to have off-street parking. If you rent, speak with your landlord about charger installation. We can discuss options like portable Level 1 chargers if permanent installation isn't possible."
+          },
+          {
+            "id": "ev-faq-3",
+            "question": "How long does EV charger installation take?",
+            "answer": "Most installations take 1 day. We assess your electrical system first, then install the charger, cable, weatherproofing, and testing. We'll ensure it's ready to use immediately."
+          }
+        ],
+        "seo": {
+          "title": "EV Charger Installation Sydney | Home & Business Charging",
+          "description": "Professional EV charging station installation for homes and businesses in Sydney. Level 2 chargers, safe installation, compatible with all EVs."
+        }
+      },
+      {
+        "slug": "power-point-installation",
+        "title": "Power Point Installation & USB Outlets in Sydney",
+        "summary": "New power point and outlet installation for homes, kitchens, and smart home integration.",
+        "icon": "Lightbulb",
+        "intro": "Need more power outlets in your home? Insufficient outlets leads to dangerous overloading and extension cord tangling. Gold Electrical Services installs new power points wherever you need them—kitchens, living areas, bedrooms, or outdoor spaces. We also install USB-integrated outlets and smart home-compatible power points for modern living. Our electricians assess your needs, run cable safely through walls or conduits, and install outlets that blend seamlessly with your décor.\n\nWhether you're adding outlets to an older home with insufficient power, installing USB outlets for device charging, or integrating smart outlets, we handle every installation professionally.",
+        "benefits": [
+          "Add power points anywhere in your home",
+          "Eliminate dangerous extension cords and power boards",
+          "USB-integrated outlets for convenient device charging",
+          "Smart home compatible options available",
+          "Safe, code-compliant installation",
+          "Improved home functionality and safety"
+        ],
+        "sections": [
+          {
+            "heading": "New Outlet Installation",
+            "body": "We install new power points at any location, running electrical cable safely through walls to connect to your switchboard. Whether you need kitchen benchtop outlets, extra bedroom outlets, or lounge power points, we'll assess the best cable route, install the outlet safely, and make good any walls. Most homes benefit from additional outlets in kitchens, offices, and entertainment areas."
+          },
+          {
+            "heading": "USB & Smart Outlets",
+            "body": "Modern outlets can incorporate USB ports for charging phones and tablets without adapters. We also install smart outlets that you can control via app or voice commands, schedule automatic on/off times, or monitor energy usage. These are perfect for entertainment systems, lights, fans, or any device you want to control remotely."
+          },
+          {
+            "heading": "Outdoor Power Points",
+            "body": "Outdoor outlets enable you to use power tools, run lights for entertaining, or charge devices on your deck or in the garden. We install weatherproof outlets in suitable locations, with proper cable protection and circuit breaker protection. Outdoor circuits include special safety features for wet environments."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "power-faq-1",
+            "question": "How much does a new power point cost?",
+            "answer": "Basic outlet installation typically costs $150-$300 depending on location and cable run distance. USB or smart outlets may be slightly higher. We provide a fixed quote after assessment."
+          },
+          {
+            "id": "power-faq-2",
+            "question": "Can I add outlets to my kitchen benchtop?",
+            "answer": "Yes. Kitchen benchtop outlets are essential for appliances and device charging. We can install them spaced conveniently along your benchtop or backsplash at the right height."
+          },
+          {
+            "id": "power-faq-3",
+            "question": "Will you need to cut into walls?",
+            "answer": "Usually we can run cable through existing cavities, roof spaces, or conduits to minimise wall cutting. We always aim for minimal disruption, making good any access points afterward."
+          }
+        ],
+        "seo": {
+          "title": "Power Point Installation Sydney | New Outlets & USB Charging",
+          "description": "Power point and outlet installation in Sydney. New outlets, USB charging, smart home integration. Professional installation, safety-compliant."
+        }
+      },
+      {
+        "slug": "fault-finding-testing",
+        "title": "Electrical Fault Finding & Safety Testing in Sydney",
+        "summary": "Professional fault diagnosis, electrical testing, and compliance inspections.",
+        "icon": "Wrench",
+        "intro": "Strange electrical behaviour—flickering lights, warm outlets, burning smells—suggests a fault that needs professional investigation. Gold Electrical Services provides expert fault finding and diagnostic testing to identify electrical problems safely and accurately. Our licensed electricians use specialized testing equipment to locate faults, assess safety risks, and recommend solutions. We also conduct compliance testing and inspections for safety audits, house sales, or rental property requirements.\n\nProper fault finding prevents safety hazards, damage to appliances, and potential electrical fires. We provide detailed reports documenting faults found, safety risks, and recommended solutions so you understand exactly what needs fixing.",
+        "benefits": [
+          "Expert fault diagnosis using professional testing equipment",
+          "Safety assessment and hazard identification",
+          "Detailed written reports with recommendations",
+          "Compliance testing for house sales or rental audits",
+          "Peace of mind knowing electrical safety status",
+          "Prevent appliance damage and electrical hazards"
+        ],
+        "sections": [
+          {
+            "heading": "Electrical Fault Finding",
+            "body": "Flickering lights, outlets that spark, circuits that trip repeatedly, or burning smells all indicate faults needing investigation. We use systematic testing and diagnostic equipment to identify the problem—faulty wiring, damaged outlets, overloaded circuits, or other issues. Once we identify the fault, we recommend the safest and most cost-effective solution."
+          },
+          {
+            "heading": "Safety Testing & Compliance Inspections",
+            "body": "We conduct comprehensive electrical safety testing including insulation testing, earth continuity testing, and circuit integrity checks. These tests verify your system meets Australian safety standards. We provide detailed reports suitable for house sales, rental property audits, or insurance requirements."
+          },
+          {
+            "heading": "RCD Testing & Circuit Protection",
+            "body": "Residual Current Devices (RCDs) protect you from electric shock. We test RCD function to ensure protection is working correctly. We also assess circuit protection, verify circuit ratings, and ensure your system meets current safety standards."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "fault-faq-1",
+            "question": "What does fault finding cost?",
+            "answer": "Fault-finding consultations start from $250 and include testing and initial diagnosis. If you proceed with repairs, we may credit this toward repair costs. Complex faults may require more investigation."
+          },
+          {
+            "id": "fault-faq-2",
+            "question": "How long does electrical testing take?",
+            "answer": "A standard safety inspection takes 1-2 hours depending on your home's size and complexity. We provide a detailed written report afterward."
+          },
+          {
+            "id": "fault-faq-3",
+            "question": "Do I need testing for a house sale?",
+            "answer": "It's not legally required in NSW, but many buyers request it. A pre-sale electrical inspection gives confidence and can speed up sales. We provide a formal report suitable for buyer/lender requirements."
+          }
+        ],
+        "seo": {
+          "title": "Electrical Fault Finding & Safety Testing Sydney | Professional Diagnosis",
+          "description": "Electrical fault finding and safety testing in Sydney. Professional diagnosis, compliance inspections, safety reports. Fast, reliable service."
+        }
+      }
+    ],
+    "locations": [
+      {
+        "slug": "parramatta",
+        "suburb": "Parramatta",
+        "state": "NSW",
+        "intro": "Parramatta is one of Sydney's major business and residential hubs, and Gold Electrical Services is proud to serve this vibrant community with reliable electrical service. From the commercial heart around Church Street to residential suburbs nearby, we have completed countless jobs across Parramatta. We understand the electrical challenges of this growing area—busy commercial premises, older residential stock mixed with modern renovations, and the need for quick, reliable service. Whether you need emergency repairs, renovation work for your Parramatta home, or solar installation, we're your local electricians.",
+        "body": "Parramatta's diverse electrical needs span commercial office buildings, retail premises, residential homes, and heritage properties. Our experience across all these areas means we can handle any Parramatta electrical project professionally. We've installed solar systems on Parramatta roofs, rewired homes during renovations, upgraded switchboards in commercial buildings, and responded to emergencies across the suburb 24/7. Our local knowledge and quick response times make us the preferred choice for Parramatta residents and businesses needing electrical work done right.\n\nWe're familiar with Parramatta's building styles and electrical challenges—from Victorian homes with outdated wiring to modern apartments needing additional circuits and smart home integration. No matter your electrical need, we bring the same professionalism and reliability to every job.",
+        "landmarks": [
+          "Parramatta River",
+          "Church Street",
+          "Parramatta Park",
+          "Parramatta Stadium",
+          "Westfield Parramatta"
+        ],
+        "services_offered": [
+          "emergency-electrical-repairs",
+          "switchboard-upgrades",
+          "rewiring-renovations",
+          "lighting-installation",
+          "solar-battery-installation",
+          "ev-charger-installation",
+          "power-point-installation",
+          "fault-finding-testing"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "parra-faq-1",
+            "question": "How quickly can you respond to emergencies in Parramatta?",
+            "answer": "Parramatta is a major service area for us. We typically respond to emergencies in Parramatta within 1-2 hours. Call immediately and we'll dispatch the nearest available electrician."
+          },
+          {
+            "id": "parra-faq-2",
+            "question": "Do you service older Parramatta homes?",
+            "answer": "Yes, we specialise in upgrading older homes. Many Parramatta properties have outdated wiring that needs rewiring or switchboard upgrades. We handle these projects professionally and safely."
+          },
+          {
+            "id": "parra-faq-3",
+            "question": "Are you available for commercial work in Parramatta?",
+            "answer": "Absolutely. We service retail, office, and commercial premises throughout Parramatta. We can arrange work after hours if needed for businesses."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Parramatta | 24/7 Emergency Service NSW",
+          "description": "Licensed electrician in Parramatta, NSW. 24/7 emergency electrical service, switchboard upgrades, solar installation, renovations. Local fast response."
+        }
+      },
+      {
+        "slug": "penrith",
+        "suburb": "Penrith",
+        "state": "NSW",
+        "intro": "Penrith is one of Sydney's fastest-growing regions, and Gold Electrical Services is proud to serve this expanding community. Located in western Sydney, Penrith combines rural and suburban areas with growing commercial development. We've worked across Penrith for years—from emergency repairs in residential areas to commercial installations and solar projects. Our team understands Penrith's unique needs: the mix of new construction and established homes, seasonal power demands, and the growing push toward solar and renewable energy. When you need electrical work in Penrith, we're your reliable local choice.",
+        "body": "Penrith's growth means increasing electrical demands—from new housing estates needing full electrical installation to established homes upgrading systems and adding renewable energy. Our electricians have extensive Penrith experience and understand the suburb's electrical infrastructure. We've helped countless Penrith residents go solar, upgrade old switchboards, and handle emergencies. We're available 24/7 for emergencies and offer competitive fixed pricing for planned work.\n\nWhether you're a new Penrith resident upgrading your electrical system, a builder needing renovation electrician support, or a business expanding facilities, we have the expertise and local knowledge to deliver professional results on time and on budget.",
+        "landmarks": [
+          "Penrith City Centre",
+          "Penrith Whitewater Stadium",
+          "Nepean River",
+          "Penrith Lakes",
+          "St Marys Shopping Centre"
+        ],
+        "services_offered": [
+          "emergency-electrical-repairs",
+          "switchboard-upgrades",
+          "rewiring-renovations",
+          "lighting-installation",
+          "solar-battery-installation",
+          "ev-charger-installation",
+          "power-point-installation",
+          "fault-finding-testing"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "penrith-faq-1",
+            "question": "Do you service both Penrith and surrounding western suburbs?",
+            "answer": "Yes, we service Penrith and surrounding areas across western Sydney. We're familiar with the region and can respond quickly to emergencies across the wider area."
+          },
+          {
+            "id": "penrith-faq-2",
+            "question": "Is solar popular in Penrith?",
+            "answer": "Very! Penrith has excellent solar potential and many residents are making the switch to solar. We've installed solar systems across Penrith and can guide you through the process."
+          },
+          {
+            "id": "penrith-faq-3",
+            "question": "Can you help with electrical work for new builds?",
+            "answer": "Yes, we work with builders and developers on new residential projects. We can handle full electrical installation for new homes and estates."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Penrith | 24/7 Emergency Service NSW",
+          "description": "Licensed electrician in Penrith, NSW. 24/7 emergencies, switchboard upgrades, solar installation, new builds. Local experienced service."
+        }
+      },
+      {
+        "slug": "central-sydney",
+        "suburb": "Central Sydney",
+        "state": "NSW",
+        "intro": "Central Sydney—from the CBD through to inner suburbs like Surry Hills, Darlinghurst, and Paddington—is a dynamic mix of heritage buildings, modern apartments, and busy commercial spaces. Gold Electrical Services has extensive experience across central Sydney's unique electrical challenges. We handle emergency calls in the CBD, manage large commercial projects in office towers, and specialise in apartment and heritage renovations. Our 24/7 emergency service means Sydney's city centre always has a reliable electrician on call.",
+        "body": "Central Sydney's electrical needs are complex and varied. Heritage buildings require careful electrical work respecting original features. Modern apartments demand efficient electrical systems and smart home integration. Commercial spaces need robust, compliant electrical infrastructure. We've managed all these challenges across countless central Sydney projects. Our electricians work nights and weekends for commercial clients, maintain strict safety protocols for heritage work, and provide the fast response central Sydney emergencies demand.\n\nWhether you're a resident in an inner-city apartment needing renovation work, a business needing commercial electrical support, or managing a heritage property, we bring the expertise and professionalism central Sydney requires.",
+        "landmarks": [
+          "Sydney CBD",
+          "Circular Quay",
+          "Sydney Harbour Bridge",
+          "Paddington Markets",
+          "Darlinghurst"
+        ],
+        "services_offered": [
+          "emergency-electrical-repairs",
+          "switchboard-upgrades",
+          "rewiring-renovations",
+          "lighting-installation",
+          "solar-battery-installation",
+          "ev-charger-installation",
+          "power-point-installation",
+          "fault-finding-testing"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "cbd-faq-1",
+            "question": "Do you handle heritage electrical work?",
+            "answer": "Yes, we have experience with heritage properties and understand the special requirements for maintaining heritage features while modernising electrical systems safely."
+          },
+          {
+            "id": "cbd-faq-2",
+            "question": "Can you work after hours in the CBD?",
+            "answer": "Absolutely. We regularly work evenings, nights, and weekends for commercial and office clients to minimize business disruption."
+          },
+          {
+            "id": "cbd-faq-3",
+            "question": "How do you handle emergencies in busy central areas?",
+            "answer": "We maintain multiple mobile units across central Sydney for fast emergency response. Call us immediately and we'll dispatch the nearest available electrician."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Central Sydney | CBD & Inner Suburbs Service",
+          "description": "Licensed electrician in central Sydney, CBD, Surry Hills, Paddington. 24/7 emergencies, commercial work, heritage properties, apartments."
+        }
+      },
+      {
+        "slug": "north-sydney",
+        "suburb": "North Sydney",
+        "state": "NSW",
+        "intro": "North Sydney is a thriving commercial and residential hub across Sydney Harbour from the CBD. This prosperous area combines modern office buildings, residential towers, and established homes. Gold Electrical Services is your local electrician across North Sydney and the lower North Shore. We've completed commercial projects in North Sydney's business district, renovations in residential areas, and emergency repairs across the suburb. Our proximity to North Sydney means fast response times for emergencies and reliable service for all your electrical needs.",
+        "body": "North Sydney's commercial hub demands professional electrical expertise for office buildings, data centres, and retail spaces. Meanwhile, residential areas across the lower North Shore have diverse electrical needs from modern apartments to established family homes. We've handled complex commercial projects, managed apartment block upgrades, and responded to residential emergencies across North Sydney. Our team understands the suburb's unique blend of commercial and residential electrical requirements and can service both efficiently.\n\nWe pride ourselves on understanding North Sydney's character and delivering the professional, reliable electrical service this quality area demands.",
+        "landmarks": [
+          "North Sydney Oval",
+          "Milsons Point",
+          "Blues Point Tower",
+          "North Sydney CBD",
+          "Cremorne Point"
+        ],
+        "services_offered": [
+          "emergency-electrical-repairs",
+          "switchboard-upgrades",
+          "rewiring-renovations",
+          "lighting-installation",
+          "solar-battery-installation",
+          "ev-charger-installation",
+          "power-point-installation",
+          "fault-finding-testing"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "nsyd-faq-1",
+            "question": "Do you service North Sydney's commercial areas?",
+            "answer": "Yes, we handle commercial electrical work across North Sydney's business district. We can arrange work schedules around business hours and minimize disruption."
+          },
+          {
+            "id": "nsyd-faq-2",
+            "question": "Can you help with apartment block electrical upgrades?",
+            "answer": "Absolutely. We have experience upgrading electrical systems in apartment buildings, managing work with minimal resident disruption."
+          },
+          {
+            "id": "nsyd-faq-3",
+            "question": "How fast can you respond to North Sydney emergencies?",
+            "answer": "North Sydney is a priority service area for us. We typically respond to emergencies within 1 hour. Call immediately for fastest response."
+          }
+        ],
+        "seo": {
+          "title": "Electrician North Sydney | Commercial & Residential Service",
+          "description": "Licensed electrician in North Sydney, NSW. Commercial, residential, apartments. 24/7 emergency service, fast response, professional work."
+        }
+      },
+      {
+        "slug": "inner-west",
+        "suburb": "Inner West",
+        "state": "NSW",
+        "intro": "The Inner West—spanning suburbs like Marrickville, Dulwich Hill, Stanmore, and Newtown—is a vibrant community of diverse homes, small businesses, and active residents. Gold Electrical Services has deep roots in the Inner West, having completed countless renovations, emergency repairs, and installations across these characterful suburbs. We understand the Inner West's unique mix of character homes needing upgrades, small businesses requiring reliable electrical support, and residents passionate about sustainable energy. We're your local Inner West electrician.",
+        "body": "The Inner West's character homes often feature older electrical systems needing careful upgrading. We've rewired countless weatherboard homes, upgraded switchboards in converted terraces, and added modern circuits to character properties while respecting their charm. We're also familiar with the Inner West's commercial scene—cafes, studios, and small businesses that need reliable electrical support. Many Inner West residents are passionate about renewable energy, and we've installed solar systems across the region.\n\nWe're not just electricians to the Inner West—we're members of this community. We understand the area's values, its character, and its electrical needs. We deliver the professional, reliable service Inner West residents expect.",
+        "landmarks": [
+          "Marrickville Markets",
+          "Sydney Park",
+          "Newtown Station",
+          "Enmore Theatre",
+          "Stanmore Pool"
+        ],
+        "services_offered": [
+          "emergency-electrical-repairs",
+          "switchboard-upgrades",
+          "rewiring-renovations",
+          "lighting-installation",
+          "solar-battery-installation",
+          "ev-charger-installation",
+          "power-point-installation",
+          "fault-finding-testing"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "iw-faq-1",
+            "question": "Do you specialise in character home electrical work?",
+            "answer": "Yes! We have extensive experience upgrading electrical systems in older character homes while respecting original features and charm."
+          },
+          {
+            "id": "iw-faq-2",
+            "question": "Are solar installations popular in the Inner West?",
+            "answer": "Very popular! Many Inner West residents value sustainability, and solar is a great investment. We've installed systems across the region."
+          },
+          {
+            "id": "iw-faq-3",
+            "question": "Can you work on small business electrical needs?",
+            "answer": "Absolutely. We service small retail, cafes, studios, and service businesses throughout the Inner West. We understand the needs of small business."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Inner West Sydney | Local Service for Marrickville, Newtown",
+          "description": "Licensed electrician in Inner West Sydney. Character homes, renovations, solar, small business. 24/7 emergency service, local expertise."
+        }
+      },
+      {
+        "slug": "eastern-suburbs",
+        "suburb": "Eastern Suburbs",
+        "state": "NSW",
+        "intro": "The Eastern Suburbs—from Clovelly and Tamarama through to Bondi, Coogee, and Waverley—are among Sydney's most desirable residential areas. These affluent, beachside communities demand high-quality electrical work from professionals who understand their standards. Gold Electrical Services is the preferred electrician across the Eastern Suburbs, delivering premium service for luxury homes, beachfront properties, and renovations. We've completed countless projects from major renovations to smart home integrations across these prestigious suburbs.",
+        "body": "Eastern Suburbs homes are often substantial, featuring modern or renovated interiors requiring sophisticated electrical systems. We've handled major renovation projects, smart home installations, heating and cooling electrical work, and premium lighting design across Bondi, Coogee, and surrounding suburbs. We understand the high expectations Eastern Suburbs residents have for quality and reliability, and we deliver exceptional service on every project.\n\nOur electricians are experienced with premium electrical work, modern technology integration, and the sophisticated projects common in Eastern Suburbs homes. Whether you're renovating a beachfront property, adding smart home features, or upgrading a luxury apartment, we bring the expertise and attention to detail this market demands.",
+        "landmarks": [
+          "Bondi Beach",
+          "Coogee Beach",
+          "Tamarama Beach",
+          "Bondi Icebergs",
+          "Waverley Cemetery"
+        ],
+        "services_offered": [
+          "emergency-electrical-repairs",
+          "switchboard-upgrades",
+          "rewiring-renovations",
+          "lighting-installation",
+          "solar-battery-installation",
+          "ev-charger-installation",
+          "power-point-installation",
+          "fault-finding-testing"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "es-faq-1",
+            "question": "Do you handle luxury home renovations?",
+            "answer": "Yes, we specialise in premium renovation electrical work for high-end homes. We understand the standards and details expected in Eastern Suburbs properties."
+          },
+          {
+            "id": "es-faq-2",
+            "question": "Can you integrate smart home technology?",
+            "answer": "Absolutely. We install smart lighting, smart outlets, automated systems, and home technology integration for modern Eastern Suburbs homes."
+          },
+          {
+            "id": "es-faq-3",
+            "question": "Are you experienced with heritage coastal properties?",
+            "answer": "Yes, we handle heritage and character properties across the Eastern Suburbs, managing upgrades respectfully while ensuring modern safety and functionality."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Eastern Suburbs Sydney | Bondi, Coogee, Waverley",
+          "description": "Premium electrician in Eastern Suburbs Sydney. Bondi, Coogee, luxury homes, renovations, smart home installation. Professional, reliable service."
+        }
+      },
+      {
+        "slug": "south-sydney",
+        "suburb": "South Sydney",
+        "state": "NSW",
+        "intro": "South Sydney—spanning suburbs from Kogarah and Kingsford through to Cronulla—covers a large area with diverse electrical needs. From beach communities to established residential suburbs, Gold Electrical Services has extensive South Sydney experience. We've completed emergency repairs, renovations, solar installations, and commercial work across the region. Our local knowledge and established relationships mean we understand South Sydney's unique electrical landscape and can deliver reliable service across these diverse communities.",
+        "body": "South Sydney's mix of established residential properties, newer developments, and commercial areas requires diverse electrical expertise. We've upgraded outdated systems in older homes, installed solar across the region's sunny suburbs, responded to emergencies from Kogarah to Cronulla, and supported local businesses with reliable electrical service. We understand South Sydney residents' needs—from reliable everyday service to professional renovation work and sustainable energy solutions.\n\nOur team has completed hundreds of jobs across South Sydney and maintains the local relationships and understanding that ensure great service. Whether you need an emergency repair, renovation electrical work, or solar installation, we're your South Sydney electrician.",
+        "landmarks": [
+          "Cronulla Beach",
+          "Kogarah Shopping Centre",
+          "Kingsford Station",
+          "Southland Shopping Centre",
+          "Port Hacking"
+        ],
+        "services_offered": [
+          "emergency-electrical-repairs",
+          "switchboard-upgrades",
+          "rewiring-renovations",
+          "lighting-installation",
+          "solar-battery-installation",
+          "ev-charger-installation",
+          "power-point-installation",
+          "fault-finding-testing"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "ss-faq-1",
+            "question": "Do you service all South Sydney suburbs from Kogarah to Cronulla?",
+            "answer": "Yes, we service the entire South Sydney region. We maintain mobile teams across the area for fast emergency response."
+          },
+          {
+            "id": "ss-faq-2",
+            "question": "Is solar popular in South Sydney?",
+            "answer": "Definitely! South Sydney's sunny beaches and suburban areas are ideal for solar. We've installed many systems across the region."
+          },
+          {
+            "id": "ss-faq-3",
+            "question": "Can you help with older South Sydney homes?",
+            "answer": "Yes, many South Sydney homes have older electrical systems. We specialise in safely upgrading these systems for modern safety and capacity."
+          }
+        ],
+        "seo": {
+          "title": "Electrician South Sydney | Kogarah, Cronulla & Beyond",
+          "description": "Licensed electrician in South Sydney, NSW. Kogarah, Cronulla, emergencies, solar, renovations. 24/7 service, local expertise."
+        }
+      },
+      {
+        "slug": "hills-district",
+        "suburb": "Hills District",
+        "state": "NSW",
+        "intro": "The Hills District—encompassing suburbs like Baulkham Hills, Castle Hill, and Pennant Hills—is a growing residential area with established homes and new developments. Gold Electrical Services serves the entire Hills District with reliable, professional electrical service. We understand the Hills District's mix of older established properties and newer estates, and we're equipped to handle any electrical project. From emergency repairs to major renovations and solar installations, we're your trusted Hills District electrician.",
+        "body": "The Hills District's growth and mix of home types means diverse electrical needs. We've handled emergency repairs in established areas, managed electrical installation in new estates, installed solar systems on Hills District properties, and completed countless renovation projects. Our electricians understand the suburb's building patterns and infrastructure, allowing us to respond quickly and efficiently. We're available 24/7 for emergencies and offer fixed quotes for planned work.\n\nWhether you're an established Hills District resident upgrading your home's electrical system, building a new property, or running a business in the area, we bring professional expertise and local knowledge to every project.",
+        "landmarks": [
+          "Baulkham Hills Shopping Centre",
+          "Castle Towers",
+          "Australian Botanic Garden",
+          "Pennant Hills Park",
+          "Hills Centre"
+        ],
+        "services_offered": [
+          "emergency-electrical-repairs",
+          "switchboard-upgrades",
+          "rewiring-renovations",
+          "lighting-installation",
+          "solar-battery-installation",
+          "ev-charger-installation",
+          "power-point-installation",
+          "fault-finding-testing"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "hd-faq-1",
+            "question": "Do you service new estate electrical work in Hills District?",
+            "answer": "Yes, we work with builders and developers on new residential projects. We handle complete electrical installation for new homes in Hills District estates."
+          },
+          {
+            "id": "hd-faq-2",
+            "question": "Are there good solar opportunities in the Hills District?",
+            "answer": "Yes, Hills District has good solar potential. We've installed many systems across the area and can assess your specific property."
+          },
+          {
+            "id": "hd-faq-3",
+            "question": "How quickly can you respond in the Hills District?",
+            "answer": "We maintain mobile units across the Hills District. We typically respond to emergencies within 1-2 hours depending on your location."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Hills District | Baulkham Hills, Castle Hill & Surrounds",
+          "description": "Licensed electrician in Hills District, NSW. Baulkham Hills, Castle Hill, emergencies, solar, renovations. 24/7 service, local expertise."
+        }
+      },
+      {
+        "slug": "sutherland-shire",
+        "suburb": "Sutherland Shire",
+        "state": "NSW",
+        "intro": "Sutherland Shire—spanning from Sutherland through Caringbah, Cronulla, and beyond—is a desirable southern Sydney area with diverse residential and commercial electrical needs. Gold Electrical Services has extensive experience across Sutherland Shire, having completed emergency repairs, renovations, solar installations, and commercial work throughout the region. Our team understands the Shire's character and can deliver reliable, professional electrical service for homes and businesses across the area.",
+        "body": "Sutherland Shire's established homes, newer developments, and commercial areas create diverse electrical demands. We've upgraded older systems, installed modern electrical infrastructure in new homes, managed solar projects across the sunny Shire, and provided reliable commercial support. Our electricians understand Sutherland Shire's community and infrastructure, enabling quick response and professional service.\n\nWhether you're a Sutherland Shire resident, business owner, or building contractor, we deliver the professional electrical service the Shire deserves. Available 24/7 for emergencies and competitive for planned work.",
+        "landmarks": [
+          "Sutherland Shire Council",
+          "Menai Flora Reserve",
+          "Cronulla Beach",
+          "Sutherland Shopping Centre",
+          "Port Hacking"
+        ],
+        "services_offered": [
+          "emergency-electrical-repairs",
+          "switchboard-upgrades",
+          "rewiring-renovations",
+          "lighting-installation",
+          "solar-battery-installation",
+          "ev-charger-installation",
+          "power-point-installation",
+          "fault-finding-testing"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "ss-shire-faq-1",
+            "question": "Do you service the entire Sutherland Shire?",
+            "answer": "Yes, we service Sutherland, Caringbah, Cronulla, and the surrounding Shire. We maintain mobile units across the region."
+          },
+          {
+            "id": "ss-shire-faq-2",
+            "question": "Is solar worth installing in Sutherland Shire?",
+            "answer": "Absolutely. Sutherland Shire has excellent solar potential. We can assess your property and show you potential savings."
+          },
+          {
+            "id": "ss-shire-faq-3",
+            "question": "Do you work with Shire builders and developers?",
+            "answer": "Yes, we work with builders and developers on residential and commercial projects throughout Sutherland Shire."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Sutherland Shire | Southern Sydney Service",
+          "description": "Licensed electrician in Sutherland Shire, NSW. Emergencies, solar, renovations, commercial work. 24/7 service, local expertise."
+        }
+      }
+    ],
+    "service_areas": [
+      {
+        "slug": "emergency-repairs-parramatta",
+        "service_slug": "emergency-electrical-repairs",
+        "service_title": "Emergency Electrical Repairs",
+        "suburb": "Parramatta",
+        "headline": "24/7 Emergency Electrician in Parramatta",
+        "body": "Electrical emergencies can happen anytime, and when they do, you need immediate professional help. Gold Electrical Services provides 24/7 emergency electrical repair service across Parramatta. Power outages, blown switchboards, dangerous faults, or any electrical emergency—call us immediately and we'll dispatch an electrician quickly.\n\nParramatta is a priority service area for us. We maintain mobile units and crews ready to respond to emergencies across Parramatta and nearby areas. We understand the urgency of electrical problems and pride ourselves on fast response times. Our licensed electricians diagnose problems quickly and implement safe, permanent solutions. Whether you're a Parramatta home or business owner, we're here for emergencies 24/7.",
+        "benefits": [
+          "Immediate 24/7 response to Parramatta emergencies",
+          "Mobile-equipped licensed electricians",
+          "Fast diagnosis and permanent solutions",
+          "Experienced with Parramatta's building mix",
+          "Professional safety-first approach",
+          "Transparent pricing for emergency work"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "emerg-parra-faq-1",
+            "question": "How quickly will an electrician arrive in Parramatta?",
+            "answer": "We aim for 1-2 hour response across Parramatta. Call immediately and we'll dispatch the nearest available electrician from our Parramatta-based team."
+          },
+          {
+            "id": "emerg-parra-faq-2",
+            "question": "What if my power is completely out in Parramatta?",
+            "answer": "Call us immediately. We'll troubleshoot over the phone and dispatch an electrician if it's a problem at your property. We can also check if it's a wider area outage."
+          },
+          {
+            "id": "emerg-parra-faq-3",
+            "question": "Do you charge extra for emergency calls?",
+            "answer": "Yes, emergency call-out fees apply outside business hours. We'll provide a clear quote including the call-out fee and any repair costs."
+          }
+        ],
+        "seo": {
+          "title": "24/7 Emergency Electrician Parramatta | Immediate Response",
+          "description": "Emergency electrical repairs in Parramatta, NSW. 24/7 response, power outages, faults, safety issues. Fast licensed electricians."
+        }
+      },
+      {
+        "slug": "switchboard-upgrade-north-sydney",
+        "service_slug": "switchboard-upgrades",
+        "service_title": "Switchboard Upgrades",
+        "suburb": "North Sydney",
+        "headline": "Switchboard Upgrade & Installation in North Sydney",
+        "body": "An outdated or overloaded switchboard limits your home or business electrical capacity and poses safety risks. Modern switchboard upgrades are essential for safety, additional circuits, and appliance reliability. Gold Electrical Services specialises in switchboard upgrades across North Sydney, from residential homes to commercial premises.\n\nWe assess your current system, recommend the right solution for your needs, and handle the complete upgrade professionally. North Sydney's mix of modern and established buildings means we have experience with all switchboard types. We'll upgrade your system to current safety standards, test thoroughly, and provide full compliance documentation. Your new switchboard will be safe, reliable, and ready for modern electrical demands.",
+        "benefits": [
+          "Upgrade to modern circuit breaker systems",
+          "Increased circuit capacity for North Sydney homes/businesses",
+          "Full compliance with current Australian electrical standards",
+          "Enhanced safety with surge protection",
+          "Professional installation with testing",
+          "Formal certification and documentation"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "switch-nsyd-faq-1",
+            "question": "Do North Sydney homes often need switchboard upgrades?",
+            "answer": "Many North Sydney properties have older boards. Commercial buildings especially often need upgrades for capacity. We assess each installation and advise whether upgrade is needed."
+          },
+          {
+            "id": "switch-nsyd-faq-2",
+            "question": "Can you upgrade a switchboard in a North Sydney apartment building?",
+            "answer": "Yes, we have experience upgrading building switchboards. We coordinate with strata management and minimize resident disruption."
+          },
+          {
+            "id": "switch-nsyd-faq-3",
+            "question": "How long is a switchboard upgrade in North Sydney?",
+            "answer": "Most residential upgrades take 1-2 days. Commercial upgrades may take longer. We'll schedule at your convenience and keep you informed."
+          }
+        ],
+        "seo": {
+          "title": "Switchboard Upgrade North Sydney | Modern Safety Installation",
+          "description": "Switchboard upgrade and installation in North Sydney. Commercial and residential. Increase capacity, ensure safety, modern systems."
+        }
+      },
+      {
+        "slug": "solar-installation-eastern-suburbs",
+        "service_slug": "solar-battery-installation",
+        "service_title": "Solar & Battery Systems",
+        "suburb": "Eastern Suburbs",
+        "headline": "Solar Panels & Battery Installation in Eastern Suburbs",
+        "body": "Eastern Suburbs homes with modern designs and substantial roofs are ideal for solar installation. Cut your electricity bills and increase your home value with professional solar systems from Gold Electrical Services. We're CEC-accredited solar installers serving the Eastern Suburbs with expertise in premium residential installations.\n\nOur solar experts assess your roof, design a system matched to your home and energy usage, and handle complete installation with full certification. We source quality panels and inverters, manage all permits and grid connection, and help you maximize government rebates. Battery storage options are available to increase energy independence. Eastern Suburbs residents trust Gold Electrical for professional solar installation.",
+        "benefits": [
+          "CEC-accredited professional installation",
+          "Significant electricity bill savings",
+          "Eligible for government rebates and incentives",
+          "Increases Eastern Suburbs home value",
+          "Battery storage for energy independence",
+          "Professional warranties and support"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "solar-es-faq-1",
+            "question": "How much do solar panels cost for an Eastern Suburbs home?",
+            "answer": "Costs depend on system size and quality. A typical 5-8kW system for an Eastern Suburbs home costs $8,000-$14,000 after government rebates. We provide detailed quotes."
+          },
+          {
+            "id": "solar-es-faq-2",
+            "question": "Are Eastern Suburbs roofs suitable for solar?",
+            "answer": "Most Eastern Suburbs homes have good solar potential. We assess your specific roof orientation, shading, and design. Contact us for a free assessment."
+          },
+          {
+            "id": "solar-es-faq-3",
+            "question": "Can I add battery storage later?",
+            "answer": "Yes, your solar system can be upgraded with batteries later. We design systems with this upgrade path in mind."
+          }
+        ],
+        "seo": {
+          "title": "Solar Panels & Battery Installation Eastern Suburbs | CEC Accredited",
+          "description": "Professional solar panel and battery installation in Eastern Suburbs, Sydney. CEC accredited, government rebates, expert design and installation."
+        }
+      },
+      {
+        "slug": "rewiring-inner-west",
+        "service_slug": "rewiring-renovations",
+        "service_title": "Rewiring & Renovations",
+        "suburb": "Inner West",
+        "headline": "House Rewiring & Electrical Renovations in Inner West",
+        "body": "Inner West character homes often feature outdated wiring that needs careful upgrading. Whether you're planning a full renovation or need a complete rewire for safety, Gold Electrical Services handles all electrical work with respect for your home's character. We've rewired countless Inner West weatherboard and brick homes, coordinating with builders and preserving the features you love.\n\nOur electricians understand Inner West renovation styles. We plan cable routes to minimize wall damage, run wiring through existing cavities where possible, and match new electrical features to your home's aesthetic. Your renovated Inner West home will be electrically safe, functional, and beautiful.",
+        "benefits": [
+          "Complete rewiring for older Inner West homes",
+          "Careful installation respecting home character",
+          "Modern wiring for safety and capacity",
+          "Coordination with renovation builders",
+          "Minimal wall disruption and proper making good",
+          "Full compliance and certification"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "renov-iw-faq-1",
+            "question": "How do you rewire a character home without damaging it?",
+            "answer": "We plan cable routes carefully, run wiring through existing cavities and roof spaces, and minimize wall opening. We make good any openings professionally."
+          },
+          {
+            "id": "renov-iw-faq-2",
+            "question": "Should I rewire during renovation or separately?",
+            "answer": "Coordinating with renovation is ideal. New wiring is easier before walls are fully completed. We coordinate timing with your builder."
+          },
+          {
+            "id": "renov-iw-faq-3",
+            "question": "What's typical cost for Inner West house rewiring?",
+            "answer": "Costs depend on house size and complexity. We provide fixed quotes after assessment. Budget $2,000-$6,000 for typical Inner West home rewiring."
+          }
+        ],
+        "seo": {
+          "title": "House Rewiring Inner West | Character Home Electrical Work",
+          "description": "House rewiring and renovation electrical work in Inner West Sydney. Character homes, safe modern wiring, professional installation."
+        }
+      },
+      {
+        "slug": "ev-charger-penrith",
+        "service_slug": "ev-charger-installation",
+        "service_title": "EV Charger Installation",
+        "suburb": "Penrith",
+        "headline": "Home EV Charger Installation in Penrith",
+        "body": "Electric vehicles are becoming popular in Penrith, and home charging makes EV ownership practical and economical. Installing a Level 2 home charger in Penrith means you can charge your EV overnight, avoid petrol expenses, and enjoy convenient car ownership. Gold Electrical Services installs quality EV charging stations for Penrith homes and businesses.\n\nWe assess your electrical system, recommend the right charger for your vehicle and location, and handle professional installation with testing. Most Penrith homes can accommodate home EV charging with minimal electrical work. We'll ensure your charger is properly installed, safe, and ready to charge your vehicle efficiently.",
+        "benefits": [
+          "Overnight EV charging at home in Penrith",
+          "No more petrol station visits—charge at home",
+          "Significant fuel cost savings vs petrol",
+          "Safe, professionally installed systems",
+          "Compatible with all EV brands",
+          "Future-proofs your Penrith home"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "ev-penrith-faq-1",
+            "question": "How much does EV charger installation cost in Penrith?",
+            "answer": "Installation typically costs $1,200-$2,500 depending on electrical work needed. Consider fuel savings—most EV owners save substantially on fuel."
+          },
+          {
+            "id": "ev-penrith-faq-2",
+            "question": "Will my Penrith home electrical system support a charger?",
+            "answer": "Most homes can support EV charging. We assess your system and advise if any upgrades are needed. Many Penrith homes need minimal work."
+          },
+          {
+            "id": "ev-penrith-faq-3",
+            "question": "Can you install chargers for multi-unit properties in Penrith?",
+            "answer": "Yes, we install chargers for townhouses and apartments. We work with strata and landlords to find suitable solutions."
+          }
+        ],
+        "seo": {
+          "title": "EV Charger Installation Penrith | Home Charging Station",
+          "description": "EV charger installation for homes in Penrith, NSW. Level 2 chargers, safe installation, all EV brands compatible. Professional service."
+        }
+      },
+      {
+        "slug": "lighting-central-sydney",
+        "service_slug": "lighting-installation",
+        "service_title": "Lighting Installation",
+        "suburb": "Central Sydney",
+        "headline": "Professional Lighting Installation in Central Sydney",
+        "body": "Whether you're upgrading to modern LED lighting, adding downlights to your Central Sydney apartment, or installing outdoor lighting for entertaining, professional lighting installation transforms your space. Gold Electrical Services provides complete lighting solutions for Central Sydney homes and businesses—from energy-efficient LED systems to smart home lighting control.\n\nOur electricians design lighting layouts that work functionally and aesthetically. We handle indoor downlights, accent lighting, outdoor entertainment lighting, and smart lighting systems. Central Sydney's mix of heritage and modern properties means we have experience with all lighting styles and installation challenges.",
+        "benefits": [
+          "Modern LED lighting reduces electricity costs",
+          "Professional design for function and aesthetics",
+          "Downlights, ambient, and outdoor options",
+          "Smart home lighting control available",
+          "Safe, compliant professional installation",
+          "Expert guidance for every room"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "light-cbd-faq-1",
+            "question": "Can I install downlights in my Central Sydney apartment?",
+            "answer": "Yes, downlights are popular in Sydney apartments. Installation depends on your ceiling type and building requirements. We advise on the best approach."
+          },
+          {
+            "id": "light-cbd-faq-2",
+            "question": "How much do LED lighting upgrades cost?",
+            "answer": "Costs depend on the number of lights and type. LED upgrades are very cost-effective given energy savings. We provide quotes based on your specific needs."
+          },
+          {
+            "id": "light-cbd-faq-3",
+            "question": "Can I control lighting with smart home apps?",
+            "answer": "Yes, many modern LED systems integrate with smart home control. We can install systems compatible with your devices and preferences."
+          }
+        ],
+        "seo": {
+          "title": "Lighting Installation Central Sydney | LED & Smart Home",
+          "description": "Professional lighting installation in Central Sydney. LED upgrades, downlights, outdoor lighting, smart home control. Expert design and installation."
+        }
+      },
+      {
+        "slug": "power-points-south-sydney",
+        "service_slug": "power-point-installation",
+        "service_title": "Power Point Installation",
+        "suburb": "South Sydney",
+        "headline": "Power Point & Outlet Installation in South Sydney",
+        "body": "Need more outlets in your South Sydney home? Running extension cords across rooms is unsafe and inconvenient. New power point installation adds outlets exactly where you need them—kitchens, bedrooms, offices, or outdoors. Gold Electrical Services installs power points safely across South Sydney, whether you need standard outlets, USB-integrated outlets, or smart home options.\n\nWe run electrical cable safely through walls, install modern outlets that blend with your décor, and ensure everything meets electrical safety standards. More outlets means safer homes, better functionality, and modern living convenience.",
+        "benefits": [
+          "Add outlets anywhere in your South Sydney home",
+          "Eliminate dangerous extension cords",
+          "USB-integrated outlets for device charging",
+          "Smart outlets for remote control",
+          "Safe, code-compliant installation",
+          "Improved functionality and safety"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "power-ss-faq-1",
+            "question": "How many new outlets should I install in South Sydney?",
+            "answer": "Assess your current usage and plan future needs. Kitchens, home offices, and bedrooms typically need additional outlets. We advise based on your space and needs."
+          },
+          {
+            "id": "power-ss-faq-2",
+            "question": "Can you install outlets on kitchen benchtops?",
+            "answer": "Yes, kitchen benchtop outlets are essential for appliances and charging. We space them conveniently at appropriate heights."
+          },
+          {
+            "id": "power-ss-faq-3",
+            "question": "Will installation require wall cutting?",
+            "answer": "Usually we minimize wall opening by running cable through existing cavities. We always aim for minimal disruption and make good any access points."
+          }
+        ],
+        "seo": {
+          "title": "Power Point Installation South Sydney | New Outlets & USB",
+          "description": "Power point and outlet installation in South Sydney, NSW. New outlets, USB charging, smart outlets. Professional, safe installation."
+        }
+      },
+      {
+        "slug": "fault-finding-hills-district",
+        "service_slug": "fault-finding-testing",
+        "service_title": "Fault Finding & Testing",
+        "suburb": "Hills District",
+        "headline": "Electrical Fault Finding & Safety Testing in Hills District",
+        "body": "Strange electrical behaviour in your Hills District home—flickering lights, warm outlets, burning smells—suggests a fault needing professional investigation. Gold Electrical Services provides expert fault finding and safety testing for Hills District residents. We use professional diagnostic equipment to identify problems accurately and recommend safe solutions.\n\nWe also conduct safety testing and compliance inspections for house sales, rental audits, or peace of mind. Our detailed reports document any faults, safety risks, and recommended solutions so you understand exactly what needs fixing.",
+        "benefits": [
+          "Expert fault diagnosis with professional testing",
+          "Safety assessment and hazard identification",
+          "Detailed reports with recommendations",
+          "Compliance testing for house sales/rentals",
+          "Peace of mind knowing electrical status",
+          "Prevent appliance damage and fires"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "fault-hd-faq-1",
+            "question": "What does fault finding cost in Hills District?",
+            "answer": "Fault-finding consultations start from $250 including testing and diagnosis. Complex faults may require more investigation. Credits toward repair costs are available."
+          },
+          {
+            "id": "fault-hd-faq-2",
+            "question": "Do I need safety testing for a house sale in Hills District?",
+            "answer": "It's not legally required in NSW, but many buyers request it. A pre-sale inspection gives confidence and can speed up sales."
+          },
+          {
+            "id": "fault-hd-faq-3",
+            "question": "How long does safety testing take?",
+            "answer": "A standard inspection takes 1-2 hours depending on house size. We provide a detailed written report afterward."
+          }
+        ],
+        "seo": {
+          "title": "Electrical Fault Finding & Testing Hills District | Professional Service",
+          "description": "Electrical fault finding and safety testing in Hills District, NSW. Professional diagnosis, compliance inspections, safety reports."
+        }
+      },
+      {
+        "slug": "solar-penrith",
+        "service_slug": "solar-battery-installation",
+        "service_title": "Solar & Battery Systems",
+        "suburb": "Penrith",
+        "headline": "Solar Panel & Battery Installation in Penrith",
+        "body": "Penrith's sunny climate makes it ideal for solar installation. Reduce your electricity bills significantly while increasing your home value with professional solar systems from Gold Electrical Services. We're CEC-accredited solar installers with extensive Penrith experience.\n\nOur experts assess your property, design a system matched to your energy needs and budget, and handle complete installation. We manage permits, grid connection, and help you access government rebates. Battery storage options are available for maximum energy independence. Penrith residents trust Gold Electrical for professional solar installation.",
+        "benefits": [
+          "CEC-accredited professional installation",
+          "Excellent Penrith solar potential",
+          "Major electricity bill savings",
+          "Government rebates and incentives",
+          "Battery storage options available",
+          "Increased home value"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "solar-penrith-faq-1",
+            "question": "What size solar system is right for a Penrith home?",
+            "answer": "Depends on your roof size and energy usage. We assess your situation and recommend optimal system size. Typical Penrith systems range 4-8kW."
+          },
+          {
+            "id": "solar-penrith-faq-2",
+            "question": "How quickly does solar pay for itself in Penrith?",
+            "answer": "Most systems pay back within 4-7 years. We provide detailed financial projections showing your specific savings."
+          },
+          {
+            "id": "solar-penrith-faq-3",
+            "question": "Can I start with solar and add batteries later?",
+            "answer": "Yes, we design systems with battery upgrade paths. Start with solar and add storage when it suits your budget."
+          }
+        ],
+        "seo": {
+          "title": "Solar Panel Installation Penrith | CEC Accredited Professional",
+          "description": "Professional solar panel and battery installation in Penrith, NSW. CEC accredited, government rebates, expert design and installation."
+        }
+      },
+      {
+        "slug": "rewiring-parramatta",
+        "service_slug": "rewiring-renovations",
+        "service_title": "Rewiring & Renovations",
+        "suburb": "Parramatta",
+        "headline": "House Rewiring & Electrical Renovation Work in Parramatta",
+        "body": "Parramatta homes range from Victorian heritage properties to modern family residences, all with different electrical needs. Whether you're renovating a character home or need a complete rewire, Gold Electrical Services handles all electrical renovation work professionally. We've completed hundreds of renovation projects across Parramatta, coordinating seamlessly with builders and respecting your home's character.\n\nOur electricians assess your renovation plans, design electrical layouts matching your design vision, and install all circuits, outlets, and lighting professionally. Your Parramatta renovation will be electrically safe, functional, and beautiful.",
+        "benefits": [
+          "Complete rewiring for older Parramatta homes",
+          "Modern circuits and capacity for renovations",
+          "Coordination with renovation builders",
+          "Respect for character home features",
+          "Full building code compliance",
+          "Professional certification and warranty"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "renov-parra-faq-1",
+            "question": "Should I rewire my Parramatta home during renovation?",
+            "answer": "If you're doing major renovation work, it's ideal to coordinate electrical work. New wiring is easier before walls are closed. We advise based on your situation."
+          },
+          {
+            "id": "renov-parra-faq-2",
+            "question": "How do you handle older Parramatta home renovations?",
+            "answer": "We carefully plan cable routes, respect character features, and minimize disruption. We coordinate timing with your builder for efficiency."
+          },
+          {
+            "id": "renov-parra-faq-3",
+            "question": "What's typical cost for Parramatta renovation electrical work?",
+            "answer": "Depends on renovation scope. We assess your plans and provide fixed quotes. Budget $2,000-$8,000 for typical renovation electrical work."
+          }
+        ],
+        "seo": {
+          "title": "House Rewiring & Renovation Electrician Parramatta",
+          "description": "Electrical renovation and rewiring work in Parramatta, NSW. Coordinate with builders, modern safe wiring, character home expertise."
+        }
+      }
+    ],
+    "faq": {
+      "items": [
+        {
+          "id": "general-faq-1",
+          "question": "Is Gold Electrical Services available 24/7 for emergencies?",
+          "answer": "Yes, we provide 24/7 emergency electrical service across Sydney. Power outages, blown switchboards, dangerous faults—call us immediately and we'll dispatch an electrician quickly."
+        },
+        {
+          "id": "general-faq-2",
+          "question": "Are your electricians licensed and insured?",
+          "answer": "Yes, all our electricians are fully licensed and we carry comprehensive public liability insurance. You can trust the safety and quality of our work."
+        },
+        {
+          "id": "general-faq-3",
+          "question": "Do you provide fixed-price quotes for electrical work?",
+          "answer": "Yes, we offer fixed quotes for most work after assessment. Emergency call-out fees apply for after-hours calls. We're transparent about pricing with no hidden charges."
+        },
+        {
+          "id": "general-faq-4",
+          "question": "How quickly can you respond to emergencies?",
+          "answer": "We aim to respond within 1-2 hours depending on your Sydney location. Call immediately and we'll dispatch the nearest available electrician."
+        },
+        {
+          "id": "general-faq-5",
+          "question": "Do you service both residential and commercial properties?",
+          "answer": "Yes, we handle residential homes, apartments, retail, offices, and commercial buildings. We have experience with all property types."
+        },
+        {
+          "id": "general-faq-6",
+          "question": "What areas of Sydney do you service?",
+          "answer": "We service Sydney and surrounding suburbs including Parramatta, Penrith, Central Sydney, North Sydney, Inner West, Eastern Suburbs, South Sydney, Hills District, Sutherland Shire, and Manly. Call to confirm your area."
+        },
+        {
+          "id": "general-faq-7",
+          "question": "Are your solar installations eligible for government rebates?",
+          "answer": "Yes, our CEC-accredited solar installations are eligible for government solar rebates and Small Technology Certificates (STCs). We help maximize your savings."
+        },
+        {
+          "id": "general-faq-8",
+          "question": "Can you provide warranties on electrical work?",
+          "answer": "Yes, we provide warranties on all our work. Terms vary by job type. We'll discuss warranty details when providing your quote."
+        }
+      ],
+      "seo": {
+        "title": "Electrical FAQs | Gold Electrical Services Sydney",
+        "description": "Frequently asked questions about electrical services, emergencies, solar, renovations, and more. Gold Electrical Services Sydney."
+      }
+    },
+    "about": {
+      "body": "Gold Electrical Services Australia is a trusted, professional electrical service business serving Sydney, NSW. We're committed to delivering reliable, safe, expert electrical work for residential and commercial customers across Sydney.\n\nOur team of licensed electricians combines technical expertise with professional customer service. We handle everything from emergency repairs and routine maintenance to major renovations and renewable energy installations. Whether you need 24/7 emergency support, a planned renovation project, or advice on solar energy, we bring the same commitment to quality and reliability to every job.\n\nWe pride ourselves on transparency, safety, and customer focus. We explain our work clearly, provide fixed quotes whenever possible, and ensure you understand what's being done and why. Our reputation in Sydney is built on professional workmanship, reliable service, and customers who trust us with their electrical needs.\n\nFrom switchboard upgrades to solar installations, from lighting design to EV charger setup, we have the expertise to handle your electrical project professionally. We're available 24/7 for emergencies and proud to serve Sydney's residential and commercial communities.",
+      "values": [
+        {
+          "id": "value-safety",
+          "title": "Safety First",
+          "body": "Your safety is our priority. Every job is completed to the highest safety standards with thorough testing and certification. We stay current with electrical codes and regulations to ensure your electrical system is safe and compliant.",
+          "icon": "ShieldCheck"
+        },
+        {
+          "id": "value-reliability",
+          "title": "Reliable Service",
+          "body": "From emergency response to project completion, you can count on us. We show up on time, complete work professionally, and stand behind our workmanship with warranties and support.",
+          "icon": "Zap"
+        },
+        {
+          "id": "value-expertise",
+          "title": "Professional Expertise",
+          "body": "Our licensed electricians have years of experience across residential and commercial work. We combine technical knowledge with practical problem-solving to deliver excellent results.",
+          "icon": "Wrench"
+        },
+        {
+          "id": "value-transparency",
+          "title": "Honest Communication",
+          "body": "We explain electrical work clearly, provide transparent pricing, and answer your questions. You'll always know what's happening with your project and why we're recommending specific solutions.",
+          "icon": "Lightbulb"
+        },
+        {
+          "id": "value-customer",
+          "title": "Customer Focused",
+          "body": "Your satisfaction matters. We listen to your needs, work around your schedule, and ensure you're happy with the completed work. Long-term customer relationships are what we value most.",
+          "icon": "Sun"
+        },
+        {
+          "id": "value-innovation",
+          "title": "Modern Solutions",
+          "body": "We stay current with electrical technology including solar, battery storage, EV chargers, smart home integration, and LED efficiency. We help you access modern electrical solutions.",
+          "icon": "BatteryCharging"
+        }
+      ],
+      "seo": {
+        "title": "About Gold Electrical Services Australia | Trusted Sydney Electrician",
+        "description": "Learn about Gold Electrical Services Australia. Licensed electricians serving Sydney with 24/7 emergency service, renovations, solar installation, and expert electrical work."
+      }
+    },
+    "seo": {
+      "title": "Emergency Electrician Sydney | 24/7 Service | Gold Electrical",
+      "description": "Licensed electrician in Sydney, NSW. 24/7 emergency electrical services, switchboard upgrades, solar installation, and EV chargers. Fast, reliable, professional.",
+      "schema_org_type": "LocalBusiness"
+    },
+    "preview": {},
+    "overrides": {}
+  },
+  "createdAt": "2026-06-29T06:22:06.615Z",
+  "status": "preview"
+}

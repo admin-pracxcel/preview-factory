@@ -3,43 +3,46 @@
 // Runs the build itself, unattended. You launch this once. It drives a single
 // resumable Claude Agent SDK "lead" session that works through MISSION.md and
 // state.md, spawns specialist subagents, runs the grader, commits each
-// increment, and stops to ask you ONLY when it reaches a decision gate
-// (a human-judgment call: visual quality sign-off, niche selection, anything
-// that spends money or touches a credential).
+// increment, and stops to ask you ONLY when it reaches a decision gate.
 //
-// You answer gates by tapping a link on your phone. No terminal, no Cowork,
-// no copy-paste. See RUNBOOK.md.
+// Two ways to steer it from your phone or browser at http://localhost:7878 :
+//   - At a gate: Approve / Reject / Redirect (with notes).
+//   - Any time: the "Message the agent" box. Your note is handed to the agent
+//     before its next step. For an instant hard stop, Ctrl+C the terminal.
 //
 // Requires: Node 18+, and `npm i @anthropic-ai/claude-agent-sdk`.
-// Auth: ANTHROPIC_API_KEY (an API key, not a claude.ai login). The SDK will
-// not accept subscription login for unattended agents.
+// Auth: ANTHROPIC_API_KEY (an API key, not a claude.ai login).
 
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import { createServer } from "node:http";
-import { readFileSync, readdirSync, existsSync, mkdirSync, writeFileSync, appendFileSync } from "node:fs";
+import {
+  readFileSync, readdirSync, existsSync, mkdirSync, writeFileSync, appendFileSync, renameSync,
+} from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { bashGuard, writeGuard, auditHook, makeNotifyHook } from "./guards.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const REPO = join(HERE, "..");           // repo root (autopilot/ lives at root)
+const REPO = join(HERE, "..");
 const STATE = join(HERE, "state");
 const GATES = join(STATE, "gates");
+const INBOX = join(STATE, "inbox");
 const AGENTS_DIR = join(HERE, "agents");
 
 const PORT = Number(process.env.AUTOPILOT_PORT || 7878);
 const HOST = process.env.AUTOPILOT_HOST || "0.0.0.0";
 const PUBLIC_URL = process.env.AUTOPILOT_PUBLIC_URL || `http://localhost:${PORT}`;
-const NOTIFY_URL = process.env.AUTOPILOT_NOTIFY_URL || "";   // Slack/Telegram/generic webhook
+const NOTIFY_URL = process.env.AUTOPILOT_NOTIFY_URL || "";
 const MODEL = process.env.AUTOPILOT_MODEL || "claude-opus-4-8";
-const MAX_INCREMENTS = Number(process.env.AUTOPILOT_MAX_INCREMENTS || 200); // hard ceiling, safety net
+const MAX_INCREMENTS = Number(process.env.AUTOPILOT_MAX_INCREMENTS || 200);
 
 if (!process.env.ANTHROPIC_API_KEY) {
   console.error("FATAL: set ANTHROPIC_API_KEY (an API key, not a claude.ai login).");
   process.exit(1);
 }
 mkdirSync(GATES, { recursive: true });
+mkdirSync(join(INBOX, "read"), { recursive: true });
 
 // ----------------------------------------------------------------- utilities
 const log = (m) => {
@@ -56,7 +59,6 @@ async function notify(text) {
     await fetch(NOTIFY_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // {text} fits Slack incoming webhooks; generic receivers can read it too.
       body: JSON.stringify({ text }),
     });
   } catch (e) {
@@ -64,8 +66,6 @@ async function notify(text) {
   }
 }
 
-// Load specialist subagents from autopilot/agents/*.md into the SDK `agents` map.
-// Frontmatter: description, tools (comma list). Body: the agent's system prompt.
 function loadAgents() {
   const agents = {};
   if (!existsSync(AGENTS_DIR)) return agents;
@@ -87,26 +87,65 @@ function loadAgents() {
   return agents;
 }
 
-// ------------------------------------------------------------- the gate server
-// One tappable page per open gate. Approve / Reject / Redirect writes a reply
-// file the supervisor is polling for. This is how you answer from your phone.
+// Read any messages you typed in the web box, mark them read, return the text.
+function drainInbox() {
+  const msgs = readdirSync(INBOX).filter((n) => n.endsWith(".txt")).sort();
+  if (!msgs.length) return "";
+  const out = [];
+  for (const m of msgs) {
+    out.push(readFileSync(join(INBOX, m), "utf8").trim());
+    renameSync(join(INBOX, m), join(INBOX, "read", m));
+  }
+  return out.join("\n");
+}
+
+const tail = (file, n) => {
+  if (!existsSync(file)) return "";
+  return readFileSync(file, "utf8").trim().split("\n").slice(-n).join("\n");
+};
+
+// ------------------------------------------------------------- the web server
 function startGateServer() {
   const server = createServer((req, res) => {
     const url = new URL(req.url, PUBLIC_URL);
     const send = (code, body, type = "text/html") => {
       res.writeHead(code, { "Content-Type": type }); res.end(body);
     };
+    const readBody = (cb) => { let b = ""; req.on("data", (c) => (b += c)); req.on("end", () => cb(b)); };
     try {
-      if (url.pathname === "/" ) {
+      if (url.pathname === "/") {
         const open = readdirSync(GATES).filter((n) => n.endsWith(".json") && !n.endsWith(".reply.json"));
         const stateTail = existsSync(join(REPO, "strategy/_master/state.md"))
           ? readFileSync(join(REPO, "strategy/_master/state.md"), "utf8").split("\n").slice(0, 6).join("<br>")
-          : "(no state.md found)";
+          : "(no state.md)";
+        const activity = (tail(join(STATE, "audit.log"), 10) || "(nothing yet)")
+          .split("\n").reverse().join("<br>");
         return send(200, `<h2>Preview Factory autopilot</h2>
           <p><b>Open decisions:</b> ${open.length}</p>
           <ul>${open.map((n) => `<li><a href="/gate/${n.replace(/\.json$/, "")}">${n}</a></li>`).join("")}</ul>
+
+          <h3>Message the agent</h3>
+          <p style="color:#666">Type anything here any time to steer or push back. It is handed to the agent before its next step. For an instant stop, Ctrl+C the terminal.</p>
+          <form method="POST" action="/say">
+            <textarea name="msg" rows="3" cols="60" placeholder="e.g. stop on the gallery section, make the hero full-width, focus on plumber not electrician"></textarea><br>
+            <button type="submit">Send to the agent</button>
+          </form>
+
+          <hr><h3>Recent activity</h3><pre style="white-space:pre-wrap;background:#f4f4f4;padding:8px">${activity}</pre>
           <hr><p style="color:#666">${stateTail}</p>`);
       }
+
+      if (url.pathname === "/say" && req.method === "POST") {
+        return readBody((body) => {
+          const msg = (new URLSearchParams(body).get("msg") || "").trim();
+          if (msg) {
+            writeFileSync(join(INBOX, `${Date.now()}.txt`), msg);
+            log(`inbox message from human: ${msg.slice(0, 160)}`);
+          }
+          send(200, `<p>Sent. The agent will pick it up before its next step. <a href="/">back</a></p>`);
+        });
+      }
+
       const gm = url.pathname.match(/^\/gate\/(.+)$/);
       if (gm) {
         const id = gm[1];
@@ -124,19 +163,17 @@ function startGateServer() {
             <button type="submit">Send to the agent</button>
           </form>`);
       }
+
       const rm = url.pathname.match(/^\/reply\/(.+)$/);
       if (rm && req.method === "POST") {
         const id = rm[1];
-        let body = "";
-        req.on("data", (c) => (body += c));
-        req.on("end", () => {
+        return readBody((body) => {
           const p = new URLSearchParams(body);
           const reply = { decision: p.get("decision") || "approve", note: p.get("note") || "", at: new Date().toISOString() };
           writeFileSync(join(GATES, `${id}.reply.json`), JSON.stringify(reply, null, 2));
           log(`gate ${id} answered: ${reply.decision} ${reply.note ? "(" + reply.note + ")" : ""}`);
-          send(200, `<p>Sent: <b>${reply.decision}</b>. You can close this. The agent will continue.</p>`);
+          send(200, `<p>Sent: <b>${reply.decision}</b>. You can close this. The agent will continue. <a href="/">back</a></p>`);
         });
-        return;
       }
       send(404, "not found");
     } catch (e) { send(500, "error: " + e.message); }
@@ -145,7 +182,6 @@ function startGateServer() {
   return server;
 }
 
-// Block until the agent writes a gate file, then notify and wait for the reply.
 function findOpenGate() {
   return readdirSync(GATES)
     .filter((n) => n.endsWith(".json") && !n.endsWith(".reply.json"))
@@ -158,8 +194,7 @@ async function waitForReply(id) {
   await notify(`DECISION NEEDED: ${g.title || id}\n${g.question || ""}\nAnswer: ${PUBLIC_URL}/gate/${id}`);
   log(`waiting for human on gate ${id} ...`);
   for (;;) {
-    const r = join(GATES, `${id}.reply.json`);
-    if (existsSync(r)) return JSON.parse(readFileSync(r, "utf8"));
+    if (existsSync(join(GATES, `${id}.reply.json`))) return JSON.parse(readFileSync(join(GATES, `${id}.reply.json`), "utf8"));
     await sleep(5000);
   }
 }
@@ -172,11 +207,8 @@ startGateServer();
 const baseOptions = {
   cwd: REPO,
   model: MODEL,
-  // Free file editing; Bash and everything else still pass through the guards.
   permissionMode: "acceptEdits",
-  // Include Agent so the lead can spawn subagents without a prompt.
   allowedTools: ["Read", "Write", "Edit", "Bash", "Glob", "Grep", "Agent", "WebSearch", "WebFetch"],
-  // Load .claude/ (skills, settings, CLAUDE.md) from the repo.
   settingSources: ["project"],
   agents,
   hooks: {
@@ -198,6 +230,10 @@ const KICKOFF =
 
 let sessionId;
 
+// Errors we should wait out and retry, not die on. Credit top-ups, rate limits,
+// overloads, and transient network blips all recover by themselves.
+const RECOVERABLE = /credit balance is too low|rate.?limit|overloaded|too many requests|\b429\b|\b529\b|ECONNRESET|ETIMEDOUT|timeout|temporarily|service unavailable|\b503\b/i;
+
 async function runIncrement(promptText) {
   const opts = sessionId ? { ...baseOptions, resume: sessionId } : baseOptions;
   for await (const msg of query({ prompt: promptText, options: opts })) {
@@ -210,31 +246,71 @@ async function runIncrement(promptText) {
   }
 }
 
+// Self-healing wrapper: on a recoverable error, notify, wait, and retry the same
+// step (no relaunch needed). On a real error (e.g. invalid key), bubble up.
+async function runIncrementWithRetry(promptText) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      await runIncrement(promptText);
+      return;
+    } catch (e) {
+      if (!RECOVERABLE.test(e.message)) throw e;
+      const wait = Math.min(60, 15 * attempt);
+      log(`recoverable error: ${e.message} — auto-retrying in ${wait}s (attempt ${attempt})`);
+      await notify(`Paused: ${e.message}. Auto-retrying in ${wait}s. If it is credit, top up and it will continue on its own. No relaunch needed.`);
+      await sleep(wait * 1000);
+      const extra = drainInbox();
+      if (extra) promptText += `\n\nHuman message received while paused: "${extra}"\n`;
+    }
+  }
+}
+
 (async () => {
-  await notify(`Autopilot started. Status + decisions: ${PUBLIC_URL}`);
+  await notify(`Autopilot started. Status, messages, decisions: ${PUBLIC_URL}`);
   for (let i = 0; i < MAX_INCREMENTS; i++) {
     if (existsSync(join(STATE, "DONE"))) {
-      await notify("Autopilot finished the build queue. Read autopilot handoff and review when you like.");
+      await notify("Autopilot finished the build queue. Review when you like.");
       log("DONE sentinel present. Stopping.");
       break;
     }
-    log(`--- increment ${i + 1} ---`);
-    try {
-      await runIncrement(i === 0 ? KICKOFF : "Continue per MISSION.md and state.md. " + KICKOFF);
-    } catch (e) {
-      log(`increment error: ${e.message}`);
-      await notify(`Autopilot hit an error and paused: ${e.message}. Check the box.`);
-      break;
+
+    // ALWAYS resolve an open decision FIRST, before any generic continue.
+    // A gate written at the end of the previous step is caught here and waited
+    // on, so a fresh gate can never be bypassed and a plain "continue" can never
+    // be mistaken for your approval.
+    const openGate = findOpenGate();
+    if (openGate) {
+      const reply = await waitForReply(openGate);
+      const note = drainInbox();
+      try {
+        await runIncrementWithRetry(
+          `Human answered gate "${openGate}": decision=${reply.decision}. ` +
+          `${reply.note ? "Redirect instructions: " + reply.note + ". " : ""}` +
+          `${note ? "Additional human message: \"" + note + "\". " : ""}` +
+          `Act on it FULLY before anything else. Mark the gate resolved (move it to answered/), then continue. ` +
+          `Only an explicit "Human answered gate" message is approval; never treat a generic continue as approval ` +
+          `of a pending gate. ` + KICKOFF
+        );
+      } catch (e) {
+        log(`increment error (non-recoverable): ${e.message}`);
+        await notify(`Autopilot stopped on a non-recoverable error: ${e.message}. Fix it and relaunch.`);
+        break;
+      }
+      continue; // re-check for any newly written gate at the top
     }
-    const gateId = findOpenGate();
-    if (gateId) {
-      const reply = await waitForReply(gateId);
-      // Feed the decision back into the same session and keep going.
-      await runIncrement(
-        `Human answered gate "${gateId}": decision=${reply.decision}. ` +
-        `${reply.note ? "Instructions: " + reply.note + ". " : ""}` +
-        `Act on it, mark the gate resolved (move it to answered), then continue. ` + KICKOFF
-      );
+
+    // No open decision: do the next build increment.
+    const pending = drainInbox();
+    const steer = pending
+      ? `\n\nThe human sent you a message, treat it as priority guidance and act on it now: "${pending}"\n\n`
+      : "";
+    log(`--- increment ${i + 1} ---${pending ? " (with human message)" : ""}`);
+    try {
+      await runIncrementWithRetry((i === 0 ? KICKOFF : "Continue per MISSION.md and state.md. " + KICKOFF) + steer);
+    } catch (e) {
+      log(`increment error (non-recoverable): ${e.message}`);
+      await notify(`Autopilot stopped on a non-recoverable error: ${e.message}. This one needs you (likely the API key). Fix it and relaunch.`);
+      break;
     }
   }
   log("supervisor loop ended.");

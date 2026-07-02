@@ -69,12 +69,21 @@ export const serviceSchema = z.object({
 
 /* ---------------------------------------------------------------------- about */
 
+export const aboutValueChipSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  body: z.string(),
+  icon: z.string().optional(),
+});
+
 export const aboutSchema = z.object({
   heading: z.string().optional(),
   body: z.string(),
   photo_url: z.string().optional(),
   years_in_business: z.number().optional(),
   licence: z.string().optional(),
+  /** Optional value cards rendered as a grid below the about copy. */
+  values: z.array(aboutValueChipSchema).optional(),
 });
 
 /* --------------------------------------------------------------- service area */
@@ -169,9 +178,15 @@ export const previewSchema = z.object({
 
 export const overridesSchema = z.object({
   primary_color: z.string().optional(),
+  secondary_color: z.string().optional(),
   accent_color: z.string().optional(),
   logo_url: z.string().optional(),
   hero_image_url: z.string().optional(),
+  /** Light or dark chrome for header / footer / areas-we-service.
+   *  Defaults to "light" (white bg, dark text). */
+  chrome_theme: z.enum(["light", "dark"]).optional(),
+  /** Rendered height of the header logo in CSS pixels. Defaults to 36. */
+  logo_height_px: z.number().int().min(24).max(72).optional(),
 });
 
 /* ---------------------------------------------------------- canonical schema */

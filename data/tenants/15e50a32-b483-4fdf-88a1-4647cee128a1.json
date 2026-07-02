@@ -1,0 +1,1363 @@
+{
+  "id": "15e50a32-b483-4fdf-88a1-4647cee128a1",
+  "name": "Gold Electrical Services Australia",
+  "niche": "Electrician",
+  "category": "trades",
+  "siteProps": {
+    "business": {
+      "name": "Gold Electrical Services Australia",
+      "phone": "1300 465 353"
+    },
+    "branding": {
+      "primary_color": "#003366",
+      "secondary_color": "#FFFFFF",
+      "accent_color": "#FFC107"
+    },
+    "home": {
+      "hero": {
+        "headline": "24/7 Emergency Electrical Services Sydney",
+        "subheadline": "Same-day repairs, fully licensed electricians, fixed pricing, no call-out fees",
+        "cta_primary": {
+          "label": "Request a Quote",
+          "href": "#contact"
+        },
+        "cta_secondary": {
+          "label": "Emergency Call",
+          "href": "tel:1300465353"
+        }
+      },
+      "services": [
+        {
+          "id": "svc-emergency",
+          "title": "Emergency Electrical Repairs",
+          "description": "24/7 emergency callouts for power outages, electrical faults, and safety hazards",
+          "icon": "Zap"
+        },
+        {
+          "id": "svc-switchboard",
+          "title": "Switchboard Upgrades",
+          "description": "Modern switchboard installations and circuit breaker upgrades to current safety standards",
+          "icon": "Wrench"
+        },
+        {
+          "id": "svc-rewiring",
+          "title": "House Rewiring",
+          "description": "Complete house rewiring, safety upgrades, and electrical compliance certification",
+          "icon": "ShieldCheck"
+        },
+        {
+          "id": "svc-solar",
+          "title": "Solar Panel Installation",
+          "description": "CEC-accredited solar installations with battery integration and warranty support",
+          "icon": "Sun"
+        },
+        {
+          "id": "svc-ev-charger",
+          "title": "EV Charger Installation",
+          "description": "Home and business EV charger setup by certified Level 2 installers",
+          "icon": "BatteryCharging"
+        },
+        {
+          "id": "svc-lighting",
+          "title": "Lighting Installation",
+          "description": "Indoor and outdoor lighting, LED upgrades, downlights, and smart lighting systems",
+          "icon": "Lightbulb"
+        },
+        {
+          "id": "svc-power-points",
+          "title": "Power Points & Outlets",
+          "description": "Additional power point installation, USB outlets, and electrical socket upgrades",
+          "icon": "Zap"
+        },
+        {
+          "id": "svc-testing",
+          "title": "Testing & Compliance",
+          "description": "Safety switch testing, electrical inspections, tagging, and compliance certification",
+          "icon": "ShieldCheck"
+        }
+      ],
+      "about": {
+        "body": "Gold Electrical Services Australia has been delivering reliable electrical solutions across Sydney for over a decade. We pride ourselves on fast response times, transparent pricing, and professional workmanship. Every job is completed by fully licensed and insured electricians who meet all Australian electrical standards."
+      },
+      "service_area": {
+        "suburbs": [
+          "Bondi",
+          "Parramatta",
+          "Manly",
+          "Chatswood",
+          "Penrith",
+          "Sutherland Shire",
+          "Blacktown",
+          "Cronulla",
+          "Ryde",
+          "Wollongong",
+          "Newcastle",
+          "Central Coast"
+        ]
+      },
+      "testimonials": [
+        {
+          "id": "rev-mark",
+          "quote": "Gold Electrical fixed our switchboard in one day. Professional, clean, and no mess left behind. Highly recommend.",
+          "author": "Mark T.",
+          "location": "Bondi",
+          "rating": 5
+        },
+        {
+          "id": "rev-sarah",
+          "quote": "Had an emergency power outage on a Sunday. They arrived within an hour and sorted the problem. Fantastic service.",
+          "author": "Sarah L.",
+          "location": "Chatswood",
+          "rating": 5
+        },
+        {
+          "id": "rev-david",
+          "quote": "Solar installation was seamless. Electricians knew their stuff and explained everything clearly. Worth every dollar.",
+          "author": "David K.",
+          "location": "Manly",
+          "rating": 5
+        }
+      ],
+      "social_proof": {
+        "items": [
+          {
+            "id": "proof-1",
+            "value": "2,500+",
+            "label": "Jobs completed",
+            "icon": "Wrench"
+          },
+          {
+            "id": "proof-2",
+            "value": "24/7",
+            "label": "Emergency service",
+            "icon": "Zap"
+          },
+          {
+            "id": "proof-3",
+            "value": "Licensed",
+            "label": "Fully insured",
+            "icon": "ShieldCheck"
+          }
+        ]
+      },
+      "offer": {
+        "headline": "First-Time Customers",
+        "cta": {
+          "label": "Book Free Inspection",
+          "href": "#contact"
+        }
+      },
+      "contact": {
+        "phone": "1300 465 353",
+        "hours": [
+          {
+            "label": "Monday – Friday",
+            "value": "7:00am – 6:00pm"
+          },
+          {
+            "label": "Saturday",
+            "value": "8:00am – 4:00pm"
+          },
+          {
+            "label": "Sunday & Public Holidays",
+            "value": "24-hour emergency service"
+          }
+        ]
+      }
+    },
+    "services": [
+      {
+        "slug": "emergency-electrical-repairs",
+        "title": "24/7 Emergency Electrical Repairs Sydney",
+        "summary": "Fast response electrical fault repairs available anytime. Same-day callouts for power outages and safety hazards.",
+        "icon": "Zap",
+        "intro": "When the lights go out or you smell burning from your switchboard, you need help fast. Gold Electrical Services provides 24/7 emergency callouts across Sydney with response times as quick as one hour during business hours. We handle everything from tripped safety switches to sparking outlets, power outages, and smoke-damaged wiring. No call-out fees apply to emergency jobs, and we provide honest diagnosis upfront so you know exactly what needs fixing and why. Our licensed electricians are trained in fault-finding and carry all common replacement parts on their vans to complete most repairs on the first visit.",
+        "benefits": [
+          "Same-day callouts, 24/7 availability",
+          "No call-out fees on emergency work",
+          "Fixed pricing on most repairs",
+          "Licensed and fully insured",
+          "One-visit solutions where possible"
+        ],
+        "sections": [
+          {
+            "heading": "Common Electrical Emergencies",
+            "body": "The most common emergency we respond to is a tripped safety switch—usually caused by water damage, faulty appliances, or aging circuits. We diagnose the cause, isolate the fault, and restore power safely. Other frequent emergencies include sparking power points (fire hazard), dead circuits or rooms without power, burning smells from switchboards or walls, and water damage to outdoor power points. Some emergencies like water-damaged wiring require immediate isolation for safety; we always err on the side of caution and never restore power to a dangerous circuit."
+          },
+          {
+            "heading": "Why Response Time Matters",
+            "body": "A power outage affecting your fridge, heating, or security system can cost you hundreds in spoiled food or property damage within hours. Our rapid response means minimal downtime and reduced risk of further damage. We maintain a dispatch network across greater Sydney so that emergency jobs in Bondi, Parramatta, or Penrith all receive fast attention. During winter, a failed heating system becomes a health issue; in summer, a dead air-con circuit is unbearable. We prioritise these urgent calls accordingly."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "emg-faq-1",
+            "question": "Do you charge a call-out fee for emergencies?",
+            "answer": "No. We do not charge a call-out fee on emergency jobs. You pay only for the repair work completed—labour, parts, and testing. This removes the barrier to calling us immediately when you spot a fault."
+          },
+          {
+            "id": "emg-faq-2",
+            "question": "How quickly can you arrive?",
+            "answer": "During business hours (7am–6pm Mon–Fri, 8am–4pm Sat), we aim to attend within 60 minutes of your call. After hours and on Sundays, response time depends on your location and our available crews; we always respond within 2–3 hours for genuine emergencies."
+          },
+          {
+            "id": "emg-faq-3",
+            "question": "What if the fault is not in my house but the street wiring?",
+            "answer": "We diagnose where the fault lies. If it is the street line, we contact Ausgrid (NSW) to report it and isolate your house from danger while we wait for their crew. We never charge you for a fault outside your property."
+          }
+        ],
+        "seo": {
+          "title": "24/7 Emergency Electrician Sydney | Same-Day Repairs",
+          "description": "Emergency electrical services in Sydney. Fast response times, no call-out fees, licensed electricians. Call 1300 465 353 anytime for power outages, faults, or safety hazards."
+        }
+      },
+      {
+        "slug": "switchboard-upgrades",
+        "title": "Switchboard Upgrades & Circuit Breaker Installation",
+        "summary": "Modern switchboard installations meeting current safety standards. Upgrade aging fuse boxes to modern circuit breaker boards.",
+        "icon": "Wrench",
+        "intro": "An old switchboard or fuse box is a fire and electrocution risk—and many insurance companies refuse to cover damage if your house has outdated wiring. Modern switchboards with circuit breakers and safety switches are mandatory for most home upgrades, solar installations, or when you buy a property with an aging electrical system. We handle the complete upgrade: isolation of the old board, removal, installation of the new board, integration with existing circuits, and full testing. The upgrade typically takes one full day and we coordinate with your energy provider for any supply-line changes required.",
+        "benefits": [
+          "Upgrade from dangerous fuse boxes to modern circuit breakers",
+          "Safety switches installed to prevent electrocution and fire",
+          "Meets current Australian electrical standards",
+          "Improves home resale value and insurance eligibility",
+          "Enables future solar, EV charger, or high-power upgrades"
+        ],
+        "sections": [
+          {
+            "heading": "Why You Need a Modern Switchboard",
+            "body": "Switchboards installed before 2000 often use rewireable fuses instead of circuit breakers. Fuses are slow to react to overloads and dangerous faults; a blown fuse can tempt you to replace it with a higher-rated one, creating a fire hazard. Circuit breakers respond instantly, cutting power before dangerous currents flow. Modern boards also include a safety switch (RCD) which stops electrocution in milliseconds if you touch a live wire or water contacts a fault. New insurance policies often require certification that your switchboard meets the current standard AS/NZS 3000."
+          },
+          {
+            "heading": "What the Upgrade Includes",
+            "body": "We isolate the main supply and safely remove the old board. The new board is installed in the same or nearest suitable location, with all existing circuits (lights, power points, stove, hot water, heating/cooling) reconnected to new circuit breakers. We label every circuit clearly so future repairs or additions are easy. A safety switch is installed to protect all general circuits, and additional switches may be added for specific high-risk circuits like bathrooms or outdoor power. Finally, we test every circuit, obtain a Certificate of Compliance from the energy provider, and hand you documentation for insurance and resale."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "swb-faq-1",
+            "question": "How much does a switchboard upgrade cost?",
+            "answer": "A typical upgrade ranges from $1,500 to $3,500 depending on the board size, complexity, and any rewiring needed. We provide a fixed quote after inspection. Some energy companies offer rebates for upgrading old boards—ask us during the quote."
+          },
+          {
+            "id": "swb-faq-2",
+            "question": "Will I lose power during the upgrade?",
+            "answer": "Yes, the upgrade requires the main power to be isolated for 4–8 hours. We coordinate with your energy provider to minimize outage time. If you need continuous power for medical equipment, we arrange a temporary supply via a portable generator."
+          },
+          {
+            "id": "swb-faq-3",
+            "question": "Do I need council approval?",
+            "answer": "No, switchboard upgrades do not require council approval. They do require a Certificate of Compliance from a licensed electrician and notification to your energy provider, both of which we handle."
+          }
+        ],
+        "seo": {
+          "title": "Switchboard Upgrade Sydney | Modern Circuit Breaker Installation",
+          "description": "Switchboard upgrade specialists in Sydney. Replace old fuse boxes with modern circuit breaker boards. Safe, compliant, and insured. Same-day installation available."
+        }
+      },
+      {
+        "slug": "house-rewiring",
+        "title": "Complete House Rewiring & Electrical Compliance",
+        "summary": "Full rewiring for older homes, compliance certification, safety upgrades, and code compliance for renovations.",
+        "icon": "ShieldCheck",
+        "intro": "Rewiring a house means replacing all internal cables, outlets, switches, and fixtures to meet current electrical safety standards. This is essential for homes built before 1990 or after any major renovation or damage. Old wiring may have degraded insulation (creating fire risk), lack grounding, or be undersized for modern loads like air-conditioning or EV chargers. A complete rewire ensures your home is safe, passes inspection for insurance and resale, and supports modern power demands. We handle the entire process: planning the new circuit layout, installing cable and conduits, installing outlets and switches, integrating a new switchboard, and obtaining a Certificate of Compliance.",
+        "benefits": [
+          "Eliminates fire hazard from degraded old wiring",
+          "Adds circuits for modern appliances and loads",
+          "Meets current AS/NZS 3000 standard for safety and resale",
+          "Improves home insurance eligibility and reduces premiums",
+          "Supports future solar, batteries, heating/cooling, and EV chargers"
+        ],
+        "sections": [
+          {
+            "heading": "Signs Your Home Needs Rewiring",
+            "body": "Flickering lights, outlets that don't hold plugs, burnt smell from switches, or frequent blown fuses are all red flags. If your home lacks grounding (two-pin instead of three-pin outlets), that is a serious shock risk. Homes with cloth-wrapped wiring (common in 1960s–1980s homes) have insulation that dries and cracks, exposing live wires inside walls—a hidden fire hazard. We inspect and advise on whether you need a full rewire or spot upgrades; in older suburbs like Manly or Bondi, many homes are rewiring candidates."
+          },
+          {
+            "heading": "Partial vs. Full Rewiring",
+            "body": "A full rewire replaces all internal wiring; a partial rewire upgrades specific circuits or areas. If your home is 50+ years old or has a mix of old and new wiring, full rewiring ensures consistency and safety. If only one room or the kitchen is being renovated, a partial rewire of that area combined with an upgraded switchboard may suffice. We assess your situation and recommend the most cost-effective solution. A full rewire typically takes 5–7 working days depending on house size and layout."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "rew-faq-1",
+            "question": "How much does a full house rewire cost?",
+            "answer": "A full rewire for a typical 3-bedroom house costs $4,000–$8,000 depending on size, layout, and access. We provide a fixed quote after site inspection. Costs are offset by improved insurance rates and home value."
+          },
+          {
+            "id": "rew-faq-2",
+            "question": "Will rewiring damage my walls and paintwork?",
+            "answer": "We minimize damage by running new cable through existing conduit where possible and carefully patching holes. Some cosmetic touch-ups (paint, plaster) are usually needed. Discuss expectations with us during the quote; some customers combine rewiring with repainting."
+          },
+          {
+            "id": "rew-faq-3",
+            "question": "Do I need to leave the house during rewiring?",
+            "answer": "You can stay home, but the power will be off during installation. Plan for several days without power, or we can arrange temporary lighting and power from a portable generator if needed. Most customers stay with family or hotels during the 5–7 day install."
+          }
+        ],
+        "seo": {
+          "title": "House Rewiring Sydney | Complete Electrical Compliance Upgrade",
+          "description": "Professional house rewiring in Sydney for older homes and renovations. Full compliance certification, safety upgrades, modern standards. Licensed electricians."
+        }
+      },
+      {
+        "slug": "solar-panel-installation",
+        "title": "Solar Panel Installation & Battery Systems",
+        "summary": "CEC-accredited solar installations with battery integration, warranty support, and energy-saving design.",
+        "icon": "Sun",
+        "intro": "Solar panels cut your electricity bills by 50–80% while reducing grid demand and your carbon footprint. We design and install residential and small-business solar systems using high-efficiency panels and approved inverters, with battery storage options to power your home at night or during outages. Our electricians are CEC-accredited (Clean Energy Council), which means your system qualifies for government rebates and incentives. We handle everything: site survey, system design, electrical integration, installation, connection to the grid, and ongoing warranty support.",
+        "benefits": [
+          "CEC-accredited installers—systems qualify for government rebates",
+          "High-efficiency panels with 25-year performance warranty",
+          "Battery integration for energy independence and blackout protection",
+          "Reduces electricity bills by 50–80%",
+          "Increases home resale value"
+        ],
+        "sections": [
+          {
+            "heading": "Solar + Battery for Energy Independence",
+            "body": "Solar panels generate power during the day; battery systems (like Tesla Powerwall or LG Chem) store excess power for use at night or during outages. A typical 5kW solar system with 10kWh battery storage costs $12,000–$18,000 after rebates and can eliminate grid bills if combined with efficient appliances. Without battery, your system feeds surplus power back to the grid at a feed-in rate (currently 5–10c/kWh in NSW); a battery lets you keep and use that power, saving 25–35c/kWh instead. We design systems based on your usage pattern, roof space, and budget."
+          },
+          {
+            "heading": "CEC Accreditation & Rebates",
+            "body": "All installers must be CEC-accredited to comply with the Small-scale Renewable Energy Scheme (SRES). Your system qualifies for Small-scale Technology Certificates (STCs) that are tradeable for a significant cash rebate—typically $3,000–$5,000 for residential systems. We handle the paperwork and registration; the rebate reduces your final cost. Our accreditation also means your system is eligible for the Solar Homes & Communities Plan (varies by state) and other incentives."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "sol-faq-1",
+            "question": "What size system do I need?",
+            "answer": "Most homes use 5–10kW (15–30 panels) and save 60–80% on bills. We analyse your annual usage from electricity bills and your roof space, then design a system sized for your needs. Larger systems take more roof space but maximize savings."
+          },
+          {
+            "id": "sol-faq-2",
+            "question": "Do I need a battery?",
+            "answer": "Batteries are optional. Without a battery, you save on day usage and feed unused power back to the grid. With a battery, you store power for night/rainy days and protect against blackouts. We recommend batteries in areas with frequent outages or high electricity costs."
+          },
+          {
+            "id": "sol-faq-3",
+            "question": "What happens if my roof needs replacement?",
+            "answer": "We recommend replacing your roof before solar installation if it is nearing end-of-life. If you install now and need a roof replacement later, we can temporarily remove and reinstall panels (labour cost ~$500–$1,000). Plan roof work before solar where possible."
+          }
+        ],
+        "seo": {
+          "title": "Solar Panel Installation Sydney | CEC-Accredited | Battery Systems",
+          "description": "Professional solar installation across Sydney. CEC-accredited, government rebates, high-efficiency panels, battery storage options. Free quote. (02) XXXX XXXX"
+        }
+      },
+      {
+        "slug": "ev-charger-installation",
+        "title": "EV Charger Installation for Home & Business",
+        "summary": "Level 2 EV charger installation by certified electricians. Home and workplace charging solutions.",
+        "icon": "BatteryCharging",
+        "intro": "Electric vehicles are becoming the norm, and home charging is far cheaper and more convenient than public charging stations. A Level 2 home charger (7kW or 11kW) fills most EV batteries overnight for a fraction of petrol costs. We are certified Level 2 installers and handle the complete installation: electrical assessment, circuit upgrade if needed, charging unit installation, safety testing, and warranty support. If you run a business or apartment complex, we also design commercial charging networks for multiple vehicles.",
+        "benefits": [
+          "Home charging costs 70% less than petrol per km",
+          "Overnight charging for daily commuting convenience",
+          "Certified Level 2 installer—compliant and warranted",
+          "Upgrades to future-proof your electrical system",
+          "Government grants available for residential installations"
+        ],
+        "sections": [
+          {
+            "heading": "Level 2 vs. Portable Chargers",
+            "body": "Portable chargers (3.7kW) plug into standard power points and add only 25–30km of range per night—suitable for short commutes but slow for daily use. Level 2 chargers (7–11kW) install permanently in your garage or driveway and add 50–80km of range per night, enough for most daily commutes. A dedicated circuit ensures fast, safe charging without overloading your switchboard. We assess your electrical capacity and upgrade the switchboard or circuits if needed before installation."
+          },
+          {
+            "heading": "Installation & Ongoing Use",
+            "body": "Installation takes 1–2 days and involves running a dedicated circuit from your switchboard to the charger location (garage, driveway, or carport). We ensure the circuit is properly grounded, sized for the charger power, and integrated with safety switches. Most chargers are smart-enabled, allowing you to schedule charging during off-peak hours for lower tariffs. We provide a warranty on labour and parts, and can advise on grid export rules if your EV charger works with battery systems."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "ev-faq-1",
+            "question": "How much does a Level 2 charger installation cost?",
+            "answer": "A typical installation ranges $1,500–$3,000 depending on the distance from your switchboard to the charger location and any circuit upgrades needed. Government rebates (NSW Home Battery or local schemes) can reduce this. We provide a fixed quote after electrical assessment."
+          },
+          {
+            "id": "ev-faq-2",
+            "question": "Can I charge two EVs at home?",
+            "answer": "Yes, if your switchboard has capacity. Most modern homes can handle one 11kW charger easily; two chargers require a larger service or staggered charging. We assess your electrical capacity and design the system accordingly."
+          },
+          {
+            "id": "ev-faq-3",
+            "question": "Is my garage/driveway safe for an outdoor charger?",
+            "answer": "Outdoor Level 2 chargers are weatherproof and safe if installed correctly with proper conduit, grounding, and drainage. We assess your site and choose an appropriate charger and mounting location to protect against water, UV, and physical damage."
+          }
+        ],
+        "seo": {
+          "title": "EV Charger Installation Sydney | Level 2 Home & Business Charging",
+          "description": "Professional EV charger installation in Sydney. Level 2 chargers, certified installers, government rebates available. Home and business solutions."
+        }
+      },
+      {
+        "slug": "lighting-installation",
+        "title": "Lighting Installation & LED Upgrades",
+        "summary": "Indoor and outdoor lighting design, LED upgrades, downlights, smart lighting, and energy-efficient solutions.",
+        "icon": "Lightbulb",
+        "intro": "Good lighting transforms your home—brighter, safer, and more energy-efficient. We design and install complete lighting systems for homes and businesses, from energy-efficient LED downlights and ceiling lights to outdoor security lighting and smart lighting control. LED upgrades use 80% less energy than incandescent and last 25+ years, paying for themselves through energy savings. We also install smart lighting (app-controlled, voice-activated) and specialized lighting like under-cabinet kitchen lights, bathroom exhaust fans with lights, and outdoor pathway lighting.",
+        "benefits": [
+          "LED upgrades save 80% on lighting energy costs",
+          "Instant brightness—no warm-up time like fluorescent",
+          "25+ year lifespan—rarely need replacement",
+          "Smart lighting control—adjust brightness and color temperature",
+          "Enhanced home value and ambience"
+        ],
+        "sections": [
+          {
+            "heading": "LED Downlights vs. Traditional Bulbs",
+            "body": "LED downlights are the standard for modern homes. They fit into ceiling cavities, produce bright even light, and use minimal power (8–12W each vs. 50W+ for incandescent). They run cool, so heat loss in summer is reduced. Colour temperature ranges from warm (2700K, yellowish—bedroom/living) to cool (4000K–5000K, bluish—kitchen/bathroom). We choose colour and brightness to suit each room. Fluorescent lights (40W+, hum, flicker slightly) are outdated; LED is cheaper to run and lasts longer."
+          },
+          {
+            "heading": "Smart Lighting & Automation",
+            "body": "Smart bulbs and switches let you adjust lighting via smartphone app or voice commands (Alexa, Google). You can set schedules (lights on at sunset, off at bedtime), dim for different moods, or change colour temperature. Motion sensors can trigger outdoor lights or hallway lights at night. Smart lighting is ideal for security, convenience, and further energy savings. We integrate smart systems with your WiFi and provide setup guidance."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "lit-faq-1",
+            "question": "Can I retrofit LED downlights into my existing ceiling?",
+            "answer": "Yes, if your ceiling has cavities or is open (like suspended). If your ceiling is solid (insulation above), we install flush-mount surface lights instead. We assess your ceiling structure and recommend the best option during the quote."
+          },
+          {
+            "id": "lit-faq-2",
+            "question": "Do LED lights work with all dimmer switches?",
+            "answer": "Not all dimmers work with LEDs—older dimmers can cause flickering. We use dimmers rated for LED and advise on compatible bulbs. Most new dimmers are LED-compatible."
+          },
+          {
+            "id": "lit-faq-3",
+            "question": "How much do smart lights cost compared to regular LEDs?",
+            "answer": "Smart bulbs cost $20–$50 each vs. $5–$15 for standard LEDs, but offer convenience and additional savings. Smart switches cost $50–$100 per switch. The payback from energy savings and convenience is 2–3 years."
+          }
+        ],
+        "seo": {
+          "title": "Lighting Installation Sydney | LED Downlights & Smart Lighting",
+          "description": "Professional lighting installation in Sydney. LED downlights, outdoor lighting, smart lighting systems, energy-efficient solutions. Modern, safe, cost-effective."
+        }
+      },
+      {
+        "slug": "power-points-installation",
+        "title": "Power Points & Electrical Outlets Installation",
+        "summary": "Additional power point installation, USB outlets, and surface power solutions for kitchens, bathrooms, and offices.",
+        "icon": "Zap",
+        "intro": "Not enough power points? Outdated outlets or damaged sockets? We install additional power points, USB charging outlets, and surface-mounted power strips to give you flexibility and safety. Modern homes need more outlets than older designs anticipated—kitchens now have multiple appliances (coffee machines, toasters, air fryers), offices need many device chargers, and living rooms want outlets without visible cords. We install new circuits or extend existing ones, mount outlets at appropriate heights, and integrate USB outlets for phone and tablet charging.",
+        "benefits": [
+          "Add outlets without unsightly power boards and tangled cords",
+          "USB outlets for faster, safer device charging",
+          "Properly installed outlets reduce fire and electrocution risk",
+          "Supports modern appliances and high-power devices",
+          "Improves home value and usability"
+        ],
+        "sections": [
+          {
+            "heading": "Why Install New Outlets Instead of Using Power Boards",
+            "body": "Power boards are temporary solutions; overloading them creates fire risk by exceeding safe current limits on single circuits. Multiple boards daisy-chained together are particularly dangerous. Permanent installed outlets distribute power across multiple circuits, each protected by a safety switch and circuit breaker. They are neater, safer, and compliant with electrical standards. If you find yourself using power boards regularly, you need additional outlets installed."
+          },
+          {
+            "heading": "USB Outlets & Modern Convenience",
+            "body": "USB outlets eliminate the need for phone chargers and power adapters. Built-in USB ports deliver 2–3A per port, charging phones and tablets faster than adapters. We install USB outlets in bedrooms, living rooms, kitchens, and offices. Some smart USB outlets also have wireless charging pads built in. Dual power + USB outlets save space in tight areas."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "pow-faq-1",
+            "question": "How much does it cost to add a new power point?",
+            "answer": "A single outlet added to an existing nearby circuit costs $150–$300. If a new circuit is needed, add $200–$400. We provide a fixed quote after assessing your switchboard capacity and routing requirements."
+          },
+          {
+            "id": "pow-faq-2",
+            "question": "Can I install a power point outside?",
+            "answer": "Yes, outdoor power points must be weatherproof (IP65 rated) and protected by a safety switch. We install them in garages, patios, and gardens. Outdoor outlets have plastic covers to keep them dry."
+          },
+          {
+            "id": "pow-faq-3",
+            "question": "Do USB outlets save energy?",
+            "answer": "Slightly. USB outlets avoid the standby power draw of wall chargers left plugged in, saving 1–2% of overall energy. The main benefit is convenience and safety, not energy savings."
+          }
+        ],
+        "seo": {
+          "title": "Power Point Installation Sydney | USB Outlets & Electrical Outlets",
+          "description": "Professional power point installation in Sydney. Additional outlets, USB charging, surface wiring. Safe, code-compliant, modern solutions."
+        }
+      },
+      {
+        "slug": "electrical-testing-compliance",
+        "title": "Electrical Testing, Safety Switches & Compliance Inspections",
+        "summary": "Safety switch testing, electrical compliance certification, tagging, and safety inspections for homes and workplaces.",
+        "icon": "ShieldCheck",
+        "intro": "Electrical safety switches, circuit testing, and compliance documentation are essential for protecting your family and meeting legal requirements. We carry out comprehensive electrical inspections, test safety switches to ensure they respond in milliseconds to dangerous faults, and provide certification for insurance, resale, or regulatory compliance. For businesses, we conduct regular testing and tagging of portable appliances and provide compliance reports for WorkSafe NSW or other authorities. Every installation we complete includes full testing and a Certificate of Compliance.",
+        "benefits": [
+          "Safety switches tested for instant fault response",
+          "Full electrical compliance certification",
+          "Insurance and resale eligibility",
+          "Identification of hidden faults and aging hazards",
+          "Portable appliance testing for workplaces"
+        ],
+        "sections": [
+          {
+            "heading": "Why Safety Switch Testing Matters",
+            "body": "A safety switch (RCD) should cut power in 30 milliseconds if it senses a fault—fast enough to prevent serious electrocution. Over time, switches can degrade and lose responsiveness. We test every safety switch using calibrated test equipment and replace any that are slow or faulty. This is a simple, inexpensive check that could save lives. We also check circuit breakers to ensure they trip at rated current and are not bypassed with inappropriate fuses."
+          },
+          {
+            "heading": "Compliance Certificates & Documentation",
+            "body": "A Certificate of Compliance (provided after electrical work) confirms the installation meets AS/NZS 3000. For home resales, banks and buyers often request this certificate. For renovations, council may require it. For businesses, WorkSafe NSW requires periodic electrical testing and a safety compliance schedule. We handle all documentation and lodgement with relevant authorities."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "tst-faq-1",
+            "question": "How often should safety switches be tested?",
+            "answer": "We recommend testing every 6–12 months in residential homes and every 6 months in workplaces. Many insurance policies require annual testing evidence. Simple testing (press the 'test' button on the switch) can be done by you; professional calibrated testing we do annually or as needed."
+          },
+          {
+            "id": "tst-faq-2",
+            "question": "What does a Certificate of Compliance cover?",
+            "answer": "It certifies that all electrical work (installation, repair, or upgrade) complies with the current standard AS/NZS 3000 and is safe. It includes details of work done, circuits affected, and testing results. It is required by banks for home loans and by councils for renovations."
+          },
+          {
+            "id": "tst-faq-3",
+            "question": "How much does an electrical compliance inspection cost?",
+            "answer": "A basic inspection and safety switch test costs $150–$300. A full house compliance inspection with circuit testing and documentation costs $400–$800 depending on house size and complexity. We provide a fixed quote after assessment."
+          }
+        ],
+        "seo": {
+          "title": "Electrical Testing & Compliance Inspections Sydney",
+          "description": "Electrical compliance, safety switch testing, certification. Residential and workplace testing. Insurance and resale compliance. Licensed inspectors."
+        }
+      }
+    ],
+    "locations": [
+      {
+        "slug": "bondi",
+        "suburb": "Bondi",
+        "state": "NSW",
+        "intro": "Bondi is one of Sydney's most iconic beachside suburbs, known for its stunning coastline, vibrant community, and premium real estate. The area has a mix of heritage Victorian terrace houses dating back over a century, alongside modern apartments and renovated properties. Many Bondi homes feature updated kitchens, climate control, and modern entertainment spaces—all requiring reliable electrical systems. We serve Bondi locals and investors with emergency repairs, renovations, solar installations, and switchboard upgrades.",
+        "body": "Bondi's older homes often have outdated electrical systems from the 1950s–1980s that need upgrading before solar installation or major renovation. Our electricians are familiar with Bondi's character homes and know how to work within heritage constraints while meeting modern safety standards. We handle emergency callouts to Bondi beachfront properties (often on tight schedules for holiday rentals) and provide compliance certification for investment properties.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Same-day service to Bondi, Tamarama, and Clovelly",
+          "Heritage home rewiring specialists",
+          "Solar installation for updated homes",
+          "Investment property compliance",
+          "24/7 emergency response"
+        ],
+        "sections": [
+          {
+            "heading": "Electrical Needs in Bondi's Homes",
+            "body": "Bondi's mix of heritage and modern homes means diverse electrical needs. Terraces and villas from the early 1900s typically have two-pin outlets, rewirable fuse boxes, and cloth-wrapped wiring—all fire hazards. We provide full rewiring and switchboard upgrades to bring these homes up to code. Modern apartments and renovated homes often lack sufficient circuits for modern appliances, air-con, and heating; we add dedicated circuits and upgrade switchboards. Beachfront properties face salt corrosion on outdoor fixtures; we use marine-grade materials for durability."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "bondi-faq-1",
+            "question": "Do Bondi holiday rental properties need electrical compliance certificates?",
+            "answer": "Yes. Holiday rentals in NSW must meet fire safety and electrical compliance standards. We provide full electrical compliance inspections and certification for rental properties."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Bondi | Emergency & Renovation Electrical Services",
+          "description": "Licensed electrician serving Bondi, NSW. Heritage home rewiring, solar installation, emergency repairs. Fast response, compliance certified."
+        }
+      },
+      {
+        "slug": "parramatta",
+        "suburb": "Parramatta",
+        "state": "NSW",
+        "intro": "Parramatta, in Sydney's west, is a major commercial and residential hub with a rapidly growing population. The area includes older 1970s–1980s suburban homes, newer residential developments, and growing apartment blocks. Parramatta experiences hot summers and cold winters, driving high HVAC and heating/cooling loads that stress aging electrical systems. Many homes and businesses in Parramatta benefit from switchboard upgrades, solar installation, and modern circuit design to handle demand.",
+        "body": "Parramatta has experienced significant growth in recent years, with many properties undergoing renovation and modernization. We serve both residential and small-business customers with switchboard upgrades, solar and battery installations for summer heat management, and renovation electrical work. The area's older homes (1980s–1990s) often have insufficient circuits for modern families; we design and install expanded electrical systems to support contemporary living.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Switchboard upgrades for modern demand",
+          "Solar and battery installation for summer cooling",
+          "Renovation electrical services",
+          "Commercial fit-out and maintenance",
+          "Rapid response to Parramatta and surrounding areas"
+        ],
+        "sections": [
+          {
+            "heading": "Summer Electrical Demands in Parramatta",
+            "body": "Parramatta's hot summers (regularly 35–40°C) mean high air-con and refrigeration load. Older switchboards and circuits can trip or overheat when multiple cooling systems run simultaneously. We upgrade switchboards to handle peak summer loads and recommend solar + battery systems to power cooling during peak daylight hours, reducing grid strain and electricity costs. Battery systems also provide blackout protection during heat waves when the grid is stressed."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "parr-faq-1",
+            "question": "Is solar a good investment in Parramatta?",
+            "answer": "Yes. Parramatta has high sunshine hours and hot summers, meaning high electricity costs. A 5–8kW solar system typically saves $1,500–$2,500 per year on bills. Government rebates and tax incentives further improve returns."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Parramatta | Solar Installation & Switchboard Upgrades",
+          "description": "Licensed electrician in Parramatta, West Sydney. Solar installation, switchboard upgrades, air-con electrical, renovations. Fast service."
+        }
+      },
+      {
+        "slug": "manly",
+        "suburb": "Manly",
+        "state": "NSW",
+        "intro": "Manly is a prestigious beachside suburb on Sydney's Northern Beaches, known for its pristine beaches, upscale properties, and strong community. The area features a mix of heritage homes, modern beachfront apartments, and renovated Victorian houses. Many properties have waterfront or elevated views, which influences electrical design (outdoor lighting, pool wiring, smart home systems). Our electricians serve Manly with high-end residential work, emergency repairs, and compliance for investment properties.",
+        "body": "Manly's premium properties often require sophisticated electrical systems—heated pools, smart home automation, outdoor entertainment lighting, and modern kitchens. We are experienced with high-end installations and can integrate smart lighting, security systems, and energy management. The proximity to the ocean means salt spray can corrode outdoor fixtures; we use marine-grade materials and recommend regular testing of outdoor circuits.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Smart home and automation integration",
+          "Pool and outdoor entertainment electrical",
+          "Premium lighting and custom installations",
+          "Marine-grade materials for coastal durability",
+          "Same-day service to Manly and Northern Beaches"
+        ],
+        "sections": [
+          {
+            "heading": "Smart Home and Automation in Manly",
+            "body": "Manly properties often feature smart home systems—app-controlled lighting, voice-activated entertainment, automated blinds, and energy monitoring. We integrate these systems with modern switchboards and ensure all circuits are properly designed for future expansion. Smart thermostats, lighting control, and pool automation add convenience and can save energy when properly configured. We advise on WiFi coverage and electrical integration for seamless smart-home operation."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "manly-faq-1",
+            "question": "Is my beachfront property at risk of electrical corrosion?",
+            "answer": "Yes. Salt spray and high humidity accelerate corrosion of outdoor electrical fittings. We recommend using marine-grade (stainless steel) hardware and regular testing of outdoor circuits. Sacrificial anode systems can also protect metal components."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Manly | Premium Home Automation & Coastal Properties",
+          "description": "Licensed electrician in Manly, Northern Beaches. Smart home, pool wiring, solar installation. Coastal-rated, premium service."
+        }
+      },
+      {
+        "slug": "chatswood",
+        "suburb": "Chatswood",
+        "state": "NSW",
+        "intro": "Chatswood is a vibrant business and residential hub in Sydney's North Shore, featuring modern apartments, shopping precincts, and established suburban homes. The area is known for its diverse community, convenient public transport, and growing commercial presence. Many properties in Chatswood are modern 1990s–2010s homes with generally adequate electrical systems, but increasing power demands (home offices, streaming entertainment, EV chargers) often necessitate circuit upgrades and smart-home integration.",
+        "body": "Chatswood's mix of residential and commercial properties means we handle both home and business electrical work. The area has seen significant apartment development; we wire new apartments and renovate existing units for improved power and smart-home capability. Working professionals in Chatswood increasingly demand home office infrastructure, EV charging, and energy-efficient heating/cooling. We design electrical systems to support these modern lifestyle needs.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Home office and smart office wiring",
+          "EV charger installation for home and businesses",
+          "Apartment and unit renovation",
+          "Energy-efficient heating and cooling circuits",
+          "Fast response to Chatswood and surrounding area"
+        ],
+        "sections": [
+          {
+            "heading": "Home Office Electrical Requirements",
+            "body": "Modern home offices require dedicated circuits for computers, monitors, lighting, and backup power systems. We design power circuits with adequate capacity for high-load equipment and install surge protection to protect sensitive electronics. Proper grounding and circuit isolation prevent electrical noise that can degrade network performance. We also advise on battery backup systems (UPS) for continuous power during outages."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "chats-faq-1",
+            "question": "Can my apartment's electrical system handle an EV charger?",
+            "answer": "Maybe. Apartment switchboards vary; many have shared panels with limited capacity for individual units. We assess your building's electrical infrastructure and advise whether an individual or shared charging solution is feasible. Strata approval and coordination with building management is usually required."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Chatswood | Home Office & EV Charging",
+          "description": "Licensed electrician in Chatswood, North Sydney. Home office wiring, EV chargers, apartment renovations, smart home. Professional service."
+        }
+      },
+      {
+        "slug": "penrith",
+        "suburb": "Penrith",
+        "state": "NSW",
+        "intro": "Penrith, in Sydney's southwest, is a large regional centre with a diverse mix of residential suburbs, commercial zones, and industrial areas. The region experiences hot summers and cool winters, creating significant heating and cooling loads. Many properties are mid-range suburban homes from the 1980s–2000s; older homes often have undersized electrical systems that struggle with modern appliances and air-con. We provide comprehensive services to Penrith residents including switchboard upgrades, solar installation, and energy-efficient electrical design.",
+        "body": "Penrith's property market is diverse, with many first-home buyers and families looking for affordable housing. Many homes in the area would benefit from electrical upgrades—switchboard modernization, additional circuits, and solar installation to reduce grid costs. The region's summer heat drives high air-con demand; we design circuits and cooling systems for reliability and efficiency. We serve both residential and small-business customers throughout Penrith and the surrounding Blue Mountains foothills.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Switchboard upgrades for modern demand",
+          "Solar installation to reduce summer air-con costs",
+          "Renovation and extension electrical work",
+          "Industrial and commercial maintenance",
+          "Same-day service to Penrith region"
+        ],
+        "sections": [
+          {
+            "heading": "Air-Con Electrical in Penrith's Hot Climate",
+            "body": "Penrith regularly reaches 35–40°C in summer. Cooling is essential, but air-con systems draw significant electrical current; multiple units running simultaneously can overload older circuits and switchboards. We upgrade boards to handle peak cooling loads and recommend installing solar systems with battery backup to power cooling during peak daylight heat. Battery systems ensure cooling continues during blackouts, which occur during heat waves when the grid is stressed."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "penr-faq-1",
+            "question": "How much does it cost to upgrade electrical for air-con installation?",
+            "answer": "Most air-con units require a dedicated 16–25A circuit from the switchboard. The cost is $400–$800 depending on distance and whether the switchboard has available capacity. If the board is full, upgrade costs add $1,500–$3,000."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Penrith | Air-Con Installation & Solar Services",
+          "description": "Licensed electrician in Penrith, Southwest Sydney. Air-conditioning wiring, solar installation, switchboard upgrades. Reliable service."
+        }
+      },
+      {
+        "slug": "sutherland-shire",
+        "suburb": "Sutherland Shire",
+        "state": "NSW",
+        "intro": "Sutherland Shire, Sydney's scenic southern beach region, is known for beautiful coastal areas like Cronulla, Bundeena, and Gymea, alongside suburban residential communities. Properties here range from modest 1970s homes to modern beachfront residences. Many homes have outdoor entertainment spaces, pools, and gardens that require robust outdoor electrical systems. The coastal location means salt-air corrosion is a consideration for all outdoor electrical work.",
+        "body": "Sutherland Shire is a premium residential area with growing demand for modern electrical upgrades. Many older homes lack sufficient circuits for contemporary living; we provide switchboard upgrades and circuit expansion. Pool and outdoor entertainment lighting are common; we design and install these systems with safety and durability in mind. The coastal environment requires careful material selection and regular maintenance of outdoor circuits.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Pool and outdoor entertainment electrical",
+          "Coastal-rated materials for durability",
+          "Solar and battery installation",
+          "Switchboard upgrades and renovation work",
+          "Fast service to all Sutherland Shire suburbs"
+        ],
+        "sections": [
+          {
+            "heading": "Pool and Outdoor Electrical Safety",
+            "body": "Pools and water features require specialized electrical design. All circuits must have safety switches, and wiring must be protected from water and UV damage. Underwater lighting, pool pumps, and heating systems need dedicated circuits with proper grounding and surge protection. We design these systems to comply with AS/NZS 3000 and local council requirements. Regular safety testing ensures ongoing protection."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "suther-faq-1",
+            "question": "Can I add a pool heater to my existing electrical system?",
+            "answer": "Most pool heaters (gas or heat pump) require a dedicated 20–25A circuit. If your switchboard lacks capacity, an upgrade is needed. We assess your system and advise on the most cost-effective solution."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Sutherland Shire | Pool & Outdoor Electrical",
+          "description": "Licensed electrician serving Sutherland Shire beaches. Pool wiring, solar installation, outdoor entertainment, coastal durability."
+        }
+      },
+      {
+        "slug": "blacktown",
+        "suburb": "Blacktown",
+        "state": "NSW",
+        "intro": "Blacktown, in Sydney's western region, is one of NSW's largest and fastest-growing local government areas. The area has diverse residential communities, commercial zones, and is increasingly popular with families seeking affordable housing. Many homes are suburban builds from the 1980s–2000s; many would benefit from electrical upgrades to support modern lifestyles and to enable renewable energy systems. We serve Blacktown and the broader Western Sydney region with comprehensive electrical services.",
+        "body": "Blacktown's rapid growth and affordable housing attract families and first-home buyers. Many properties would benefit from switchboard upgrades, additional circuits, and solar installation. Western Sydney experiences hot, dry summers and cool winters, making climate control important; we design electrical systems to support efficient heating and cooling. Our electricians are familiar with the area and provide reliable, cost-effective service to residential and commercial customers.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Affordable switchboard upgrades",
+          "Solar installation and battery backup",
+          "Extension and renovation electrical",
+          "Commercial fit-outs and maintenance",
+          "Fast, reliable service across Western Sydney"
+        ],
+        "sections": [
+          {
+            "heading": "Growing Demand for Renewable Energy in Blacktown",
+            "body": "Blacktown's expanding suburbs and family-focused demographics align well with renewable energy adoption. Solar installation is increasingly common as families look to reduce electricity costs. We provide CEC-accredited solar and battery installation, helping Blacktown residents achieve energy independence and protection from grid outages during extreme weather."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "black-faq-1",
+            "question": "Is solar worthwhile in Blacktown?",
+            "answer": "Yes. Blacktown has high sunshine hours and strong summer heat, plus high average electricity costs. A 5–6kW solar system typically saves $1,200–$1,800 per year after rebates."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Blacktown | Solar Installation & Affordable Upgrades",
+          "description": "Licensed electrician in Blacktown, West Sydney. Solar installation, switchboard upgrades, extensions. Affordable, reliable service."
+        }
+      },
+      {
+        "slug": "cronulla",
+        "suburb": "Cronulla",
+        "state": "NSW",
+        "intro": "Cronulla is Sydney's southernmost beach suburb, famous for its pristine beaches, village atmosphere, and strong community spirit. Properties range from beachfront apartments and villas to established suburban homes. The beachside location means residents value outdoor entertainment, water features (pools, spas), and reliable power for holiday rentals and permanent residences. Coastal salt spray requires specialized electrical materials and regular maintenance.",
+        "body": "Cronulla's premium properties often feature pools, spas, and sophisticated outdoor entertainment areas with significant electrical requirements. Holiday rental properties need robust, code-compliant electrical systems for tenant safety and insurance requirements. We provide comprehensive electrical services to Cronulla—from emergency repairs to switchboard upgrades, pool installations, and smart-home integration. Our experience with coastal corrosion ensures outdoor systems are durable and safe.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Pool and spa electrical installation",
+          "Holiday rental compliance certification",
+          "Coastal-rated materials and durability",
+          "Smart home and entertainment systems",
+          "Premium service to Cronulla beachfront"
+        ],
+        "sections": [
+          {
+            "heading": "Holiday Rental Compliance in Cronulla",
+            "body": "Many Cronulla properties are holiday rentals, which must comply with NSW fire safety and electrical standards. We provide full electrical compliance inspections, ensure all circuits have safety switches, and verify that outlets and switches are in good condition. We issue Certificates of Compliance required by councils and insurance companies. Annual testing and maintenance keeps holiday rentals safe and compliant."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "cron-faq-1",
+            "question": "What electrical safety is required for a holiday rental in Cronulla?",
+            "answer": "Holiday rentals must have working safety switches on all circuits, functioning smoke alarms, surge-protected circuits, and documented electrical compliance. We conduct audits and provide certification."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Cronulla | Holiday Rental & Pool Electrical Services",
+          "description": "Licensed electrician in Cronulla beach. Pool and spa wiring, holiday rental compliance, coastal durability, premium service."
+        }
+      },
+      {
+        "slug": "ryde",
+        "suburb": "Ryde",
+        "state": "NSW",
+        "intro": "Ryde, on Sydney's North Shore, is a well-established residential area with diverse suburbs and a strong community. Properties range from post-war homes (1950s–1960s) to modern apartments and renovated houses. The area has good schools, shopping, and transport; many properties are being renovated and updated. Ryde residents often upgrade electrical systems as part of home modernization and to support energy-efficient heating/cooling.",
+        "body": "Ryde is an established area with many older homes (1960s–1970s) that benefit from electrical modernization. Switchboard upgrades, circuit expansion, and safety improvements are common requests. We also serve the area's renovations market, wiring new extensions and kitchens. Ryde's temperate climate means less extreme heating/cooling demand than western or inland areas, but modern homes still benefit from efficient electrical design.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Switchboard upgrades for older homes",
+          "Renovation and extension wiring",
+          "Solar installation and battery backup",
+          "Home office and modern appliance support",
+          "Rapid response to Ryde and surrounding areas"
+        ],
+        "sections": [
+          {
+            "heading": "Modernizing Ryde's Older Homes",
+            "body": "Many Ryde properties from the 1960s–1970s have original switchboards and wiring, often undersized by modern standards. We upgrade these systems to handle contemporary appliances, heating/cooling, and entertainment systems. A full switchboard upgrade typically takes one day and costs $1,500–$3,000, but brings permanent safety and functionality improvements."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "ryde-faq-1",
+            "question": "How do I know if my Ryde home needs an electrical upgrade?",
+            "answer": "Signs include: flickering lights, outlets that don't hold plugs, burnt smells from switches, breakers that trip frequently, or missing safety switches. If your home was built before 1990, we recommend a professional inspection."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Ryde | Home Modernization & Switchboard Upgrades",
+          "description": "Licensed electrician in Ryde, North Sydney. Switchboard upgrades, renovations, solar installation. Serving established suburbs."
+        }
+      },
+      {
+        "slug": "wollongong",
+        "suburb": "Wollongong",
+        "state": "NSW",
+        "intro": "Wollongong, on the NSW south coast, is a significant regional city with industrial heritage, beaches, and growing residential areas. Properties range from heritage industrial-area homes to modern suburban developments. Wollongong's coastal location offers beautiful ocean views and outdoor living, but salt spray and humidity affect electrical systems. The region's industrial past means we also serve commercial and manufacturing clients.",
+        "body": "Wollongong is a vibrant regional centre with diverse electrical service needs. We serve both residential customers (home renovations, switchboard upgrades, solar installations) and commercial/industrial clients (maintenance, industrial wiring, compliance). The coastal environment requires attention to corrosion prevention and durability. Our electricians are experienced with Wollongong's mix of heritage and modern properties.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Commercial and industrial electrical work",
+          "Coastal-rated materials and durability",
+          "Solar installation for regional homes and businesses",
+          "Switchboard upgrades and modernization",
+          "Rapid response to Wollongong and surrounding regions"
+        ],
+        "sections": [
+          {
+            "heading": "Industrial Electrical Maintenance in Wollongong",
+            "body": "Wollongong's industrial heritage means we service many light-industrial and manufacturing facilities. We conduct electrical maintenance, upgrade power distribution systems, and ensure compliance with WorkSafe NSW requirements. Industrial clients benefit from our experience with high-load systems, three-phase power, and specialized equipment."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "woll-faq-1",
+            "question": "Do Wollongong businesses need regular electrical maintenance?",
+            "answer": "Yes. WorkSafe NSW recommends regular electrical testing and maintenance for all businesses. We provide annual inspections, safety switch testing, and compliance reporting."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Wollongong | Commercial & Residential Services",
+          "description": "Licensed electrician in Wollongong, NSW south coast. Commercial maintenance, residential upgrades, solar installation, coastal durability."
+        }
+      },
+      {
+        "slug": "newcastle",
+        "suburb": "Newcastle",
+        "state": "NSW",
+        "intro": "Newcastle, NSW's largest regional city, is a vibrant beachside centre with a growing population, business district, and coastal community. Properties range from heritage buildings and post-war homes to modern apartments and new developments. Newcastle's coastal environment and growing tech and creative industries mean diverse electrical service needs. We serve Newcastle residents and businesses with comprehensive electrical solutions.",
+        "body": "Newcastle is experiencing growth and modernization, with increased demand for electrical upgrades, renewable energy, and smart-home systems. We serve both residential and commercial customers across Newcastle, providing switchboard upgrades, solar installation, commercial fit-outs, and industrial maintenance. Our electricians understand Newcastle's diverse property portfolio and community needs.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "Commercial and business electrical services",
+          "Residential solar and battery installation",
+          "City and regional service coverage",
+          "Industrial maintenance and upgrades",
+          "Same-day response to Newcastle area"
+        ],
+        "sections": [
+          {
+            "heading": "Growing Tech and Creative Industries in Newcastle",
+            "body": "Newcastle's growing tech and creative sectors demand modern office infrastructure. We wire commercial spaces with robust power distribution, networking support, and energy-efficient lighting and climate control. Backup power systems and surge protection are important for protecting sensitive equipment."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "newc-faq-1",
+            "question": "Do Newcastle businesses need electrical compliance certification?",
+            "answer": "Yes. NSW regulations require regular electrical testing, safety switch testing, and compliance documentation. We provide annual inspections and certification."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Newcastle | Commercial & Residential Services",
+          "description": "Licensed electrician in Newcastle, NSW. Commercial fit-outs, residential upgrades, solar installation, business electrical services."
+        }
+      },
+      {
+        "slug": "central-coast",
+        "suburb": "Central Coast",
+        "state": "NSW",
+        "intro": "The Central Coast, including suburbs like Gosford, Wyong, and Terrigal, is a rapidly growing region north of Sydney. The area features coastal towns, lakeside suburbs, and expanding residential developments. Properties range from beachfront homes to family suburban houses. The region's growing population and construction mean increasing demand for electrical services—new builds, renovations, and upgrades.",
+        "body": "The Central Coast's rapid growth creates diverse electrical needs. We serve new residential developments, established suburbs, and coastal properties. Solar installation is particularly popular on the Coast due to high sunshine and growing energy costs. We also handle commercial work, industrial maintenance, and renovation electrical. Our electricians are familiar with the region and provide reliable service from Gosford to Terrigal.",
+        "landmarks": [],
+        "services_offered": [],
+        "benefits": [
+          "New build and construction electrical",
+          "Coastal-rated materials and durability",
+          "Solar and renewable energy installation",
+          "Renovation and extension wiring",
+          "Commercial and residential service across the Coast"
+        ],
+        "sections": [
+          {
+            "heading": "New Build Electrical on the Central Coast",
+            "body": "New residential developments on the Central Coast require modern electrical design from the ground up. We design and install complete systems to meet AS/NZS 3000 and provide Certificates of Compliance for new properties. Smart-home pre-wiring, solar integration, and EV charger readiness are increasingly common in new builds."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "cent-faq-1",
+            "question": "Is solar installation popular on the Central Coast?",
+            "answer": "Yes. The Coast has excellent sunshine hours and strong demand for affordable energy. Most new homes include solar-ready infrastructure. We provide CEC-accredited solar installations for new and existing properties."
+          }
+        ],
+        "seo": {
+          "title": "Electrician Central Coast | Solar Installation & New Builds",
+          "description": "Licensed electrician on the Central Coast, NSW. Solar installation, new builds, renovations, commercial services across Gosford and Terrigal."
+        }
+      }
+    ],
+    "service_areas": [
+      {
+        "slug": "emergency-repairs-bondi",
+        "service_slug": "emergency-electrical-repairs",
+        "service_title": "Emergency Electrical Repairs",
+        "suburb": "Bondi",
+        "headline": "24/7 Emergency Electrician in Bondi",
+        "body": "When your lights go out or you smell burning from a power point, you need immediate help. We offer 24/7 emergency electrical repairs in Bondi with response times as quick as 60 minutes during the day. Our licensed electricians are on call every day, including weekends and public holidays. Bondi's mix of heritage terraces and modern apartments means we handle diverse electrical faults—from blown safety switches to damaged wiring in period properties. No call-out fees apply; you pay only for the repair work completed.",
+        "benefits": [
+          "Same-day emergency response to Bondi",
+          "No call-out fees on emergency work",
+          "Available 24/7, including weekends",
+          "Fixed pricing on most repairs",
+          "Licensed and fully insured"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "emg-bondi-1",
+            "question": "How quickly can an electrician arrive in Bondi?",
+            "answer": "During business hours (7am–6pm), we aim for 60 minutes. After hours and weekends, 2–3 hours depending on demand. For true emergencies (fire, electrocution risk), we prioritise fastest response."
+          }
+        ],
+        "seo": {
+          "title": "24/7 Emergency Electrician Bondi | Same-Day Repairs",
+          "description": "Emergency electrical repair in Bondi. 24/7 service, fast response, no call-out fees. Power outages, faults, safety hazards."
+        }
+      },
+      {
+        "slug": "switchboard-upgrades-parramatta",
+        "service_slug": "switchboard-upgrades",
+        "service_title": "Switchboard Upgrades",
+        "suburb": "Parramatta",
+        "headline": "Modern Switchboard Upgrades in Parramatta",
+        "body": "Parramatta's older homes often struggle with aging switchboards and fuse boxes that cannot handle modern appliances and air-con loads. We provide complete switchboard upgrades—replacing dangerous fuse boxes with modern circuit breaker systems that meet current safety standards. The upgrade typically takes one full day, and we coordinate with your energy provider for any supply-line changes. A modern switchboard is essential for solar installation, EV chargers, and renovation work, and qualifies you for better insurance rates and home resale value.",
+        "benefits": [
+          "Upgrade from fuses to modern circuit breakers",
+          "Handles high summer cooling loads",
+          "Enables solar and EV charger installation",
+          "Improves insurance eligibility",
+          "Increases home value"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "swb-parr-1",
+            "question": "Why does Parramatta need bigger switchboards?",
+            "answer": "Parramatta's hot summers mean high air-con loads. Older boards sized for 1970s appliances cannot safely handle modern cooling demands. An upgrade adds capacity and safety switches to manage peak summer loads."
+          }
+        ],
+        "seo": {
+          "title": "Switchboard Upgrade Parramatta | Modern Circuit Breaker Installation",
+          "description": "Switchboard upgrade specialists in Parramatta. Replace old fuse boxes with modern circuit breaker systems. Safe, compliant, same-day service."
+        }
+      },
+      {
+        "slug": "house-rewiring-manly",
+        "service_slug": "house-rewiring",
+        "service_title": "House Rewiring",
+        "suburb": "Manly",
+        "headline": "Complete House Rewiring in Manly",
+        "body": "Manly's heritage and period properties often have aging wiring—cloth insulation, two-pin outlets, and no grounding—creating serious fire and electrocution risks. We provide complete house rewiring, installing modern cable, grounding systems, and up-to-date switchboards that meet current safety standards. A full rewire takes 5–7 days and brings your home into compliance for insurance, resale, and modern living. Our electricians are experienced with Manly's heritage homes and work carefully to minimize disruption.",
+        "benefits": [
+          "Eliminates fire hazard from old wiring",
+          "Adds modern outlets and grounding",
+          "Meets insurance and resale requirements",
+          "Supports future solar and smart home upgrades",
+          "Heritage-home specialists"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "rew-manly-1",
+            "question": "How do you minimize damage to a heritage Manly home during rewiring?",
+            "answer": "We run new cable through existing conduit where possible and use surface mounting or discrete wall channels. Some patching and paint touch-up is usually needed; most customers combine rewiring with a fresh paint job."
+          }
+        ],
+        "seo": {
+          "title": "House Rewiring Manly | Heritage Home Specialists",
+          "description": "Complete house rewiring in Manly. Heritage home specialists. Compliance, safety, modern standards. Licensed electricians."
+        }
+      },
+      {
+        "slug": "solar-installation-chatswood",
+        "service_slug": "solar-panel-installation",
+        "service_title": "Solar Panel Installation",
+        "suburb": "Chatswood",
+        "headline": "Solar Panel Installation & Battery in Chatswood",
+        "body": "Chatswood's modern homes and high electricity costs make solar installation an excellent investment. We design and install high-efficiency solar systems with battery storage options, all CEC-accredited for government rebates. A typical 5–8kW system saves $1,500–$2,500 per year and qualifies for Small-scale Technology Certificates (STCs) worth $3,000–$5,000. Battery systems store daytime power for night use and protect you from blackouts. Chatswood's good sunshine and high tariffs mean a 5–7 year payback on solar investment.",
+        "benefits": [
+          "Save $1,500–$2,500 annually on electricity",
+          "CEC-accredited—qualify for government rebates",
+          "Battery storage for energy independence",
+          "Blackout protection",
+          "Increase home value"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "sol-chats-1",
+            "question": "How much solar do Chatswood homes typically need?",
+            "answer": "Most Chatswood homes use 5–8kW systems (15–25 panels). We analyse your usage and design a system sized for your needs. Larger systems use more roof space but maximize savings."
+          }
+        ],
+        "seo": {
+          "title": "Solar Panel Installation Chatswood | Battery Storage & Rebates",
+          "description": "Solar panel installation in Chatswood. CEC-accredited, government rebates, battery storage. Save on electricity. Same-day quote."
+        }
+      },
+      {
+        "slug": "ev-charger-penrith",
+        "service_slug": "ev-charger-installation",
+        "service_title": "EV Charger Installation",
+        "suburb": "Penrith",
+        "headline": "Home EV Charger Installation in Penrith",
+        "body": "Electric vehicles are becoming the norm in Penrith, and home charging is far cheaper than petrol or public charging stations. We install Level 2 home chargers (7–11kW) that fully charge most EVs overnight for minimal cost. Penrith's growing EV adoption means many homes need charger installation; we handle the complete electrical work, from switchboard assessment to charger installation and safety testing. Government grants are available for Penrith residents in some areas.",
+        "benefits": [
+          "Charge overnight for 50–80km range",
+          "Cost 70% less than petrol per km",
+          "Certified Level 2 installer",
+          "Potentially eligible for government grants",
+          "Convenient, safe home charging"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "ev-penr-1",
+            "question": "Will a Level 2 charger work for my EV in Penrith?",
+            "answer": "Yes. Most EVs charge at 7–11kW and fully charge overnight. Our certified installers size the charger to your EV and ensure your switchboard has capacity."
+          }
+        ],
+        "seo": {
+          "title": "EV Charger Installation Penrith | Home Charging Solutions",
+          "description": "Home EV charger installation in Penrith. Level 2 chargers, certified installers, government grants. Convenient overnight charging."
+        }
+      },
+      {
+        "slug": "lighting-installation-sutherland-shire",
+        "service_slug": "lighting-installation",
+        "service_title": "Lighting Installation",
+        "suburb": "Sutherland Shire",
+        "headline": "Lighting Installation & LED Upgrades in Sutherland Shire",
+        "body": "Modern lighting transforms your Sutherland Shire home—brighter, safer, and more energy-efficient. We install LED downlights, outdoor security lighting, and smart lighting systems that you can control via smartphone or voice commands. LED upgrades use 80% less energy than incandescent and last 25+ years, paying for themselves in energy savings. Many Sutherland Shire properties lack adequate outdoor lighting for pools and entertainment areas; we design and install weatherproof, durable systems.",
+        "benefits": [
+          "LED upgrades save 80% on lighting costs",
+          "25+ year lifespan—rarely need replacement",
+          "Smart controls for convenience",
+          "Outdoor security and entertainment lighting",
+          "Weatherproof coastal-rated materials"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "lit-suth-1",
+            "question": "Can outdoor lights in Sutherland Shire withstand salt spray?",
+            "answer": "Yes. We use marine-grade stainless steel fittings and weatherproof units designed for coastal environments. Regular maintenance and testing ensures durability."
+          }
+        ],
+        "seo": {
+          "title": "Lighting Installation Sutherland Shire | LED & Smart Lighting",
+          "description": "Lighting installation in Sutherland Shire. LED downlights, outdoor lighting, smart controls. Coastal-rated, energy-efficient."
+        }
+      },
+      {
+        "slug": "power-points-blacktown",
+        "service_slug": "power-points-installation",
+        "service_title": "Power Points Installation",
+        "suburb": "Blacktown",
+        "headline": "Power Point Installation in Blacktown",
+        "body": "Need more power outlets in your Blacktown home? We install additional power points, USB charging outlets, and surface-mounted solutions to eliminate unsightly power boards. Modern homes and home offices often lack sufficient outlets; we add circuits and outlets at convenient locations—kitchens, living rooms, bedrooms, and home offices. USB outlets provide fast charging for phones and tablets without separate adapters.",
+        "benefits": [
+          "Eliminate dangerous power boards",
+          "USB outlets for faster device charging",
+          "Properly installed outlets comply with standards",
+          "Supports modern appliances and loads",
+          "Improves home functionality"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "pow-black-1",
+            "question": "How much does it cost to add power points in Blacktown?",
+            "answer": "A single outlet added to an existing circuit costs $150–$300. If a new circuit is needed, add $200–$400. We provide a fixed quote after assessment."
+          }
+        ],
+        "seo": {
+          "title": "Power Point Installation Blacktown | USB Outlets & Outlets",
+          "description": "Power point installation in Blacktown. Additional outlets, USB charging, surface wiring. Safe, code-compliant."
+        }
+      },
+      {
+        "slug": "testing-compliance-cronulla",
+        "service_slug": "electrical-testing-compliance",
+        "service_title": "Electrical Testing & Compliance",
+        "suburb": "Cronulla",
+        "headline": "Electrical Safety Testing & Compliance in Cronulla",
+        "body": "Holiday rental and residential properties in Cronulla must comply with NSW electrical safety standards. We conduct comprehensive electrical testing, verify safety switches respond properly, and issue Certificates of Compliance required by councils and insurance companies. Annual testing ensures ongoing safety and compliance. We also provide testing and tagging of portable appliances for holiday rentals.",
+        "benefits": [
+          "Safety switch testing for instant fault response",
+          "Compliance certification for insurance and resale",
+          "Holiday rental compliance",
+          "Portable appliance testing",
+          "Annual maintenance and testing"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "tst-cron-1",
+            "question": "What compliance is needed for a Cronulla holiday rental?",
+            "answer": "Holiday rentals need working safety switches, functional smoke alarms, and documented electrical compliance. We conduct audits and provide certification."
+          }
+        ],
+        "seo": {
+          "title": "Electrical Testing & Compliance Cronulla | Holiday Rental Certified",
+          "description": "Electrical testing and compliance in Cronulla. Safety switch testing, holiday rental certification, insurance compliance."
+        }
+      },
+      {
+        "slug": "emergency-repairs-ryde",
+        "service_slug": "emergency-electrical-repairs",
+        "service_title": "Emergency Electrical Repairs",
+        "suburb": "Ryde",
+        "headline": "24/7 Emergency Electrician in Ryde",
+        "body": "Power outage or electrical fault in Ryde? We respond 24/7 with same-day emergency repairs. Our licensed electricians are on call every day to handle blown safety switches, damaged outlets, power failures, and dangerous electrical faults. Ryde's older homes sometimes develop electrical problems; we diagnose and fix the issue quickly, safely, and affordably.",
+        "benefits": [
+          "24/7 emergency availability",
+          "Same-day response to Ryde",
+          "No call-out fees on emergencies",
+          "Fixed pricing on repairs",
+          "Licensed and insured"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "emg-ryde-1",
+            "question": "What constitutes an electrical emergency?",
+            "answer": "Burning smells, sparking outlets, power outages, water damage to wiring, and tripped safety switches that won't reset are emergencies. Call us immediately for safety."
+          }
+        ],
+        "seo": {
+          "title": "24/7 Emergency Electrician Ryde | Fast Same-Day Repairs",
+          "description": "Emergency electrical repair in Ryde. 24/7 service, fast response, no call-out fees. Power outages, faults, safety hazards."
+        }
+      },
+      {
+        "slug": "switchboard-upgrades-wollongong",
+        "service_slug": "switchboard-upgrades",
+        "service_title": "Switchboard Upgrades",
+        "suburb": "Wollongong",
+        "headline": "Switchboard Upgrade Services in Wollongong",
+        "body": "Wollongong's coastal homes and businesses often have aging switchboards that cannot safely handle modern loads. We upgrade old fuse boxes to modern circuit breaker systems, adding safety switches and adequate capacity for contemporary appliances, heating, cooling, and future solar installation. A complete upgrade takes one day and qualifies you for better insurance rates and home resale value.",
+        "benefits": [
+          "Modern circuit breaker safety systems",
+          "Handles high summer cooling loads",
+          "Enables solar and EV installation",
+          "Improves insurance and resale value",
+          "Professional, same-day installation"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "swb-woll-1",
+            "question": "How does coastal salt affect switchboards?",
+            "answer": "Salt spray accelerates corrosion of metal components. We use marine-grade materials and recommend regular testing to detect corrosion early. A modern board in a marine-grade enclosure offers better protection."
+          }
+        ],
+        "seo": {
+          "title": "Switchboard Upgrade Wollongong | Modern Electrical Systems",
+          "description": "Switchboard upgrades in Wollongong. Safe, modern circuit breaker systems. Coastal-rated, reliable installation."
+        }
+      },
+      {
+        "slug": "solar-installation-newcastle",
+        "service_slug": "solar-panel-installation",
+        "service_title": "Solar Panel Installation",
+        "suburb": "Newcastle",
+        "headline": "Solar Panel Installation & Battery in Newcastle",
+        "body": "Newcastle's growing tech and creative sectors, combined with high electricity costs, make solar installation ideal for residential and small-business properties. We provide CEC-accredited solar installations with battery storage options that qualify for government rebates. Newcastle's good sunshine hours mean a 5–7 year payback on solar investment, with savings of $1,500–$2,500 per year for typical homes.",
+        "benefits": [
+          "Save $1,500–$2,500 annually",
+          "CEC-accredited—government rebates available",
+          "Battery storage for energy independence",
+          "Blackout protection",
+          "Increase property value"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "sol-newc-1",
+            "question": "Is Newcastle a good location for solar?",
+            "answer": "Yes. Newcastle has high sunshine hours and strong electricity tariffs. Most installations save 60–80% on bills after accounting for usage and weather patterns."
+          }
+        ],
+        "seo": {
+          "title": "Solar Panel Installation Newcastle | CEC-Accredited Systems",
+          "description": "Solar installation in Newcastle. CEC-accredited, government rebates, battery storage. Residential and business solutions."
+        }
+      },
+      {
+        "slug": "house-rewiring-central-coast",
+        "service_slug": "house-rewiring",
+        "service_title": "House Rewiring",
+        "suburb": "Central Coast",
+        "headline": "Complete House Rewiring on the Central Coast",
+        "body": "Central Coast homes—especially older properties and renovated builds—often need electrical upgrades to meet current standards. We provide complete house rewiring, modern switchboard installation, and full compliance certification. A complete rewire takes 5–7 days and brings your home into compliance for insurance, resale, and modern living demands.",
+        "benefits": [
+          "Eliminates fire hazard from old wiring",
+          "Modern outlets and grounding installed",
+          "Meets insurance and resale requirements",
+          "Supports future renewable energy",
+          "Professional, licensed installation"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "rew-cent-1",
+            "question": "Do Central Coast new builds include complete wiring?",
+            "answer": "Yes, new builds are wired to current standards. Existing homes (20+ years old) may benefit from upgrades, especially before renovation or solar installation."
+          }
+        ],
+        "seo": {
+          "title": "House Rewiring Central Coast | Complete Electrical Upgrades",
+          "description": "House rewiring on the Central Coast. Compliance certification, modern standards, licensed installation."
+        }
+      },
+      {
+        "slug": "ev-charger-central-coast",
+        "service_slug": "ev-charger-installation",
+        "service_title": "EV Charger Installation",
+        "suburb": "Central Coast",
+        "headline": "EV Charger Installation on the Central Coast",
+        "body": "As EV adoption grows on the Central Coast, home charging is becoming essential. We install Level 2 home chargers that fully charge most EVs overnight, far cheaper than petrol or public charging. Our certified installers handle the complete electrical work and ensure your system is safe and reliable.",
+        "benefits": [
+          "Overnight charging for 50–80km range",
+          "70% cost savings vs. petrol",
+          "Certified Level 2 installation",
+          "Future-proof home electrical system",
+          "Convenient, safe charging at home"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "ev-cent-1",
+            "question": "What is the average cost of an EV charger on the Central Coast?",
+            "answer": "Typical installation costs $1,500–$3,000 depending on distance from switchboard and any needed circuit upgrades. Government grants may be available."
+          }
+        ],
+        "seo": {
+          "title": "EV Charger Installation Central Coast | Home Charging Solutions",
+          "description": "Home EV charger installation on the Central Coast. Level 2 chargers, certified installation, government grants available."
+        }
+      }
+    ],
+    "faq": {
+      "items": [
+        {
+          "id": "faq-emergency",
+          "question": "What should I do if I smell burning from an electrical outlet?",
+          "answer": "Turn off power to that outlet immediately at the switchboard (flip the circuit breaker) and do not use it. Call us on 1300 465 353 for an emergency callout. Do not attempt to repair or inspect a burning outlet yourself—it is a fire hazard."
+        },
+        {
+          "id": "faq-safety-switch",
+          "question": "What is a safety switch and why do I need one?",
+          "answer": "A safety switch (RCD) instantly cuts power if it detects a dangerous fault like water contact or touching a live wire. It protects you from electrocution and fire. Modern Australian standards require safety switches on all circuits. If your home lacks them, contact us for an upgrade."
+        },
+        {
+          "id": "faq-solar-rebate",
+          "question": "How do I get the government rebate for solar installation?",
+          "answer": "When you install a CEC-accredited solar system, you qualify for Small-scale Technology Certificates (STCs) worth $3,000–$5,000. Our licensed installers handle all rebate paperwork and registration; the rebate reduces your final cost."
+        },
+        {
+          "id": "faq-switchboard-cost",
+          "question": "Why does a switchboard upgrade cost so much?",
+          "answer": "A switchboard upgrade is a complex job involving isolation of the main power supply, removal of the old board, installation of a new modern board, reconnection of all circuits, testing, and safety certification. It typically takes a full day and requires coordination with your energy provider. The cost ($1,500–$3,500) is offset by improved safety, insurance rates, and home resale value."
+        },
+        {
+          "id": "faq-circuit-breaker",
+          "question": "What is the difference between a circuit breaker and a fuse?",
+          "answer": "Circuit breakers respond instantly to electrical overloads and dangerous faults, cutting power in milliseconds. Fuses melt slowly and are less reliable; they are outdated and dangerous. Modern switchboards use circuit breakers exclusively. If your home has fuses, we recommend upgrading to a circuit breaker system."
+        },
+        {
+          "id": "faq-power-points",
+          "question": "Is it safe to use power boards instead of installing additional outlets?",
+          "answer": "Power boards are temporary solutions and overloading them creates fire risk. Multiple boards daisy-chained together are particularly dangerous. If you rely on power boards, you need additional outlets installed. We can typically add outlets for $150–$300 per outlet."
+        }
+      ],
+      "seo": {
+        "title": "Electrical Services FAQ | Gold Electrical Sydney",
+        "description": "Frequently asked questions about electrical services, safety switches, solar installation, and switchboard upgrades."
+      }
+    },
+    "about": {
+      "body": "Gold Electrical Services Australia is a family-run business dedicated to delivering safe, reliable electrical solutions across Sydney and beyond. Founded on the principles of honesty, quality workmanship, and customer satisfaction, we have built a reputation as a trusted partner for residential, commercial, and industrial electrical services.\n\nOur team of fully licensed and insured electricians brings decades of combined experience to every job—from emergency repairs to complex solar installations and commercial fit-outs. We invest in ongoing training to stay current with the latest electrical standards, renewable energy technologies, and safety protocols. Whether you need a simple power point installation, a complete house rewire, or a sophisticated smart-home system, we approach each project with the same commitment to excellence.\n\nWe serve greater Sydney and surrounding regions including the Central Coast, Newcastle, and Wollongong. Our 24/7 emergency response team ensures that electrical faults are addressed immediately, minimizing safety risks and downtime. We provide transparent pricing, honest diagnosis, and no surprises—you always know what the job will cost and why.",
+      "years_in_business": 12,
+      "values": [
+        {
+          "id": "val-safety",
+          "title": "Safety First",
+          "body": "Every job is executed to the highest safety standards. We comply with AS/NZS 3000 and WorkSafe NSW requirements. Your family and business safety is our top priority.",
+          "icon": "ShieldCheck"
+        },
+        {
+          "id": "val-honesty",
+          "title": "Honest Advice",
+          "body": "No pressure sales or unnecessary work. We diagnose faults accurately and recommend solutions that make sense for your situation—not always the most expensive option.",
+          "icon": "Sparkle"
+        },
+        {
+          "id": "val-reliability",
+          "title": "Reliable Service",
+          "body": "Same-day response to emergencies. On-time appointments for non-emergency work. If we say we'll be there at 2pm, you can count on it.",
+          "icon": "Wrench"
+        },
+        {
+          "id": "val-quality",
+          "title": "Quality Workmanship",
+          "body": "We use quality materials, certified installers, and thorough testing. Your electrical system is built to last, not just pass inspection.",
+          "icon": "Lightbulb"
+        }
+      ],
+      "seo": {
+        "title": "About Gold Electrical Services Australia | Sydney Licensed Electricians",
+        "description": "Gold Electrical Services Australia - trusted Sydney electricians with 12+ years experience. 24/7 emergency service, licensed and insured."
+      }
+    },
+    "seo": {
+      "title": "Licensed Electrician Sydney | 24/7 Emergency Electrical Services",
+      "description": "Gold Electrical Services Australia - trusted electrician in Sydney. Emergency repairs, switchboard upgrades, solar installation, EV chargers. Licensed, insured, same-day service available.",
+      "schema_org_type": "LocalBusiness"
+    },
+    "preview": {},
+    "overrides": {}
+  },
+  "createdAt": "2026-06-29T09:32:06.831Z",
+  "status": "preview"
+}

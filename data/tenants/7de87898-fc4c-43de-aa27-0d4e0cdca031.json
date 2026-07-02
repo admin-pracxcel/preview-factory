@@ -1,0 +1,711 @@
+{
+  "id": "7de87898-fc4c-43de-aa27-0d4e0cdca031",
+  "name": "Barber Industries QVB",
+  "niche": "Barber Shop",
+  "category": "trades",
+  "siteProps": {
+    "business": {
+      "name": "Barber Industries QVB",
+      "phone": "(02) 8288 9003"
+    },
+    "branding": {
+      "primary_color": "#1a3a52",
+      "secondary_color": "#d4af37",
+      "accent_color": "#dc2626"
+    },
+    "home": {
+      "hero": {
+        "headline": "Expert Barbers in the Heart of Sydney CBD",
+        "subheadline": "Premium haircuts, fades, and beard grooming with meticulous attention to detail",
+        "cta_primary": {
+          "label": "Book Your Appointment",
+          "href": "/book"
+        },
+        "cta_secondary": {
+          "label": "Call (02) 8288 9003",
+          "href": "tel:+61282889003"
+        }
+      },
+      "services": [
+        {
+          "id": "svc-haircuts",
+          "title": "Premium Haircuts",
+          "description": "Expert haircuts tailored to your style and hair type, from classic cuts to modern designs",
+          "icon": "Scissors"
+        },
+        {
+          "id": "svc-fades",
+          "title": "Fade Cuts",
+          "description": "Clean, precise fade cuts with expert blending and sharp line work",
+          "icon": "Zap"
+        },
+        {
+          "id": "svc-beard",
+          "title": "Beard Grooming",
+          "description": "Professional beard trimming, shaping, and line-ups with meticulous precision",
+          "icon": "Sparkle"
+        },
+        {
+          "id": "svc-styling",
+          "title": "Hair Styling",
+          "description": "Professional styling and product application for any occasion or everyday look",
+          "icon": "Paintbrush"
+        },
+        {
+          "id": "svc-curly",
+          "title": "Curly Hair Specialist",
+          "description": "Expert cuts and styling for curly hair, enhancing natural texture and volume",
+          "icon": "Wind"
+        },
+        {
+          "id": "svc-products",
+          "title": "Premium Hair Products",
+          "description": "Quality grooming products and treatments to maintain your look",
+          "icon": "Star"
+        }
+      ],
+      "about": {
+        "body": "At Barber Industries QVB, we believe every haircut is an opportunity to build a relationship with our clients. Located in the heart of Sydney CBD, our team of skilled barbers brings years of experience and a genuine passion for their craft.\n\nWe're committed to listening to your needs, understanding your style, and delivering exceptional results every single time. Whether you're after a clean fade, a tailored cut, or expert beard work, we treat every customer with the same level of care and attention to detail."
+      },
+      "service_area": {
+        "suburbs": []
+      },
+      "testimonials": [
+        {
+          "id": "review-mike",
+          "quote": "I went in to purchase a product because there was such a large display that really drew my attention and not only did I buy a product I also got a styled haircut. Great shop, great service and very affordable compared to other places in Sydney CBD. Highly recommend and will definitely be back again.",
+          "author": "Mike",
+          "rating": 5
+        },
+        {
+          "id": "review-sanie",
+          "quote": "I brought my son into Barber Industries QVB for a haircut, and we had such a great experience. He has curly hair and wanted a nice, clean fade, which can sometimes be tricky, but Samer absolutely delivered. Samer took the time to really listen to what my son wanted and made sure he felt comfortable throughout the whole process. His communication was excellent, he explained what he was doing and checked in to make sure my son was happy every step of the way. The end result was exactly what my son was hoping for, and I was very satisfied with both the service and the care Samer showed. We'll definitely be coming back!",
+          "author": "Sanie Elmasri",
+          "rating": 5
+        },
+        {
+          "id": "review-mark",
+          "quote": "Had my booking today on 5 March 2026 at 11:50 AM, and the team at Barber Industries QVB looked after me perfectly. They gave me water and coffee while I waited, and even wished me a happy and lucky date, which was a nice touch. Every time I book with a different barber here, I get a new experience that's just as good, clean fades, friendly service, smooth booking, great music, and a solid atmosphere. Easily the most consistent barbershop in the CBD.",
+          "author": "Mark",
+          "rating": 5
+        },
+        {
+          "id": "review-jabour",
+          "quote": "I had an excellent experience at Barber Industries QVB, especially as someone with curly hair and a full beard. It can be hard to find a barber who really understands how to work with curls, but Omar clearly knew exactly what he was doing. He took the time to assess my hair type, listened carefully to how I usually style it, and gave me a cut that enhanced the natural shape and volume of my curls without making it look uneven or bulky. The beard work was just as impressive. Instead of rushing through it, Omar carefully shaped and blended my beard to suit my face, paying close attention to symmetry and detail. The line-up was sharp, clean, and precise, and he used proper techniques and products to keep everything looking neat but still natural. What stood out most was the attention to detail and patience – he didn't treat my hair like a standard cut. He worked methodically, making sure both my curls and beard complemented each other perfectly. The whole experience felt professional and tailored, and I walked out feeling fresh, confident, and genuinely impressed. If you've got curly hair and a beard and want someone who actually knows how to handle both properly, I'd highly recommend Barber Industries QVB. Thanks again, Omar – really appreciate the great work!",
+          "author": "Jabour El Arse",
+          "rating": 5
+        },
+        {
+          "id": "review-jawad",
+          "quote": "Booked a appointment with Moe on the 28th of April at 4pm. The friendly staff welcomed me in, ensured my comfort, and offered a hot expresso and refreshing water bottle which was refreshing. The haircut itself was professional, efficient, and clean. I've never had a barber do my beard exactly how I want it but Moe understood what I wanted, advised me, and provided the best service I've ever received. Overall my experience at barber industries QVB was amazing I will definitely be making this my regular shop!! Highly recommend visiting barber industries QVB",
+          "author": "Jawad Elmrad",
+          "rating": 5
+        }
+      ],
+      "social_proof": {
+        "items": [
+          {
+            "id": "proof-rating",
+            "value": "5",
+            "label": "Star Average Rating",
+            "icon": "Star"
+          }
+        ]
+      },
+      "contact": {
+        "phone": "(02) 8288 9003",
+        "address": "Shop 45 LG1 QVB, 455 George St, Sydney NSW 2000, Australia"
+      }
+    },
+    "services": [
+      {
+        "slug": "premium-haircuts",
+        "title": "Premium Haircuts",
+        "summary": "Expert haircuts tailored to your style, face shape, and hair type",
+        "icon": "Scissors",
+        "intro": "Your haircut is more than just a trim – it's an expression of who you are. At Barber Industries QVB, our expert barbers take the time to understand your style preferences, assess your hair type, and create a cut that suits you perfectly.\n\nWhether you're after a classic look, a modern style, or something entirely unique, we have the skill and experience to deliver. Every cut is performed with precision and attention to detail, ensuring you leave looking and feeling your best.",
+        "benefits": [
+          "Custom cuts tailored to your face shape and style",
+          "Expert assessment of your hair type and texture",
+          "Professional styling advice and product recommendations",
+          "Consistent quality from our experienced team"
+        ],
+        "sections": [
+          {
+            "heading": "Why Choose Our Haircut Service",
+            "body": "Our barbers bring years of experience and a commitment to staying current with the latest techniques and trends. We listen carefully to what you want, discuss options, and deliver results that exceed expectations. Every client receives personalized attention, and we're committed to understanding your unique needs and preferences to ensure complete satisfaction with your haircut."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "faq-haircut-1",
+            "question": "How often should I get a haircut?",
+            "answer": "Most people benefit from a haircut every 4–6 weeks to maintain shape and style. However, this depends on your hair type and desired look. Our barbers can recommend a schedule tailored to you."
+          },
+          {
+            "id": "faq-haircut-2",
+            "question": "Can you cut all hair types?",
+            "answer": "Yes, our barbers are experienced with all hair types, including straight, wavy, curly, and coily hair. We have specialists who excel at working with curly hair and other textured styles."
+          }
+        ],
+        "seo": {
+          "title": "Premium Haircuts in Sydney CBD | Barber Industries QVB",
+          "description": "Expert haircuts for all styles and hair types in Sydney CBD. Professional barbers trained in modern and classic techniques. Book today."
+        }
+      },
+      {
+        "slug": "fade-cuts",
+        "title": "Fade Cuts",
+        "summary": "Sharp, precise fade cuts with clean lines and professional finish",
+        "icon": "Zap",
+        "intro": "The fade cut is a timeless style that requires precision, skill, and an understanding of proportion. At Barber Industries QVB, our barbers have mastered the art of the fade, delivering clean, sharp cuts with perfect blending from top to sides.\n\nWhether you want a low fade, mid fade, high fade, or skin fade, we execute each cut with meticulous attention to line work and symmetry. Our team uses professional techniques and quality tools to ensure your fade looks crisp and lasts longer.",
+        "benefits": [
+          "Clean, sharp fade lines that last weeks",
+          "Expert blending and perfect symmetry",
+          "Multiple fade styles to choose from",
+          "Professional line-up and finishing work"
+        ],
+        "sections": [
+          {
+            "heading": "Our Fade Expertise",
+            "body": "Fades are our specialty. Every barber on our team has extensive experience creating clean fades for clients with all hair types. We understand the technique required to blend different clipper grades seamlessly and create the perfect gradation. From start to finish, we ensure every fade is executed with precision and attention to detail."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "faq-fade-1",
+            "question": "What's the difference between a low, mid, and high fade?",
+            "answer": "The fade refers to how high up the sides the shorter hair starts. A low fade begins closer to the ear, a mid fade starts at mid-ear height, and a high fade begins higher on the head. We'll recommend what suits your style and head shape."
+          },
+          {
+            "id": "faq-fade-2",
+            "question": "How long does a fade last?",
+            "answer": "Most fades look sharp for 3–4 weeks. Some clients prefer to return every 2 weeks for maintenance, while others stretch it to 4–5 weeks depending on personal preference and hair growth rate."
+          }
+        ],
+        "seo": {
+          "title": "Fade Cuts in Sydney CBD | Expert Barbers",
+          "description": "Professional fade cuts with sharp lines and clean blending. Low, mid, high, and skin fades for all hair types in Sydney CBD."
+        }
+      },
+      {
+        "slug": "beard-grooming",
+        "title": "Beard Grooming",
+        "summary": "Professional beard trimming, shaping, and maintenance for a polished look",
+        "icon": "Sparkle",
+        "intro": "A well-groomed beard makes a statement. At Barber Industries QVB, we specialize in professional beard grooming that enhances your features and keeps your beard looking sharp. From trimming and shaping to detailed line-ups, our barbers treat beard work as an art form.\n\nWe understand that every beard is unique – different growth patterns, textures, and styles. Our team assesses your beard's characteristics and works with you to create a shape that complements your face, personal style, and grooming preferences.",
+        "benefits": [
+          "Expert beard assessment and custom shaping",
+          "Precise line-ups and meticulous edge work",
+          "Professional blending of beard with haircut",
+          "Personalized grooming advice for home maintenance"
+        ],
+        "sections": [
+          {
+            "heading": "Beard Grooming Expertise",
+            "body": "Our barbers take time to understand your beard growth, discuss the style you want, and work methodically to achieve the perfect shape. We pay close attention to symmetry, proportion, and the natural flow of your beard. Whether you prefer a full, thick beard or a more sculpted look, we have the skills to deliver exactly what you envision."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "faq-beard-1",
+            "question": "How often should I get my beard trimmed?",
+            "answer": "For maintenance, most people benefit from beard grooming every 3–4 weeks. If you're growing out your beard or prefer a more maintained look, you might visit every 2–3 weeks."
+          },
+          {
+            "id": "faq-beard-2",
+            "question": "Can you work with thick or curly beards?",
+            "answer": "Absolutely. Our barbers have experience with all beard types, including thick, curly, and textured beards. We adjust our techniques to work with your beard's natural characteristics."
+          }
+        ],
+        "seo": {
+          "title": "Professional Beard Grooming in Sydney CBD | Barber Industries QVB",
+          "description": "Expert beard trimming, shaping, and grooming in Sydney CBD. Precise line-ups and custom styling. Book your beard appointment."
+        }
+      },
+      {
+        "slug": "curly-hair-specialist",
+        "title": "Curly Hair Specialist",
+        "summary": "Expert cuts and styling for curly hair that enhance natural texture and shape",
+        "icon": "Wind",
+        "intro": "Curly hair requires a different approach. Not all barbers understand how to work with curls – how they sit, how they shrink, and how to shape them for the best result. At Barber Industries QVB, our specialists have honed their skills specifically for curly and textured hair.\n\nWe take time to assess your curl pattern, discuss your desired style, and execute cuts that enhance your natural texture while maintaining proportion and shape. Whether you have tight coils, loose waves, or everything in between, we know how to bring out the best in your curls.",
+        "benefits": [
+          "Specialized knowledge of curl patterns and behavior",
+          "Cuts that enhance natural texture and add volume",
+          "Expert advice for curly hair care and daily styling",
+          "Precision techniques that account for shrinkage and curl patterns"
+        ],
+        "sections": [
+          {
+            "heading": "Curly Hair Expertise",
+            "body": "Cutting curly hair is a specialized skill. Our barbers assess your curl pattern, understand how your hair behaves when dry versus wet, and cut strategically to achieve balance and shape. We use techniques that enhance your natural curls without making them look bulky or uneven. The result is a cut that looks great whether your curls are wet or dry."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "faq-curly-1",
+            "question": "Why does my curly hair look different after a cut when it dries?",
+            "answer": "Curly hair shrinks as it dries due to the curl pattern. Our specialists account for this and cut accordingly so your style looks balanced and proportional when completely dry."
+          },
+          {
+            "id": "faq-curly-2",
+            "question": "Can you cut curly hair with fades?",
+            "answer": "Yes, absolutely. Clean fades work beautifully with curly hair. Our barbers have the skill to create sharp fades on textured hair that look professional and maintain definition."
+          }
+        ],
+        "seo": {
+          "title": "Curly Hair Specialist Barber in Sydney CBD | Barber Industries QVB",
+          "description": "Expert curly hair cutting and styling in Sydney CBD. Specialists trained in all curl types and textures. Book with our experts."
+        }
+      },
+      {
+        "slug": "hair-styling",
+        "title": "Hair Styling",
+        "summary": "Professional styling services for special occasions and everyday looks",
+        "icon": "Paintbrush",
+        "intro": "Sometimes you need more than just a haircut – you need styling to complete the look. At Barber Industries QVB, our barbers excel at professional styling for any occasion. From everyday styling to special event preparation, we apply our expertise to ensure you look your absolute best.\n\nWe use quality products, modern techniques, and an understanding of what works for your hair type to create a style that lasts and looks polished throughout the day.",
+        "benefits": [
+          "Expert product selection and professional application",
+          "Modern styling techniques for all hair types",
+          "Personalized advice on products for home use",
+          "Perfect preparation for special events and occasions"
+        ],
+        "sections": [
+          {
+            "heading": "Professional Styling Service",
+            "body": "Our barbers combine technical skill with product knowledge to create styles that enhance your appearance. We discuss the occasion, your preferences, and the look you want to achieve, then apply the right products and techniques to get there. Whether it's a sleek look, tousled style, or special event preparation, we deliver professional results."
+          }
+        ],
+        "faqs": [
+          {
+            "id": "faq-style-1",
+            "question": "What products do you recommend for home styling?",
+            "answer": "We recommend products based on your hair type and desired style. Our team will advise you on the right pomade, paste, clay, or spray to maintain your look at home."
+          }
+        ],
+        "seo": {
+          "title": "Professional Hair Styling in Sydney CBD | Barber Industries QVB",
+          "description": "Expert hair styling for everyday looks and special occasions. Quality products and professional techniques. Book today."
+        }
+      }
+    ],
+    "locations": [
+      {
+        "slug": "sydney-cbd",
+        "suburb": "Sydney CBD",
+        "state": "NSW",
+        "intro": "Located in the heart of Sydney CBD at QVB, Barber Industries is easily accessible from major transport hubs, offices, and shopping precincts. Our central location at Shop 45 makes us the ideal choice for professionals, students, and Sydney residents looking for convenient, expert barber services.\n\nWe've earned a strong reputation as the most consistent barbershop in Sydney CBD, delivering exceptional quality and service with every visit.",
+        "body": "Our Sydney CBD location puts us right in the action. Whether you're working nearby, shopping, or visiting the city, popping in for a haircut is easy. Our team welcomes walk-ins and bookings, and we pride ourselves on smooth, efficient service that respects your time. The atmosphere is welcoming and inclusive – great music, comfortable seating, and complimentary beverages make your visit enjoyable. Our team of skilled barbers, including specialists like Samer, Omar, and Moe, brings years of experience and genuine care for every client.",
+        "landmarks": [
+          "Queen Victoria Building (QVB)",
+          "George Street retail and offices",
+          "Town Hall Station (nearby)",
+          "Sydney CBD commercial district"
+        ],
+        "services_offered": [
+          "premium-haircuts",
+          "fade-cuts",
+          "beard-grooming",
+          "hair-styling",
+          "curly-hair-specialist"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-cbd-1",
+            "question": "Is there parking near Barber Industries at QVB?",
+            "answer": "Yes, QVB has a car park, and there are several public parking options nearby on George Street and surrounding areas. Public transport via Town Hall Station is also very close."
+          },
+          {
+            "id": "faq-cbd-2",
+            "question": "Can I book an appointment?",
+            "answer": "Yes, we accept bookings and walk-ins. Contact us on (02) 8288 9003 to schedule your appointment at a time that suits you."
+          }
+        ],
+        "seo": {
+          "title": "Barber Shop in Sydney CBD | Barber Industries QVB",
+          "description": "Expert barber services in Sydney CBD at Queen Victoria Building. Premium haircuts, fades, and beard grooming. Shop 45 LG1 QVB, 455 George St."
+        }
+      },
+      {
+        "slug": "circular-quay",
+        "suburb": "Circular Quay",
+        "state": "NSW",
+        "intro": "Circular Quay is one of Sydney's most iconic destinations, home to the Opera House, Harbour Bridge, and vibrant waterfront culture. Barber Industries at QVB is perfectly positioned to serve professionals, tourists, and residents in the Circular Quay precinct with convenient, high-quality barber services.\n\nWhether you're catching a show at the Opera House or exploring the waterfront, our team is here to keep you looking sharp.",
+        "body": "The Circular Quay area attracts discerning individuals who appreciate quality and attention to detail. Our barbers understand this clientele and deliver premium service that matches the caliber of the precinct. From business professionals catching a quick trim between meetings to tourists wanting a touch-up before enjoying Sydney's attractions, we handle all requests with professionalism and care. Our location at QVB is a short walk from the harbour and major attractions, making us an ideal stop.",
+        "landmarks": [
+          "Sydney Opera House",
+          "Sydney Harbour Bridge",
+          "Royal Botanic Garden",
+          "Customs House",
+          "The Rocks historic precinct"
+        ],
+        "services_offered": [
+          "premium-haircuts",
+          "fade-cuts",
+          "beard-grooming",
+          "hair-styling"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-cq-1",
+            "question": "How quickly can you fit me in if I'm visiting the Opera House?",
+            "answer": "We do walk-ins and can often accommodate visitors quickly. For guaranteed timing, call ahead on (02) 8288 9003 to check availability."
+          }
+        ],
+        "seo": {
+          "title": "Barber Near Circular Quay | Premium Haircuts Sydney",
+          "description": "Expert barber services near Circular Quay and Sydney Opera House. Quick appointments and professional styling. Barber Industries QVB."
+        }
+      },
+      {
+        "slug": "martin-place",
+        "suburb": "Martin Place",
+        "state": "NSW",
+        "intro": "Martin Place is Sydney's business heart, packed with corporate offices, financial institutions, and prestigious retailers. Our QVB location serves the professionals of Martin Place with convenient, high-quality barber services tailored to the demands of the business district.\n\nWe understand the professional standards of Martin Place – precision, efficiency, and consistent quality are non-negotiable for our clientele.",
+        "body": "Business professionals from Martin Place rely on Barber Industries for expert haircuts and styling that maintain a polished appearance throughout the workday. Our team works efficiently to respect your schedule while never compromising on quality. Whether you need a sharp fade, beard grooming, or professional styling, we deliver the precision and attention to detail that Sydney's business leaders expect. Same-day appointments and flexible scheduling make us the convenient choice for your grooming needs.",
+        "landmarks": [
+          "Martin Place shopping district and offices",
+          "Reserve Bank of Australia",
+          "GPO Building",
+          "Sydney's financial district"
+        ],
+        "services_offered": [
+          "premium-haircuts",
+          "fade-cuts",
+          "beard-grooming",
+          "hair-styling"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-mp-1",
+            "question": "What's the quickest appointment I can get?",
+            "answer": "We offer same-day appointments and walk-in service. Call (02) 8288 9003 to check current availability or book ahead for guaranteed timing."
+          },
+          {
+            "id": "faq-mp-2",
+            "question": "Do you offer express services for busy professionals?",
+            "answer": "Yes, we understand professionals are busy. Our team works efficiently without cutting corners on quality."
+          }
+        ],
+        "seo": {
+          "title": "Professional Barber Near Martin Place | Sydney CBD",
+          "description": "Expert haircuts and styling for Martin Place professionals. Quick appointments, precision service. Barber Industries QVB."
+        }
+      },
+      {
+        "slug": "wynyard",
+        "suburb": "Wynyard",
+        "state": "NSW",
+        "intro": "Wynyard Station is a major transport hub and business district, serving thousands of commuters and workers daily. Barber Industries at QVB is ideally positioned to serve the Wynyard community with accessible, convenient barber services right in Sydney CBD.\n\nWe're just a short walk from Wynyard Station, making it easy to fit a quality haircut into your commute or workday.",
+        "body": "The Wynyard area is busy and professional, and our barber shop reflects that energy. We respect your time and schedule, offering convenient bookings and efficient service. Whether you're catching a train or popping in during a break, our team delivers the same high-quality service every visit. We pride ourselves on consistency, which is why so many Wynyard regulars trust us for their grooming needs.",
+        "landmarks": [
+          "Wynyard Station",
+          "Carrington Street offices",
+          "Wynyard Park",
+          "CBD shopping district"
+        ],
+        "services_offered": [
+          "premium-haircuts",
+          "fade-cuts",
+          "beard-grooming"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-wy-1",
+            "question": "Can I get a quick haircut between trains?",
+            "answer": "Depending on how busy we are, we may be able to fit you in quickly. For guaranteed timing that works with your commute, we recommend booking ahead."
+          }
+        ],
+        "seo": {
+          "title": "Convenient Barber Near Wynyard Station | Sydney",
+          "description": "Expert barber services near Wynyard Station. Quick appointments and quality cuts. Barber Industries QVB."
+        }
+      },
+      {
+        "slug": "town-hall",
+        "suburb": "Town Hall",
+        "state": "NSW",
+        "intro": "Town Hall Station and the surrounding precinct is one of Sydney's busiest areas, home to shopping, dining, and business. Barber Industries at QVB sits perfectly in this dynamic area, serving the diverse crowd that moves through Town Hall daily.\n\nOur accessible location and reputation for quality make us the natural choice for anyone seeking expert barber services in the Town Hall area.",
+        "body": "The Town Hall precinct brings together shoppers, office workers, and visitors – all with grooming needs. We serve this diverse clientele with the same professionalism and care, whether you're popping in for a quick trim or booking a more detailed styling session. Our welcoming atmosphere and expert team make every visit pleasant, and our location near the shopping district makes us easy to reach.",
+        "landmarks": [
+          "Town Hall Station",
+          "Sydney Town Hall",
+          "Queen Victoria Building",
+          "George Street retail",
+          "Westfield Sydney"
+        ],
+        "services_offered": [
+          "premium-haircuts",
+          "fade-cuts",
+          "beard-grooming",
+          "hair-styling"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-th-1",
+            "question": "Is there parking near Town Hall?",
+            "answer": "There are parking options in nearby car parks and on the street. Public transport is excellent – Town Hall Station is right nearby."
+          }
+        ],
+        "seo": {
+          "title": "Barber Shop Near Town Hall | Sydney CBD Barbers",
+          "description": "Professional barber services near Town Hall Station. Expert haircuts and grooming. Barber Industries QVB, Sydney."
+        }
+      },
+      {
+        "slug": "darling-harbour",
+        "suburb": "Darling Harbour",
+        "state": "NSW",
+        "intro": "Darling Harbour is Sydney's entertainment and leisure destination, featuring museums, restaurants, and entertainment venues. Barber Industries at QVB is conveniently located for anyone in the Darling Harbour area looking for quality barber services.\n\nWhether you're spending time at the harbour or working nearby, we're here to keep you looking sharp.",
+        "body": "The Darling Harbour area attracts visitors and residents who appreciate quality experiences. Our barber shop offers that same quality – expert cuts, attentive service, and a welcoming atmosphere. We're easy to reach from the harbour precinct, making us a great choice for a touch-up or full grooming session. Our team understands that every client is important and treats you accordingly.",
+        "landmarks": [
+          "Darling Harbour waterfront",
+          "SEA LIFE Sydney",
+          "Australian National Maritime Museum",
+          "Entertainment venues",
+          "Barangaroo Reserve (nearby)"
+        ],
+        "services_offered": [
+          "premium-haircuts",
+          "fade-cuts",
+          "beard-grooming",
+          "curly-hair-specialist"
+        ],
+        "benefits": [],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-dh-1",
+            "question": "Can I book an appointment if I'm visiting Darling Harbour?",
+            "answer": "Absolutely! Call (02) 8288 9003 to check availability. We welcome both bookings and walk-ins."
+          }
+        ],
+        "seo": {
+          "title": "Barber Services Near Darling Harbour | Sydney",
+          "description": "Expert barber services near Darling Harbour. Premium haircuts and grooming. Barber Industries QVB."
+        }
+      }
+    ],
+    "service_areas": [
+      {
+        "slug": "fade-cuts-sydney-cbd",
+        "service_slug": "fade-cuts",
+        "service_title": "Fade Cuts",
+        "suburb": "Sydney CBD",
+        "headline": "Expert Fade Cuts in Sydney CBD",
+        "body": "Looking for sharp, precise fade cuts in Sydney CBD? Barber Industries at QVB specializes in clean, professional fades with expert blending and line work. Our barbers have perfected the art of the fade, delivering crisp lines that last and look impeccable.\n\nWhether you want a low fade, mid fade, high fade, or skin fade, we execute each cut with meticulous attention to symmetry and proportion. We work with all hair types and understand how to create fades that complement your style and features. Visit us at Shop 45 LG1 QVB, 455 George Street – easily accessible from Town Hall Station and throughout Sydney CBD.",
+        "benefits": [
+          "Expert fade techniques and precision blending",
+          "Sharp lines that last 3–4 weeks",
+          "Professional finishing and detailed line-up",
+          "Convenient location in Sydney CBD"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-fcsd-1",
+            "question": "How long does a fade cut appointment take?",
+            "answer": "Most fade cuts take 30–45 minutes depending on your hair type and the complexity of the style. We respect your time and work efficiently without compromising quality."
+          }
+        ],
+        "seo": {
+          "title": "Fade Cuts in Sydney CBD | Barber Industries QVB",
+          "description": "Professional fade cuts with sharp lines and clean blending in Sydney CBD. Expert barbers specializing in all fade styles. Book now."
+        }
+      },
+      {
+        "slug": "beard-grooming-sydney-cbd",
+        "service_slug": "beard-grooming",
+        "service_title": "Beard Grooming",
+        "suburb": "Sydney CBD",
+        "headline": "Professional Beard Grooming in Sydney CBD",
+        "body": "Get expert beard grooming in Sydney CBD at Barber Industries QVB. Our barbers specialize in professional beard trimming, shaping, and line-ups that enhance your features and maintain a polished look.\n\nWe assess your beard's characteristics, discuss your desired style, and execute the work with precision and attention to detail. From thick beards to shaped styling, our team handles all beard grooming needs. We're located at Shop 45 LG1 QVB, 455 George Street, right in the heart of Sydney CBD.",
+        "benefits": [
+          "Expert beard assessment and custom shaping",
+          "Precise line-ups and professional finishing",
+          "Personalized grooming advice and recommendations",
+          "Comfortable, welcoming atmosphere"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-bgsd-1",
+            "question": "What's included in a beard grooming service?",
+            "answer": "Our beard grooming includes trimming, shaping, line-ups, and advice on maintenance. We can also blend your beard with your haircut for a complete look."
+          }
+        ],
+        "seo": {
+          "title": "Beard Grooming in Sydney CBD | Professional Service",
+          "description": "Expert beard trimming and grooming in Sydney CBD. Professional barbers at Barber Industries QVB. Book your appointment."
+        }
+      },
+      {
+        "slug": "curly-hair-specialist-sydney-cbd",
+        "service_slug": "curly-hair-specialist",
+        "service_title": "Curly Hair Specialist",
+        "suburb": "Sydney CBD",
+        "headline": "Curly Hair Specialist in Sydney CBD",
+        "body": "Not all barbers understand curly hair. At Barber Industries QVB in Sydney CBD, we have specialists trained in cutting and styling all curl types – from tight coils to loose waves.\n\nOur curly hair experts assess your unique curl pattern, understand how your hair behaves, and cut strategically to enhance your natural texture while maintaining shape and proportion. The result is a cut that looks great whether your curls are wet or dry. Come see our specialists at Shop 45 LG1 QVB and experience the difference expert curly hair care makes.",
+        "benefits": [
+          "Specialized knowledge of curl patterns and behavior",
+          "Cuts that enhance natural texture and volume",
+          "Expert advice for curly hair care and styling",
+          "Experienced, trained curly hair specialists"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-chss-1",
+            "question": "How do curly hair specialists differ from regular barbers?",
+            "answer": "Curly hair specialists understand curl patterns, shrinkage, and techniques specific to textured hair. They cut strategically to enhance your curls while maintaining proper proportion and shape."
+          }
+        ],
+        "seo": {
+          "title": "Curly Hair Specialist in Sydney CBD | Expert Cuts",
+          "description": "Specialized curly hair cutting and styling in Sydney CBD. Expert barbers trained in all curl types. Barber Industries QVB."
+        }
+      },
+      {
+        "slug": "premium-haircuts-martin-place",
+        "service_slug": "premium-haircuts",
+        "service_title": "Premium Haircuts",
+        "suburb": "Martin Place",
+        "headline": "Premium Haircuts for Martin Place Professionals",
+        "body": "Martin Place professionals demand precision, quality, and efficiency. At Barber Industries QVB, we understand the expectations of Sydney's business district and deliver haircuts that maintain your polished appearance.\n\nOur barbers assess your hair type, discuss your style preferences, and execute cuts with expert precision. Whether you prefer a classic look or modern style, we deliver consistent quality that keeps you looking sharp for work, meetings, and beyond. Conveniently located at QVB, we're easily accessible for your lunch break or after-work grooming.",
+        "benefits": [
+          "Expert cuts for business professionals",
+          "Quick, efficient appointments",
+          "Precise styling and professional finishing",
+          "Convenient CBD location"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-phmp-1",
+            "question": "Can you do professional styling for business meetings?",
+            "answer": "Absolutely. We specialize in professional styling that keeps your look sharp throughout the day. Our team uses quality products suited to your hair type."
+          }
+        ],
+        "seo": {
+          "title": "Professional Haircuts in Martin Place | Sydney CBD Barber",
+          "description": "Expert haircuts for Martin Place professionals. Precise styling and quality service. Barber Industries QVB."
+        }
+      },
+      {
+        "slug": "fade-cuts-town-hall",
+        "service_slug": "fade-cuts",
+        "service_title": "Fade Cuts",
+        "suburb": "Town Hall",
+        "headline": "Sharp Fade Cuts Near Town Hall Station",
+        "body": "Need a sharp fade cut near Town Hall? Barber Industries QVB is just a short walk from Town Hall Station and the shopping precinct. We specialize in clean, precise fades that look crisp from day one and last for weeks.\n\nOur barbers understand fade techniques for all hair types and work with precision to create sharp lines and expert blending. Whether it's a low fade, mid fade, or high fade, we execute every cut with meticulous attention to detail. Walk in anytime or book ahead for guaranteed timing.",
+        "benefits": [
+          "Expert fade cutting and precision blending",
+          "Sharp lines and professional finishing",
+          "Convenient location near Town Hall Station",
+          "Walk-in or appointment options available"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-fcth-1",
+            "question": "How often should I get my fade trimmed to keep it sharp?",
+            "answer": "Most people return for a fade every 3–4 weeks to maintain the sharpness. Some prefer every 2 weeks, while others stretch it to 4–5 weeks – it depends on your preference and hair growth rate."
+          }
+        ],
+        "seo": {
+          "title": "Fade Cuts Near Town Hall | Sydney CBD Barber",
+          "description": "Professional fade cuts near Town Hall Station. Sharp lines, expert blending. Barber Industries QVB."
+        }
+      },
+      {
+        "slug": "premium-haircuts-wynyard",
+        "service_slug": "premium-haircuts",
+        "service_title": "Premium Haircuts",
+        "suburb": "Wynyard",
+        "headline": "Quality Haircuts Near Wynyard Station",
+        "body": "Wynyard commuters and workers can enjoy quality haircuts at Barber Industries QVB, just a short walk from Wynyard Station. We offer convenient appointments that fit your schedule – whether you're catching a train or taking a lunch break.\n\nOur barbers provide expert assessments of your hair type and style preferences, delivering cuts that suit you perfectly. We're known for consistency – every visit delivers the same high quality that keeps our clients coming back.",
+        "benefits": [
+          "Expert haircuts for all styles",
+          "Convenient location near Wynyard Station",
+          "Flexible scheduling and quick appointments",
+          "Consistent quality every single visit"
+        ],
+        "sections": [],
+        "faqs": [
+          {
+            "id": "faq-phwy-1",
+            "question": "What's your closest parking or transport option?",
+            "answer": "We're walking distance from Wynyard Station. There's street parking and car parks nearby if you prefer to drive."
+          }
+        ],
+        "seo": {
+          "title": "Quality Haircuts Near Wynyard Station | Sydney",
+          "description": "Expert barber services near Wynyard Station. Professional haircuts and styling. Barber Industries QVB."
+        }
+      }
+    ],
+    "faq": {
+      "items": [
+        {
+          "id": "faq-general-1",
+          "question": "Do you take appointments and walk-ins?",
+          "answer": "Yes, we welcome both bookings and walk-ins. For guaranteed timing, we recommend calling (02) 8288 9003 to book an appointment. Walk-ins are accommodated based on availability."
+        },
+        {
+          "id": "faq-general-2",
+          "question": "What payment methods do you accept?",
+          "answer": "We accept all major payment methods including cash, card, and mobile payments. Ask the team at the shop for specific details."
+        },
+        {
+          "id": "faq-general-3",
+          "question": "Where exactly are you located?",
+          "answer": "We're at Shop 45 LG1 QVB, 455 George Street, Sydney NSW 2000. We're inside the Queen Victoria Building on the lower ground level. Easy access from Town Hall Station and the George Street shopping precinct."
+        },
+        {
+          "id": "faq-general-4",
+          "question": "How do I book an appointment?",
+          "answer": "You can book by calling (02) 8288 9003. Our friendly team will find a time that works for you."
+        },
+        {
+          "id": "faq-general-5",
+          "question": "What makes Barber Industries different from other barbershops?",
+          "answer": "We're known as the most consistent barbershop in Sydney CBD. Our team of expert barbers, including specialists in curly hair and fades, brings years of experience and genuine care for every client. We offer a welcoming atmosphere, great music, comfortable seating, and complimentary beverages."
+        },
+        {
+          "id": "faq-general-6",
+          "question": "Do you have experience with all hair types?",
+          "answer": "Yes, our barbers are experienced with all hair types – straight, wavy, curly, coily, and textured hair. We have specialists trained specifically in curly hair cutting and styling."
+        }
+      ],
+      "seo": {
+        "title": "Barber FAQ | Barber Industries QVB",
+        "description": "Frequently asked questions about Barber Industries QVB in Sydney CBD. Booking, services, hours, and more."
+      }
+    },
+    "about": {
+      "body": "Barber Industries QVB is Sydney's premier barbershop, dedicated to delivering exceptional grooming services with uncompromising attention to detail. Located in the heart of Sydney CBD in Queen Victoria Building, we've built our reputation on expertise, consistency, and genuine care for our clients.\n\nOur team of skilled barbers brings years of experience and a passion for the craft. Every barber here is trained to understand different hair types, assess client needs, and deliver results that exceed expectations. Whether it's a precise fade, expert beard grooming, or specialized cuts for curly hair, we treat every client with the same level of professionalism and personal attention.\n\nWhat sets us apart is our commitment to the client experience. We understand that a visit to the barber isn't just about getting a haircut – it's about feeling welcome, comfortable, and genuinely cared for. That's why we offer complimentary beverages, create a welcoming atmosphere with great music, and ensure smooth, efficient service every single visit.\n\nWe're proud to be recognized as the most consistent barbershop in Sydney CBD. Whether you're a regular or a first-time visitor, you'll experience the same high standard of service, quality craftsmanship, and professional expertise. Our diverse clientele – from business professionals to students to families – all trust us with their grooming needs.\n\nAt Barber Industries QVB, we believe that grooming is an art form. We take pride in our work, invest in our team's expertise and development, and continuously strive to deliver the best possible experience. Visit us at Shop 45 LG1 QVB, 455 George Street, and experience the difference professional barbering makes.",
+      "values": [],
+      "seo": {
+        "title": "About Barber Industries QVB | Sydney's Premier Barbershop",
+        "description": "Learn about Barber Industries QVB in Sydney CBD. Expert barbers, consistent quality, and professional grooming services."
+      }
+    },
+    "seo": {
+      "title": "Barber Industries QVB | Expert Barber Shop in Sydney CBD",
+      "description": "Premium barber shop in Sydney CBD at QVB. Expert fades, beard grooming, curly hair specialist. Professional service, quality products, 5-star reviews.",
+      "schema_org_type": "LocalBusiness"
+    }
+  },
+  "createdAt": "2026-06-30T01:39:44.955Z",
+  "status": "preview"
+}

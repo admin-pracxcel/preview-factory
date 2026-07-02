@@ -86,7 +86,7 @@ export function CountdownBanner({ label, target }: { label?: string; target?: st
   const unit = (n: number, suffix: string) => `${n}${suffix}`;
 
   return (
-    <div className="bg-[var(--accent)] text-white">
+    <div className="bg-[var(--accent)] text-[var(--accent-fg)]">
       <div className="mx-auto flex max-w-6xl items-center justify-center gap-2 px-4 py-2 text-center text-xs font-semibold tracking-wide sm:text-sm">
         <Sparkles className="h-4 w-4 shrink-0" />
         <span>{label ?? "Limited-time offer"}</span>

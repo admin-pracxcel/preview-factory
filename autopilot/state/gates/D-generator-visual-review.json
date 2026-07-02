@@ -1,6 +1,0 @@
-{
-  "title": "Phase D visual review: generated plumber site",
-  "question": "Please review the AI-generated Clearflow Plumbing site and approve before we mass-produce the remaining categories. Once approved, allied-health, beauty-aesthetics, and fitness-wellness categories will be built in parallel (each grader-gated).",
-  "context": "Start the dev server if it is not already running:\n\n  npm run dev\n\nThen open:\n\n  http://localhost:3000/preview/plumber          ← Generated plumber site (Clearflow Plumbing, Melbourne)\n  http://localhost:3000/preview/trades           ← Hand-crafted electrician reference\n\nWhat to check on the plumber site:\n  - Homepage hero, services grid, testimonials, gallery, contact section\n  - Service pages e.g. /preview/plumber/services/blocked-drains\n  - Location pages e.g. /preview/plumber/locations/richmond  (should have rich local content, not thin)\n  - Service-area pages e.g. /preview/plumber/areas/blocked-drains-richmond\n  - Nav dropdowns (Services ▾ and Areas ▾) — hover to see sub-pages\n  - Mobile: sticky call bar at bottom, countdown banner at top\n  - FAQ at /preview/plumber/faq\n  - About at /preview/plumber/about\n\nIf the quality is acceptable, reply 'approve' and we will immediately start building the three remaining categories in parallel.",
-  "at": "2026-06-20"
-}
