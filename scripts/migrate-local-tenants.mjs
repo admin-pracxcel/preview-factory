@@ -31,6 +31,34 @@ const REPO = join(__dirname, "..");
 const TENANTS_DIR = join(REPO, "data", "tenants");
 const LEADS_DIR = join(REPO, "data", "leads");
 
+/**
+ * Node doesn't auto-load .env.local the way Next.js does. Parse and inject it
+ * so `node scripts/migrate-local-tenants.mjs` works without extra flags.
+ * Existing process.env values win (so a one-shot `FOO=bar node ...` still
+ * overrides the file).
+ */
+function loadEnvLocal() {
+  const envPath = join(REPO, ".env.local");
+  if (!existsSync(envPath)) return;
+  for (const line of readFileSync(envPath, "utf8").split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eq = trimmed.indexOf("=");
+    if (eq === -1) continue;
+    const key = trimmed.slice(0, eq).trim();
+    let value = trimmed.slice(eq + 1).trim();
+    // strip surrounding quotes if present
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (!(key in process.env)) process.env[key] = value;
+  }
+}
+loadEnvLocal();
+
 const dryRun = process.argv.includes("--dry-run");
 const only = process.argv.includes("--leads")
   ? "leads"
