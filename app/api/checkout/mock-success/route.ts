@@ -22,7 +22,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
 
   try {
-    const result = publishTenant(tenantId, undefined, undefined);
+    const result = await publishTenant(tenantId, undefined, undefined);
     console.log(
       `[mock-success] tenant ${tenantId} published. liveUrl=${result.liveUrl}`
     );

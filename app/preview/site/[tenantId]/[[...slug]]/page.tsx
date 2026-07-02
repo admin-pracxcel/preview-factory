@@ -125,7 +125,7 @@ export async function generateMetadata({
   const { tenantId, slug = [] } = await params;
   const { editRequest: editRequestId } = await searchParams;
 
-  const tenant = getTenant(tenantId);
+  const tenant = await getTenant(tenantId);
   if (!tenant) return { title: "Not Found" };
 
   const parseResult = sitePropsSchema.safeParse(tenant.siteProps);
@@ -149,7 +149,7 @@ export default async function TenantPreviewPage({
   const { tenantId, slug = [] } = await params;
   const { editRequest: editRequestId } = await searchParams;
 
-  const tenant = getTenant(tenantId);
+  const tenant = await getTenant(tenantId);
   if (!tenant) notFound();
 
   const parseResult = sitePropsSchema.safeParse(tenant.siteProps);

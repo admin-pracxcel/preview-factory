@@ -34,7 +34,7 @@ export async function generateMetadata({
   params: Promise<{ tenantId: string }>;
 }): Promise<Metadata> {
   const { tenantId } = await params;
-  const tenant = getTenant(tenantId);
+  const tenant = await getTenant(tenantId);
   return {
     title: tenant ? `Dashboard — ${tenant.name}` : "Dashboard",
   };
@@ -88,10 +88,10 @@ export default async function DashboardPage({
   params: Promise<{ tenantId: string }>;
 }) {
   const { tenantId } = await params;
-  const tenant = getTenant(tenantId);
+  const tenant = await getTenant(tenantId);
   if (!tenant) notFound();
 
-  const leads = listLeads(tenantId).slice(0, 20);
+  const leads = (await listLeads(tenantId)).slice(0, 20);
   const editRequests = listEditRequests(tenantId).slice(0, 5);
 
   const liveUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/preview/site/${tenantId}`;

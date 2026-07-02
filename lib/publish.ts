@@ -28,17 +28,17 @@ export interface PublishResult {
  * Publish a tenant's site.
  * Idempotent — safe to call multiple times (e.g. webhook retries).
  */
-export function publishTenant(
+export async function publishTenant(
   tenantId: string,
   stripeSessionId?: string,
   stripeCustomerId?: string
-): PublishResult {
-  const tenant = getTenant(tenantId);
+): Promise<PublishResult> {
+  const tenant = await getTenant(tenantId);
   if (!tenant) throw new Error(`Tenant ${tenantId} not found`);
 
   const publishedAt = tenant.publishedAt ?? new Date().toISOString();
 
-  saveTenant({
+  await saveTenant({
     ...tenant,
     status: "published",
     publishedAt,

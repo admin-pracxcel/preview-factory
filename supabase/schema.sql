@@ -44,6 +44,12 @@ create table if not exists public.tenants (
   created_at                timestamptz not null default now(),
   updated_at                timestamptz not null default now(),
 
+  -- Denormalised business context (cached on the row for list views).
+  name                      text,
+  niche                     text,
+  place_id                  text,
+  gbp_photos                jsonb,
+
   -- Claim + billing (Phase 7.5). Nullable until the tenant is claimed.
   claimed_at                timestamptz,
   owner_email               text,
@@ -67,6 +73,14 @@ create table if not exists public.tenants (
                                 ('existing','crazy_domains_affiliate'))
 );
 
+-- Retrofit missing columns on tenants when the table already exists from an
+-- earlier schema apply. `create table if not exists` above is a no-op if the
+-- table exists, so column additions need their own idempotent step here.
+alter table public.tenants add column if not exists name text;
+alter table public.tenants add column if not exists niche text;
+alter table public.tenants add column if not exists place_id text;
+alter table public.tenants add column if not exists gbp_photos jsonb;
+
 -- Job queue for async generation (Phase 4+). n8n pulls status='queued' rows.
 -- Retained after completion for the observability + retry story; weekly
 -- cleanup cron (Phase 8) drops anything older than 7 days.
@@ -88,13 +102,21 @@ create table if not exists public.jobs (
 -- (Phase 3). Cascades on tenant delete.
 create table if not exists public.leads (
   id          uuid primary key default gen_random_uuid(),
-  tenant_id   uuid not null references public.tenants(id) on delete cascade,
+  tenant_id   uuid references public.tenants(id) on delete cascade,
   name        text,
   email       text,
   phone       text,
   message     text,
+  source      text check (source is null or source in ('contact-form','call-click','email-click')),
+  page        text,
   created_at  timestamptz not null default now()
 );
+
+-- Retrofit source + page + drop the tenant_id NOT NULL constraint for legacy
+-- static-demo leads. Idempotent.
+alter table public.leads add column if not exists source text;
+alter table public.leads add column if not exists page text;
+alter table public.leads alter column tenant_id drop not null;
 
 -- One-time-use magic link tokens (Phase 7.5). 15-min expiry. Rows are marked
 -- used_at rather than deleted so we can audit login history for a week or two.

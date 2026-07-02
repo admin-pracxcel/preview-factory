@@ -72,7 +72,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       }
 
       try {
-        const result = publishTenant(
+        const result = await publishTenant(
           tenantId,
           session.id,
           session.customer ?? undefined

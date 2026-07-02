@@ -1,21 +1,37 @@
 /**
  * lib/tenant-store.ts
- * Per-tenant SiteProps store — file-based for local development.
+ * Per-tenant SiteProps store — Supabase-backed (Phase 3).
  *
- * Production swap: set SUPABASE_URL + SUPABASE_SERVICE_KEY and replace the
- * read/write functions with @supabase/supabase-js calls. See
- * strategy/_master/deployment-checklist.md section "Supabase".
+ * Public interface mirrors the previous file-based version; only the async
+ * signatures had to change. App-facing TenantStatus values are translated at
+ * the boundary:
  *
- * The interface is intentionally narrow so the swap is a single-file change.
+ *   App       <->  DB
+ *   -------------  ---------
+ *   "preview" <->  "done"
+ *   "paid"    <->  "claimed"
+ *   "published" <->  "claimed"
+ *
+ * The paid-vs-published distinction is currently lossy at the DB layer — no
+ * caller writes "paid" anyway. If we need it back, add a published_at column
+ * and set it alongside claimed_at.
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { supabase } from "@/lib/supabase";
 import type { SiteProps } from "@/shared/types/site-props";
 
 /* --------------------------------------------------------------------- types */
 
 export type TenantStatus = "preview" | "paid" | "published";
+
+type DBStatus =
+  | "queued"
+  | "running"
+  | "done"
+  | "failed"
+  | "claimed"
+  | "past_due"
+  | "cancelled";
 
 export interface TenantRecord {
   /** UUID generated at intake time. Used as the tenant/preview ID. */
@@ -34,6 +50,8 @@ export interface TenantRecord {
   status: TenantStatus;
   /** Google place_id if the intake used the Places API; undefined for fixture. */
   placeId?: string;
+  /** Original GBP photo URLs captured at intake. */
+  gbpPhotos?: string[];
   /** ISO 8601 timestamp set when the site is published. */
   publishedAt?: string;
   /** Stripe Checkout session ID associated with the payment. */
@@ -42,47 +60,147 @@ export interface TenantRecord {
   stripeCustomerId?: string;
 }
 
-/* ------------------------------------------------------------------ file store */
+const TABLE = "tenants";
 
-const DATA_DIR = join(process.cwd(), "data", "tenants");
+/* --------------------------------------------------------- status translation */
 
-function ensureDir(): void {
-  mkdirSync(DATA_DIR, { recursive: true });
-}
-
-/** Persist a tenant record. Overwrites any existing record with the same id. */
-export function saveTenant(record: TenantRecord): void {
-  ensureDir();
-  writeFileSync(
-    join(DATA_DIR, `${record.id}.json`),
-    JSON.stringify(record, null, 2),
-    "utf8"
-  );
-}
-
-/** Load a tenant by id. Returns null if not found or unreadable. */
-export function getTenant(id: string): TenantRecord | null {
-  ensureDir();
-  const path = join(DATA_DIR, `${id}.json`);
-  if (!existsSync(path)) return null;
-  try {
-    return JSON.parse(readFileSync(path, "utf8")) as TenantRecord;
-  } catch {
-    return null;
+function toDbStatus(app: TenantStatus): DBStatus {
+  switch (app) {
+    case "preview":
+      return "done";
+    case "paid":
+    case "published":
+      return "claimed";
   }
 }
 
-/** Update the status field only. Throws if the tenant does not exist. */
-export function updateTenantStatus(id: string, status: TenantStatus): void {
-  const record = getTenant(id);
-  if (!record) throw new Error(`Tenant ${id} not found`);
-  saveTenant({ ...record, status });
+function toAppStatus(db: DBStatus | null | undefined): TenantStatus {
+  switch (db) {
+    case "claimed":
+    case "past_due":
+    case "cancelled":
+      return "published";
+    default:
+      // done | queued | running | failed — the UI treats them all as preview.
+      return "preview";
+  }
 }
 
-/** List all tenant IDs in the store. */
-export function listTenantIds(): string[] {
-  ensureDir();
-  return readdirSync(DATA_DIR)
-    .filter((f) => f.endsWith(".json"))
-    .map((f) => f.replace(/\.json$/, ""));
+/* ------------------------------------------------------------- row <-> record */
+
+interface TenantRow {
+  id: string;
+  session_id: string | null;
+  category: string;
+  status: DBStatus;
+  site_props: SiteProps | null;
+  created_at: string;
+  updated_at: string;
+  name: string | null;
+  niche: string | null;
+  place_id: string | null;
+  gbp_photos: string[] | null;
+  claimed_at: string | null;
+  owner_email: string | null;
+  billing_customer_id: string | null;
+  cancelled_at: string | null;
+}
+
+function rowToRecord(row: TenantRow): TenantRecord {
+  return {
+    id: row.id,
+    name: row.name ?? row.site_props?.business?.name ?? "",
+    niche: row.niche ?? "",
+    category: row.category,
+    siteProps: (row.site_props ?? {}) as SiteProps,
+    createdAt: row.created_at,
+    status: toAppStatus(row.status),
+    placeId: row.place_id ?? undefined,
+    gbpPhotos: row.gbp_photos ?? undefined,
+    publishedAt: row.claimed_at ?? undefined,
+    stripeCustomerId: row.billing_customer_id ?? undefined,
+  };
+}
+
+function recordToUpsert(record: TenantRecord): Record<string, unknown> {
+  return {
+    id: record.id,
+    category: record.category,
+    status: toDbStatus(record.status),
+    site_props: record.siteProps,
+    created_at: record.createdAt,
+    name: record.name,
+    niche: record.niche,
+    place_id: record.placeId ?? null,
+    gbp_photos: record.gbpPhotos ?? null,
+    // claimed_at only set when the app-facing status implies claim
+    claimed_at:
+      record.status === "paid" || record.status === "published"
+        ? record.publishedAt ?? new Date().toISOString()
+        : null,
+    billing_customer_id: record.stripeCustomerId ?? null,
+  };
+}
+
+/* ---------------------------------------------------------------- public API */
+
+/** Persist a tenant record. Upserts on id. */
+export async function saveTenant(record: TenantRecord): Promise<void> {
+  const { error } = await supabase()
+    .from(TABLE)
+    .upsert(recordToUpsert(record), { onConflict: "id" });
+  if (error) {
+    throw new Error(`saveTenant(${record.id}) failed: ${error.message}`);
+  }
+}
+
+/** Load a tenant by id. Returns null when not found. */
+export async function getTenant(id: string): Promise<TenantRecord | null> {
+  const { data, error } = await supabase()
+    .from(TABLE)
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) {
+    throw new Error(`getTenant(${id}) failed: ${error.message}`);
+  }
+  if (!data) return null;
+  return rowToRecord(data as TenantRow);
+}
+
+/** Update the lifecycle status only. Throws if the tenant does not exist. */
+export async function updateTenantStatus(
+  id: string,
+  status: TenantStatus,
+): Promise<void> {
+  const patch: Record<string, unknown> = { status: toDbStatus(status) };
+  if (status === "paid" || status === "published") {
+    patch.claimed_at = new Date().toISOString();
+  }
+  const { data, error } = await supabase()
+    .from(TABLE)
+    .update(patch)
+    .eq("id", id)
+    .select("id")
+    .maybeSingle();
+  if (error) {
+    throw new Error(`updateTenantStatus(${id}) failed: ${error.message}`);
+  }
+  if (!data) throw new Error(`Tenant ${id} not found`);
+}
+
+/**
+ * List all tenant IDs, newest first. Caps at 1000 rows. Used only by admin
+ * flows and legacy scripts.
+ */
+export async function listTenantIds(): Promise<string[]> {
+  const { data, error } = await supabase()
+    .from(TABLE)
+    .select("id")
+    .order("created_at", { ascending: false })
+    .limit(1000);
+  if (error) {
+    throw new Error(`listTenantIds failed: ${error.message}`);
+  }
+  return (data ?? []).map((r) => r.id as string);
 }

@@ -17,8 +17,8 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { fetchByPlaceId, fetchByName } from "@/lib/places-client";
-import { generateSiteForApi, nicheToCategory } from "@/lib/generator-api";
+import { fetchByPlaceId, fetchByName, type GbpData } from "@/lib/places-client";
+import { generateSiteForApi, resolveCategory } from "@/lib/generator-api";
 import { saveTenant } from "@/lib/tenant-store";
 
 export const runtime = "nodejs";
@@ -26,9 +26,14 @@ export const runtime = "nodejs";
 // export const maxDuration = 120;
 
 interface IntakeBody {
+  /** Pre-fetched GBP payload (from /api/lookup). When provided, skip the Places fetch. */
+  gbpData?: GbpData;
   placeId?: string;
   businessName?: string;
   niche: string;
+  suburb?: string;
+  /** Form-supplied category slug (e.g. "beauty", "fitness"). Authoritative when set. */
+  category?: string;
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
@@ -39,33 +44,42 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const { placeId, businessName, niche } = body;
+  const { gbpData: providedGbp, placeId, businessName, niche, suburb, category: formCategory } = body;
 
   if (!niche || typeof niche !== "string") {
     return NextResponse.json({ error: "niche is required" }, { status: 400 });
   }
-  if (!placeId && !businessName) {
+  if (!providedGbp && !placeId && !businessName) {
     return NextResponse.json(
-      { error: "Either placeId or businessName is required" },
+      { error: "gbpData, placeId, or businessName is required" },
       { status: 400 }
     );
   }
 
   try {
-    // 1. Fetch GBP data
-    console.log(`[intake] fetching GBP for niche="${niche}"...`);
-    const gbpData = placeId
-      ? await fetchByPlaceId(placeId, niche)
-      : await fetchByName(businessName!, niche);
+    // 1. Resolve GBP data — skip the lookup if the caller already has it
+    let gbpData: GbpData;
+    if (providedGbp) {
+      console.log(`[intake] using provided gbpData for "${providedGbp.name}".`);
+      gbpData = providedGbp;
+    } else {
+      console.log(`[intake] fetching GBP for niche="${niche}"...`);
+      gbpData = placeId
+        ? await fetchByPlaceId(placeId, niche)
+        : await fetchByName(businessName!, niche, suburb);
+    }
 
-    // 2. Generate SiteProps
+    // 2. Resolve category once — drives both prompt selection and template routing
+    const category = resolveCategory(niche, formCategory);
+    console.log(`[intake] resolved category="${category}" (niche="${niche}", form="${formCategory ?? "none"}")`);
+
+    // 3. Generate SiteProps
     console.log(`[intake] generating SiteProps for "${gbpData.name}"...`);
-    const siteProps = await generateSiteForApi(gbpData);
+    const siteProps = await generateSiteForApi(gbpData, category);
 
-    // 3. Store tenant
+    // 4. Store tenant
     const id = crypto.randomUUID();
-    const category = nicheToCategory(niche);
-    saveTenant({
+    await saveTenant({
       id,
       name: gbpData.name,
       niche,
@@ -74,6 +88,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       createdAt: new Date().toISOString(),
       status: "preview",
       placeId: placeId,
+      // Persist the GBP photo URLs so the customise panel can restore them
+      // after the user refreshes the gallery from stock.
+      gbpPhotos: gbpData.photos ?? [],
     });
 
     console.log(`[intake] tenant ${id} stored. category=${category}`);

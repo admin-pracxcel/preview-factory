@@ -21,7 +21,7 @@ export async function GET(
     return NextResponse.json({ error: "Invalid tenant ID" }, { status: 400 });
   }
 
-  const tenant = getTenant(id);
+  const tenant = await getTenant(id);
   if (!tenant) {
     return NextResponse.json({ error: "Tenant not found" }, { status: 404 });
   }

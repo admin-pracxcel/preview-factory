@@ -32,7 +32,7 @@ export async function POST(
     );
   }
 
-  const tenant = getTenant(editReq.tenantId);
+  const tenant = await getTenant(editReq.tenantId);
   if (!tenant) {
     return NextResponse.json({ error: "Tenant not found" }, { status: 404 });
   }
@@ -45,7 +45,7 @@ export async function POST(
   }
 
   // Apply the proposed changes to the tenant record
-  saveTenant({ ...tenant, siteProps: editReq.proposedSiteProps });
+  await saveTenant({ ...tenant, siteProps: editReq.proposedSiteProps });
 
   // Mark the edit request as applied
   saveEditRequest({

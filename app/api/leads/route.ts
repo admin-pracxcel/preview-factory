@@ -61,7 +61,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   };
 
   try {
-    saveLead(lead);
+    await saveLead(lead);
   } catch (err) {
     console.error("[leads] save error:", err);
     return NextResponse.json({ error: "Failed to save lead" }, { status: 500 });

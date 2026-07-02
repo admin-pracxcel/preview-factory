@@ -40,7 +40,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ error: "tenantId is required" }, { status: 400 });
   }
 
-  const tenant = getTenant(tenantId);
+  const tenant = await getTenant(tenantId);
   if (!tenant) {
     return NextResponse.json({ error: "Tenant not found" }, { status: 404 });
   }

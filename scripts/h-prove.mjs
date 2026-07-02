@@ -1,7 +1,14 @@
 #!/usr/bin/env node
 /**
  * scripts/h-prove.mjs
- * Phase H end-to-end fixture proof.
+ * Phase H end-to-end fixture proof (LEGACY, pre-Phase-3).
+ *
+ * -----------------------------------------------------------------------------
+ * NOTE (post-Phase-3): This script writes to data/tenants/<uuid>.json which
+ * the app no longer reads from. It still runs and its own read-back check
+ * still passes, but the tenant it creates is invisible to `next dev`. Use
+ * scripts/smoke-generate.mjs for the equivalent post-Phase-3 wire proof.
+ * -----------------------------------------------------------------------------
  *
  * Proves the intake pipeline works without any external API keys:
  *   1. Directly imports the tenant-store and generator-api modules via the

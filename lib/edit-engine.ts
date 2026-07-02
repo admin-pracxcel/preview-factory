@@ -5,15 +5,16 @@
  * Applies a plain-English edit request to a tenant's current SiteProps,
  * producing a proposed updated SiteProps blob and a one-sentence change summary.
  *
- * - If ANTHROPIC_API_KEY is absent: uses fixtureEdit() so the pipeline is
- *   fully testable without API spend.
- * - On Claude API path: validates output with sitePropsSchema, retries once
- *   on failure, then throws.
+ * Auth: shells out to the local `claude` CLI (Claude Code subscription).
+ * No Anthropic API key required.
+ *
+ * Fixture mode: set USE_FIXTURE=1 to bypass the model entirely and use
+ * fixtureEdit() for deterministic, zero-cost testing.
  */
 
-import Anthropic from "@anthropic-ai/sdk";
 import { getTenant } from "@/lib/tenant-store";
 import { sitePropsSchema, type SiteProps } from "@/shared/types/site-props";
+import { callClaudeCli } from "@/lib/claude-cli";
 
 /* --------------------------------------------------------------------- types */
 
@@ -24,8 +25,7 @@ export interface EditEngineResult {
 
 /* ------------------------------------------------------------------ constants */
 
-const MODEL = "claude-sonnet-4-6";
-const MAX_TOKENS = 16000;
+const MODEL = "claude-haiku-4-5";
 
 const SYSTEM_PROMPT = `You are a website content editor. You receive:
 1. A current SiteProps JSON object representing a business website.
@@ -50,27 +50,24 @@ export async function applyEditRequest(
   tenantId: string,
   editRequest: string
 ): Promise<EditEngineResult> {
-  const tenant = getTenant(tenantId);
+  const tenant = await getTenant(tenantId);
   if (!tenant) {
     throw new Error(`Tenant ${tenantId} not found`);
   }
 
   const currentSiteProps = tenant.siteProps;
 
-  // No API key — use deterministic fixture path
-  if (!process.env.ANTHROPIC_API_KEY) {
-    console.warn(
-      "[edit-engine] ANTHROPIC_API_KEY not set — using fixture edit."
-    );
+  // Explicit fixture mode — deterministic, no model call
+  if (process.env.USE_FIXTURE === "1") {
+    console.warn("[edit-engine] USE_FIXTURE=1 — using fixture edit.");
     return fixtureEdit(currentSiteProps, editRequest);
   }
 
-  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const userMessage = buildUserMessage(currentSiteProps, editRequest);
 
   // Attempt 1
   console.log("[edit-engine] attempt 1 — calling Claude...");
-  const raw1 = await callClaude(client, [{ role: "user", content: userMessage }]);
+  const raw1 = await callClaude(userMessage);
   const result1 = parseAndValidate(raw1);
   if (result1.ok) {
     console.log("[edit-engine] attempt 1 — PASSED.");
@@ -78,16 +75,21 @@ export async function applyEditRequest(
   }
   console.warn(`[edit-engine] attempt 1 failed:\n${result1.errors.slice(0, 400)}`);
 
-  // Attempt 2 — feed validation errors back
+  // Attempt 2 — inline previous response + errors into a single corrective prompt
   console.log("[edit-engine] attempt 2 — corrective prompt...");
-  const raw2 = await callClaude(client, [
-    { role: "user", content: userMessage },
-    { role: "assistant", content: result1.rawText },
-    {
-      role: "user",
-      content: `The JSON you returned has validation errors. Fix them and return the complete corrected JSON followed by the SUMMARY line. Errors:\n${result1.errors}`,
-    },
-  ]);
+  const retryPrompt = `Your previous response failed schema validation. Fix the issues and return the complete corrected JSON followed by the SUMMARY line.
+
+## Validation errors
+${result1.errors}
+
+## Your previous response (first 4000 chars)
+${result1.rawText.slice(0, 4000)}
+
+## Original request
+${userMessage}
+
+Return the corrected JSON now, then SUMMARY: <one sentence>.`;
+  const raw2 = await callClaude(retryPrompt);
   const result2 = parseAndValidate(raw2);
   if (result2.ok) {
     console.log("[edit-engine] attempt 2 — PASSED.");
@@ -111,23 +113,8 @@ ${editRequest}
 Return the complete updated SiteProps JSON, then on a new line: SUMMARY: <one sentence>.`;
 }
 
-async function callClaude(
-  client: Anthropic,
-  messages: Anthropic.MessageParam[]
-): Promise<string> {
-  const response = await client.messages.create({
-    model: MODEL,
-    max_tokens: MAX_TOKENS,
-    system: SYSTEM_PROMPT,
-    messages,
-  });
-  const content = response.content[0];
-  if (!content || content.type !== "text") {
-    throw new Error(
-      `Unexpected Claude response type: ${content?.type ?? "none"}`
-    );
-  }
-  return content.text;
+async function callClaude(userPrompt: string): Promise<string> {
+  return callClaudeCli({ systemPrompt: SYSTEM_PROMPT, userPrompt, model: MODEL });
 }
 
 function stripFences(raw: string): string {

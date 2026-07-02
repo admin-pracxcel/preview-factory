@@ -1,7 +1,22 @@
 #!/usr/bin/env node
 /**
  * scripts/outreach.mjs
- * Phase M — Outreach engine
+ * Phase M — Outreach engine (LOCAL-ONLY research/batch tool)
+ *
+ * -----------------------------------------------------------------------------
+ * NOTE (post-Phase-3): This script still writes tenant records to
+ * data/tenants/<uuid>.json (the legacy file store). After Phase 3 the app
+ * reads from Supabase, not disk — so tenants written here are invisible to
+ * `next dev` until you migrate them. Two options:
+ *
+ *   1. After a batch, run:  node scripts/migrate-local-tenants.mjs
+ *      which pushes new data/tenants/*.json rows into Supabase.
+ *   2. Port saveTenantFile() below to insert directly into Supabase (same
+ *      shape as scripts/migrate-local-tenants.mjs). Only worth doing if you
+ *      run this at scale post-launch.
+ *
+ * For occasional cold-outreach batches, option 1 is fine.
+ * -----------------------------------------------------------------------------
  *
  * Batch-generates preview websites for local businesses in a given niche + suburb list.
  * Outputs a CSV of preview links ready for cold outreach. No real sends — this is the
@@ -14,7 +29,10 @@
  *
  * Env vars (all optional — fixture fallbacks run without any keys):
  *   GOOGLE_PLACES_API_KEY     — enables real Places API text search
- *   ANTHROPIC_API_KEY         — enables real Claude site generation
+ *   ANTHROPIC_API_KEY         — bills the Anthropic API per token. If unset,
+ *                               the Agent SDK falls back to your local `claude`
+ *                               CLI login and bills your Claude Code subscription.
+ *   USE_FIXTURE=1             — force fixture site generation (no model call)
  *   N8N_OUTREACH_WEBHOOK_URL  — if set, fires a stub POST with preview links
  *   NEXT_PUBLIC_BASE_URL      — base URL for preview links (default: http://localhost:3000)
  *
@@ -24,6 +42,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { query } from "@anthropic-ai/claude-agent-sdk";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -218,10 +237,42 @@ function adaptFixtureSite(fixture, biz) {
 // Set by main() when --fixture flag is present
 let _forceFixture = false;
 
-async function generateSiteProps(biz) {
-  const anthropicKey = process.env.ANTHROPIC_API_KEY;
+/**
+ * Single-shot text completion via the Claude Agent SDK.
+ * Auth: ANTHROPIC_API_KEY → API billing; otherwise local `claude` CLI login
+ * → Claude Code subscription billing.
+ */
+async function callClaudeAgent(systemPrompt, userPrompt) {
+  let collected = "";
+  for await (const msg of query({
+    prompt: userPrompt,
+    options: {
+      model: "claude-sonnet-4-6",
+      systemPrompt,
+      tools: [],
+      maxTurns: 1,
+      settingSources: [],
+      permissionMode: "bypassPermissions",
+    },
+  })) {
+    if (msg.type === "assistant") {
+      for (const block of msg.message?.content ?? []) {
+        if (block.type === "text" && typeof block.text === "string") {
+          collected += block.text;
+        }
+      }
+    }
+  }
+  if (!collected.trim()) {
+    throw new Error(
+      "Claude Agent SDK returned no text. Check ANTHROPIC_API_KEY or that `claude` CLI is logged in."
+    );
+  }
+  return collected;
+}
 
-  if (!anthropicKey || _forceFixture) {
+async function generateSiteProps(biz) {
+  if (_forceFixture || process.env.USE_FIXTURE === "1") {
     // Fixture path: adapt Clearflow site to this business
     return adaptFixtureSite(loadFixtureSiteProps(), biz);
   }
@@ -237,9 +288,6 @@ async function generateSiteProps(biz) {
       join(ROOT, "templates", "categories", "trades", "system-prompt.md"), "utf8"
     );
   }
-
-  const { default: Anthropic } = await import("@anthropic-ai/sdk");
-  const client = new Anthropic({ apiKey: anthropicKey });
 
   const userMsg = `Generate a complete SiteProps JSON for this Australian business. Respond with ONLY valid JSON — no prose, no fences.
 
@@ -258,14 +306,7 @@ Requirements (must pass automated grader):
 - contact.hours entries must use { "label": "...", "value": "..." } format
 - faq items must have an "id" field`;
 
-  const response = await client.messages.create({
-    model: "claude-sonnet-4-6",
-    max_tokens: 16000,
-    system: systemPrompt,
-    messages: [{ role: "user", content: userMsg }],
-  });
-
-  const raw = response.content[0]?.text ?? "";
+  const raw = await callClaudeAgent(systemPrompt, userMsg);
   const cleaned = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/i, "").trim();
   return JSON.parse(cleaned);
 }
@@ -319,7 +360,12 @@ async function main() {
   console.log(`  State:         ${state}`);
   console.log(`  Max/suburb:    ${maxPerSuburb}`);
   console.log(`  Places API:    ${placesKey ? "real (GOOGLE_PLACES_API_KEY set)" : "FIXTURE (no key — set GOOGLE_PLACES_API_KEY for real)"}`);
-  const generatorMode = forceFixture ? "FIXTURE (--fixture flag)" : (process.env.ANTHROPIC_API_KEY ? "real (ANTHROPIC_API_KEY set)" : "FIXTURE (no key — set ANTHROPIC_API_KEY for real)");
+  const useFixtureGen = forceFixture || process.env.USE_FIXTURE === "1";
+  const generatorMode = useFixtureGen
+    ? `FIXTURE (${forceFixture ? "--fixture flag" : "USE_FIXTURE=1"})`
+    : process.env.ANTHROPIC_API_KEY
+      ? "real (ANTHROPIC_API_KEY — bills Anthropic API)"
+      : "real (Claude Code subscription — `claude` CLI login)";
   console.log(`  Generator:     ${generatorMode}`);
   console.log(`  n8n webhook:   ${n8nUrl ?? "not configured (stub payload written to file)"}`);
   console.log(`  Base URL:      ${baseUrl}`);
@@ -427,7 +473,7 @@ async function main() {
     base_url:        baseUrl,
     fixture_mode: {
       places:    !placesKey,
-      generator: !process.env.ANTHROPIC_API_KEY,
+      generator: useFixtureGen,
     },
     summary: {
       total_searched: suburbs.length * maxPerSuburb,
@@ -490,7 +536,10 @@ async function main() {
   console.log("\n  ── Deploy notes ──────────────────────────────────────");
   console.log("  To use real data, set these env vars:");
   console.log("    GOOGLE_PLACES_API_KEY     — Google Places API (New) key");
-  console.log("    ANTHROPIC_API_KEY         — Anthropic API key");
+  console.log("    ANTHROPIC_API_KEY         — optional: bills Anthropic API.");
+  console.log("                                If unset, the Agent SDK uses your");
+  console.log("                                local `claude` CLI login (subscription).");
+  console.log("    USE_FIXTURE=1             — bypass model, use fixtures only");
   console.log("    N8N_OUTREACH_WEBHOOK_URL  — your n8n webhook URL");
   console.log("    NEXT_PUBLIC_BASE_URL      — your production base URL");
   console.log("  ──────────────────────────────────────────────────────\n");
