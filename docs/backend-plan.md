@@ -74,7 +74,7 @@ Browser
 **Why**: makes generation portable. n8n today, a proper queue worker tomorrow.
 
 **Deliverables**:
-- `generator/cli.mjs` — reads JSON from stdin, writes exactly one JSON line to stdout, exits 0 on success / 1 on failure.
+- `generator/cli.ts` — reads JSON from stdin, writes exactly one JSON line to stdout, exits 0 on success / 1 on failure.
 - Payload contract (versioned):
   ```json
   { "v": 1, "tenant_id": "...", "category": "trades", "gbp_data": {...},
@@ -87,13 +87,13 @@ Browser
   ```
   Errors: `{"v":1,"ok":false,"error":{"code":"phase_a_validation","message":"..."}}`.
 - **Gap fix — stdout pollution**: Claude CLI streams progress to stderr; redirect Claude's stderr to a captured log; only emit result envelope on stdout. Never `console.log` anywhere else in the CLI path.
-- **Gap fix — Claude CLI version pinning**: read installed version (`claude --version`), fail fast if below known-good tag. Store tag in `generator/cli.mjs`.
+- **Gap fix — Claude CLI version pinning**: read installed version (`claude --version`), fail fast if below known-good tag. Store tag in `generator/cli.ts`.
 - **Gap fix — partial degradation**: if Pexels or Google Places 429/500s, generator falls back (skip that image slot, use archetype default) rather than failing the whole run.
 - All existing normalizers (`ensureSeoTitles`, `ensureAboutValues`, `hardenCtas`, `hardenSocialProof`, image assembly) called from inside the CLI.
-- `package.json`: `"generate:cli": "node generator/cli.mjs"`.
+- `package.json`: `"generate:cli": "node generator/cli.ts"`.
 - Fixture: `scripts/fixtures/gbp-trades.json` + smoke-test script.
 
-**Acceptance**: `node generator/cli.mjs < scripts/fixtures/gbp-trades.json > /tmp/out.json && jq .ok /tmp/out.json` prints `true`; `site_props` byte-for-byte matches current API route output on same input.
+**Acceptance**: `node generator/cli.ts < scripts/fixtures/gbp-trades.json > /tmp/out.json && jq .ok /tmp/out.json` prints `true`; `site_props` byte-for-byte matches current API route output on same input.
 
 ---
 

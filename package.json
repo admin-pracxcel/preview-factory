@@ -8,10 +8,14 @@
     "start": "next start",
     "lint": "eslint",
     "autopilot": "node autopilot/run.mjs",
-    "grade": "node scripts/grade.mjs"
+    "grade": "node scripts/grade.mjs",
+    "generate:cli": "tsx generator/cli.ts",
+    "smoke:generate": "node scripts/smoke-generate.mjs",
+    "postinstall": "xattr -dr com.apple.quarantine node_modules 2>/dev/null || true"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
+    "@imgly/background-removal": "^1.7.0",
     "framer-motion": "^12.40.0",
     "lucide-react": "^1.20.0",
     "next": "16.2.9",
@@ -28,6 +32,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   }
 }
