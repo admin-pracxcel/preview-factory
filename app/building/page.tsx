@@ -111,10 +111,15 @@ function BuildingPageInner() {
   const phoneInputRef = useRef<HTMLInputElement>(null);
 
   // Real lookup + intake state. Lookup runs first and populates the "Found on
-  // Google" card with real data; intake runs after and produces the tenant.
-  // The redirect waits until the animation reaches "done" AND tenantId is set.
+  // Google" card with real data; intake enqueues the generation job and returns
+  // a tenantId immediately (Phase 4). The client then polls
+  // /api/tenants/[id]/status every 2s until the async worker finishes.
+  //
+  // The redirect waits until the animation reaches "done" AND tenantStatus is
+  // 'done' (or 'claimed' for legacy paths).
   const [gbpData, setGbpData] = useState<GbpCardData | null>(null);
   const [tenantId, setTenantId] = useState<string | null>(null);
+  const [tenantStatus, setTenantStatus] = useState<string | null>(null);
   const [intakeError, setIntakeError] = useState<string | null>(null);
   const [animationReady, setAnimationReady] = useState(false);
   const intakeStartedRef = useRef(false);
@@ -242,18 +247,73 @@ function BuildingPageInner() {
     };
   }, [phoneSubmitted]);
 
-  // Redirect once both the animation has finished AND the real tenant is ready.
-  // On tenantId arrival, snap progress to 100% then briefly hold so the user
-  // sees the bar fill before navigation.
+  // Poll /api/tenants/[id]/status every 2s while the async generation runs.
+  // The intake API returns fast; the real work happens in the n8n worker.
   useEffect(() => {
-    if (animationReady && tenantId) {
-      setDesignProgress(100);
-      const t = setTimeout(() => {
-        router.push(`/preview/${tenantId}`);
-      }, 600);
-      return () => clearTimeout(t);
-    }
-  }, [animationReady, tenantId, router]);
+    if (!tenantId) return;
+    // Reset any stale status from a previous mount before polling.
+    setTenantStatus(null);
+
+    let cancelled = false;
+    const TIMEOUT_MS = 6 * 60 * 1000; // 6 minutes hard cap
+    const startedAt = Date.now();
+
+    const tick = async () => {
+      if (cancelled) return;
+      try {
+        const res = await fetch(`/api/tenants/${tenantId}/status`, {
+          cache: "no-store",
+        });
+        if (!res.ok) throw new Error(`status HTTP ${res.status}`);
+        const data = (await res.json()) as { status: string; error?: string };
+        if (cancelled) return;
+        setTenantStatus(data.status);
+        if (data.status === "failed" && data.error) {
+          setIntakeError(data.error);
+        }
+        // Once terminal, stop polling.
+        if (
+          data.status === "done" ||
+          data.status === "claimed" ||
+          data.status === "failed"
+        ) {
+          return;
+        }
+        // Hard timeout — surface as a friendly error, stop polling.
+        if (Date.now() - startedAt > TIMEOUT_MS) {
+          setIntakeError(
+            "Generation is taking longer than expected. Please refresh in a minute or contact support.",
+          );
+          return;
+        }
+      } catch (err: unknown) {
+        // Transient poll errors don't kill the loop; keep trying.
+        console.warn("[building] status poll:", err);
+      }
+      setTimeout(tick, 2000);
+    };
+    // First tick fires immediately so we don't waste 2s at 'queued'.
+    void tick();
+    return () => {
+      cancelled = true;
+    };
+  }, [tenantId]);
+
+  // Redirect once BOTH the animation has finished AND the async generation
+  // has landed. On terminal-success, snap progress to 100% then briefly hold
+  // so the user sees the bar fill before navigation.
+  useEffect(() => {
+    const ready =
+      animationReady &&
+      tenantId &&
+      (tenantStatus === "done" || tenantStatus === "claimed");
+    if (!ready) return;
+    setDesignProgress(100);
+    const t = setTimeout(() => {
+      router.push(`/preview/${tenantId}`);
+    }, 600);
+    return () => clearTimeout(t);
+  }, [animationReady, tenantId, tenantStatus, router]);
 
   /* ---------------------------------------------------------------------- */
   /*  Phone submit handler                                                    */
@@ -282,7 +342,8 @@ function BuildingPageInner() {
   //   1. While animation timer running → cycle through DESIGN_STEPS
   //   2. After animation timer elapses (intake still in flight) → "Finalising your site…"
   //   3. After tenantId arrives → "Site is ready"
-  const activeDesignLabel = tenantId
+  const generationDone = tenantStatus === "done" || tenantStatus === "claimed";
+  const activeDesignLabel = generationDone
     ? "Site is ready"
     : animationReady
       ? "Finalising your site…"
@@ -439,7 +500,7 @@ function BuildingPageInner() {
             {showDesigning && (
               <div className="flex items-start gap-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
                 <div className="w-6 h-6 shrink-0 mt-0.5">
-                  {tenantId ? (
+                  {generationDone ? (
                     <CheckCircle2 className="w-6 h-6 text-green-400" />
                   ) : (
                     <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />

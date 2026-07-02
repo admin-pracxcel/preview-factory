@@ -190,6 +190,45 @@ export async function updateTenantStatus(
 }
 
 /**
+ * Create a tenant in status=queued for async generation (Phase 4). Skips the
+ * TenantRecord path because a queued tenant has no site_props yet; the n8n
+ * worker will fill it in and flip status=done.
+ *
+ * Returns the new tenant id. Later, /api/tenants/[id]/status polls the row
+ * until status=done or =failed.
+ */
+export interface CreateQueuedTenantInput {
+  category: string;
+  name: string;
+  niche: string;
+  placeId?: string;
+  gbpPhotos?: string[];
+  sessionId?: string;
+}
+
+export async function createQueuedTenant(
+  input: CreateQueuedTenantInput,
+): Promise<string> {
+  const { data, error } = await supabase()
+    .from(TABLE)
+    .insert({
+      category: input.category,
+      status: "queued",
+      name: input.name,
+      niche: input.niche,
+      place_id: input.placeId ?? null,
+      gbp_photos: input.gbpPhotos ?? null,
+      session_id: input.sessionId ?? null,
+    })
+    .select("id")
+    .single();
+  if (error || !data) {
+    throw new Error(`createQueuedTenant failed: ${error?.message ?? "no row returned"}`);
+  }
+  return data.id as string;
+}
+
+/**
  * List all tenant IDs, newest first. Caps at 1000 rows. Used only by admin
  * flows and legacy scripts.
  */
