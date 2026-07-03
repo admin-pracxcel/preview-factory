@@ -189,6 +189,15 @@ sudo chown -R "$NODE_UID:$NODE_GID" /opt/preview-factory
 
 You should see `node uid=1000 gid=1000` or similar. If the second command errors with "Operation not permitted", make sure you're running as root/sudo on the host.
 
+**Then — tell git the directory is safe** (both root on the host, and node inside the container). Git 2.35+ blocks operations on a repo owned by a different user; without this you'll get `fatal: detected dubious ownership` when running `git pull` as root, or when the workflow does `git fetch` inside the container:
+
+```bash
+git config --global --add safe.directory /opt/preview-factory
+docker exec n8n git config --global --add safe.directory /opt/preview-factory
+```
+
+The workflow's Execute Command also uses `git -c safe.directory=/opt/preview-factory ...` inline as belt-and-braces, so even if the container's node home resets, git operations still work.
+
 ---
 
 ## Step 5 — Create the `.env` file inside `/opt/preview-factory`
