@@ -111,10 +111,19 @@ export async function callClaudeCli(args: CallClaudeCliArgs): Promise<string> {
       // Result message is the canonical final output — emitted at end of stream.
       if (m.type === "result") {
         if (m.is_error === true) {
-          const status = typeof m.api_error_status === "string" ? m.api_error_status : "unknown";
+          // api_error_status is a number in newer CLI versions (2.1.x), was a
+          // string in older ones. Accept either.
+          const status =
+            typeof m.api_error_status === "string" || typeof m.api_error_status === "number"
+              ? String(m.api_error_status)
+              : "unknown";
           const subtype = typeof m.subtype === "string" ? m.subtype : "error";
+          // If the CLI put the human-readable failure in `result`, surface it —
+          // "Failed to authenticate. API Error: 401 ..." is far more useful than
+          // "error result (success): 401".
+          const detail = typeof m.result === "string" && m.result.trim() ? `: ${m.result.trim()}` : "";
           clearTimeout(timer);
-          reject(new Error(`claude CLI returned error result (${subtype}): ${status}`));
+          reject(new Error(`claude CLI returned error result (${subtype}, http=${status})${detail}`));
           return;
         }
         if (typeof m.result === "string") {

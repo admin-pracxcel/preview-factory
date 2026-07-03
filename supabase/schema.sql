@@ -137,6 +137,17 @@ create table if not exists public.processed_events (
   seen_at     timestamptz not null default now()
 );
 
+-- Worker heartbeat singleton (Phase 5). n8n hits POST /api/health/worker every
+-- 5 minutes; Vercel writes the timestamp here. /api/health reads it to decide
+-- whether the worker is stale (>15 min since last beat). One row, id='worker'.
+create table if not exists public.worker_health (
+  id            text primary key,
+  last_seen_at  timestamptz not null default now(),
+  meta          jsonb
+);
+insert into public.worker_health (id) values ('worker')
+  on conflict (id) do nothing;
+
 -- =========================================================================
 -- 3. Indexes
 -- =========================================================================
@@ -192,6 +203,7 @@ alter table public.jobs              enable row level security;
 alter table public.leads             enable row level security;
 alter table public.magic_tokens      enable row level security;
 alter table public.processed_events  enable row level security;
+alter table public.worker_health     enable row level security;
 
 -- =========================================================================
 -- 6. Storage — previews bucket
@@ -224,3 +236,5 @@ comment on table public.magic_tokens is
   'One-time-use magic-link tokens for magic-link auth (Phase 7.5).';
 comment on table public.processed_events is
   'Webhook idempotency guard. Insert-conflict = duplicate delivery, skip.';
+comment on table public.worker_health is
+  'Singleton row (id=worker). n8n heartbeat writes last_seen_at every 5 min.';

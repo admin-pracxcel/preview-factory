@@ -73,7 +73,17 @@ interface FailureEnvelope {
   error: { code: string; message: string };
 }
 
+let emitted = false;
+
 function emit(envelope: SuccessEnvelope | FailureEnvelope, code: 0 | 1): never {
+  // Guard against double emission. emit() schedules process.exit() in a
+  // callback so synchronous code after emit() keeps running — if a caller
+  // reaches a second emit before the exit fires, we'd write two envelopes
+  // to stdout. Ignore anything after the first.
+  if (emitted) {
+    return undefined as never;
+  }
+  emitted = true;
   // Wait for the write to flush before exiting. Calling process.exit()
   // synchronously can truncate a large JSON payload on piped stdout,
   // dropping several kilobytes silently.
@@ -184,6 +194,11 @@ function parsePayload(raw: string): JobPayloadV1 {
  */
 function classifyError(err: unknown): { code: string; message: string } {
   const message = err instanceof Error ? err.message : String(err);
+  // Auth failures — permanent, no retry helps. Check before the generic
+  // "error result" match below.
+  if (/authentication|401|Invalid authentication credentials/i.test(message)) {
+    return { code: "auth_failed", message };
+  }
   if (/subscription.+rate.?limit/i.test(message)) {
     return { code: "subscription_limit", message };
   }
@@ -199,7 +214,7 @@ function classifyError(err: unknown): { code: string; message: string } {
   if (/runtime validation/i.test(message)) {
     return { code: "runtime_validation", message };
   }
-  if (/claude CLI (returned no text|exited with code)/i.test(message)) {
+  if (/claude CLI (returned no text|exited with code|returned error result)/i.test(message)) {
     return { code: "claude_cli_error", message };
   }
   return { code: "generation_failed", message };

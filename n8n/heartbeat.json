@@ -1,0 +1,61 @@
+{
+  "name": "Worker Heartbeat",
+  "nodes": [
+    {
+      "id": "hb00cafe-0000-4000-8000-000000000001",
+      "name": "Every 5 min",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-16, 176],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {"field": "minutes", "minutesInterval": 5}
+          ]
+        }
+      }
+    },
+    {
+      "id": "hb00cafe-0000-4000-8000-000000000002",
+      "name": "POST /api/health/worker",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [208, 176],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.HEARTBEAT_URL || 'http://placeholder.set.HEARTBEAT_URL/api/health/worker' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "x-worker-secret", "value": "={{ $env.WORKER_SECRET }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"n8n_workflow_id\": \"{{ $workflow.id }}\",\n  \"n8n_execution_id\": \"{{ $execution.id }}\"\n}",
+        "options": {
+          "response": {"response": {"responseFormat": "json"}},
+          "timeout": 10000
+        }
+      },
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "connections": {
+    "Every 5 min": {
+      "main": [[{"node": "POST /api/health/worker", "type": "main", "index": 0}]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "none",
+    "saveDataErrorExecution": "all",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "pinData": {},
+  "meta": {"instanceId": "preview-factory"},
+  "versionId": "6001a601-0000-4601-8601-000000006001",
+  "tags": []
+}

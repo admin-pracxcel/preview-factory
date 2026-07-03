@@ -45,3 +45,7 @@ node_modules
 .next
 .env
 autopilot/state
+
+# n8n workflow exports contain embedded service_role keys — local-only
+n8n/generate-stub-fixed.json
+n8n/*-with-secrets.json
