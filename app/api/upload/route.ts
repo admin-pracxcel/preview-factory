@@ -1,32 +1,32 @@
 /**
  * POST /api/upload
  *
- * Accepts a multipart/form-data file ("file") and stores it under
- * `public/uploads/<tenantId>/<hash>.<ext>`. Returns the public URL.
+ * Accepts multipart/form-data with a `file` and `tenantId` field. Streams the
+ * bytes to the Supabase `previews` storage bucket at
+ * `<tenantId>/<hash>.<ext>` and returns the object's public URL.
  *
- * - Hash-based filenames give automatic dedupe across same-content uploads.
- * - tenantId is required (so files don't collide across customers).
- * - 5 MB cap; images only.
- *
- * Production note: swap to S3 / Vercel Blob / R2 for real deployments. This
- * works for local dev and proves the contract.
+ * - Session cookie must own the tenantId (assertOwnsTenant, Phase 3).
+ * - Raster only: PNG/JPG/WebP. SVG is rejected because it can embed scripts.
+ * - 5 MB cap.
+ * - Hash-based object key gives automatic dedupe across same-content uploads
+ *   within a tenant folder (re-upload = same key = upsert = free).
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir } from "node:fs/promises";
-import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { cookies } from "next/headers";
 import { createHash } from "node:crypto";
+import { supabase } from "@/lib/supabase";
+import { assertOwnsTenant, type MutableCookies } from "@/lib/session";
 
 export const runtime = "nodejs";
 
+const BUCKET = "previews";
 const MAX_BYTES = 5 * 1024 * 1024;
-const ALLOWED = new Set(["image/png", "image/jpeg", "image/webp", "image/svg+xml"]);
+const ALLOWED = new Set(["image/png", "image/jpeg", "image/webp"]);
 const EXT_BY_MIME: Record<string, string> = {
   "image/png": "png",
   "image/jpeg": "jpg",
   "image/webp": "webp",
-  "image/svg+xml": "svg",
 };
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
@@ -47,22 +47,42 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
   if (!ALLOWED.has(file.type)) {
     return NextResponse.json(
-      { error: `Unsupported type ${file.type}. Allowed: PNG, JPG, WebP, SVG.` },
-      { status: 415 }
+      { error: `Unsupported type ${file.type}. Allowed: PNG, JPG, WebP.` },
+      { status: 415 },
+    );
+  }
+
+  // Session must own the tenant. Prevents random visitors from filling up a
+  // competitor's storage folder or overwriting their logo by URL guess.
+  const cookieStore = (await cookies()) as unknown as MutableCookies;
+  try {
+    await assertOwnsTenant(cookieStore, tenantId);
+  } catch (err) {
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "not allowed" },
+      { status: 403 },
     );
   }
 
   const buf = Buffer.from(await file.arrayBuffer());
   const hash = createHash("sha256").update(buf).digest("hex").slice(0, 16);
   const ext = EXT_BY_MIME[file.type];
-  const filename = `${hash}.${ext}`;
+  const objectPath = `${tenantId}/${hash}.${ext}`;
 
-  const dir = join(process.cwd(), "public", "uploads", tenantId);
-  if (!existsSync(dir)) await mkdir(dir, { recursive: true });
+  const { error: uploadError } = await supabase()
+    .storage.from(BUCKET)
+    .upload(objectPath, buf, {
+      contentType: file.type,
+      // Same content -> same hash -> same key. Upsert makes the second POST a
+      // no-op instead of a 409, so retries and re-crops "just work".
+      upsert: true,
+      cacheControl: "public, max-age=31536000, immutable",
+    });
+  if (uploadError) {
+    console.error("[upload] Supabase storage upload failed:", uploadError);
+    return NextResponse.json({ error: "upload failed" }, { status: 500 });
+  }
 
-  const path = join(dir, filename);
-  if (!existsSync(path)) await writeFile(path, buf);
-
-  const url = `/uploads/${tenantId}/${filename}`;
-  return NextResponse.json({ url });
+  const { data: pub } = supabase().storage.from(BUCKET).getPublicUrl(objectPath);
+  return NextResponse.json({ url: pub.publicUrl });
 }

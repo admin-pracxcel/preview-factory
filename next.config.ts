@@ -18,6 +18,10 @@ const nextConfig: NextConfig = {
       // resolved to lh3.googleusercontent.com (covered above) but the
       // pre-resolved photoUri may also use this host.
       { protocol: "https", hostname: "places.googleapis.com" },
+      // Supabase Storage — user-uploaded logos / hero images / gallery slots
+      // (Phase 6). Wildcard covers both dev and prod projects without
+      // per-env config edits.
+      { protocol: "https", hostname: "**.supabase.co" },
     ],
   },
 };
