@@ -25,8 +25,27 @@ import {
   type StripeCheckoutSessionCompleted,
 } from "@/lib/stripe-client";
 import { publishTenant } from "@/lib/publish";
+import { supabase } from "@/lib/supabase";
 
 export const runtime = "nodejs";
+
+/**
+ * Insert the event id into processed_events. Returns true if we're the first
+ * (proceed), false if a duplicate delivery landed while we were mid-flight.
+ * Any DB error is treated as "proceed" — we prefer occasional re-processing
+ * over dropping a real event on a transient Postgres blip. publishTenant is
+ * itself idempotent, so a double-run of a real event is safe.
+ */
+async function markEventProcessed(eventId: string): Promise<boolean> {
+  const { error } = await supabase()
+    .from("processed_events")
+    .insert({ event_id: eventId, provider: "stripe" });
+  if (!error) return true;
+  // Postgres unique_violation → this event id is already in the table.
+  if (error.code === "23505") return false;
+  console.warn(`[webhook] processed_events insert warned (${error.code}): ${error.message}`);
+  return true;
+}
 
 // Must read raw body before parsing to verify signature.
 export async function POST(request: NextRequest): Promise<NextResponse> {
@@ -34,7 +53,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const signatureHeader = request.headers.get("stripe-signature") ?? "";
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-  // Verify signature if secret is configured
   if (webhookSecret) {
     if (!signatureHeader) {
       return NextResponse.json({ error: "Missing Stripe-Signature header" }, { status: 400 });
@@ -50,7 +68,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // Parse event
   let event: StripeEvent;
   try {
     event = JSON.parse(rawBody) as StripeEvent;
@@ -60,6 +77,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   console.log(`[webhook] received event: ${event.type} (id=${event.id})`);
 
+  const proceed = await markEventProcessed(event.id);
+  if (!proceed) {
+    console.log(`[webhook] duplicate delivery for ${event.id} — skipping`);
+    return NextResponse.json({ received: true, duplicate: true });
+  }
+
   switch (event.type) {
     case "checkout.session.completed": {
       const session = event.data.object as StripeCheckoutSessionCompleted;
@@ -67,18 +90,27 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
       if (!tenantId) {
         console.error("[webhook] checkout.session.completed missing tenantId in metadata");
-        // Return 200 so Stripe doesn't retry — this is a data issue, not a transient error
+        // Return 200 so Stripe doesn't retry — this is a data issue.
         return NextResponse.json({ received: true, warning: "no tenantId in metadata" });
       }
 
+      // Stripe stores the guest checkout email under customer_details.email on
+      // a completed session. customer_email is only present if the merchant
+      // pre-filled it. Fall through both.
+      const ownerEmail =
+        session.customer_details?.email ?? session.customer_email ?? undefined;
+
       try {
-        const result = await publishTenant(
-          tenantId,
-          session.id,
-          session.customer ?? undefined
-        );
+        const result = await publishTenant(tenantId, {
+          stripeSessionId: session.id,
+          stripeCustomerId: session.customer ?? undefined,
+          stripeSubscriptionId: session.subscription ?? undefined,
+          ownerEmail,
+        });
         console.log(
-          `[webhook] tenant ${tenantId} published. liveUrl=${result.liveUrl}`
+          `[webhook] tenant ${tenantId} published. liveUrl=${result.liveUrl}${
+            ownerEmail ? ` owner=${ownerEmail}` : ""
+          }`
         );
       } catch (err) {
         console.error(`[webhook] publishTenant failed for ${tenantId}:`, err);

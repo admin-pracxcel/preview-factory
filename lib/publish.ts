@@ -28,10 +28,16 @@ export interface PublishResult {
  * Publish a tenant's site.
  * Idempotent — safe to call multiple times (e.g. webhook retries).
  */
+export interface PublishInput {
+  stripeSessionId?: string;
+  stripeCustomerId?: string;
+  stripeSubscriptionId?: string;
+  ownerEmail?: string;
+}
+
 export async function publishTenant(
   tenantId: string,
-  stripeSessionId?: string,
-  stripeCustomerId?: string
+  input: PublishInput = {},
 ): Promise<PublishResult> {
   const tenant = await getTenant(tenantId);
   if (!tenant) throw new Error(`Tenant ${tenantId} not found`);
@@ -42,8 +48,10 @@ export async function publishTenant(
     ...tenant,
     status: "published",
     publishedAt,
-    ...(stripeSessionId ? { stripeSessionId } : {}),
-    ...(stripeCustomerId ? { stripeCustomerId } : {}),
+    ...(input.stripeSessionId ? { stripeSessionId: input.stripeSessionId } : {}),
+    ...(input.stripeCustomerId ? { stripeCustomerId: input.stripeCustomerId } : {}),
+    ...(input.stripeSubscriptionId ? { stripeSubscriptionId: input.stripeSubscriptionId } : {}),
+    ...(input.ownerEmail ? { ownerEmail: input.ownerEmail.toLowerCase() } : {}),
   });
 
   const liveUrl = `/preview/site/${tenantId}`;

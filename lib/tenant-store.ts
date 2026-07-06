@@ -58,6 +58,12 @@ export interface TenantRecord {
   stripeSessionId?: string;
   /** Stripe customer ID for billing management. */
   stripeCustomerId?: string;
+  /** Stripe subscription ID — retained separately so the customer portal, cancel
+   *  flows, and past_due transitions have a stable reference (Phase 7.5a). */
+  stripeSubscriptionId?: string;
+  /** Owner email captured from the completed Checkout Session (Phase 7.5a).
+   *  Used as the auth identity post-claim once magic-link login is wired. */
+  ownerEmail?: string;
 }
 
 const TABLE = "tenants";
@@ -103,6 +109,7 @@ interface TenantRow {
   claimed_at: string | null;
   owner_email: string | null;
   billing_customer_id: string | null;
+  billing_subscription_id: string | null;
   cancelled_at: string | null;
 }
 
@@ -119,6 +126,8 @@ function rowToRecord(row: TenantRow): TenantRecord {
     gbpPhotos: row.gbp_photos ?? undefined,
     publishedAt: row.claimed_at ?? undefined,
     stripeCustomerId: row.billing_customer_id ?? undefined,
+    stripeSubscriptionId: row.billing_subscription_id ?? undefined,
+    ownerEmail: row.owner_email ?? undefined,
   };
 }
 
@@ -139,6 +148,8 @@ function recordToUpsert(record: TenantRecord): Record<string, unknown> {
         ? record.publishedAt ?? new Date().toISOString()
         : null,
     billing_customer_id: record.stripeCustomerId ?? null,
+    billing_subscription_id: record.stripeSubscriptionId ?? null,
+    owner_email: record.ownerEmail ?? null,
   };
 }
 

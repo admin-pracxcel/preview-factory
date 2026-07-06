@@ -154,6 +154,13 @@ export interface StripeCheckoutSessionCompleted {
   metadata: Record<string, string>;
   payment_status: string;
   subscription: string | null;
+  /** Optional field: only set when the merchant passed it on the session. */
+  customer_email: string | null;
+  /** Always populated by Stripe on a completed session — this is where the
+   *  guest checkout email lives. Prefer this over customer_email. */
+  customer_details: {
+    email: string | null;
+  } | null;
 }
 
 export interface StripeEvent {
