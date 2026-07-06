@@ -75,14 +75,15 @@ interface FailureEnvelope {
 
 let emitted = false;
 
-function emit(envelope: SuccessEnvelope | FailureEnvelope, code: 0 | 1): never {
+// Sentinel error thrown by fail() so callers immediately unwind instead of
+// racing the async process.exit() scheduled from emit(). The top-level
+// main().catch() detects this and skips writing another envelope.
+const FAIL_SENTINEL = "__pf_fail_sentinel__";
+
+function emit(envelope: SuccessEnvelope | FailureEnvelope, code: 0 | 1): void {
   // Guard against double emission. emit() schedules process.exit() in a
-  // callback so synchronous code after emit() keeps running — if a caller
-  // reaches a second emit before the exit fires, we'd write two envelopes
-  // to stdout. Ignore anything after the first.
-  if (emitted) {
-    return undefined as never;
-  }
+  // callback so a duplicate call would otherwise print a second envelope.
+  if (emitted) return;
   emitted = true;
   // Wait for the write to flush before exiting. Calling process.exit()
   // synchronously can truncate a large JSON payload on piped stdout,
@@ -92,12 +93,13 @@ function emit(envelope: SuccessEnvelope | FailureEnvelope, code: 0 | 1): never {
   // Belt-and-braces: if the callback never fires (unlikely, but if stdout is
   // detached we'd hang forever), give it 5s then force exit.
   setTimeout(() => process.exit(code), 5000).unref();
-  // Satisfy TypeScript's `never` return — the process is exiting one way or another.
-  return undefined as never;
 }
 
 function fail(code: string, message: string): never {
   emit({ v: 1, ok: false, error: { code, message } }, 1);
+  // Throwing here stops the caller from continuing past fail() before the
+  // async process.exit fires. main().catch() swallows this sentinel.
+  throw new Error(FAIL_SENTINEL);
 }
 
 /**
@@ -258,10 +260,11 @@ async function main(): Promise<void> {
 }
 
 main().catch((err) => {
-  // Should never reach here — main() emits and exits for all known paths.
-  // Belt-and-braces: crash on stderr with a non-zero exit so n8n treats it as
-  // a failure, but still write a parseable envelope so the parent doesn't
-  // choke on empty stdout.
+  // Sentinel path: fail() already emitted the envelope and threw so the
+  // caller unwound cleanly. The async process.exit will fire — do nothing.
+  if (err instanceof Error && err.message === FAIL_SENTINEL) return;
+  // Genuinely uncaught path: write a parseable failure envelope so the
+  // parent doesn't choke on empty stdout.
   const message = err instanceof Error ? err.stack ?? err.message : String(err);
   process.stderr.write(`[cli] uncaught: ${message}\n`);
   emit(

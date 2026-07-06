@@ -826,6 +826,8 @@ ${JSON_VALIDITY_RULE}
 
 ## EXACT FIELD SHAPES — case-sensitive, schema rejects deviations
 
+\`home.services\`, \`home.gallery\`, and \`services\` are ARRAYS \`[]\` of objects. Never emit them as an object \`{}\` keyed by slug or id. If you need to reference them by key elsewhere in your response, do so from an array with an \`id\` or \`slug\` field on each item — the container is always an array.
+
 \`home.about.values[]\` items MUST use these exact keys:
   \`{ "id": "value-trust", "title": "Trust", "body": "We do what we say.", "icon": "Shield" }\`
   Not "name"/"description"/"text" — must be \`id\` + \`title\` + \`body\` (+ optional \`icon\`).
