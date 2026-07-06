@@ -137,6 +137,26 @@ create table if not exists public.processed_events (
   seen_at     timestamptz not null default now()
 );
 
+-- Plain-English edit requests submitted from the client dashboard (Phase L).
+-- The engine reads pending rows, produces a proposed SiteProps mutation, and
+-- flips status to 'preview' for the owner to approve or reject.
+create table if not exists public.edit_requests (
+  id                   uuid primary key default gen_random_uuid(),
+  tenant_id            uuid not null references public.tenants(id) on delete cascade,
+  request              text not null,
+  status               text not null default 'pending'
+                         check (status in ('pending','processing','preview','applied','rejected','error')),
+  created_at           timestamptz not null default now(),
+  resolved_at          timestamptz,
+  change_summary       text,
+  proposed_site_props  jsonb
+);
+
+create index if not exists edit_requests_tenant_id_idx
+  on public.edit_requests (tenant_id, created_at desc);
+
+alter table public.edit_requests enable row level security;
+
 -- Worker heartbeat singleton (Phase 5). n8n hits POST /api/health/worker every
 -- 5 minutes; Vercel writes the timestamp here. /api/health reads it to decide
 -- whether the worker is stale (>15 min since last beat). One row, id='worker'.

@@ -84,13 +84,16 @@ function pageMetadata(
  * edit request is in "preview" state with valid proposedSiteProps, return
  * those; otherwise fall back to tenant.siteProps.
  */
-function resolveProposedSite(
+async function resolveProposedSite(
   tenant: { siteProps: SiteProps },
   editRequestId: string | undefined
-): { site: SiteProps; isPreview: boolean; editReqId: string; changeSummary: string; request: string } | { site: SiteProps; isPreview: false } {
+): Promise<
+  | { site: SiteProps; isPreview: true; editReqId: string; changeSummary: string; request: string }
+  | { site: SiteProps; isPreview: false }
+> {
   if (!editRequestId) return { site: tenant.siteProps, isPreview: false };
 
-  const editReq = getEditRequest(editRequestId);
+  const editReq = await getEditRequest(editRequestId);
   if (
     !editReq ||
     editReq.status !== "preview" ||
@@ -132,7 +135,7 @@ export async function generateMetadata({
   if (!parseResult.success) return { title: tenant.name };
 
   // Use proposed site props for metadata if in preview mode
-  const resolved = resolveProposedSite(tenant, editRequestId);
+  const resolved = await resolveProposedSite(tenant, editRequestId);
   const site = resolved.site;
 
   const meta = pageMetadata(tenant.category, site, slug);
@@ -168,7 +171,7 @@ export default async function TenantPreviewPage({
   }
 
   // Resolve effective site props (may be proposed edit preview)
-  const resolved = resolveProposedSite(tenant, editRequestId);
+  const resolved = await resolveProposedSite(tenant, editRequestId);
 
   const page = renderPage(tenant.category, resolved.site, slug, tenantId);
   if (!page) notFound();

@@ -2,18 +2,15 @@
  * lib/edit-requests-store.ts
  * Storage for plain-English edit requests submitted via the client dashboard.
  *
- * Phase K: stores requests. Phase L: adds the mutation + approval engine.
+ * Phase 7: migrated from `data/edit-requests/*.json` to Supabase so the app
+ * can run on Vercel (read-only filesystem). Public API is the same shape but
+ * now async — call sites had to add `await`.
  *
- * Production swap: replace with Supabase inserts to an edit_requests table.
+ * Phase K wrote the record. Phase L extended it with the mutation + approval
+ * engine (proposed_site_props, change_summary, preview/applied/rejected states).
  */
 
-import {
-  readFileSync,
-  writeFileSync,
-  mkdirSync,
-  readdirSync,
-} from "node:fs";
-import { join } from "node:path";
+import { supabase } from "@/lib/supabase";
 import type { SiteProps } from "@/shared/types/site-props";
 
 /* --------------------------------------------------------------------- types */
@@ -41,47 +38,78 @@ export interface EditRequest {
   proposedSiteProps?: SiteProps;
 }
 
-/* ------------------------------------------------------------------ store */
+const TABLE = "edit_requests";
 
-const DATA_DIR = join(process.cwd(), "data", "edit-requests");
-
-function ensureDir(): void {
-  mkdirSync(DATA_DIR, { recursive: true });
+interface EditRequestRow {
+  id: string;
+  tenant_id: string;
+  request: string;
+  status: EditRequestStatus;
+  created_at: string;
+  resolved_at: string | null;
+  change_summary: string | null;
+  proposed_site_props: SiteProps | null;
 }
 
-export function saveEditRequest(record: EditRequest): void {
-  ensureDir();
-  writeFileSync(
-    join(DATA_DIR, `${record.id}.json`),
-    JSON.stringify(record, null, 2),
-    "utf8"
-  );
+function rowToRecord(row: EditRequestRow): EditRequest {
+  return {
+    id: row.id,
+    tenantId: row.tenant_id,
+    request: row.request,
+    status: row.status,
+    createdAt: row.created_at,
+    resolvedAt: row.resolved_at ?? undefined,
+    changeSummary: row.change_summary ?? undefined,
+    proposedSiteProps: row.proposed_site_props ?? undefined,
+  };
 }
 
-export function getEditRequest(id: string): EditRequest | null {
-  ensureDir();
-  const path = join(DATA_DIR, `${id}.json`);
-  try {
-    return JSON.parse(readFileSync(path, "utf8")) as EditRequest;
-  } catch {
-    return null;
+/* ---------------------------------------------------------------- public API */
+
+/**
+ * Upsert an edit request. Same primary-key semantics as the file-based store:
+ * calling with the same `id` overwrites the row.
+ */
+export async function saveEditRequest(record: EditRequest): Promise<void> {
+  const row = {
+    id: record.id,
+    tenant_id: record.tenantId,
+    request: record.request,
+    status: record.status,
+    created_at: record.createdAt,
+    resolved_at: record.resolvedAt ?? null,
+    change_summary: record.changeSummary ?? null,
+    proposed_site_props: record.proposedSiteProps ?? null,
+  };
+  const { error } = await supabase().from(TABLE).upsert(row);
+  if (error) {
+    throw new Error(`saveEditRequest(${record.id}) failed: ${error.message}`);
   }
 }
 
+export async function getEditRequest(id: string): Promise<EditRequest | null> {
+  const { data, error } = await supabase()
+    .from(TABLE)
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) {
+    throw new Error(`getEditRequest(${id}) failed: ${error.message}`);
+  }
+  if (!data) return null;
+  return rowToRecord(data as EditRequestRow);
+}
+
 /** List edit requests for a tenant, newest first. */
-export function listEditRequests(tenantId: string): EditRequest[] {
-  ensureDir();
-  return readdirSync(DATA_DIR)
-    .filter((f) => f.endsWith(".json"))
-    .map((f) => {
-      try {
-        return JSON.parse(
-          readFileSync(join(DATA_DIR, f), "utf8")
-        ) as EditRequest;
-      } catch {
-        return null;
-      }
-    })
-    .filter((r): r is EditRequest => r !== null && r.tenantId === tenantId)
-    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+export async function listEditRequests(tenantId: string): Promise<EditRequest[]> {
+  const { data, error } = await supabase()
+    .from(TABLE)
+    .select("*")
+    .eq("tenant_id", tenantId)
+    .order("created_at", { ascending: false })
+    .limit(50);
+  if (error) {
+    throw new Error(`listEditRequests(${tenantId}) failed: ${error.message}`);
+  }
+  return (data ?? []).map((r) => rowToRecord(r as EditRequestRow));
 }

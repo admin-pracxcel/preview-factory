@@ -92,7 +92,7 @@ export default async function DashboardPage({
   if (!tenant) notFound();
 
   const leads = (await listLeads(tenantId)).slice(0, 20);
-  const editRequests = listEditRequests(tenantId).slice(0, 5);
+  const editRequests = (await listEditRequests(tenantId)).slice(0, 5);
 
   const liveUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/preview/site/${tenantId}`;
 

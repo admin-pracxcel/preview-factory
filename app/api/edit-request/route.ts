@@ -12,8 +12,10 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 import { saveEditRequest } from "@/lib/edit-requests-store";
 import { applyEditRequest } from "@/lib/edit-engine";
+import { assertOwnsTenant, type MutableCookies } from "@/lib/session";
 
 export const runtime = "nodejs";
 
@@ -34,20 +36,20 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ error: "request text is required" }, { status: 400 });
   }
 
+  const cookieStore = (await cookies()) as unknown as MutableCookies;
+  try {
+    await assertOwnsTenant(cookieStore, tenantId);
+  } catch (err) {
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "not allowed" },
+      { status: 403 },
+    );
+  }
+
   const id = crypto.randomUUID();
   const trimmedRequest = requestText.trim();
 
-  // Step 1: save as pending
-  saveEditRequest({
-    id,
-    tenantId,
-    request: trimmedRequest,
-    status: "pending",
-    createdAt: new Date().toISOString(),
-  });
-
-  // Step 2: mark as processing
-  saveEditRequest({
+  await saveEditRequest({
     id,
     tenantId,
     request: trimmedRequest,
@@ -58,14 +60,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   console.log(`[edit-request] processing id=${id} for tenant=${tenantId}`);
 
   try {
-    // Step 3: run the mutation engine
     const { proposedSiteProps, changeSummary } = await applyEditRequest(
       tenantId,
       trimmedRequest
     );
 
-    // Step 4: save as preview
-    saveEditRequest({
+    await saveEditRequest({
       id,
       tenantId,
       request: trimmedRequest,
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       err instanceof Error ? err.message : String(err);
     const truncated = message.slice(0, 200);
 
-    saveEditRequest({
+    await saveEditRequest({
       id,
       tenantId,
       request: trimmedRequest,
