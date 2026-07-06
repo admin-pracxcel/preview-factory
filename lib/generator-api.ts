@@ -137,21 +137,29 @@ export async function generateSiteForApi(
   const systemPrompt = loadSystemPrompt(resolved);
 
   // Phase A — homepage + 4 service/location stubs.
+  // Model wobble occasionally drops required fields (missing hero.headline,
+  // services as object instead of array, etc). One retry with the validation
+  // errors fed back into the prompt catches most of these — a second failure
+  // is a real issue worth surfacing.
   console.log("[generator-api] phase A — homepage + skeleton...");
   const phaseAStart = Date.now();
-  const rawA = await callClaude(systemPrompt, buildPhaseAMessage(gbpData), PHASE_A_JSON_SCHEMA);
-  const phaseA = parseAndValidateAgainst(rawA, phaseAGenerationSchema);
+  let phaseA = await runPhaseA(systemPrompt, gbpData, null);
+  if (!phaseA.ok) {
+    console.log("[generator-api] phase A validation failed, retrying once with feedback...");
+    phaseA = await runPhaseA(systemPrompt, gbpData, phaseA.errors);
+  }
   if (!phaseA.ok) {
     throw new Error(`Phase A validation failed:\n${phaseA.errors}`);
   }
+  const phaseAData = phaseA.data;
   // Harden the social-proof strip before it reaches the merge. The LLM
   // frequently emits garbage USPs ("5 stars", "100%", bare percentages); we
   // strip those and inject a real Google rating tile from GBP data.
-  hardenSocialProof(phaseA.data, gbpData);
+  hardenSocialProof(phaseAData, gbpData);
   // Override CTAs deterministically. The LLM often truncates them ("Call The",
   // "Book at The") or picks a verb inappropriate for the category (an
   // electrician doesn't take "appointments"). Category-aware overrides only.
-  hardenCtas(phaseA.data, gbpData, resolved);
+  hardenCtas(phaseAData, gbpData, resolved);
   console.log(`[generator-api] phase A done in ${Math.round((Date.now() - phaseAStart) / 1000)}s.`);
 
   // Phase B — expand each service stub into a detail page (one batched call).
@@ -728,6 +736,27 @@ function escapeUnquotedControlChars(json: string): string {
  * pass that escapes literal newlines/tabs inside string values, then parses
  * against the supplied schema. Returns the typed data on success.
  */
+async function runPhaseA(
+  systemPrompt: string,
+  gbp: GbpData,
+  previousErrors: string | null,
+): Promise<{ ok: true; data: PhaseAResult } | { ok: false; errors: string }> {
+  const baseMessage = buildPhaseAMessage(gbp);
+  const message = previousErrors
+    ? `${baseMessage}
+
+## RETRY — your previous attempt failed schema validation
+
+Fix these specific errors and return the corrected object. Do not omit required fields.
+
+${previousErrors}`
+    : baseMessage;
+  const raw = await callClaude(systemPrompt, message, PHASE_A_JSON_SCHEMA);
+  const result = parseAndValidateAgainst(raw, phaseAGenerationSchema);
+  if (result.ok) return { ok: true, data: result.data };
+  return { ok: false, errors: result.errors };
+}
+
 function parseAndValidateAgainst<T>(
   raw: string,
   schema: z.ZodType<T>,
