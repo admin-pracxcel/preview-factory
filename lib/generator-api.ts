@@ -452,17 +452,35 @@ function loadSystemPrompt(category: string): string {
   );
 }
 
+/**
+ * Transient errors are worth retrying once. 529 Overloaded and 429 rate-limit
+ * are Anthropic's own signals to back off briefly; timeouts are usually the
+ * same class of thing. A single retry with a 2s pause converts most of these
+ * into user-invisible blips without turning the pipeline into a retry loop.
+ */
+function isTransientClaudeError(err: unknown): boolean {
+  const message = err instanceof Error ? err.message : String(err);
+  if (/http=(?:429|500|502|503|504|529)/i.test(message)) return true;
+  if (/overloaded/i.test(message)) return true;
+  if (/rate.?limit/i.test(message) && !/subscription.+rate.?limit/i.test(message)) return true;
+  if (/timed out/i.test(message)) return true;
+  return false;
+}
+
 async function callClaude(
   systemPrompt: string,
   userPrompt: string,
   jsonSchema: object,
 ): Promise<string> {
-  return callClaudeCli({
-    systemPrompt,
-    userPrompt,
-    model: MODEL,
-    jsonSchema,
-  });
+  try {
+    return await callClaudeCli({ systemPrompt, userPrompt, model: MODEL, jsonSchema });
+  } catch (err) {
+    if (!isTransientClaudeError(err)) throw err;
+    const message = err instanceof Error ? err.message : String(err);
+    console.warn(`[generator-api] transient Claude error, retrying once in 2s: ${message}`);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    return callClaudeCli({ systemPrompt, userPrompt, model: MODEL, jsonSchema });
+  }
 }
 
 function stripFences(raw: string): string {
