@@ -283,13 +283,30 @@ specifically the `effectiveBasePath` helper.
 curl -I https://this-slug-doesnt-exist.launcharoo.online/
 ```
 
-Expected: `HTTP/2 302` with a `Location: https://preview-factory.vercel.app/`
-header. That's the "unknown slug → punt to marketing landing" behavior.
+Expected: `HTTP/2 404` with `content-type: text/html`. Open in a browser
+— you should see the branded "Site not found" page. The URL stays on
+launcharoo.online — no leak to `preview-factory.vercel.app`.
 
-### 5e. Try an expired tenant (if you have one)
+### 5e. Try an expired tenant
 
-Take a tenant with `status='expired'`, hit its slug, and confirm the
-response is a 302 to `/expired/<tenantId>`.
+Take a tenant with `status='expired'`, hit its slug in a browser. Expected:
+the `/expired` page renders **under `<slug>.launcharoo.online/`** (URL
+does not change to `preview-factory.vercel.app`). The Worker proxies the
+expired page from Vercel rather than redirecting.
+
+### 5f. Apex + reserved subdomains
+
+```bash
+curl -I https://launcharoo.online/
+curl -I https://www.launcharoo.online/
+curl -I https://api.launcharoo.online/
+```
+
+- Apex + www → `HTTP/2 200` branded landing placeholder
+- Reserved names (`api`, `admin`, `dashboard`, etc.) → `HTTP/2 404`
+  branded "not found"
+
+All under launcharoo.online, no origin leak.
 
 ---
 

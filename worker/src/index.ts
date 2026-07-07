@@ -4,20 +4,20 @@
  * Cloudflare Worker that maps `<slug>.launcharoo.online/*` onto the
  * Preview Factory Next.js app on Vercel.
  *
- * Flow:
- *   1. Extract slug from the Host header.
- *   2. Call the Vercel API GET /api/tenant/by-slug/<slug> (cached at the
- *      edge with Cache-Control from the upstream response).
- *   3. If found, proxy the request to
- *      https://preview-factory.vercel.app/preview/site/<tenantId>/<path>
- *      and forward the response.
- *   4. If not found, redirect to the marketing site.
- *   5. Asset paths (/_next/*, /favicon.ico, /robots.txt) pass through
- *      to the Vercel origin unchanged so relative asset URLs resolve.
+ * Design goal: the visitor's browser only ever sees the launcharoo.online
+ * hostname. All origin URLs (preview-factory.vercel.app) are contained
+ * inside the Worker's fetch calls. Redirect responses from upstream are
+ * intercepted and rewritten so nothing leaks.
  *
- * The site render page inspects the X-Forwarded-Host header this Worker
- * sets to render internal links without the /preview/site/<tenantId>
- * prefix — see app/preview/site/[tenantId]/[[...slug]]/page.tsx.
+ * Flow:
+ *   1. Extract slug from Host.
+ *   2. Asset paths (/_next/*, /favicon.ico, etc.) proxy through unchanged.
+ *   3. Look up { tenantId, expired } from GET /api/tenant/by-slug/<slug>.
+ *      Cached at Cloudflare edge for 5 min (upstream Cache-Control).
+ *   4. If expired → proxy /expired/<tenantId> under the customer host.
+ *   5. Otherwise → proxy /preview/site/<tenantId>/<path> under the customer host.
+ *   6. Any 3xx response from Vercel has its Location header rewritten if it
+ *      would send the browser to preview-factory.vercel.app.
  */
 
 interface Env {
@@ -25,7 +25,6 @@ interface Env {
   SITE_DOMAIN: string;
 }
 
-/** Belt-and-braces: even if the slug generator lets these through, refuse. */
 const RESERVED_SLUGS = new Set([
   "www",
   "api",
@@ -47,14 +46,12 @@ const RESERVED_SLUGS = new Set([
   "assets",
 ]);
 
-/** Paths that should never be rewritten with the tenant prefix. */
 const PASSTHROUGH_PREFIXES = ["/_next/", "/api/", "/__nextjs_", "/@vercel/"];
 const PASSTHROUGH_EXACT = new Set([
   "/favicon.ico",
   "/robots.txt",
   "/sitemap.xml",
   "/manifest.json",
-  "/.well-known",
 ]);
 
 function isPassthroughPath(pathname: string): boolean {
@@ -81,8 +78,54 @@ async function lookupTenant(
     cf: { cacheTtl: 300, cacheEverything: true },
   });
   if (res.status === 404) return null;
-  if (!res.ok) throw new Error(`by-slug lookup failed: ${res.status}`);
+  if (!res.ok) throw new Error(`by-slug lookup returned ${res.status}`);
   return (await res.json()) as { tenantId: string; expired: boolean };
+}
+
+/**
+ * If the upstream 3xx Location leaks the origin, rewrite it to be relative
+ * to the customer host. Handles both absolute-URL Locations (a bug we
+ * shouldn't emit but defend against) and paths under /preview/site/<id>
+ * (which we present as clean paths on launcharoo.online).
+ */
+function rewriteLocationHeader(
+  response: Response,
+  vercelOrigin: string,
+  tenantId: string | null,
+): Response {
+  if (response.status < 300 || response.status >= 400) return response;
+  const location = response.headers.get("location");
+  if (!location) return response;
+
+  let rewritten = location;
+
+  // Strip the vercel origin if present.
+  if (rewritten.startsWith(vercelOrigin)) {
+    rewritten = rewritten.slice(vercelOrigin.length) || "/";
+  }
+
+  // Strip the /preview/site/<tenantId> prefix so links stay clean.
+  if (tenantId) {
+    const prefix = `/preview/site/${tenantId}`;
+    if (rewritten === prefix) rewritten = "/";
+    else if (rewritten.startsWith(prefix + "/"))
+      rewritten = rewritten.slice(prefix.length);
+    else if (rewritten.startsWith(prefix + "?"))
+      rewritten = "/" + rewritten.slice(prefix.length + 1);
+  }
+
+  if (rewritten === location) return response;
+
+  const headers = new Headers(response.headers);
+  headers.set("location", rewritten);
+  // Redirect responses shouldn't be cached — state can flip
+  // (expired → active on support intervention).
+  headers.set("cache-control", "no-store");
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
 }
 
 async function proxy(
@@ -90,6 +133,7 @@ async function proxy(
   origin: string,
   upstreamPath: string,
   originalHost: string,
+  tenantId: string | null,
 ): Promise<Response> {
   const url = new URL(request.url);
   const upstream = new URL(upstreamPath, origin);
@@ -98,18 +142,89 @@ async function proxy(
   const headers = new Headers(request.headers);
   headers.set("X-Forwarded-Host", originalHost);
   headers.set("X-Forwarded-Proto", "https");
-  // Vercel's routing needs the Host header to match the deployment; the
-  // origin URL already sets it, so nothing to do here.
+
+  const method = request.method.toUpperCase();
+  const hasBody = method !== "GET" && method !== "HEAD";
 
   const upstreamReq = new Request(upstream.toString(), {
-    method: request.method,
+    method,
     headers,
-    body: request.body,
+    body: hasBody ? request.body : undefined,
     redirect: "manual",
   });
 
-  return fetch(upstreamReq);
+  const res = await fetch(upstreamReq);
+  return rewriteLocationHeader(res, origin, tenantId);
 }
+
+/* ----------------------------------------------- branded error responses */
+
+const BRAND_STYLES = `
+  body { margin:0; padding:0; background:#0A0F1E; color:#fff;
+         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+         min-height:100vh; display:flex; align-items:center; justify-content:center; }
+  .card { max-width:520px; padding:48px 32px; text-align:center; }
+  h1 { font-size:28px; font-weight:800; margin:0 0 12px; letter-spacing:-0.02em; }
+  p  { font-size:16px; line-height:1.5; color:rgba(255,255,255,0.6); margin:0 0 24px; }
+  a  { color:#60a5fa; text-decoration:none; font-weight:600; }
+  a:hover { text-decoration:underline; }
+  .small { font-size:12px; color:rgba(255,255,255,0.3); margin-top:32px; }
+`;
+
+function brandedHtml(status: number, title: string, body: string, ctaHref?: string): Response {
+  const cta = ctaHref
+    ? `<p><a href="${ctaHref}">Get your own website in 60 seconds →</a></p>`
+    : "";
+  return new Response(
+    `<!doctype html><html lang="en"><head>
+      <meta charset="utf-8"/>
+      <meta name="viewport" content="width=device-width,initial-scale=1"/>
+      <title>${title}</title>
+      <meta name="robots" content="noindex"/>
+      <style>${BRAND_STYLES}</style>
+    </head><body>
+      <div class="card">
+        <h1>${title}</h1>
+        <p>${body}</p>
+        ${cta}
+        <div class="small">launcharoo.online</div>
+      </div>
+    </body></html>`,
+    {
+      status,
+      headers: {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "no-store",
+      },
+    },
+  );
+}
+
+function notFoundResponse(): Response {
+  return brandedHtml(
+    404,
+    "Site not found",
+    "This address doesn't point to a live website.",
+  );
+}
+
+function apexLandingResponse(): Response {
+  return brandedHtml(
+    200,
+    "Launcharoo",
+    "Fast websites for local service businesses.",
+  );
+}
+
+function upstreamErrorResponse(): Response {
+  return brandedHtml(
+    502,
+    "Temporarily unavailable",
+    "We're having trouble reaching this website. Please try again in a moment.",
+  );
+}
+
+/* ----------------------------------------------- main handler */
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -117,46 +232,53 @@ export default {
     const host = url.hostname.toLowerCase();
 
     const slug = extractSlug(host, env.SITE_DOMAIN);
-    if (!slug || slug === "www") {
-      // Apex or www hit — punt to the marketing site.
-      return Response.redirect(env.VERCEL_ORIGIN, 302);
+    if (slug === null || slug === "www") {
+      // Apex or www — serve a small landing placeholder, no origin leak.
+      return apexLandingResponse();
     }
 
     if (RESERVED_SLUGS.has(slug) || slug.includes(".")) {
-      // Nested subdomain or reserved word — 404 rather than leak internals.
-      return new Response("Not found", { status: 404 });
+      // Nested subdomain (e.g. foo.bar.launcharoo.online) or a reserved
+      // word (e.g. api.launcharoo.online). Refuse cleanly.
+      return notFoundResponse();
     }
 
-    // Asset requests: proxy through with path unchanged.
+    // Asset requests always proxy through with path unchanged. We don't
+    // know the tenantId yet — the Next.js chunks are shared across all
+    // tenants, and static file paths don't need rewriting.
     if (isPassthroughPath(url.pathname)) {
-      return proxy(request, env.VERCEL_ORIGIN, url.pathname, host);
+      return proxy(request, env.VERCEL_ORIGIN, url.pathname, host, null);
     }
 
     let lookup;
     try {
       lookup = await lookupTenant(env.VERCEL_ORIGIN, slug);
     } catch (err) {
-      console.error("[launcharoo-router] lookup failed:", err);
-      return new Response("Upstream lookup failed", { status: 502 });
+      console.error(`[launcharoo-router] slug=${slug} lookup failed:`, err);
+      return upstreamErrorResponse();
     }
     if (!lookup) {
-      // Slug not found — redirect to landing.
-      return Response.redirect(env.VERCEL_ORIGIN, 302);
+      return notFoundResponse();
     }
 
     if (lookup.expired) {
-      return Response.redirect(
-        `${env.VERCEL_ORIGIN}/expired/${lookup.tenantId}`,
-        302,
+      // Serve Vercel's /expired/<tenantId> page under the customer host so
+      // the URL doesn't leak. The page itself has an internal 302 to
+      // /preview/site/<id> which the rewriteLocation helper will strip.
+      return proxy(
+        request,
+        env.VERCEL_ORIGIN,
+        `/expired/${lookup.tenantId}`,
+        host,
+        lookup.tenantId,
       );
     }
 
-    // Everything else: prepend /preview/site/<tenantId> and proxy.
     const rewritten =
       url.pathname === "/"
         ? `/preview/site/${lookup.tenantId}`
         : `/preview/site/${lookup.tenantId}${url.pathname}`;
 
-    return proxy(request, env.VERCEL_ORIGIN, rewritten, host);
+    return proxy(request, env.VERCEL_ORIGIN, rewritten, host, lookup.tenantId);
   },
 } satisfies ExportedHandler<Env>;
