@@ -94,7 +94,9 @@ export default async function DashboardPage({
   const leads = (await listLeads(tenantId)).slice(0, 20);
   const editRequests = (await listEditRequests(tenantId)).slice(0, 5);
 
-  const liveUrl = `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/preview/site/${tenantId}`;
+  const liveUrl = tenant.slug
+    ? `https://${tenant.slug}.launcharoo.online`
+    : `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/preview/site/${tenantId}`;
 
   return (
     <div className="min-h-screen bg-[#0A0F1E] text-white">

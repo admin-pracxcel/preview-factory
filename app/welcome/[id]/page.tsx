@@ -17,14 +17,8 @@ import {
 /*  Helpers                                                                     */
 /* -------------------------------------------------------------------------- */
 
-function deriveSubdomain(id: string): string {
-  const clean = id
-    .replace(/^lead_\d+_/, "")
-    .replace(/[^a-z0-9-]/gi, "-")
-    .toLowerCase()
-    .slice(0, 30);
-  return clean || "your-business";
-}
+const SITE_DOMAIN = "launcharoo.online";
+const FALLBACK_SUBDOMAIN = "your-business";
 
 /* -------------------------------------------------------------------------- */
 /*  Animated star burst (CSS only)                                              */
@@ -136,8 +130,26 @@ export default function WelcomePage() {
       ? params.id[0]
       : "unknown";
 
-  const subdomain = deriveSubdomain(id);
-  const siteUrl = `https://${subdomain}.mysitehq.com.au`;
+  const [slug, setSlug] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/tenants/${id}/status`);
+        if (!res.ok) return;
+        const body = (await res.json()) as { slug?: string };
+        if (!cancelled && body.slug) setSlug(body.slug);
+      } catch {
+        // Non-fatal — welcome page still renders with fallback subdomain.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
+  const subdomain = slug ?? FALLBACK_SUBDOMAIN;
+  const siteUrl = `https://${subdomain}.${SITE_DOMAIN}`;
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);

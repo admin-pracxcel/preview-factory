@@ -16,6 +16,10 @@ export const runtime = "nodejs";
 interface StatusResponse {
   status: string;
   error?: string;
+  /** Business trading name (Phase 10a: for welcome/dashboard URL rendering). */
+  name?: string;
+  /** Public subdomain fragment (Phase 10a). */
+  slug?: string;
 }
 
 export async function GET(
@@ -26,7 +30,7 @@ export async function GET(
 
   const { data, error } = await supabase()
     .from("tenants")
-    .select("status,error")
+    .select("status,error,name,slug")
     .eq("id", tenantId)
     .maybeSingle();
 
@@ -41,6 +45,8 @@ export async function GET(
     {
       status: data.status as string,
       ...(data.error ? { error: data.error as string } : {}),
+      ...(data.name ? { name: data.name as string } : {}),
+      ...(data.slug ? { slug: data.slug as string } : {}),
     },
     {
       // Never cache — status changes every few seconds.
