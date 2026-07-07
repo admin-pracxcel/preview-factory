@@ -24,7 +24,7 @@ import {
 import { getTenant } from "@/lib/tenant-store";
 import { listLeads } from "@/lib/leads-store";
 import { listEditRequests } from "@/lib/edit-requests-store";
-import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard } from "./ui";
+import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard, EditSiteCard } from "./ui";
 
 /* ------------------------------------------------------------------ meta */
 
@@ -166,6 +166,9 @@ export default async function DashboardPage({
           </div>
         </section>
 
+        {/* ── edit your site card ── */}
+        <EditSiteCard tenantId={tenantId} />
+
         {/* ── custom domain card ── */}
         <CustomDomainCard
           tenantId={tenantId}
@@ -270,7 +273,10 @@ export default async function DashboardPage({
             </section>
 
             {/* Edit request card */}
-            <section className="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col gap-4">
+            <section
+              id="edit-request-form"
+              className="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col gap-4 scroll-mt-24"
+            >
               <div className="flex items-center gap-2">
                 <PenLine className="h-5 w-5 text-amber-400" />
                 <h2 className="text-base font-bold">Request a change</h2>

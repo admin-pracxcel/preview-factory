@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useParams } from "next/navigation";
-import { Share2, X, Lock, ChevronDown, Smartphone, Monitor } from "lucide-react";
+import Link from "next/link";
+import { Share2, X, Lock, ChevronDown, Smartphone, Monitor, LayoutDashboard, CheckCircle2 } from "lucide-react";
 import CustomisePanel, { type CustomisationState } from "@/app/components/CustomisePanel";
 import { derivePrimary, deriveSecondary } from "@/lib/color";
 
@@ -114,6 +115,10 @@ function PreviewPageInner() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [businessName, setBusinessName] = useState("Your Business");
   const [viewMode, setViewMode] = useState<"mobile" | "desktop">("mobile");
+  /** When the tenant has already been claimed/published, hide the 3h
+   *  countdown urgency + "Save my site" checkout button and show a
+   *  "back to dashboard" affordance instead. Fetched once on mount. */
+  const [isPublished, setIsPublished] = useState(false);
 
   // Customisation state. Initial values come from /api/tenants/[id]/customise.
   const [customisation, setCustomisation] = useState<CustomisationState | null>(null);
@@ -227,6 +232,28 @@ function PreviewPageInner() {
     setBusinessName(getBusinessName());
   }, [id]);
 
+  // Detect whether this tenant has already been published so we can swap
+  // the countdown/checkout for an "editing your live site" affordance.
+  useEffect(() => {
+    if (!id || id === "unknown") return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/tenants/${id}/status`);
+        if (!res.ok) return;
+        const body = (await res.json()) as { status?: string };
+        if (!cancelled && (body.status === "claimed" || body.status === "past_due")) {
+          setIsPublished(true);
+        }
+      } catch {
+        // Non-fatal — page still renders as a pre-checkout preview.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
   useEffect(() => {
     const interval = setInterval(() => {
       const remaining = Math.max(0, expiryRef.current - Date.now());
@@ -298,9 +325,16 @@ function PreviewPageInner() {
     <div className="md:hidden flex flex-col h-screen bg-slate-950">
       {/* Slim top bar */}
       <div className="flex items-center justify-between px-4 py-2.5 bg-slate-950/95 border-b border-slate-800 z-10 backdrop-blur shrink-0">
-        <div className={`text-sm font-mono font-bold ${urgency ? "text-red-400" : "text-slate-300"}`}>
-          {urgency ? "⚠ " : ""}Expires {formatCountdown(timeLeft)}
-        </div>
+        {isPublished ? (
+          <div className="flex items-center gap-1.5 text-sm font-semibold text-green-400">
+            <CheckCircle2 className="h-4 w-4" />
+            Editing your live site
+          </div>
+        ) : (
+          <div className={`text-sm font-mono font-bold ${urgency ? "text-red-400" : "text-slate-300"}`}>
+            {urgency ? "⚠ " : ""}Expires {formatCountdown(timeLeft)}
+          </div>
+        )}
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -334,20 +368,32 @@ function PreviewPageInner() {
 
       {/* Sticky bottom CTA — gradient bg */}
       <div className="shrink-0 px-4 pb-6 pt-8 bg-gradient-to-t from-slate-950 via-slate-950/95 to-transparent">
-        <button
-          type="button"
-          onClick={handleSave}
-          disabled={checkingOut}
-          className="w-full py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:opacity-60 text-white font-bold text-base shadow-lg shadow-blue-900/40 transition-colors"
-        >
-          {checkingOut ? "Taking you to checkout…" : <>Save my site &mdash; $49/mo<span className="ml-2 line-through text-blue-300 font-normal text-sm">$149</span></>}
-        </button>
-        <div className="flex items-center justify-center gap-1.5 mt-2">
-          <Lock className="w-3 h-3 text-slate-500" />
-          <p className="text-center text-xs text-slate-500">
-            Secure checkout via Stripe
-          </p>
-        </div>
+        {isPublished ? (
+          <Link
+            href={`/dashboard/${id}`}
+            className="flex w-full items-center justify-center gap-2 py-4 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-base transition-colors"
+          >
+            <LayoutDashboard className="w-4 h-4" />
+            Back to dashboard
+          </Link>
+        ) : (
+          <>
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={checkingOut}
+              className="w-full py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:opacity-60 text-white font-bold text-base shadow-lg shadow-blue-900/40 transition-colors"
+            >
+              {checkingOut ? "Taking you to checkout…" : <>Save my site &mdash; $49/mo<span className="ml-2 line-through text-blue-300 font-normal text-sm">$149</span></>}
+            </button>
+            <div className="flex items-center justify-center gap-1.5 mt-2">
+              <Lock className="w-3 h-3 text-slate-500" />
+              <p className="text-center text-xs text-slate-500">
+                Secure checkout via Stripe
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -397,29 +443,55 @@ function PreviewPageInner() {
               Desktop
             </button>
           </div>
-          <CountdownBox timeLeft={timeLeft} urgency={urgency} />
-          <button
-            type="button"
-            onClick={handleShare}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 text-sm font-medium transition-colors"
-          >
-            <Share2 className="w-4 h-4" />
-            Share
-          </button>
-          <div className="flex flex-col items-end">
-            <button
-              type="button"
-              onClick={handleSave}
-              disabled={checkingOut}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:opacity-60 text-white text-sm font-bold transition-colors shadow-lg shadow-blue-900/30"
-            >
-              {checkingOut ? "Taking you to checkout…" : <>Save my site &mdash; $49/mo<span className="line-through text-blue-300 font-normal text-xs ml-1">$149</span></>}
-            </button>
-            <div className="flex items-center gap-1 mt-1">
-              <Lock className="w-3 h-3 text-slate-600" />
-              <span className="text-xs text-slate-600">Secure checkout via Stripe</span>
-            </div>
-          </div>
+          {isPublished ? (
+            <>
+              <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-green-500/20 bg-green-900/10 text-sm font-semibold text-green-400">
+                <CheckCircle2 className="h-4 w-4" />
+                Editing your live site
+              </div>
+              <button
+                type="button"
+                onClick={handleShare}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 text-sm font-medium transition-colors"
+              >
+                <Share2 className="w-4 h-4" />
+                Share
+              </button>
+              <Link
+                href={`/dashboard/${id}`}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-bold transition-colors"
+              >
+                <LayoutDashboard className="w-4 h-4" />
+                Back to dashboard
+              </Link>
+            </>
+          ) : (
+            <>
+              <CountdownBox timeLeft={timeLeft} urgency={urgency} />
+              <button
+                type="button"
+                onClick={handleShare}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 text-sm font-medium transition-colors"
+              >
+                <Share2 className="w-4 h-4" />
+                Share
+              </button>
+              <div className="flex flex-col items-end">
+                <button
+                  type="button"
+                  onClick={handleSave}
+                  disabled={checkingOut}
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:opacity-60 text-white text-sm font-bold transition-colors shadow-lg shadow-blue-900/30"
+                >
+                  {checkingOut ? "Taking you to checkout…" : <>Save my site &mdash; $49/mo<span className="line-through text-blue-300 font-normal text-xs ml-1">$149</span></>}
+                </button>
+                <div className="flex items-center gap-1 mt-1">
+                  <Lock className="w-3 h-3 text-slate-600" />
+                  <span className="text-xs text-slate-600">Secure checkout via Stripe</span>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -489,7 +561,9 @@ function PreviewPageInner() {
           <div className="mb-4">
             <h2 className="text-xl font-bold text-white">Make it yours</h2>
             <p className="text-slate-400 text-sm mt-1">
-              {urgency
+              {isPublished
+                ? "Changes save automatically to your live site."
+                : urgency
                 ? `Preview expires in ${formatCountdown(timeLeft)} — save now to keep it.`
                 : "Your preview is active. Customise then save."}
             </p>

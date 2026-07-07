@@ -20,7 +20,10 @@ import {
   Globe,
   AlertCircle,
   Clock,
+  Palette,
+  PenLine,
 } from "lucide-react";
+import Link from "next/link";
 
 /* ================================================================ copy btn == */
 
@@ -234,6 +237,62 @@ export function EditRequestForm({ tenantId }: { tenantId: string }) {
         )}
       </button>
     </form>
+  );
+}
+
+/* =========================================================== edit your site */
+
+/**
+ * Prominent "make changes to your site" entry point. Two paths:
+ *   - Change design → the customise page (/preview/[id]) — colors, gallery,
+ *     images. That page detects the paid status and swaps its checkout
+ *     junk for a "back to dashboard" link.
+ *   - Request a change → smooth-scrolls to the plain-English form below.
+ */
+export function EditSiteCard({ tenantId }: { tenantId: string }) {
+  function scrollToEditForm() {
+    const el = document.getElementById("edit-request-form");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+      <div className="mb-4 flex items-center gap-3">
+        <PenLine className="h-5 w-5 text-purple-400" />
+        <h3 className="text-base font-bold text-white">Edit your site</h3>
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Link
+          href={`/preview/${tenantId}`}
+          className="flex items-start gap-3 rounded-xl border border-white/10 bg-black/20 p-4 transition-colors hover:border-white/25 hover:bg-black/30"
+        >
+          <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-900/40">
+            <Palette className="h-4 w-4 text-blue-400" />
+          </div>
+          <div>
+            <div className="font-semibold text-white">Change design</div>
+            <div className="mt-0.5 text-xs text-white/50">
+              Colours, logo, hero image, gallery
+            </div>
+          </div>
+        </Link>
+        <button
+          type="button"
+          onClick={scrollToEditForm}
+          className="flex items-start gap-3 rounded-xl border border-white/10 bg-black/20 p-4 text-left transition-colors hover:border-white/25 hover:bg-black/30"
+        >
+          <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-purple-900/40">
+            <PenLine className="h-4 w-4 text-purple-400" />
+          </div>
+          <div>
+            <div className="font-semibold text-white">Request a change</div>
+            <div className="mt-0.5 text-xs text-white/50">
+              Plain-English: &ldquo;update phone to 0412…&rdquo;
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
   );
 }
 
