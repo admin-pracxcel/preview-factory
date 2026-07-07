@@ -68,6 +68,8 @@ export interface TenantRecord {
   /** True when the underlying DB status is 'expired' (Phase 8b reaper).
    *  Read-only, populated on load. Callers use it to redirect to /expired. */
   isExpired?: boolean;
+  /** Public subdomain fragment: <slug>.launcharoo.online. Phase 10a. */
+  slug?: string;
 }
 
 const TABLE = "tenants";
@@ -115,6 +117,7 @@ interface TenantRow {
   billing_customer_id: string | null;
   billing_subscription_id: string | null;
   cancelled_at: string | null;
+  slug: string | null;
 }
 
 function rowToRecord(row: TenantRow): TenantRecord {
@@ -133,6 +136,7 @@ function rowToRecord(row: TenantRow): TenantRecord {
     stripeSubscriptionId: row.billing_subscription_id ?? undefined,
     ownerEmail: row.owner_email ?? undefined,
     isExpired: row.status === "expired",
+    slug: row.slug ?? undefined,
   };
 }
 
@@ -155,6 +159,7 @@ function recordToUpsert(record: TenantRecord): Record<string, unknown> {
     billing_customer_id: record.stripeCustomerId ?? null,
     billing_subscription_id: record.stripeSubscriptionId ?? null,
     owner_email: record.ownerEmail ?? null,
+    slug: record.slug ?? null,
   };
 }
 

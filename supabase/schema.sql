@@ -88,6 +88,13 @@ alter table public.tenants drop constraint if exists tenants_status_check;
 alter table public.tenants add constraint tenants_status_check
   check (status in ('queued','running','done','failed','claimed','past_due','cancelled','expired'));
 
+-- Slug for the public subdomain (<slug>.launcharoo.online). Phase 10a.
+-- Nullable so pre-Phase-10 rows still load; the intake path fills it on
+-- create and the backfill migration below covers historical rows.
+alter table public.tenants add column if not exists slug text;
+create unique index if not exists tenants_slug_unique on public.tenants (slug)
+  where slug is not null;
+
 -- Job queue for async generation (Phase 4+). n8n pulls status='queued' rows.
 -- Retained after completion for the observability + retry story; weekly
 -- cleanup cron (Phase 8) drops anything older than 7 days.

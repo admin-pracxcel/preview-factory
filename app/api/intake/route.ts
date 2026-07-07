@@ -22,7 +22,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { fetchByPlaceId, fetchByName, type GbpData } from "@/lib/places-client";
 import { resolveCategory } from "@/lib/generator-api";
-import { createQueuedTenant } from "@/lib/tenant-store";
+import { createQueuedTenant, saveTenant, getTenant } from "@/lib/tenant-store";
+import { reserveSlug } from "@/lib/slug";
 import { enqueueJob } from "@/lib/jobs-store";
 import { ensureSession, type MutableCookies } from "@/lib/session";
 
@@ -101,6 +102,19 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       gbpPhotos: gbpData.photos ?? [],
       sessionId,
     });
+
+    // 4b. Reserve a public subdomain slug for <slug>.launcharoo.online. The
+    //     slug can be derived only after the tenant row exists (collision
+    //     handling needs the tenantId in scope for owner-owns-same-slug case).
+    //     Non-fatal — if reservation fails we leave slug null and log; the
+    //     tenant is still usable via /preview/site/<tenantId>.
+    try {
+      const slug = await reserveSlug(gbpData.name, tenantId);
+      const tenant = await getTenant(tenantId);
+      if (tenant) await saveTenant({ ...tenant, slug });
+    } catch (err) {
+      console.warn(`[intake] slug reservation failed for ${tenantId}:`, err);
+    }
 
     // 5. Enqueue the generator job with the CLI payload contract (see
     //    generator/cli.ts). Same shape as scripts/fixtures/gbp-trades.json.
