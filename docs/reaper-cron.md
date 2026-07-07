@@ -19,10 +19,15 @@ n8n UI → Workflows → **Import from file** → `n8n/reaper.json`.
 
 The workflow uses the same env vars as heartbeat:
 - `HEARTBEAT_URL` (base URL of the Vercel deployment)
-- `WORKER_SECRET` (must match Vercel's `WORKER_SHARED_SECRET`)
+- `WORKER_SHARED_SECRET` (matches the Vercel env var by the same name)
 
 Both are already set on your n8n box for the heartbeat workflow — no new
 vars.
+
+Note: the env var name is `WORKER_SHARED_SECRET` (matching Vercel), not
+`WORKER_SECRET`. Old imports of `heartbeat.json` may have used the shorter
+name — if you re-import either workflow, the current JSON references
+`WORKER_SHARED_SECRET` and you'll want your n8n `.env` to have that name set.
 
 Schedule: `15 3 * * *` (03:15 UTC daily). Adjust if you prefer a
 different quiet hour.

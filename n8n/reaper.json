@@ -27,7 +27,7 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {"name": "x-worker-secret", "value": "={{ $env.WORKER_SECRET }}"},
+            {"name": "x-worker-secret", "value": "={{ $env.WORKER_SHARED_SECRET }}"},
             {"name": "Content-Type", "value": "application/json"}
           ]
         },
