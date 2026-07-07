@@ -46,6 +46,24 @@ If both are unset the app runs in "log-only" mode — `/api/auth/request-link`
 logs the link to Vercel function logs instead of emailing it. Useful in an
 emergency, useless for real customers.
 
+## Phase 10b (customer BYO domains via Cloudflare)
+
+Set once you're ready to accept custom customer domains. Create the API
+token at Cloudflare → My Profile → API Tokens → Create Token → Custom
+token. Permissions:
+
+- **Zone → Zone → Edit** (all zones)
+- **Zone → DNS → Edit** (all zones)
+- **Account → Workers Routes → Edit**
+
+| Name | Value |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | The API token from above |
+| `CLOUDFLARE_ACCOUNT_ID` | Right sidebar of any Cloudflare dashboard page |
+| `CLOUDFLARE_WORKER_SCRIPT` | `launcharoo-router` (default — override only if the deployed script name differs) |
+
+Redeploy Vercel after setting.
+
 ## Do NOT set on Vercel
 
 - `NEXT_PUBLIC_N8N_WEBHOOK_URL` — only used by a local script; not needed on Vercel.

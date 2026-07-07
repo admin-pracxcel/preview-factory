@@ -70,6 +70,17 @@ export interface TenantRecord {
   isExpired?: boolean;
   /** Public subdomain fragment: <slug>.launcharoo.online. Phase 10a. */
   slug?: string;
+  /* -------------------- Custom domain fields (Phase 10b) -------------------- */
+  /** Customer-supplied BYO domain (e.g. johnsplumbing.com.au). */
+  customDomain?: string;
+  /** Where we are in the setup flow. See lib/custom-domain.ts CustomDomainStatus. */
+  customDomainStatus?: string;
+  /** Cloudflare zone id, set once the zone is created in our account. */
+  cloudflareZoneId?: string;
+  /** Nameservers Cloudflare wants the customer to point their registrar at. */
+  assignedNameservers?: string[];
+  /** ISO 8601 of when SSL provisioned and the site went live at the custom domain. */
+  customDomainVerifiedAt?: string;
 }
 
 const TABLE = "tenants";
@@ -118,6 +129,11 @@ interface TenantRow {
   billing_subscription_id: string | null;
   cancelled_at: string | null;
   slug: string | null;
+  custom_domain: string | null;
+  custom_domain_status: string | null;
+  cloudflare_zone_id: string | null;
+  assigned_nameservers: string[] | null;
+  custom_domain_verified_at: string | null;
 }
 
 function rowToRecord(row: TenantRow): TenantRecord {
@@ -137,6 +153,11 @@ function rowToRecord(row: TenantRow): TenantRecord {
     ownerEmail: row.owner_email ?? undefined,
     isExpired: row.status === "expired",
     slug: row.slug ?? undefined,
+    customDomain: row.custom_domain ?? undefined,
+    customDomainStatus: row.custom_domain_status ?? undefined,
+    cloudflareZoneId: row.cloudflare_zone_id ?? undefined,
+    assignedNameservers: row.assigned_nameservers ?? undefined,
+    customDomainVerifiedAt: row.custom_domain_verified_at ?? undefined,
   };
 }
 
@@ -160,6 +181,11 @@ function recordToUpsert(record: TenantRecord): Record<string, unknown> {
     billing_subscription_id: record.stripeSubscriptionId ?? null,
     owner_email: record.ownerEmail ?? null,
     slug: record.slug ?? null,
+    custom_domain: record.customDomain ?? null,
+    custom_domain_status: record.customDomainStatus ?? null,
+    cloudflare_zone_id: record.cloudflareZoneId ?? null,
+    assigned_nameservers: record.assignedNameservers ?? null,
+    custom_domain_verified_at: record.customDomainVerifiedAt ?? null,
   };
 }
 
