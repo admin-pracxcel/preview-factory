@@ -23,6 +23,7 @@ import {
   Palette,
   PenLine,
   ChevronDown,
+  Unplug,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -462,11 +463,20 @@ export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardPro
       )}
 
       {status === "active" && state.domain && (
-        <ActivePanel domain={state.domain} verifiedAt={state.verifiedAt ?? null} />
+        <ActivePanel
+          domain={state.domain}
+          verifiedAt={state.verifiedAt ?? null}
+          tenantId={tenantId}
+          onDisconnected={() => setState({ status: null })}
+        />
       )}
 
       {status === "failed" && state.domain && (
-        <FailedPanel domain={state.domain} />
+        <FailedPanel
+          domain={state.domain}
+          tenantId={tenantId}
+          onDisconnected={() => setState({ status: null })}
+        />
       )}
 
       {(status === "pending_ns" || status === "pending_ssl" || status === "active") &&
@@ -748,7 +758,17 @@ function CheckNowRow({
   );
 }
 
-function ActivePanel({ domain, verifiedAt }: { domain: string; verifiedAt: string | null }) {
+function ActivePanel({
+  domain,
+  verifiedAt,
+  tenantId,
+  onDisconnected,
+}: {
+  domain: string;
+  verifiedAt: string | null;
+  tenantId: string;
+  onDisconnected: () => void;
+}) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-start gap-3 rounded-xl border border-green-500/20 bg-green-900/10 p-4">
@@ -781,23 +801,140 @@ function ActivePanel({ domain, verifiedAt }: { domain: string; verifiedAt: strin
         <ExternalLink className="h-4 w-4" />
         Visit your site
       </a>
+      <DisconnectButton domain={domain} tenantId={tenantId} onDisconnected={onDisconnected} />
     </div>
   );
 }
 
-function FailedPanel({ domain }: { domain: string }) {
+function FailedPanel({
+  domain,
+  tenantId,
+  onDisconnected,
+}: {
+  domain: string;
+  tenantId: string;
+  onDisconnected: () => void;
+}) {
   return (
-    <div className="flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-900/10 p-4">
-      <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
-      <div className="text-sm">
-        <div className="font-semibold text-red-200">
-          Setup didn't complete for {domain}
-        </div>
-        <div className="mt-1 text-red-100/70">
-          Contact support and we'll look into it. Your Preview Factory
-          subdomain still works.
+    <div className="flex flex-col gap-4">
+      <div className="flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-900/10 p-4">
+        <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+        <div className="text-sm">
+          <div className="font-semibold text-red-200">
+            Setup didn&apos;t complete for {domain}
+          </div>
+          <div className="mt-1 text-red-100/70">
+            Contact support and we&apos;ll look into it. Your Preview Factory
+            subdomain still works.
+          </div>
         </div>
       </div>
+      <DisconnectButton domain={domain} tenantId={tenantId} onDisconnected={onDisconnected} />
+    </div>
+  );
+}
+
+/**
+ * Two-click disconnect: first click surfaces a confirm state with a
+ * plain-language warning; second click ("Yes, disconnect") fires the
+ * request. Prevents accidental clicks in either panel.
+ */
+function DisconnectButton({
+  domain,
+  tenantId,
+  onDisconnected,
+}: {
+  domain: string;
+  tenantId: string;
+  onDisconnected: () => void;
+}) {
+  const [state, setState] = useState<"idle" | "confirming" | "working" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  async function handleConfirm() {
+    setState("working");
+    setErrorMessage(null);
+    try {
+      const res = await fetch("/api/dashboard/custom-domain/disconnect", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tenantId }),
+      });
+      if (!res.ok) {
+        const body = (await res.json().catch(() => ({}))) as { error?: string };
+        setErrorMessage(body.error ?? "Disconnect failed. Try again.");
+        setState("error");
+        return;
+      }
+      onDisconnected();
+    } catch {
+      setErrorMessage("Network error. Try again.");
+      setState("error");
+    }
+  }
+
+  if (state === "confirming" || state === "working") {
+    return (
+      <div className="rounded-xl border border-yellow-500/20 bg-yellow-900/10 p-4 text-sm">
+        <div className="font-semibold text-yellow-100">
+          Disconnect {domain} from your site?
+        </div>
+        <ul className="mt-2 list-disc pl-5 text-xs text-yellow-100/70">
+          <li>Your site stays reachable on your launcharoo subdomain.</li>
+          <li>
+            Your DNS records at Cloudflare (email, DKIM, etc.) stay in
+            place — we just stop routing web traffic through them.
+          </li>
+          <li>
+            To move the domain elsewhere, change nameservers at your
+            registrar after disconnecting.
+          </li>
+        </ul>
+        <div className="mt-3 flex gap-2">
+          <button
+            type="button"
+            onClick={handleConfirm}
+            disabled={state === "working"}
+            className="flex items-center gap-2 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-red-500 disabled:opacity-60"
+          >
+            {state === "working" ? (
+              <>
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                Disconnecting…
+              </>
+            ) : (
+              <>
+                <Unplug className="h-3.5 w-3.5" />
+                Yes, disconnect
+              </>
+            )}
+          </button>
+          <button
+            type="button"
+            onClick={() => setState("idle")}
+            disabled={state === "working"}
+            className="rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-white/70 hover:border-white/20 hover:text-white disabled:opacity-60"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-2">
+      <button
+        type="button"
+        onClick={() => setState("confirming")}
+        className="flex items-center justify-center gap-2 self-start rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-white/50 transition-colors hover:border-red-500/30 hover:text-red-300"
+      >
+        <Unplug className="h-3.5 w-3.5" />
+        Disconnect domain
+      </button>
+      {state === "error" && errorMessage && (
+        <p className="text-xs text-red-400">{errorMessage}</p>
+      )}
     </div>
   );
 }

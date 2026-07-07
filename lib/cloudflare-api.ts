@@ -197,6 +197,37 @@ export async function addWorkerRoute(zoneId: string, pattern: string): Promise<W
   });
 }
 
+/** List every Worker route bound on this zone. */
+export async function listWorkerRoutes(zoneId: string): Promise<WorkerRoute[]> {
+  return cfFetch<WorkerRoute[]>(`/zones/${zoneId}/workers/routes`, { method: "GET" });
+}
+
+/** Remove a specific Worker route. Used when disconnecting a custom domain. */
+export async function deleteWorkerRoute(zoneId: string, routeId: string): Promise<void> {
+  await cfFetch<{ id: string }>(`/zones/${zoneId}/workers/routes/${routeId}`, {
+    method: "DELETE",
+  });
+}
+
+/**
+ * Convenience: unbind every route that points at our Worker script on a
+ * given zone. Used by the disconnect flow so a disconnected zone stops
+ * routing through us. Idempotent — silently no-ops on already-empty.
+ */
+export async function unbindWorkerFromZone(zoneId: string): Promise<number> {
+  const routes = await listWorkerRoutes(zoneId);
+  const ours = routes.filter((r) => r.script === workerScriptName() && r.id);
+  for (const route of ours) {
+    if (!route.id) continue;
+    try {
+      await deleteWorkerRoute(zoneId, route.id);
+    } catch (err) {
+      console.warn(`[cf] deleteWorkerRoute(${zoneId}, ${route.id}) failed:`, err);
+    }
+  }
+  return ours.length;
+}
+
 /**
  * Convenience: apex + wildcard routes for a customer domain, both bound
  * to our Worker script. Idempotent — if a route already exists CF returns
