@@ -81,6 +81,10 @@ export interface TenantRecord {
   assignedNameservers?: string[];
   /** ISO 8601 of when SSL provisioned and the site went live at the custom domain. */
   customDomainVerifiedAt?: string;
+  /** Snapshot of the customer's live DNS at the moment we scanned before
+   *  taking over (Phase 10b-ii). Used to seed the new Cloudflare zone so
+   *  their email keeps working after the nameserver flip. */
+  dnsRecordsSnapshot?: unknown;
 }
 
 const TABLE = "tenants";
@@ -134,6 +138,7 @@ interface TenantRow {
   cloudflare_zone_id: string | null;
   assigned_nameservers: string[] | null;
   custom_domain_verified_at: string | null;
+  dns_records_snapshot: unknown;
 }
 
 function rowToRecord(row: TenantRow): TenantRecord {
@@ -158,6 +163,7 @@ function rowToRecord(row: TenantRow): TenantRecord {
     cloudflareZoneId: row.cloudflare_zone_id ?? undefined,
     assignedNameservers: row.assigned_nameservers ?? undefined,
     customDomainVerifiedAt: row.custom_domain_verified_at ?? undefined,
+    dnsRecordsSnapshot: row.dns_records_snapshot ?? undefined,
   };
 }
 
@@ -186,6 +192,7 @@ function recordToUpsert(record: TenantRecord): Record<string, unknown> {
     cloudflare_zone_id: record.cloudflareZoneId ?? null,
     assigned_nameservers: record.assignedNameservers ?? null,
     custom_domain_verified_at: record.customDomainVerifiedAt ?? null,
+    dns_records_snapshot: record.dnsRecordsSnapshot ?? null,
   };
 }
 
