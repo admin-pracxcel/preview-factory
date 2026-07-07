@@ -23,7 +23,7 @@
       "position": [208, 176],
       "parameters": {
         "method": "POST",
-        "url": "={{ $env.HEARTBEAT_URL || 'http://placeholder.set.HEARTBEAT_URL/api/health/worker' }}",
+        "url": "={{ ($env.HEARTBEAT_URL || 'http://placeholder.set.HEARTBEAT_URL').replace(/\\/$/, '') + '/api/health/worker' }}",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [

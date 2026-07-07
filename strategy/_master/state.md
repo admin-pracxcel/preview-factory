@@ -1,7 +1,17 @@
 # Project State
 
-Last updated: 2026-06-22
-Current phase: K — Client dashboard (BUILT, awaiting gate)
+Last updated: 2026-07-07
+Current phase: 7.5b — Magic-link auth (BUILT, awaiting smoke test)
+
+## Backend migration phases (July 2026)
+- [x] Phase 6: Supabase storage for uploads — verified end-to-end, SVG rejection working
+- [x] Phase 7: Vercel deploy — live at https://preview-factory.vercel.app/
+- [x] Phase 7.5a: Stripe hardening — idempotent webhook + owner_email capture (commit c728015)
+- [x] Phase 7.5b: Magic-link auth via Resend — /login, /api/auth/request-link, /api/auth/verify
+- [ ] Phase 8: Subscription reaper + cleanup crons
+- [ ] Phases 9-11: Cloudflare custom domains, prod hardening
+
+## Original build phases (June 2026)
 
 Human directive 2026-06-22: Added phases H–M (product pipeline: GBP intake, checkout, lead capture, client dashboard, edit-request engine, outreach engine). Building one phase at a time with grader gate after each.
 
@@ -126,7 +136,7 @@ Visual fixes (commit 4e69078):
 Cleanups still pending (non-destructive so far): legacy single-page `templates/tradies/` left in place as reference; `templates/mobile-services/` orphaned stub not yet removed. New work lives under `templates/categories/`.
 
 ## Phase D: Generator upgrade
-- [ ] D1-D4 complete
+- [x] D1-D4 complete
 
 ## Phase E: Funnel infrastructure
 Phase E v1 (commit 43fc900): initial 6-page build — REJECTED (no images, no niche split, not premium enough).

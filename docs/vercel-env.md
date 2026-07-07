@@ -23,16 +23,28 @@ links) are gated behind Phase 7.5 and won't run until then.
 | `PEXELS_API_KEY` | same as .env.local | Image assembler fallback. |
 | `NEXT_PUBLIC_BASE_URL` | `https://<your-project>.vercel.app` | Set **after** first deploy so Vercel gives you the URL. Used for redirect URLs and preview links. |
 
-## Placeholder for Phase 7.5 (Stripe / magic-link)
+## Phase 7.5a (Stripe)
 
-Add these as empty strings for now — the code checks presence and skips the
-integration if unset.
+Set once you've followed `docs/stripe-setup.md`.
 
 | Name | Value |
 |---|---|
-| `STRIPE_SECRET_KEY` | placeholder |
-| `STRIPE_PRICE_ID` | placeholder |
-| `STRIPE_WEBHOOK_SECRET` | placeholder |
+| `STRIPE_SECRET_KEY` | `sk_test_...` from Stripe → Developers → API keys |
+| `STRIPE_WEBHOOK_SECRET` | `whsec_...` from your webhook endpoint |
+| `STRIPE_PRICE_ID` | `price_...` (optional — leave blank for dynamic pricing) |
+
+## Phase 7.5b (magic-link auth via Resend)
+
+Set once you've followed `docs/resend-setup.md`.
+
+| Name | Value |
+|---|---|
+| `RESEND_API_KEY` | `re_...` from Resend → API Keys |
+| `RESEND_FROM_EMAIL` | Dev: `onboarding@resend.dev` (sends only to your account email). Prod: `hello@<your-verified-domain>` |
+
+If both are unset the app runs in "log-only" mode — `/api/auth/request-link`
+logs the link to Vercel function logs instead of emailing it. Useful in an
+emergency, useless for real customers.
 
 ## Do NOT set on Vercel
 

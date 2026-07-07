@@ -149,6 +149,12 @@ export default function HomePage() {
               How it works
             </a>
             <a
+              href="/login"
+              className="hidden sm:block text-sm text-white/70 hover:text-white transition-colors"
+            >
+              Sign in
+            </a>
+            <a
               href="#industries"
               className="px-5 py-2 rounded-full bg-white text-black font-bold text-sm hover:bg-white/90 transition-colors"
             >
