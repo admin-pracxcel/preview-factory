@@ -208,14 +208,6 @@ function notFoundResponse(): Response {
   );
 }
 
-function apexLandingResponse(): Response {
-  return brandedHtml(
-    200,
-    "Launcharoo",
-    "Fast websites for local service businesses.",
-  );
-}
-
 function upstreamErrorResponse(): Response {
   return brandedHtml(
     502,
@@ -233,8 +225,11 @@ export default {
 
     const slug = extractSlug(host, env.SITE_DOMAIN);
     if (slug === null || slug === "www") {
-      // Apex or www — serve a small landing placeholder, no origin leak.
-      return apexLandingResponse();
+      // Apex or www: proxy the entire Next.js app through under
+      // launcharoo.online. That gives us the marketing landing at /,
+      // /login for magic-link, /dashboard/<id>, /welcome/<id>, etc.,
+      // all without leaving the branded hostname.
+      return proxy(request, env.VERCEL_ORIGIN, url.pathname, host, null);
     }
 
     if (RESERVED_SLUGS.has(slug) || slug.includes(".")) {

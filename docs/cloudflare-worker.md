@@ -225,6 +225,28 @@ wrong Cloudflare account or the zone isn't active yet.
 
 ---
 
+## Step 4b — update NEXT_PUBLIC_BASE_URL on Vercel
+
+Vercel needs to know that outbound absolute URLs (magic-link emails,
+Stripe checkout success/cancel, Stripe billing portal return) should
+point at `https://launcharoo.online`, not the raw Vercel URL. Otherwise
+those redirect chains leak the origin the moment a customer clicks a
+sign-in link or completes payment.
+
+1. Vercel dashboard → **preview-factory** → Settings → Environment
+   Variables.
+2. Find `NEXT_PUBLIC_BASE_URL`. Currently:
+   `https://preview-factory.vercel.app`.
+3. Edit → set to `https://launcharoo.online` (no trailing slash).
+4. Save. Trigger a redeploy (Deployments tab → latest → **Redeploy**).
+
+After the redeploy:
+- Magic-link emails contain `https://launcharoo.online/api/auth/verify?...`
+- Stripe checkout redirects to `https://launcharoo.online/welcome/<id>`
+- Stripe billing portal returns to `https://launcharoo.online/dashboard/<id>`
+
+All three land back on the Worker and proxy through cleanly.
+
 ## Step 5 — smoke test
 
 Pick a real slug from Supabase to test with. In the Supabase SQL editor:
