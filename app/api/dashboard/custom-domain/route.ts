@@ -188,5 +188,53 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     status: tenant.customDomainStatus ?? null,
     nameservers: tenant.assignedNameservers ?? [],
     verifiedAt: tenant.customDomainVerifiedAt ?? null,
+    snapshot: summariseSnapshot(tenant.dnsRecordsSnapshot),
   });
+}
+
+/**
+ * Small typed summary the dashboard renders on the "Records we preserved"
+ * panel. Buckets records by type, surfaces DKIM selectors we found, and
+ * flags CAA + SRV as "not imported" so the customer knows to re-add them
+ * if they had any (very rare on small-business domains).
+ */
+function summariseSnapshot(raw: unknown): {
+  total: number;
+  byType: Record<string, number>;
+  dkimSelectorsFound: string[];
+  notImported: Array<{ type: string; count: number; reason: string }>;
+  scannedAt: string | null;
+} | null {
+  if (!raw || typeof raw !== "object") return null;
+  const obj = raw as { records?: unknown; dkimSelectorsFound?: unknown; scannedAt?: unknown };
+  const records = Array.isArray(obj.records) ? (obj.records as Array<{ type?: string }>) : [];
+  const byType: Record<string, number> = {};
+  for (const r of records) {
+    const type = typeof r?.type === "string" ? r.type : "?";
+    byType[type] = (byType[type] ?? 0) + 1;
+  }
+  const notImported: Array<{ type: string; count: number; reason: string }> = [];
+  if (byType.CAA) {
+    notImported.push({
+      type: "CAA",
+      count: byType.CAA,
+      reason: "wire format not writable via Cloudflare API — safe to skip",
+    });
+  }
+  if (byType.SRV) {
+    notImported.push({
+      type: "SRV",
+      count: byType.SRV,
+      reason: "needs manual re-add if you use it (rare)",
+    });
+  }
+  return {
+    total: records.length,
+    byType,
+    dkimSelectorsFound: Array.isArray(obj.dkimSelectorsFound)
+      ? (obj.dkimSelectorsFound as string[])
+      : [],
+    notImported,
+    scannedAt: typeof obj.scannedAt === "string" ? obj.scannedAt : null,
+  };
 }

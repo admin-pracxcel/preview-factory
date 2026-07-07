@@ -22,6 +22,7 @@ import {
   Clock,
   Palette,
   PenLine,
+  ChevronDown,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -298,11 +299,20 @@ export function EditSiteCard({ tenantId }: { tenantId: string }) {
 
 /* ============================================================ custom domain */
 
+type SnapshotSummary = {
+  total: number;
+  byType: Record<string, number>;
+  dkimSelectorsFound: string[];
+  notImported: Array<{ type: string; count: number; reason: string }>;
+  scannedAt: string | null;
+};
+
 type CustomDomainState = {
   domain?: string;
   status?: "choosing" | "pending_ns" | "pending_ssl" | "active" | "failed" | null;
   nameservers?: string[];
   verifiedAt?: string | null;
+  snapshot?: SnapshotSummary | null;
 };
 
 interface CustomDomainCardProps {
@@ -457,6 +467,75 @@ export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardPro
 
       {status === "failed" && state.domain && (
         <FailedPanel domain={state.domain} />
+      )}
+
+      {(status === "pending_ns" || status === "pending_ssl" || status === "active") &&
+        state.snapshot && <PreservedRecordsPanel snapshot={state.snapshot} />}
+    </div>
+  );
+}
+
+/**
+ * "Records we preserved" — reassurance panel so a customer with email on
+ * the domain can see, at a glance, that the migration didn't wipe their
+ * MX/DKIM. Collapsed by default so the card stays clean.
+ */
+function PreservedRecordsPanel({ snapshot }: { snapshot: SnapshotSummary }) {
+  const [open, setOpen] = useState(false);
+  const preserved = snapshot.total - snapshot.notImported.reduce((a, b) => a + b.count, 0);
+  return (
+    <div className="mt-4 rounded-xl border border-white/5 bg-black/20 p-4">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between text-left"
+      >
+        <div className="flex items-center gap-2 text-sm">
+          <CheckCircle2 className="h-4 w-4 text-green-400" />
+          <span className="font-semibold text-white/80">
+            {preserved} DNS record{preserved === 1 ? "" : "s"} preserved
+          </span>
+          {snapshot.dkimSelectorsFound.length > 0 && (
+            <span className="text-xs text-white/40">
+              (incl. DKIM: {snapshot.dkimSelectorsFound.join(", ")})
+            </span>
+          )}
+        </div>
+        <ChevronDown
+          className={`h-4 w-4 text-white/40 transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      {open && (
+        <div className="mt-3 space-y-3 text-xs">
+          <p className="text-white/50">
+            We scanned your live DNS before taking over so your email and
+            other services keep working.
+          </p>
+          <div className="flex flex-wrap gap-x-4 gap-y-1 font-mono text-white/70">
+            {Object.entries(snapshot.byType).map(([type, count]) => (
+              <span key={type}>
+                {type}: {count}
+              </span>
+            ))}
+          </div>
+          {snapshot.notImported.length > 0 && (
+            <div className="rounded-lg border border-yellow-500/20 bg-yellow-900/10 p-3">
+              <div className="font-semibold text-yellow-200">Not imported</div>
+              <ul className="mt-1 space-y-1 text-yellow-100/70">
+                {snapshot.notImported.map((n) => (
+                  <li key={n.type}>
+                    <span className="font-mono">{n.type}</span> × {n.count} — {n.reason}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {snapshot.scannedAt && (
+            <div className="text-white/30">
+              Snapshot taken {new Date(snapshot.scannedAt).toLocaleString()}
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
