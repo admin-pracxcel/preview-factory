@@ -119,7 +119,7 @@ export async function runHousekeeping(): Promise<HousekeepingResult> {
     .select("id");
   if (blankErr) throw new Error(`housekeeping site_props blank: ${blankErr.message}`);
 
-  return {
+  const result = {
     jobsDeleted: jobs?.length ?? 0,
     processedEventsDeleted: events?.length ?? 0,
     magicTokensDeleted: (usedTokens?.length ?? 0) + (expiredTokens?.length ?? 0),
@@ -127,4 +127,26 @@ export async function runHousekeeping(): Promise<HousekeepingResult> {
     sitePropsBlanked: blanked?.length ?? 0,
     ranAt: now.toISOString(),
   };
+
+  const { error: telemetryErr } = await supabase()
+    .from("worker_health")
+    .upsert(
+      {
+        id: "cleanup",
+        last_seen_at: result.ranAt,
+        meta: {
+          jobsDeleted: result.jobsDeleted,
+          processedEventsDeleted: result.processedEventsDeleted,
+          magicTokensDeleted: result.magicTokensDeleted,
+          sessionsDeleted: result.sessionsDeleted,
+          sitePropsBlanked: result.sitePropsBlanked,
+        },
+      },
+      { onConflict: "id" }
+    );
+  if (telemetryErr) {
+    console.warn(`[cleanup] telemetry upsert warned: ${telemetryErr.message}`);
+  }
+
+  return result;
 }

@@ -56,9 +56,30 @@ export async function runReaper(): Promise<ReaperResult> {
     throw new Error(`reaper cancelled sweep failed: ${cancelledErr.message}`);
   }
 
-  return {
+  const result = {
     unclaimedExpired: unclaimed?.length ?? 0,
     cancelledExpired: cancelled?.length ?? 0,
     ranAt: now.toISOString(),
   };
+
+  // Record the run in worker_health so /api/health can surface when the
+  // reaper last completed. Non-fatal on error — the sweep is already done.
+  const { error: telemetryErr } = await supabase()
+    .from("worker_health")
+    .upsert(
+      {
+        id: "reaper",
+        last_seen_at: result.ranAt,
+        meta: {
+          unclaimedExpired: result.unclaimedExpired,
+          cancelledExpired: result.cancelledExpired,
+        },
+      },
+      { onConflict: "id" }
+    );
+  if (telemetryErr) {
+    console.warn(`[reaper] telemetry upsert warned: ${telemetryErr.message}`);
+  }
+
+  return result;
 }
