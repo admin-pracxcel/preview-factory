@@ -257,6 +257,9 @@ export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardPro
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [scan, setScan] = useState<{ total: number; byType: Record<string, number>; dkimSelectorsFound: string[] } | null>(null);
+  const [checking, setChecking] = useState(false);
+  const [lastChecked, setLastChecked] = useState<Date | null>(null);
+  const [lastCheckReason, setLastCheckReason] = useState<string | null>(null);
 
   const status = state.status ?? null;
 
@@ -268,6 +271,42 @@ export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardPro
       setState(body);
     } catch {
       // ignore
+    }
+  }
+
+  /**
+   * Ask the server to actively reconcile — check Cloudflare, import DNS,
+   * bind Worker routes if the zone is ready. Falls back to a plain
+   * status re-read so the UI always ends with the freshest state.
+   */
+  async function checkNow() {
+    setChecking(true);
+    setLastCheckReason(null);
+    try {
+      const res = await fetch("/api/dashboard/custom-domain/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tenantId }),
+      });
+      const body = (await res.json().catch(() => ({}))) as {
+        outcome?: { state?: string; reason?: string; changed?: boolean };
+        error?: string;
+      };
+      if (body.outcome) {
+        setLastCheckReason(
+          body.outcome.changed
+            ? `Advanced to ${body.outcome.state}`
+            : body.outcome.reason ?? `Still ${body.outcome.state}`,
+        );
+      } else if (body.error) {
+        setLastCheckReason(body.error);
+      }
+      await refreshStatus();
+    } catch {
+      setLastCheckReason("Network error. Try again.");
+    } finally {
+      setChecking(false);
+      setLastChecked(new Date());
     }
   }
 
@@ -336,12 +375,21 @@ export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardPro
           domain={state.domain}
           nameservers={state.nameservers ?? []}
           scan={scan}
-          onRefresh={refreshStatus}
+          onCheck={checkNow}
+          checking={checking}
+          lastChecked={lastChecked}
+          lastCheckReason={lastCheckReason}
         />
       )}
 
       {status === "pending_ssl" && state.domain && (
-        <PendingSslPanel domain={state.domain} onRefresh={refreshStatus} />
+        <PendingSslPanel
+          domain={state.domain}
+          onCheck={checkNow}
+          checking={checking}
+          lastChecked={lastChecked}
+          lastCheckReason={lastCheckReason}
+        />
       )}
 
       {status === "active" && state.domain && (
@@ -415,7 +463,10 @@ function PendingNsPanel(props: {
   domain: string;
   nameservers: string[];
   scan: { total: number; byType: Record<string, number>; dkimSelectorsFound: string[] } | null;
-  onRefresh: () => void;
+  onCheck: () => void;
+  checking: boolean;
+  lastChecked: Date | null;
+  lastCheckReason: string | null;
 }) {
   return (
     <div className="flex flex-col gap-5">
@@ -472,18 +523,29 @@ function PendingNsPanel(props: {
         </div>
       )}
 
-      <button
-        type="button"
-        onClick={props.onRefresh}
-        className="self-start text-xs text-white/40 underline underline-offset-4 hover:text-white/70"
-      >
-        Refresh status
-      </button>
+      <CheckNowRow
+        onCheck={props.onCheck}
+        checking={props.checking}
+        lastChecked={props.lastChecked}
+        lastCheckReason={props.lastCheckReason}
+      />
     </div>
   );
 }
 
-function PendingSslPanel({ domain, onRefresh }: { domain: string; onRefresh: () => void }) {
+function PendingSslPanel({
+  domain,
+  onCheck,
+  checking,
+  lastChecked,
+  lastCheckReason,
+}: {
+  domain: string;
+  onCheck: () => void;
+  checking: boolean;
+  lastChecked: Date | null;
+  lastCheckReason: string | null;
+}) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-start gap-3 rounded-xl border border-blue-500/20 bg-blue-900/10 p-4">
@@ -497,13 +559,53 @@ function PendingSslPanel({ domain, onRefresh }: { domain: string; onRefresh: () 
           </div>
         </div>
       </div>
+      <CheckNowRow
+        onCheck={onCheck}
+        checking={checking}
+        lastChecked={lastChecked}
+        lastCheckReason={lastCheckReason}
+      />
+    </div>
+  );
+}
+
+function CheckNowRow({
+  onCheck,
+  checking,
+  lastChecked,
+  lastCheckReason,
+}: {
+  onCheck: () => void;
+  checking: boolean;
+  lastChecked: Date | null;
+  lastCheckReason: string | null;
+}) {
+  return (
+    <div className="flex flex-col gap-2">
       <button
         type="button"
-        onClick={onRefresh}
-        className="self-start text-xs text-white/40 underline underline-offset-4 hover:text-white/70"
+        onClick={onCheck}
+        disabled={checking}
+        className="flex items-center gap-2 self-start rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white/70 transition-colors hover:border-white/20 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
       >
-        Refresh status
+        {checking ? (
+          <>
+            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+            Checking…
+          </>
+        ) : (
+          <>
+            <Clock className="h-3.5 w-3.5" />
+            Check now
+          </>
+        )}
       </button>
+      {lastChecked && (
+        <p className="text-[11px] text-white/40">
+          Last checked {lastChecked.toLocaleTimeString()}
+          {lastCheckReason ? ` — ${lastCheckReason}` : ""}
+        </p>
+      )}
     </div>
   );
 }

@@ -82,6 +82,18 @@ async function lookupTenant(
   return (await res.json()) as { tenantId: string; expired: boolean };
 }
 
+async function lookupTenantByDomain(
+  origin: string,
+  domain: string,
+): Promise<{ tenantId: string; expired: boolean } | null> {
+  const res = await fetch(`${origin}/api/tenant/by-domain/${encodeURIComponent(domain)}`, {
+    cf: { cacheTtl: 300, cacheEverything: true },
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`by-domain lookup returned ${res.status}`);
+  return (await res.json()) as { tenantId: string; expired: boolean };
+}
+
 /**
  * If the upstream 3xx Location leaks the origin, rewrite it to be relative
  * to the customer host. Handles both absolute-URL Locations (a bug we
@@ -223,57 +235,93 @@ export default {
     const url = new URL(request.url);
     const host = url.hostname.toLowerCase();
 
-    const slug = extractSlug(host, env.SITE_DOMAIN);
-    if (slug === null || slug === "www") {
-      // Apex or www: proxy the entire Next.js app through under
-      // launcharoo.online. That gives us the marketing landing at /,
-      // /login for magic-link, /dashboard/<id>, /welcome/<id>, etc.,
-      // all without leaving the branded hostname.
-      return proxy(request, env.VERCEL_ORIGIN, url.pathname, host, null);
-    }
-
-    if (RESERVED_SLUGS.has(slug) || slug.includes(".")) {
-      // Nested subdomain (e.g. foo.bar.launcharoo.online) or a reserved
-      // word (e.g. api.launcharoo.online). Refuse cleanly.
-      return notFoundResponse();
-    }
-
-    // Asset requests always proxy through with path unchanged. We don't
-    // know the tenantId yet — the Next.js chunks are shared across all
-    // tenants, and static file paths don't need rewriting.
+    // Asset requests always proxy through with path unchanged. Common
+    // across every host, so handle before any tenant lookup.
     if (isPassthroughPath(url.pathname)) {
       return proxy(request, env.VERCEL_ORIGIN, url.pathname, host, null);
     }
 
-    let lookup;
-    try {
-      lookup = await lookupTenant(env.VERCEL_ORIGIN, slug);
-    } catch (err) {
-      console.error(`[launcharoo-router] slug=${slug} lookup failed:`, err);
-      return upstreamErrorResponse();
-    }
-    if (!lookup) {
-      return notFoundResponse();
+    const isSiteHost = host === env.SITE_DOMAIN || host.endsWith("." + env.SITE_DOMAIN);
+    if (isSiteHost) {
+      return handleSiteDomain(request, url, host, env);
     }
 
-    if (lookup.expired) {
-      // Serve Vercel's /expired/<tenantId> page under the customer host so
-      // the URL doesn't leak. The page itself has an internal 302 to
-      // /preview/site/<id> which the rewriteLocation helper will strip.
-      return proxy(
-        request,
-        env.VERCEL_ORIGIN,
-        `/expired/${lookup.tenantId}`,
-        host,
-        lookup.tenantId,
-      );
-    }
-
-    const rewritten =
-      url.pathname === "/"
-        ? `/preview/site/${lookup.tenantId}`
-        : `/preview/site/${lookup.tenantId}${url.pathname}`;
-
-    return proxy(request, env.VERCEL_ORIGIN, rewritten, host, lookup.tenantId);
+    // Custom customer domain (johnsplumbing.com.au etc). Look up by domain
+    // and proxy the same way as for a slug host.
+    return handleCustomDomain(request, url, host, env);
   },
 } satisfies ExportedHandler<Env>;
+
+async function handleSiteDomain(
+  request: Request,
+  url: URL,
+  host: string,
+  env: Env,
+): Promise<Response> {
+  const slug = extractSlug(host, env.SITE_DOMAIN);
+  if (slug === null || slug === "www") {
+    // Apex or www: proxy the whole Next.js app under launcharoo.online.
+    return proxy(request, env.VERCEL_ORIGIN, url.pathname, host, null);
+  }
+  if (RESERVED_SLUGS.has(slug) || slug.includes(".")) {
+    return notFoundResponse();
+  }
+
+  let lookup;
+  try {
+    lookup = await lookupTenant(env.VERCEL_ORIGIN, slug);
+  } catch (err) {
+    console.error(`[launcharoo-router] slug=${slug} lookup failed:`, err);
+    return upstreamErrorResponse();
+  }
+  if (!lookup) return notFoundResponse();
+
+  if (lookup.expired) {
+    return proxy(
+      request,
+      env.VERCEL_ORIGIN,
+      `/expired/${lookup.tenantId}`,
+      host,
+      lookup.tenantId,
+    );
+  }
+
+  const rewritten =
+    url.pathname === "/"
+      ? `/preview/site/${lookup.tenantId}`
+      : `/preview/site/${lookup.tenantId}${url.pathname}`;
+  return proxy(request, env.VERCEL_ORIGIN, rewritten, host, lookup.tenantId);
+}
+
+async function handleCustomDomain(
+  request: Request,
+  url: URL,
+  host: string,
+  env: Env,
+): Promise<Response> {
+  // Look up by the bare host (Vercel side strips leading www.).
+  let lookup;
+  try {
+    lookup = await lookupTenantByDomain(env.VERCEL_ORIGIN, host);
+  } catch (err) {
+    console.error(`[launcharoo-router] custom domain=${host} lookup failed:`, err);
+    return upstreamErrorResponse();
+  }
+  if (!lookup) return notFoundResponse();
+
+  if (lookup.expired) {
+    return proxy(
+      request,
+      env.VERCEL_ORIGIN,
+      `/expired/${lookup.tenantId}`,
+      host,
+      lookup.tenantId,
+    );
+  }
+
+  const rewritten =
+    url.pathname === "/"
+      ? `/preview/site/${lookup.tenantId}`
+      : `/preview/site/${lookup.tenantId}${url.pathname}`;
+  return proxy(request, env.VERCEL_ORIGIN, rewritten, host, lookup.tenantId);
+}
