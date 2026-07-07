@@ -19,6 +19,10 @@
     {
       "pattern": "*.launcharoo.online/*",
       "zone_name": "launcharoo.online"
+    },
+    {
+      "pattern": "launcharoo.online/*",
+      "zone_name": "launcharoo.online"
     }
   ]
 }

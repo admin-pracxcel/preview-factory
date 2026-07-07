@@ -103,29 +103,45 @@ deploying (get the ID from `wrangler whoami` output).
 
 ---
 
-## Step 2 — add the wildcard DNS record
+## Step 2 — add DNS records
 
 The Worker only fires on requests to hostnames that Cloudflare actually
-knows about. So we need to tell Cloudflare "any subdomain of
-launcharoo.online should be handled by our infrastructure".
+knows about. You need **three** records: the wildcard (for
+`<slug>.launcharoo.online`), the apex (for `launcharoo.online` itself),
+and www (for `www.launcharoo.online`).
 
-In the Cloudflare dashboard:
+In the Cloudflare dashboard: **Websites** → `launcharoo.online` → **DNS**
+→ **Records** → **Add record**. Repeat for each of the three below.
 
-1. Click **Websites** in the left nav → select `launcharoo.online`.
-2. Left nav → **DNS** → **Records**.
-3. Click **Add record**.
-
-Fill in:
+### 2a. Wildcard subdomain
 
 | Field | Value | Why |
 |---|---|---|
 | **Type** | `AAAA` | IPv6 record. We use AAAA because the placeholder we set is an IPv6 discard address (see below). |
 | **Name** | `*` | Wildcard — matches every subdomain. |
 | **IPv6 address** | `100::` | Placeholder. See explanation below. |
-| **Proxy status** | **Proxied** (orange cloud toggle ON) | Critical. Only proxied records go through the Worker. If this is a grey cloud, the Worker will never fire. |
-| **TTL** | Auto | Cloudflare-managed. Leave as default. |
+| **Proxy status** | **Proxied** (orange cloud ON) | Critical. Only proxied records go through the Worker. |
+| **TTL** | Auto | Cloudflare-managed. |
 
-Click **Save**.
+### 2b. Apex (bare `launcharoo.online`)
+
+| Field | Value |
+|---|---|
+| **Type** | `AAAA` |
+| **Name** | `@` (Cloudflare will display this as `launcharoo.online`) |
+| **IPv6 address** | `100::` |
+| **Proxy status** | **Proxied** (orange cloud ON) |
+| **TTL** | Auto |
+
+### 2c. www
+
+| Field | Value |
+|---|---|
+| **Type** | `CNAME` |
+| **Name** | `www` |
+| **Target** | `launcharoo.online` |
+| **Proxy status** | **Proxied** (orange cloud ON) |
+| **TTL** | Auto |
 
 **Why `100::`?** DNS records need *some* address. `100::` is the IPv6
 "discard prefix" — RFC 6666 formalises it as an address that must never
