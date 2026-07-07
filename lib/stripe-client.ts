@@ -168,3 +168,38 @@ export interface StripeEvent {
   type: string;
   data: { object: unknown };
 }
+
+/**
+ * Subset of Stripe's Subscription object we care about. Phase 8 uses this to
+ * mirror lifecycle state (active / past_due / canceled) onto the tenant row.
+ */
+export interface StripeSubscription {
+  id: string;
+  object: "subscription";
+  customer: string;
+  status:
+    | "active"
+    | "trialing"
+    | "past_due"
+    | "canceled"
+    | "unpaid"
+    | "incomplete"
+    | "incomplete_expired"
+    | "paused";
+  /** Unix seconds. Set when Stripe finalises the cancellation. */
+  canceled_at: number | null;
+  /** Unix seconds. Only set when the customer scheduled a future cancel. */
+  cancel_at: number | null;
+  cancel_at_period_end: boolean;
+}
+
+/**
+ * Subset of Stripe's Invoice object. Only invoice.payment_failed carries
+ * the subscription id we need to look the tenant up by.
+ */
+export interface StripeInvoice {
+  id: string;
+  object: "invoice";
+  customer: string | null;
+  subscription: string | null;
+}

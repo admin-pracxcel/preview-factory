@@ -23,9 +23,15 @@ import {
   verifyWebhookSignature,
   type StripeEvent,
   type StripeCheckoutSessionCompleted,
+  type StripeSubscription,
+  type StripeInvoice,
 } from "@/lib/stripe-client";
 import { publishTenant } from "@/lib/publish";
 import { supabase } from "@/lib/supabase";
+import {
+  applySubscriptionStatus,
+  markPastDueBySubscription,
+} from "@/lib/subscription-lifecycle";
 
 export const runtime = "nodejs";
 
@@ -122,6 +128,57 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       }
 
       return NextResponse.json({ received: true, tenantId });
+    }
+
+    case "customer.subscription.updated":
+    case "customer.subscription.deleted": {
+      const sub = event.data.object as StripeSubscription;
+      try {
+        const { tenantId, patch } = await applySubscriptionStatus(sub.id, sub.status);
+        if (!tenantId) {
+          console.warn(
+            `[webhook] ${event.type} sub=${sub.id} — no matching tenant, ignoring`
+          );
+          return NextResponse.json({ received: true, warning: "no tenant for subscription" });
+        }
+        console.log(
+          `[webhook] ${event.type} tenant=${tenantId} sub=${sub.id} → status=${patch.status} (stripe=${sub.status})`
+        );
+        return NextResponse.json({ received: true, tenantId, status: patch.status });
+      } catch (err) {
+        console.error(`[webhook] ${event.type} failed:`, err);
+        return NextResponse.json(
+          { error: err instanceof Error ? err.message : "subscription update failed" },
+          { status: 500 }
+        );
+      }
+    }
+
+    case "invoice.payment_failed": {
+      const invoice = event.data.object as StripeInvoice;
+      if (!invoice.subscription) {
+        // One-off invoice — no subscription to mark past_due. Ignore.
+        return NextResponse.json({ received: true, ignored: "no subscription on invoice" });
+      }
+      try {
+        const { tenantId } = await markPastDueBySubscription(invoice.subscription);
+        if (!tenantId) {
+          console.warn(
+            `[webhook] invoice.payment_failed sub=${invoice.subscription} — no matching tenant`
+          );
+          return NextResponse.json({ received: true, warning: "no tenant for subscription" });
+        }
+        console.log(
+          `[webhook] invoice.payment_failed tenant=${tenantId} sub=${invoice.subscription} → past_due`
+        );
+        return NextResponse.json({ received: true, tenantId, status: "past_due" });
+      } catch (err) {
+        console.error("[webhook] invoice.payment_failed failed:", err);
+        return NextResponse.json(
+          { error: err instanceof Error ? err.message : "past_due mark failed" },
+          { status: 500 }
+        );
+      }
     }
 
     default:

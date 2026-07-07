@@ -36,9 +36,10 @@ Stripe → Developers → Webhooks → Add endpoint.
 
 - Endpoint URL: `https://preview-factory.vercel.app/api/webhooks/stripe`
 - Events to send:
-  - `checkout.session.completed`
-  - (later, for Phase 8: `customer.subscription.deleted`,
-    `customer.subscription.updated`, `invoice.payment_failed`)
+  - `checkout.session.completed` (Phase 7.5a — payment landed)
+  - `customer.subscription.updated` (Phase 8a — status transitions)
+  - `customer.subscription.deleted` (Phase 8a — final cancel)
+  - `invoice.payment_failed` (Phase 8a — dunning past_due)
 - Save. Reveal the **signing secret** (`whsec_...`) → Vercel env as
   `STRIPE_WEBHOOK_SECRET`.
 
