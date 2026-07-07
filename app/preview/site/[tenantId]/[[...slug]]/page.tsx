@@ -173,7 +173,14 @@ export default async function TenantPreviewPage({
 
   const parseResult = sitePropsSchema.safeParse(tenant.siteProps);
   if (!parseResult.success) {
-    // Schema changed after generation — render a simple error page
+    // Log the actual validation issues so we can see WHAT is wrong.
+    // Silently swallowing the parse error was making this class of bug
+    // undebuggable from Vercel logs.
+    const issues = parseResult.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`);
+    console.error(
+      `[site-render] SiteProps validation failed for tenant=${tenantId}`,
+      { category: tenant.category, issues },
+    );
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-950 text-white p-8">
         <div className="max-w-lg text-center">
