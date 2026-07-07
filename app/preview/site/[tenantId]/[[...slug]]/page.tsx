@@ -21,6 +21,7 @@
  */
 
 import { notFound, redirect } from "next/navigation";
+import { headers } from "next/headers";
 import type { Metadata } from "next";
 import { getTenant } from "@/lib/tenant-store";
 import { getEditRequest } from "@/lib/edit-requests-store";
@@ -42,13 +43,27 @@ function basePath(tenantId: string): string {
   return `/preview/site/${tenantId}`;
 }
 
-function renderPage(
+/**
+ * When the request came in via the Cloudflare Worker at
+ * <slug>.launcharoo.online, use an empty basePath so all internal hrefs
+ * render as clean paths (/services/x, /locations/y) rather than
+ * /preview/site/<tenantId>/services/x. The Worker sets X-Forwarded-Host
+ * to the customer-facing hostname on every proxied request.
+ */
+async function effectiveBasePath(tenantId: string): Promise<string> {
+  const h = await headers();
+  const fwd = h.get("x-forwarded-host") ?? "";
+  if (fwd.endsWith(".launcharoo.online")) return "";
+  return basePath(tenantId);
+}
+
+async function renderPage(
   category: string,
   site: SiteProps,
   slug: string[],
   tenantId: string
-): React.ReactElement | null {
-  const bp = basePath(tenantId);
+): Promise<React.ReactElement | null> {
+  const bp = await effectiveBasePath(tenantId);
   switch (category) {
     case "allied-health":
       return renderAlliedHealthPage(site, slug, bp);
@@ -174,7 +189,7 @@ export default async function TenantPreviewPage({
   // Resolve effective site props (may be proposed edit preview)
   const resolved = await resolveProposedSite(tenant, editRequestId);
 
-  const page = renderPage(tenant.category, resolved.site, slug, tenantId);
+  const page = await renderPage(tenant.category, resolved.site, slug, tenantId);
   if (!page) notFound();
 
   if (resolved.isPreview) {

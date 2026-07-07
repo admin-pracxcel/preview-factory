@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "launcharoo-router",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-06-15",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "vars": {
+    "VERCEL_ORIGIN": "https://preview-factory.vercel.app",
+    "SITE_DOMAIN": "launcharoo.online"
+  },
+
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+
+  "routes": [
+    {
+      "pattern": "*.launcharoo.online/*",
+      "zone_name": "launcharoo.online"
+    }
+  ]
+}
