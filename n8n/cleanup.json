@@ -1,0 +1,61 @@
+{
+  "name": "Housekeeping (weekly)",
+  "nodes": [
+    {
+      "id": "cl00cafe-0000-4000-8000-000000000001",
+      "name": "Every Sunday 04:00 UTC",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-16, 176],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {"field": "cronExpression", "expression": "0 4 * * 0"}
+          ]
+        }
+      }
+    },
+    {
+      "id": "cl00cafe-0000-4000-8000-000000000002",
+      "name": "POST /api/cron/cleanup",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [208, 176],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ ($env.HEARTBEAT_URL || 'http://placeholder.set.HEARTBEAT_URL').replace(/\\/$/, '') + '/api/cron/cleanup' }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "x-worker-secret", "value": "={{ $env.WORKER_SHARED_SECRET }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"n8n_workflow_id\": \"{{ $workflow.id }}\",\n  \"n8n_execution_id\": \"{{ $execution.id }}\"\n}",
+        "options": {
+          "response": {"response": {"responseFormat": "json"}},
+          "timeout": 60000
+        }
+      },
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "connections": {
+    "Every Sunday 04:00 UTC": {
+      "main": [[{"node": "POST /api/cron/cleanup", "type": "main", "index": 0}]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "pinData": {},
+  "meta": {"instanceId": "preview-factory"},
+  "versionId": "8002c802-0000-4802-8802-000000008002",
+  "tags": []
+}
