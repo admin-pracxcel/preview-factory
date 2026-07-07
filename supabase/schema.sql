@@ -38,7 +38,7 @@ create table if not exists public.tenants (
   session_id                uuid references public.sessions(id) on delete set null,
   category                  text not null,
   status                    text not null default 'queued'
-                              check (status in ('queued','running','done','failed','claimed','past_due','cancelled')),
+                              check (status in ('queued','running','done','failed','claimed','past_due','cancelled','expired')),
   site_props                jsonb,
   error                     text,
   created_at                timestamptz not null default now(),
@@ -80,6 +80,13 @@ alter table public.tenants add column if not exists name text;
 alter table public.tenants add column if not exists niche text;
 alter table public.tenants add column if not exists place_id text;
 alter table public.tenants add column if not exists gbp_photos jsonb;
+
+-- Widen the status check to include 'expired' (Phase 8b reaper). Drop-and-add
+-- is safe because the constraint is only enforced on writes and the values
+-- are a proper superset of the previous set.
+alter table public.tenants drop constraint if exists tenants_status_check;
+alter table public.tenants add constraint tenants_status_check
+  check (status in ('queued','running','done','failed','claimed','past_due','cancelled','expired'));
 
 -- Job queue for async generation (Phase 4+). n8n pulls status='queued' rows.
 -- Retained after completion for the observability + retry story; weekly

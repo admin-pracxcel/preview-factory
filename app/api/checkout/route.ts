@@ -45,6 +45,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ error: "Tenant not found" }, { status: 404 });
   }
 
+  if (tenant.isExpired) {
+    // Reaper (Phase 8b) has flagged this site as expired. Don't take money
+    // for a preview we've soft-deleted.
+    return NextResponse.json(
+      { error: "This preview has expired.", expiredUrl: `/expired/${tenantId}` },
+      { status: 410 }
+    );
+  }
+
   if (tenant.status === "published") {
     // Already paid — skip checkout, send straight to welcome
     return NextResponse.json({

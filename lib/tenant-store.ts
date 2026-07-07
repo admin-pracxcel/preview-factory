@@ -31,7 +31,8 @@ type DBStatus =
   | "failed"
   | "claimed"
   | "past_due"
-  | "cancelled";
+  | "cancelled"
+  | "expired";
 
 export interface TenantRecord {
   /** UUID generated at intake time. Used as the tenant/preview ID. */
@@ -64,6 +65,9 @@ export interface TenantRecord {
   /** Owner email captured from the completed Checkout Session (Phase 7.5a).
    *  Used as the auth identity post-claim once magic-link login is wired. */
   ownerEmail?: string;
+  /** True when the underlying DB status is 'expired' (Phase 8b reaper).
+   *  Read-only, populated on load. Callers use it to redirect to /expired. */
+  isExpired?: boolean;
 }
 
 const TABLE = "tenants";
@@ -128,6 +132,7 @@ function rowToRecord(row: TenantRow): TenantRecord {
     stripeCustomerId: row.billing_customer_id ?? undefined,
     stripeSubscriptionId: row.billing_subscription_id ?? undefined,
     ownerEmail: row.owner_email ?? undefined,
+    isExpired: row.status === "expired",
   };
 }
 

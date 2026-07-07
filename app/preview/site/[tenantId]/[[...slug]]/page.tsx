@@ -20,7 +20,7 @@
  * This is a server component — it reads from the local file store directly.
  */
 
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getTenant } from "@/lib/tenant-store";
 import { getEditRequest } from "@/lib/edit-requests-store";
@@ -154,6 +154,7 @@ export default async function TenantPreviewPage({
 
   const tenant = await getTenant(tenantId);
   if (!tenant) notFound();
+  if (tenant.isExpired) redirect(`/expired/${tenantId}`);
 
   const parseResult = sitePropsSchema.safeParse(tenant.siteProps);
   if (!parseResult.success) {
