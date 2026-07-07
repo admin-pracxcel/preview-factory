@@ -24,7 +24,7 @@ import {
 import { getTenant } from "@/lib/tenant-store";
 import { listLeads } from "@/lib/leads-store";
 import { listEditRequests } from "@/lib/edit-requests-store";
-import { CopyButton, BillingButton, EditRequestForm } from "./ui";
+import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard } from "./ui";
 
 /* ------------------------------------------------------------------ meta */
 
@@ -165,6 +165,23 @@ export default async function DashboardPage({
             ))}
           </div>
         </section>
+
+        {/* ── custom domain card ── */}
+        <CustomDomainCard
+          tenantId={tenantId}
+          initialState={{
+            domain: tenant.customDomain,
+            status: (tenant.customDomainStatus as
+              | "choosing"
+              | "pending_ns"
+              | "pending_ssl"
+              | "active"
+              | "failed"
+              | undefined) ?? null,
+            nameservers: tenant.assignedNameservers ?? [],
+            verifiedAt: tenant.customDomainVerifiedAt ?? null,
+          }}
+        />
 
         <div className="grid gap-8 lg:grid-cols-2">
 

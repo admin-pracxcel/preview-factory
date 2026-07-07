@@ -8,7 +8,7 @@
  * EditRequestForm — submits a plain-English change request
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Copy,
   Check,
@@ -17,6 +17,9 @@ import {
   Send,
   CheckCircle2,
   ExternalLink,
+  Globe,
+  AlertCircle,
+  Clock,
 } from "lucide-react";
 
 /* ================================================================ copy btn == */
@@ -231,5 +234,330 @@ export function EditRequestForm({ tenantId }: { tenantId: string }) {
         )}
       </button>
     </form>
+  );
+}
+
+/* ============================================================ custom domain */
+
+type CustomDomainState = {
+  domain?: string;
+  status?: "choosing" | "pending_ns" | "pending_ssl" | "active" | "failed" | null;
+  nameservers?: string[];
+  verifiedAt?: string | null;
+};
+
+interface CustomDomainCardProps {
+  tenantId: string;
+  initialState: CustomDomainState;
+}
+
+export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardProps) {
+  const [state, setState] = useState<CustomDomainState>(initialState);
+  const [domainInput, setDomainInput] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [scan, setScan] = useState<{ total: number; byType: Record<string, number>; dkimSelectorsFound: string[] } | null>(null);
+
+  const status = state.status ?? null;
+
+  async function refreshStatus() {
+    try {
+      const res = await fetch(`/api/dashboard/custom-domain?tenantId=${encodeURIComponent(tenantId)}`);
+      if (!res.ok) return;
+      const body = (await res.json()) as CustomDomainState;
+      setState(body);
+    } catch {
+      // ignore
+    }
+  }
+
+  useEffect(() => {
+    if (status !== "pending_ns" && status !== "pending_ssl") return;
+    const id = setInterval(refreshStatus, 30_000);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, tenantId]);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!domainInput) return;
+    setSubmitting(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/dashboard/custom-domain", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tenantId, domain: domainInput }),
+      });
+      const body = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        domain?: string;
+        status?: CustomDomainState["status"];
+        nameservers?: string[];
+        scan?: typeof scan;
+      };
+      if (!res.ok) {
+        setError(body.error ?? "Something went wrong. Try again.");
+      } else {
+        setState({
+          domain: body.domain,
+          status: body.status,
+          nameservers: body.nameservers ?? [],
+        });
+        setScan(body.scan ?? null);
+        setDomainInput("");
+      }
+    } catch {
+      setError("Network error. Try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+      <div className="mb-4 flex items-center gap-3">
+        <Globe className="h-5 w-5 text-blue-400" />
+        <h3 className="text-base font-bold text-white">Custom domain</h3>
+      </div>
+
+      {status === null && (
+        <ConnectDomainForm
+          onSubmit={handleSubmit}
+          domainInput={domainInput}
+          setDomainInput={setDomainInput}
+          submitting={submitting}
+          error={error}
+        />
+      )}
+
+      {status === "pending_ns" && state.domain && (
+        <PendingNsPanel
+          domain={state.domain}
+          nameservers={state.nameservers ?? []}
+          scan={scan}
+          onRefresh={refreshStatus}
+        />
+      )}
+
+      {status === "pending_ssl" && state.domain && (
+        <PendingSslPanel domain={state.domain} onRefresh={refreshStatus} />
+      )}
+
+      {status === "active" && state.domain && (
+        <ActivePanel domain={state.domain} verifiedAt={state.verifiedAt ?? null} />
+      )}
+
+      {status === "failed" && state.domain && (
+        <FailedPanel domain={state.domain} />
+      )}
+    </div>
+  );
+}
+
+function ConnectDomainForm(props: {
+  onSubmit: (e: React.FormEvent) => void;
+  domainInput: string;
+  setDomainInput: (v: string) => void;
+  submitting: boolean;
+  error: string | null;
+}) {
+  return (
+    <form onSubmit={props.onSubmit} className="flex flex-col gap-4">
+      <p className="text-sm text-white/60">
+        Point your own domain at this site. We handle SSL and setup — you
+        just change nameservers at your registrar.
+      </p>
+      <label className="flex flex-col gap-2">
+        <span className="text-xs font-bold uppercase tracking-widest text-white/60">
+          Your domain
+        </span>
+        <input
+          type="text"
+          value={props.domainInput}
+          onChange={(e) => props.setDomainInput(e.target.value)}
+          placeholder="yourbusiness.com.au"
+          className="rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white placeholder:text-white/25 focus:border-blue-500/60 focus:outline-none"
+          disabled={props.submitting}
+        />
+      </label>
+      {props.error && (
+        <p className="rounded-lg border border-red-500/30 bg-red-900/20 px-3 py-2 text-sm text-red-400">
+          {props.error}
+        </p>
+      )}
+      <button
+        type="submit"
+        disabled={props.submitting || !props.domainInput}
+        className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-sm font-bold text-white transition-colors hover:bg-blue-500 disabled:cursor-not-allowed disabled:bg-blue-900/40"
+      >
+        {props.submitting ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin" />
+            Reading your DNS + creating zone…
+          </>
+        ) : (
+          <>
+            <Globe className="h-4 w-4" />
+            Connect domain
+          </>
+        )}
+      </button>
+      <p className="text-xs text-white/40">
+        We will scan your current DNS records first so your email keeps
+        working after the switch.
+      </p>
+    </form>
+  );
+}
+
+function PendingNsPanel(props: {
+  domain: string;
+  nameservers: string[];
+  scan: { total: number; byType: Record<string, number>; dkimSelectorsFound: string[] } | null;
+  onRefresh: () => void;
+}) {
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex items-start gap-3 rounded-xl border border-yellow-500/20 bg-yellow-900/10 p-4">
+        <Clock className="mt-0.5 h-4 w-4 shrink-0 text-yellow-400" />
+        <div className="text-sm">
+          <div className="font-semibold text-yellow-200">
+            Change your nameservers to finish setup
+          </div>
+          <div className="mt-1 text-yellow-100/70">
+            Log in to your domain registrar (where you bought {props.domain})
+            and replace the current nameservers with the two below. Setup
+            usually completes 15 minutes to 24 hours after you change them.
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div className="mb-2 text-xs font-bold uppercase tracking-widest text-white/40">
+          Nameservers
+        </div>
+        <div className="flex flex-col gap-2">
+          {props.nameservers.map((ns) => (
+            <div
+              key={ns}
+              className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 px-4 py-3"
+            >
+              <span className="flex-1 font-mono text-sm text-blue-300 break-all">
+                {ns}
+              </span>
+              <CopyButton text={ns} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {props.scan && (
+        <div className="rounded-xl border border-white/5 bg-black/20 p-4 text-xs text-white/60">
+          <div className="mb-2 font-semibold text-white/70">
+            DNS snapshot taken ({props.scan.total} records)
+          </div>
+          <div className="flex flex-wrap gap-x-4 gap-y-1 font-mono">
+            {Object.entries(props.scan.byType).map(([type, count]) => (
+              <span key={type}>
+                {type}: {count}
+              </span>
+            ))}
+          </div>
+          {props.scan.dkimSelectorsFound.length > 0 && (
+            <div className="mt-2">
+              DKIM selectors: {props.scan.dkimSelectorsFound.join(", ")}
+            </div>
+          )}
+        </div>
+      )}
+
+      <button
+        type="button"
+        onClick={props.onRefresh}
+        className="self-start text-xs text-white/40 underline underline-offset-4 hover:text-white/70"
+      >
+        Refresh status
+      </button>
+    </div>
+  );
+}
+
+function PendingSslPanel({ domain, onRefresh }: { domain: string; onRefresh: () => void }) {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-start gap-3 rounded-xl border border-blue-500/20 bg-blue-900/10 p-4">
+        <Loader2 className="mt-0.5 h-4 w-4 shrink-0 animate-spin text-blue-400" />
+        <div className="text-sm">
+          <div className="font-semibold text-blue-200">Issuing SSL certificate</div>
+          <div className="mt-1 text-blue-100/70">
+            Nameservers are pointed at us. We're issuing an SSL certificate
+            for <span className="font-mono">{domain}</span>. This usually
+            takes 5-15 minutes.
+          </div>
+        </div>
+      </div>
+      <button
+        type="button"
+        onClick={onRefresh}
+        className="self-start text-xs text-white/40 underline underline-offset-4 hover:text-white/70"
+      >
+        Refresh status
+      </button>
+    </div>
+  );
+}
+
+function ActivePanel({ domain, verifiedAt }: { domain: string; verifiedAt: string | null }) {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-start gap-3 rounded-xl border border-green-500/20 bg-green-900/10 p-4">
+        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-green-400" />
+        <div className="text-sm">
+          <div className="font-semibold text-green-200">
+            Live at{" "}
+            <a
+              href={`https://${domain}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-green-500/30 underline-offset-4 hover:decoration-green-300"
+            >
+              {domain}
+            </a>
+          </div>
+          {verifiedAt && (
+            <div className="mt-1 text-xs text-green-100/50">
+              Since {new Date(verifiedAt).toLocaleDateString()}
+            </div>
+          )}
+        </div>
+      </div>
+      <a
+        href={`https://${domain}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 py-3 text-sm font-semibold text-white transition-colors hover:border-white/20"
+      >
+        <ExternalLink className="h-4 w-4" />
+        Visit your site
+      </a>
+    </div>
+  );
+}
+
+function FailedPanel({ domain }: { domain: string }) {
+  return (
+    <div className="flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-900/10 p-4">
+      <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
+      <div className="text-sm">
+        <div className="font-semibold text-red-200">
+          Setup didn't complete for {domain}
+        </div>
+        <div className="mt-1 text-red-100/70">
+          Contact support and we'll look into it. Your Preview Factory
+          subdomain still works.
+        </div>
+      </div>
+    </div>
   );
 }
