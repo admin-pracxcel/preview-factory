@@ -56,8 +56,10 @@ const nextConfig: NextConfig = {
       // are the fallback if the tunnel ever fails. Supabase for client-side
       // storage reads (Phase 6 upload flow uses signed URLs — same-origin —
       // but leave the allowlist in case). cloudflareinsights.com is where the
-      // Web Analytics beacon POSTs page-view events back.
-      "connect-src 'self' https://*.supabase.co https://*.ingest.us.sentry.io https://*.ingest.sentry.io https://cloudflareinsights.com",
+      // Web Analytics beacon POSTs page-view events back. staticimgly.com
+      // hosts img.ly's client-side background-removal ML model + resources
+      // (fetched on first logo upload — Phase 6 branding customise flow).
+      "connect-src 'self' https://*.supabase.co https://*.ingest.us.sentry.io https://*.ingest.sentry.io https://cloudflareinsights.com https://staticimgly.com",
       // 'self' is required for the /preview/[id] page which embeds
       // /preview/site/[id] in an iframe for the customise pane. Stripe
       // hosts are here for hosted Checkout (redirect today; embed later).
