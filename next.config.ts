@@ -41,7 +41,11 @@ const nextConfig: NextConfig = {
   async headers() {
     const csp = [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      // static.cloudflareinsights.com serves the Web Analytics beacon.
+      // Cloudflare auto-injects the script tag when a site is proxied
+      // through their edge (launcharoo.online + BYO customer domains).
+      // Can't remove it from the response HTML from our side.
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com",
       "style-src 'self' 'unsafe-inline'",
       // Fonts are self-hosted via next/font — no external font CDN needed.
       "font-src 'self' data:",
@@ -51,8 +55,9 @@ const nextConfig: NextConfig = {
       // Same-origin covers Sentry via /monitoring tunnel. Direct-ingest hosts
       // are the fallback if the tunnel ever fails. Supabase for client-side
       // storage reads (Phase 6 upload flow uses signed URLs — same-origin —
-      // but leave the allowlist in case).
-      "connect-src 'self' https://*.supabase.co https://*.ingest.us.sentry.io https://*.ingest.sentry.io",
+      // but leave the allowlist in case). cloudflareinsights.com is where the
+      // Web Analytics beacon POSTs page-view events back.
+      "connect-src 'self' https://*.supabase.co https://*.ingest.us.sentry.io https://*.ingest.sentry.io https://cloudflareinsights.com",
       // Stripe hosted Checkout: we redirect, but if we ever embed Stripe.js
       // these need to be here already.
       "frame-src https://checkout.stripe.com https://js.stripe.com",
