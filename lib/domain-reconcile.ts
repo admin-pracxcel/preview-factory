@@ -184,8 +184,14 @@ function normaliseSnapshot(raw: unknown): DnsSnapshot | null {
 }
 
 /**
- * Sweep all tenants that aren't yet active. Used by the cron worker.
+ * Sweep all tenants that either aren't yet active OR are active but might
+ * have drifted (routes unbound by a disconnect+reconnect race, etc.).
  * Errors on a single tenant don't abort the sweep.
+ *
+ * Sweeping active tenants is cheap: reconcileTenantDomain short-circuits
+ * after one CF getZone + one bindWorkerToCustomerDomain call, both
+ * idempotent. Cost is bounded and route drift self-heals within one cron
+ * interval.
  */
 export async function reconcileAllPending(): Promise<{
   checked: number;
@@ -196,7 +202,7 @@ export async function reconcileAllPending(): Promise<{
   const { data, error } = await supabase()
     .from("tenants")
     .select("id")
-    .in("custom_domain_status", ["pending_ns", "pending_ssl"]);
+    .in("custom_domain_status", ["pending_ns", "pending_ssl", "active"]);
   if (error) throw new Error(`reconcileAllPending list failed: ${error.message}`);
 
   let advanced = 0;
