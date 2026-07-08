@@ -8,16 +8,16 @@ import * as Sentry from "@sentry/nextjs";
 Sentry.init({
   dsn: "https://41364203f2edd782a7c8054cb14939d8@o4511697917837312.ingest.us.sentry.io/4511697954799616",
 
-  // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
-  tracesSampleRate: 1,
+  // 10% sampling keeps us inside the free tier's 10k perf events/month.
+  // Bump when we upgrade the plan.
+  tracesSampleRate: 0.1,
 
   // Enable logs to be sent to Sentry
   enableLogs: true,
 
   dataCollection: {
-    // To disable sending user data and HTTP bodies, uncomment the lines below. For more info visit:
-    // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#dataCollection
-    // userInfo: false,
-    // httpBodies: [],
+    // PII off by default. Matches sentry.server.config.ts.
+    userInfo: false,
+    httpBodies: [],
   },
 });
