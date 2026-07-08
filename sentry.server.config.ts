@@ -1,32 +1,22 @@
-/**
- * sentry.server.config.ts
- * Sentry init for the Node.js runtime (API routes, server components, crons).
- *
- * Imported from instrumentation.ts when process.env.NEXT_RUNTIME === 'nodejs'.
- */
+// This file configures the initialization of Sentry on the server.
+// The config you add here will be used whenever the server handles a request.
+// https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from "@sentry/nextjs";
 
 Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  environment: process.env.VERCEL_ENV ?? process.env.NODE_ENV ?? "development",
-  release: process.env.VERCEL_GIT_COMMIT_SHA,
+  dsn: "https://41364203f2edd782a7c8054cb14939d8@o4511697917837312.ingest.us.sentry.io/4511697954799616",
 
-  // Sample 10% of transactions for perf tracing. Enough to catch trends
-  // on the free plan (10k perf events/mo) without paying for volume.
-  tracesSampleRate: 0.1,
+  // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
+  tracesSampleRate: 1,
 
-  // Keep PII off by default. Email addresses, IPs, and request bodies
-  // stay client-side; Sentry only sees error shape + stack.
-  sendDefaultPii: false,
+  // Enable logs to be sent to Sentry
+  enableLogs: true,
 
-  // Local dev shouldn't pollute the prod project. Set SENTRY_DSN only in
-  // Vercel Production to keep dev noise out.
-  enabled: Boolean(process.env.SENTRY_DSN),
-
-  ignoreErrors: [
-    // Next 16 sometimes throws these on prefetch cancellation.
-    "NEXT_NOT_FOUND",
-    "NEXT_REDIRECT",
-  ],
+  dataCollection: {
+    // To disable sending user data and HTTP bodies, uncomment the lines below. For more info visit:
+    // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#dataCollection
+    // userInfo: false,
+    // httpBodies: [],
+  },
 });
