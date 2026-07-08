@@ -19,9 +19,9 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  title: "Preview Factory — Your Australian business website, live in 60 seconds",
+  title: "Launcharoo — Your Australian business website, live in 60 seconds",
   description:
-    "Preview Factory builds professional websites for Australian service businesses using your Google Business Profile. Go from zero to live in under 60 seconds.",
+    "Launcharoo builds professional websites for Australian service businesses using your Google Business Profile. Go from zero to live in under 60 seconds.",
 };
 
 export default function RootLayout({

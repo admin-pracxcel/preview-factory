@@ -41,9 +41,9 @@ export default function TermsPage() {
         <section className="mt-10 space-y-4">
           <h2 className="text-xl font-bold text-white">1. Agreement</h2>
           <p>
-            These Terms of Service are an agreement between [Business Name] (ABN [ABN]) (&ldquo;we&rdquo;,
-            &ldquo;us&rdquo;, &ldquo;Launcharoo&rdquo;) and you, the person who signs up for and uses the
-            service (&ldquo;you&rdquo;, &ldquo;your&rdquo;). By using Launcharoo you agree to these terms.
+            These Terms of Service are an agreement between Launcharoo (&ldquo;we&rdquo;, &ldquo;us&rdquo;,
+            &ldquo;our&rdquo;) and you, the person who signs up for and uses the service (&ldquo;you&rdquo;,
+            &ldquo;your&rdquo;). By using Launcharoo you agree to these terms.
           </p>
         </section>
 
@@ -62,7 +62,7 @@ export default function TermsPage() {
             <li>You sign in through a magic-link sent to your email — no password to lose</li>
             <li>Keep your email account secure. Anyone with access to it can sign in to Launcharoo</li>
             <li>You&rsquo;re responsible for activity on your account</li>
-            <li>Tell us promptly at <a className="text-blue-400 underline" href="mailto:admin@pracxcel.com.au">admin@pracxcel.com.au</a> if you suspect unauthorised access</li>
+            <li>Tell us promptly at <a className="text-blue-400 underline" href="mailto:hello@launcharoo.online">hello@launcharoo.online</a> if you suspect unauthorised access</li>
           </ul>
         </section>
 
@@ -191,8 +191,8 @@ export default function TermsPage() {
         <section className="mt-10 space-y-4">
           <h2 className="text-xl font-bold text-white">15. Contact</h2>
           <p>
-            [Business Name]<br />
-            Email: <a className="text-blue-400 underline" href="mailto:admin@pracxcel.com.au">admin@pracxcel.com.au</a>
+            Launcharoo<br />
+            Email: <a className="text-blue-400 underline" href="mailto:hello@launcharoo.online">hello@launcharoo.online</a>
           </p>
         </section>
 

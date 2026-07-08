@@ -406,7 +406,7 @@ function PreviewPageInner() {
       {/* Top bar */}
       <div className="flex items-center justify-between px-8 py-4 border-b border-slate-800 shrink-0">
         <div className="flex items-center gap-4">
-          <div className="text-base font-bold text-white">Preview Factory</div>
+          <div className="text-base font-bold text-white">Launcharoo</div>
           <div className="hidden lg:block h-4 w-px bg-slate-700" />
           <div className="hidden lg:block text-sm text-slate-400">
             {businessName}

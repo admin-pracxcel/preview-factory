@@ -1,7 +1,7 @@
 import NicheLanding from "@/app/components/NicheLanding";
 
 export const metadata = {
-  title: "Website for Allied Health | Preview Factory",
+  title: "Website for Allied Health | Launcharoo",
   description: "Fill your appointment book with a professional clinic website, live in 60 seconds. Built from your Google Business Profile.",
 };
 

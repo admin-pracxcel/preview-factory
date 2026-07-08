@@ -109,7 +109,7 @@ export default function UpsellPage() {
       {/* Header */}
       <header className="px-6 py-5 max-w-4xl mx-auto w-full flex items-center justify-between">
         <div className="text-xl font-[family-name:var(--font-sora)] font-extrabold text-white">
-          Preview Factory
+          Launcharoo
         </div>
         <Link
           href={`/welcome/${id}`}

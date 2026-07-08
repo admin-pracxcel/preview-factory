@@ -180,7 +180,7 @@ export default function WelcomePage() {
       {/* Header */}
       <header className="px-6 py-5 max-w-2xl mx-auto w-full">
         <div className="text-xl font-[family-name:var(--font-sora)] font-extrabold text-white">
-          Preview Factory
+          Launcharoo
         </div>
       </header>
 
@@ -268,12 +268,12 @@ export default function WelcomePage() {
               </h2>
             </div>
             <p className="text-white/60 text-sm leading-relaxed">
-              Text your changes to{" "}
+              Email your changes to{" "}
               <a
-                href="sms:+611800000000"
+                href="mailto:hello@launcharoo.online"
                 className="text-white font-bold hover:text-blue-400 transition-colors"
               >
-                +61 XXX XXX XXX
+                hello@launcharoo.online
               </a>
               . We will update your site within 2 hours. No logins. No portals.
             </p>
@@ -327,18 +327,17 @@ export default function WelcomePage() {
             <p>
               Need help?{" "}
               <a
-                href="tel:1800000000"
+                href="mailto:hello@launcharoo.online"
                 className="text-white/60 hover:text-white transition-colors"
               >
-                Call 1800 XXX XXX
-              </a>{" "}
-              or reply to your welcome SMS.
+                Email hello@launcharoo.online
+              </a>
             </p>
             <Link
               href="/"
               className="text-xs text-white/20 hover:text-white/40 transition-colors mt-2 inline-block"
             >
-              Back to Preview Factory
+              Back to Launcharoo
             </Link>
           </div>
 

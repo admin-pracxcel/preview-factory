@@ -106,7 +106,7 @@ export default async function DashboardPage({
           <div className="flex items-center gap-3">
             <LayoutDashboard className="h-5 w-5 text-blue-400" />
             <span className="font-[family-name:var(--font-sora)] text-lg font-extrabold">
-              Preview Factory
+              Launcharoo
             </span>
           </div>
           <StatusBadge status={tenant.status} />
@@ -121,7 +121,7 @@ export default async function DashboardPage({
             {tenant.name}
           </h1>
           <p className="mt-1 text-white/40 text-sm">
-            Your Preview Factory dashboard
+            Your Launcharoo dashboard
           </p>
         </div>
 
@@ -327,11 +327,11 @@ export default async function DashboardPage({
         {/* ── footer ── */}
         <footer className="border-t border-white/5 pt-6 text-center text-xs text-white/20">
           <Link href="/" className="hover:text-white/40 transition-colors">
-            Back to Preview Factory
+            Back to Launcharoo
           </Link>
           <span className="mx-3">·</span>
-          <a href="tel:1800000000" className="hover:text-white/40 transition-colors">
-            Support: 1800 XXX XXX
+          <a href="mailto:hello@launcharoo.online" className="hover:text-white/40 transition-colors">
+            Support: hello@launcharoo.online
           </a>
         </footer>
       </main>

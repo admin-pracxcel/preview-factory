@@ -13,7 +13,7 @@ export const runtime = "nodejs";
 export const revalidate = 30;
 
 export const metadata = {
-  title: "Preview Factory — status",
+  title: "Launcharoo — status",
   robots: { index: false, follow: false },
 };
 
@@ -129,7 +129,7 @@ export default async function StatusPage() {
           href="/"
           className="text-xl font-[family-name:var(--font-sora)] font-extrabold text-white"
         >
-          Preview Factory
+          Launcharoo
         </Link>
       </header>
 

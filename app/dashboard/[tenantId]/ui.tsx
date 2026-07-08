@@ -883,7 +883,7 @@ function FailedPanel({
             Setup didn&apos;t complete for {domain}
           </div>
           <div className="mt-1 text-red-100/70">
-            Contact support and we&apos;ll look into it. Your Preview Factory
+            Contact support and we&apos;ll look into it. Your Launcharoo
             subdomain still works.
           </div>
         </div>

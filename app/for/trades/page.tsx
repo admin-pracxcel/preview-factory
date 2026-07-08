@@ -1,7 +1,7 @@
 import NicheLanding from "@/app/components/NicheLanding";
 
 export const metadata = {
-  title: "Website for Tradies | Preview Factory",
+  title: "Website for Tradies | Launcharoo",
   description: "Get a professional tradie website live in 60 seconds. Built from your Google Business Profile. No web designer needed.",
 };
 

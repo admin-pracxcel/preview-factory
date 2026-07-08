@@ -61,7 +61,7 @@ function LoginForm() {
           href="/"
           className="text-xl font-[family-name:var(--font-sora)] font-extrabold text-white"
         >
-          Preview Factory
+          Launcharoo
         </Link>
       </header>
 
@@ -138,7 +138,7 @@ function LoginForm() {
 
           <div className="text-center text-white/30 text-xs">
             <Link href="/" className="hover:text-white/60 transition-colors">
-              Back to Preview Factory
+              Back to Launcharoo
             </Link>
           </div>
         </div>

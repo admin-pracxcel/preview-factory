@@ -42,12 +42,12 @@ export default function PrivacyPage() {
         <section className="mt-10 space-y-4">
           <h2 className="text-xl font-bold text-white">1. About this policy</h2>
           <p>
-            This policy explains how [Business Name] (ABN [ABN]) (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;)
-            handles your personal information when you use Launcharoo (this website and the site-building
-            service). We comply with the Privacy Act 1988 (Cth) and the Australian Privacy Principles (APPs).
+            This policy explains how Launcharoo (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;)
+            handles your personal information when you use this website and the site-building service.
+            We comply with the Privacy Act 1988 (Cth) and the Australian Privacy Principles (APPs).
           </p>
           <p>
-            If anything below is unclear, email <a className="text-blue-400 underline" href="mailto:admin@pracxcel.com.au">admin@pracxcel.com.au</a>{" "}
+            If anything below is unclear, email <a className="text-blue-400 underline" href="mailto:hello@launcharoo.online">hello@launcharoo.online</a>{" "}
             and we&rsquo;ll explain in plain language.
           </p>
         </section>
@@ -160,7 +160,7 @@ export default function PrivacyPage() {
             </li>
             <li>
               <span className="font-semibold text-white">Complain</span> — contact us first at{" "}
-              <a className="text-blue-400 underline" href="mailto:admin@pracxcel.com.au">admin@pracxcel.com.au</a>.
+              <a className="text-blue-400 underline" href="mailto:hello@launcharoo.online">hello@launcharoo.online</a>.
               If unresolved, you can complain to the Office of the Australian Information Commissioner (OAIC)
               at <a className="text-blue-400 underline" href="https://www.oaic.gov.au" target="_blank" rel="noreferrer">www.oaic.gov.au</a> or 1300 363 992
             </li>
@@ -200,8 +200,8 @@ export default function PrivacyPage() {
         <section className="mt-10 space-y-4">
           <h2 className="text-xl font-bold text-white">12. Contact</h2>
           <p>
-            [Business Name]<br />
-            Email: <a className="text-blue-400 underline" href="mailto:admin@pracxcel.com.au">admin@pracxcel.com.au</a>
+            Launcharoo<br />
+            Email: <a className="text-blue-400 underline" href="mailto:hello@launcharoo.online">hello@launcharoo.online</a>
           </p>
         </section>
 

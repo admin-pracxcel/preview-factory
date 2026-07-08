@@ -1,7 +1,7 @@
 import NicheLanding from "@/app/components/NicheLanding";
 
 export const metadata = {
-  title: "Website for Beauty & Aesthetics | Preview Factory",
+  title: "Website for Beauty & Aesthetics | Launcharoo",
   description: "Show your work and book more clients. A gallery-forward beauty website, live in 60 seconds.",
 };
 

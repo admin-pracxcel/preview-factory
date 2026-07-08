@@ -124,9 +124,9 @@ function Stars({ count }: { count: number }) {
 /* -------------------------------------------------------------------------- */
 
 export const metadata = {
-  title: "Preview Factory — Your Australian business website, live in 60 seconds",
+  title: "Launcharoo — Your Australian business website, live in 60 seconds",
   description:
-    "Preview Factory builds professional websites for Australian service businesses using your Google Business Profile. Go from zero to live in under 60 seconds.",
+    "Launcharoo builds professional websites for Australian service businesses using your Google Business Profile. Go from zero to live in under 60 seconds.",
 };
 
 export default function HomePage() {
@@ -139,7 +139,7 @@ export default function HomePage() {
       <header className="sticky top-0 z-30 bg-black/95 border-b border-white/5 backdrop-blur-md">
         <div className="flex items-center justify-between px-6 py-4 max-w-6xl mx-auto w-full">
           <div className="text-xl font-[family-name:var(--font-sora)] font-extrabold text-white tracking-tight">
-            Preview Factory
+            Launcharoo
           </div>
           <div className="flex items-center gap-6">
             <a
@@ -340,7 +340,7 @@ export default function HomePage() {
               Real results
             </p>
             <h2 className="font-[family-name:var(--font-sora)] font-extrabold text-4xl text-white tracking-tight">
-              Australian businesses growing with Preview Factory
+              Australian businesses growing with Launcharoo
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -375,7 +375,7 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <p className="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-3">
-              Why Preview Factory
+              Why Launcharoo
             </p>
             <h2 className="font-[family-name:var(--font-sora)] font-extrabold text-4xl text-white tracking-tight">
               Built for Australian service businesses
@@ -460,7 +460,7 @@ export default function HomePage() {
       <footer className="bg-[#040812] border-t border-white/10 py-10 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="font-[family-name:var(--font-sora)] font-extrabold text-white text-base">
-            Preview Factory
+            Launcharoo
           </div>
           <div className="flex gap-6">
             {CATEGORIES.map((cat) => (
@@ -473,7 +473,7 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
-          <span className="text-white/30 text-sm">© 2025 Preview Factory</span>
+          <span className="text-white/30 text-sm">© {new Date().getFullYear()} Launcharoo</span>
         </div>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-white/30">
           <Link href="/privacy" className="hover:text-white/60 transition-colors">
@@ -484,7 +484,7 @@ export default function HomePage() {
             Terms of Service
           </Link>
           <span className="text-white/15">·</span>
-          <span>For Australian service businesses. ABN: [to be added].</span>
+          <span>For Australian service businesses.</span>
         </div>
       </footer>
     </div>

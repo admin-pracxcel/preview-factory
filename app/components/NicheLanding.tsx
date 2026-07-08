@@ -81,7 +81,7 @@ export default function NicheLanding({
       {/* ------------------------------------------------------------------ */}
       <header className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-5 max-w-6xl mx-auto w-full">
         <div className="text-lg font-[family-name:var(--font-sora)] font-extrabold text-white tracking-tight drop-shadow-sm">
-          Preview Factory
+          Launcharoo
         </div>
         <Link
           href="/"
@@ -264,7 +264,7 @@ export default function NicheLanding({
               {
                 icon: <TrendingUp className="w-8 h-8 text-amber-400" />,
                 title: "Average 4.2x more enquiries",
-                body: "Sites built by Preview Factory generate an average of 4.2x more online enquiries than a basic directory listing.",
+                body: "Sites built by Launcharoo generate an average of 4.2x more online enquiries than a basic directory listing.",
               },
             ].map((pillar, i) => (
               <div
@@ -341,7 +341,7 @@ export default function NicheLanding({
       <footer className="bg-[#040812] border-t border-white/10 py-10 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="font-[family-name:var(--font-sora)] font-extrabold text-white text-base">
-            Preview Factory
+            Launcharoo
           </div>
           <div className="flex gap-6">
             {[
@@ -359,7 +359,7 @@ export default function NicheLanding({
               </Link>
             ))}
           </div>
-          <span className="text-white/30 text-sm">© 2025 Preview Factory</span>
+          <span className="text-white/30 text-sm">© {new Date().getFullYear()} Launcharoo</span>
         </div>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-white/30">
           <Link href="/privacy" className="hover:text-white/60 transition-colors">
@@ -370,7 +370,7 @@ export default function NicheLanding({
             Terms of Service
           </Link>
           <span className="text-white/15">·</span>
-          <span>For Australian service businesses. ABN: [to be added].</span>
+          <span>For Australian service businesses.</span>
         </div>
       </footer>
     </div>

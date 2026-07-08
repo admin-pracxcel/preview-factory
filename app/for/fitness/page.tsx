@@ -1,7 +1,7 @@
 import NicheLanding from "@/app/components/NicheLanding";
 
 export const metadata = {
-  title: "Website for Fitness & Wellness | Preview Factory",
+  title: "Website for Fitness & Wellness | Launcharoo",
   description: "Get more clients and fill your classes. A fitness website live in 60 seconds, built from your Google profile.",
 };
 

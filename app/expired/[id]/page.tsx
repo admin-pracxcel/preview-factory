@@ -20,7 +20,7 @@ export default async function ExpiredPage({ params }: PageProps) {
       {/* Header */}
       <header className="px-6 py-5 max-w-xl mx-auto w-full">
         <div className="text-xl font-[family-name:var(--font-sora)] font-extrabold text-white">
-          Preview Factory
+          Launcharoo
         </div>
       </header>
 
