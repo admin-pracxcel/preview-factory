@@ -66,7 +66,9 @@ const nextConfig: NextConfig = {
       // Web Analytics beacon POSTs page-view events back. staticimgly.com
       // hosts img.ly's client-side background-removal ML model + resources
       // (fetched on first logo upload — Phase 6 branding customise flow).
-      "connect-src 'self' https://*.supabase.co https://*.ingest.us.sentry.io https://*.ingest.sentry.io https://cloudflareinsights.com https://staticimgly.com",
+      // blob: — @imgly's inference Worker fetches its own model file
+      // via blob URL from inside the Worker context.
+      "connect-src 'self' blob: https://*.supabase.co https://*.ingest.us.sentry.io https://*.ingest.sentry.io https://cloudflareinsights.com https://staticimgly.com",
       // @imgly spawns a Web Worker from a blob URL to run the ML model
       // off the main thread. worker-src falls back to child-src then
       // default-src otherwise, which wouldn't allow blob:.
