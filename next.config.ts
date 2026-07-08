@@ -25,10 +25,51 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "**.supabase.co" },
     ],
   },
-  // Security headers applied to every response. See docs/security-headers.md
-  // for the rationale on each one and what's deliberately NOT here (CSP is
-  // deferred to a follow-up so it can be validated in staging first).
+  // Security headers applied to every response.
+  //
+  // CSP (Phase 11e-follow-up) is in enforce mode. Directives were chosen
+  // by walking each real dependency the app has (Next.js runtime, next/font
+  // self-hosting, Stripe redirect, Sentry tunnel, image hosts from the
+  // remotePatterns block above). Violations POST to /api/csp-report which
+  // forwards to Sentry — filter by `source:csp` to see them.
+  //
+  // Note on 'unsafe-inline' + 'unsafe-eval' in script-src: Next 16's
+  // runtime injects inline hydration scripts + uses eval in the client
+  // bundle. Removing either would require a nonce-per-request middleware
+  // refactor. Practical trade-off: CSP still buys us frame-ancestors,
+  // form-action, base-uri, object-src, and connect-src lockdown.
   async headers() {
+    const csp = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "style-src 'self' 'unsafe-inline'",
+      // Fonts are self-hosted via next/font — no external font CDN needed.
+      "font-src 'self' data:",
+      // Match the image hosts from the images.remotePatterns block above.
+      // data: covers Tailwind inline SVGs; blob: covers browser upload previews.
+      "img-src 'self' data: blob: https://*.unsplash.com https://*.cloudinary.com https://*.amazonaws.com https://*.googleusercontent.com https://images.pexels.com https://places.googleapis.com https://*.supabase.co",
+      // Same-origin covers Sentry via /monitoring tunnel. Direct-ingest hosts
+      // are the fallback if the tunnel ever fails. Supabase for client-side
+      // storage reads (Phase 6 upload flow uses signed URLs — same-origin —
+      // but leave the allowlist in case).
+      "connect-src 'self' https://*.supabase.co https://*.ingest.us.sentry.io https://*.ingest.sentry.io",
+      // Stripe hosted Checkout: we redirect, but if we ever embed Stripe.js
+      // these need to be here already.
+      "frame-src https://checkout.stripe.com https://js.stripe.com",
+      // Checkout form submits redirect to Stripe.
+      "form-action 'self' https://checkout.stripe.com",
+      // Nothing legitimate embeds objects.
+      "object-src 'none'",
+      // Prevent <base href="..."> injection changing all relative URLs.
+      "base-uri 'self'",
+      // Reinforces X-Frame-Options DENY.
+      "frame-ancestors 'none'",
+      // Auto-upgrade any accidental http:// asset link.
+      "upgrade-insecure-requests",
+      // Violations POST here — see app/api/csp-report/route.ts.
+      "report-uri /api/csp-report",
+    ].join("; ");
+
     const securityHeaders = [
       // Force HTTPS for 2 years, cover all subdomains. `preload` lets us
       // ship the domain to hstspreload.org so browsers refuse HTTP even on
@@ -51,6 +92,7 @@ const nextConfig: NextConfig = {
         key: "Permissions-Policy",
         value: "camera=(), microphone=(), geolocation=(), payment=(self)",
       },
+      { key: "Content-Security-Policy", value: csp },
     ];
     return [{ source: "/:path*", headers: securityHeaders }];
   },
