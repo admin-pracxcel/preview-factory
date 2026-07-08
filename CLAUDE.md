@@ -21,8 +21,12 @@ genuine decision gates.
 3. Run `node scripts/grade.mjs`. A unit is NOT done until the grader passes.
    If it fails, revise and re-run. Use the `reviewer` subagent to diagnose.
 4. `git add -A && git commit -m "..."` describing the increment.
-5. Update `strategy/_master/state.md`: tick the step, note what changed.
-6. Stop. The supervisor will call you again for the next increment.
+5. `git push origin main` immediately after every commit on `main`. The
+   human has given standing authorization for this — do not re-ask.
+   Force-push, resets, branch deletes, and pushes to non-`main` branches
+   still require explicit approval.
+6. Update `strategy/_master/state.md`: tick the step, note what changed.
+7. Stop. The supervisor will call you again for the next increment.
 
 ## Resequencing (important, overrides the original phase order)
 The generator (Phase D) is empty and is the largest unvalidated risk. Do NOT
