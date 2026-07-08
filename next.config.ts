@@ -58,9 +58,10 @@ const nextConfig: NextConfig = {
       // but leave the allowlist in case). cloudflareinsights.com is where the
       // Web Analytics beacon POSTs page-view events back.
       "connect-src 'self' https://*.supabase.co https://*.ingest.us.sentry.io https://*.ingest.sentry.io https://cloudflareinsights.com",
-      // Stripe hosted Checkout: we redirect, but if we ever embed Stripe.js
-      // these need to be here already.
-      "frame-src https://checkout.stripe.com https://js.stripe.com",
+      // 'self' is required for the /preview/[id] page which embeds
+      // /preview/site/[id] in an iframe for the customise pane. Stripe
+      // hosts are here for hosted Checkout (redirect today; embed later).
+      "frame-src 'self' https://checkout.stripe.com https://js.stripe.com",
       // Checkout form submits redirect to Stripe.
       "form-action 'self' https://checkout.stripe.com",
       // Nothing legitimate embeds objects.

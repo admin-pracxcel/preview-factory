@@ -31,9 +31,28 @@ export async function GET(
   if (!tenant) {
     return NextResponse.json({ error: "Tenant not found" }, { status: 404 });
   }
-  // Return the resolved values the panel needs to render its initial state.
-  const branding = tenant.siteProps.branding;
-  const overrides = tenant.siteProps.overrides ?? {};
+  // Tenants can be in a mid-generation state where siteProps or the
+  // branding subtree isn't populated yet. Guard so the customise panel
+  // gets a clean shape instead of a 500 — it'll show its own defaults.
+  const siteProps = tenant.siteProps;
+  if (!siteProps || !siteProps.branding) {
+    console.warn(
+      `[customise:GET] tenant=${tenantId} siteProps or branding missing — returning defaults`,
+    );
+    return NextResponse.json({
+      primary_color: "#0066cc",
+      secondary_color: "#0066cc",
+      accent_color: "#0066cc",
+      logo_url: "",
+      hero_image_url: "",
+      chrome_theme: "light",
+      logo_height_px: 36,
+      niche: tenant.niche,
+      pending: true,
+    });
+  }
+  const branding = siteProps.branding;
+  const overrides = siteProps.overrides ?? {};
   return NextResponse.json({
     primary_color: overrides.primary_color ?? branding.primary_color,
     secondary_color: overrides.secondary_color ?? branding.secondary_color ?? branding.primary_color,
