@@ -11,9 +11,10 @@
  * Human deploy note:
  *   1. Sign up at resend.com (free tier is enough for launch).
  *   2. Developers → API Keys → create a "Full access" key → RESEND_API_KEY.
- *   3. RESEND_FROM_EMAIL: for dev use `onboarding@resend.dev` (only sends to
- *      your account email). For prod: verify a domain in Resend and use
- *      something like `hello@yourdomain.com`.
+ *   3. RESEND_FROM_EMAIL: for dev leave unset (log-only mode) or use
+ *      `onboarding@resend.dev` (only sends to your account email). For prod
+ *      set to `Launcharoo <hello@launcharoo.online>` after verifying the
+ *      domain in Resend — see docs/resend-setup.md section 6.
  */
 
 /* ---------------------------------------------------------------- types */

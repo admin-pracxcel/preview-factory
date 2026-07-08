@@ -70,11 +70,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     await sendEmail({
       to: raw,
-      subject: "Your Preview Factory login link",
-      html: `<p>Click the link below to sign in. It expires in 15 minutes.</p>
-             <p><a href="${link}">Sign in to Preview Factory</a></p>
-             <p style="color:#666;font-size:12px">If you didn't ask for this, ignore this email.</p>`,
-      text: `Sign in to Preview Factory:\n${link}\n\nExpires in 15 minutes. If you didn't ask for this, ignore this email.`,
+      subject: "Your Launcharoo sign-in link",
+      html: `<p>Click the link below to sign in to your Launcharoo dashboard. It expires in 15 minutes.</p>
+             <p><a href="${link}">Sign in to Launcharoo</a></p>
+             <p style="color:#666;font-size:12px">If you didn't ask for this, ignore this email. Your account is safe.</p>`,
+      text: `Sign in to Launcharoo:\n${link}\n\nExpires in 15 minutes. If you didn't ask for this, ignore this email.`,
     });
   } catch (err) {
     console.error("[auth:request-link] send failed:", err);
