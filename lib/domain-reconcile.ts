@@ -42,9 +42,6 @@ export async function reconcileTenantDomain(tenantId: string): Promise<Reconcile
     return { changed: false, state: "no_domain", reason: "no custom domain configured" };
   }
   const currentStatus = tenant.customDomainStatus ?? null;
-  if (currentStatus === "active") {
-    return { changed: false, state: "active", reason: "already active" };
-  }
   if (currentStatus === "failed") {
     return { changed: false, state: "failed", reason: "previously failed — needs support intervention" };
   }
@@ -62,14 +59,34 @@ export async function reconcileTenantDomain(tenantId: string): Promise<Reconcile
     return { changed: false, state: currentStatus ?? "pending_ns", reason: `zone.status=${zone.status}` };
   }
 
+  // If already active, still re-assert Worker route binding. Routes can
+  // be missing after a disconnect+reconnect cycle because disconnect
+  // unbinds them but reconnect doesn't force re-check when DNS records
+  // are already in place. Idempotent — CF returns "already exists" for
+  // routes that are still bound.
+  if (currentStatus === "active") {
+    try {
+      await bindWorkerToCustomerDomain(tenant.cloudflareZoneId, tenant.customDomain);
+    } catch (err) {
+      console.error(`[reconcile] tenant=${tenantId} route re-bind failed:`, err);
+      return { changed: false, state: "active", reason: "route re-bind failed" };
+    }
+    return { changed: false, state: "active", reason: "already active, routes reasserted" };
+  }
+
   // 2. Zone is active — do the one-time setup work if we haven't already.
-  //    "Already done" = our site record + Worker route already exist. We
-  //    check for the site record to detect this.
+  //    "Already done" here means the DNS side (snapshot import + apex/www
+  //    records) is in place. We track that via a site record at apex.
+  //
+  //    Worker routes are handled separately: they can be unbound at any
+  //    time by the disconnect flow, so we always ensure they're bound
+  //    whenever the zone is active. bindWorkerToCustomerDomain is
+  //    idempotent — the "route already exists" case is swallowed.
   const existingRecords = await listDnsRecords(tenant.cloudflareZoneId);
-  const alreadySetup = hasSiteRecord(existingRecords, tenant.customDomain);
+  const dnsAlreadySetup = hasSiteRecord(existingRecords, tenant.customDomain);
   const details: Record<string, unknown> = { zoneStatus: zone.status };
 
-  if (!alreadySetup) {
+  if (!dnsAlreadySetup) {
     // 2a. Import the pre-migration DNS snapshot so email etc keeps working.
     const snapshot = normaliseSnapshot(tenant.dnsRecordsSnapshot);
     if (snapshot) {
@@ -113,13 +130,16 @@ export async function reconcileTenantDomain(tenantId: string): Promise<Reconcile
     } catch (err) {
       console.warn(`[reconcile] tenant=${tenantId} www CNAME add failed:`, err);
     }
-
-    // 2c. Bind our Worker script to both apex/* and *.<domain>/*.
-    await bindWorkerToCustomerDomain(tenant.cloudflareZoneId, tenant.customDomain);
-    details.workerRoutesBound = true;
   } else {
-    details.alreadySetup = true;
+    details.dnsAlreadySetup = true;
   }
+
+  // 2c. Always ensure Worker routes are bound. Idempotent — a reconnect
+  //    after a disconnect (which unbinds routes) relies on this branch
+  //    running even when DNS records are still present from the first
+  //    connect.
+  await bindWorkerToCustomerDomain(tenant.cloudflareZoneId, tenant.customDomain);
+  details.workerRoutesBound = true;
 
   // 3. Flip status to active. We collapse pending_ssl → active because
   //    Cloudflare's Universal SSL provisions in parallel with zone
