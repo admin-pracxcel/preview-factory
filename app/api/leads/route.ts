@@ -26,6 +26,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { saveLead, type LeadRecord, type LeadSource } from "@/lib/leads-store";
+import { applyRateLimit, clientIp } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -38,6 +39,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
+
+  const tenantIdForKey = typeof body.tenantId === "string" ? body.tenantId : "notenant";
+  const limited = await applyRateLimit({
+    key: `leads:ip:${clientIp(request)}:tenant:${tenantIdForKey}`,
+    limit: 10,
+    windowSeconds: 60,
+  });
+  if (limited) return limited;
 
   const source: LeadSource =
     VALID_SOURCES.includes(body.source as LeadSource)

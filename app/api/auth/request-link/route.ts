@@ -12,6 +12,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { issueMagicToken } from "@/lib/magic-tokens";
 import { sendEmail } from "@/lib/resend-client";
 import { supabase } from "@/lib/supabase";
+import { applyRateLimit, clientIp } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -33,6 +34,22 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   if (!raw || !/^\S+@\S+\.\S+$/.test(raw)) {
     return NextResponse.json({ error: "Enter a valid email address." }, { status: 400 });
   }
+
+  // Two-layer rate limit: per-IP guards against a single attacker spraying
+  // many emails; per-email guards against an attacker rotating IPs to spam
+  // one victim's inbox. Both must pass.
+  const ipLimit = await applyRateLimit({
+    key: `auth:request-link:ip:${clientIp(request)}`,
+    limit: 5,
+    windowSeconds: 60,
+  });
+  if (ipLimit) return ipLimit;
+  const emailLimit = await applyRateLimit({
+    key: `auth:request-link:email:${raw}`,
+    limit: 3,
+    windowSeconds: 60,
+  });
+  if (emailLimit) return emailLimit;
 
   // Look up whether any claimed tenant matches. If nothing matches, we quietly
   // no-op — same response shape as the happy path, so the caller can't probe.

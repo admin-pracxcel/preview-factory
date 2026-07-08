@@ -23,6 +23,7 @@ import { getTenant, saveTenant } from "@/lib/tenant-store";
 import { validateCustomDomain } from "@/lib/custom-domain";
 import { createZone, findZoneByName, CloudflareApiError } from "@/lib/cloudflare-api";
 import { scanDomain } from "@/lib/dns-scan";
+import { applyRateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const maxDuration = 60; // DNS scan + zone create can take 15-30s.
@@ -60,6 +61,17 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const tenantId = typeof body.tenantId === "string" ? body.tenantId : "";
   const domainInput = typeof body.domain === "string" ? body.domain : "";
   if (!tenantId) return NextResponse.json({ error: "tenantId required" }, { status: 400 });
+
+  // Guards Cloudflare zone-create abuse. Each connect creates a real zone
+  // in our CF account; the account has a soft cap. 3 per tenant per hour
+  // is enough for legitimate retry-on-typo without letting anyone burn
+  // through the cap.
+  const limited = await applyRateLimit({
+    key: `custom-domain:connect:tenant:${tenantId}`,
+    limit: 3,
+    windowSeconds: 3600,
+  });
+  if (limited) return limited;
 
   const validation = validateCustomDomain(domainInput);
   if (!validation.ok) {

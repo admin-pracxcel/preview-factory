@@ -25,7 +25,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const result = await runHousekeeping();
     console.log(
-      `[cron/cleanup] jobs=${result.jobsDeleted} events=${result.processedEventsDeleted} tokens=${result.magicTokensDeleted} sessions=${result.sessionsDeleted} siteProps=${result.sitePropsBlanked}`
+      `[cron/cleanup] jobs=${result.jobsDeleted} events=${result.processedEventsDeleted} tokens=${result.magicTokensDeleted} sessions=${result.sessionsDeleted} siteProps=${result.sitePropsBlanked} rateLimits=${result.rateLimitsDeleted}`
     );
     return NextResponse.json({ ok: true, ...result });
   } catch (err) {

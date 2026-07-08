@@ -182,6 +182,48 @@ create table if not exists public.worker_health (
 insert into public.worker_health (id) values ('worker')
   on conflict (id) do nothing;
 
+-- Rate-limit counters (Phase 11b). One row per (endpoint, actor) key. The
+-- window_end column is what expires a bucket. Rows are cleaned up weekly
+-- by the housekeeping cron.
+create table if not exists public.rate_limits (
+  key         text primary key,
+  count       integer not null default 0,
+  window_end  timestamptz not null
+);
+
+-- Atomic check-and-increment for rate limiting. Returns whether the caller
+-- is allowed, how many requests remain in this window, and when the window
+-- resets. Race-safe because the whole insert/update happens inside one
+-- statement with ON CONFLICT — no read-modify-write gap.
+create or replace function public.check_rate_limit(
+  p_key            text,
+  p_limit          int,
+  p_window_seconds int
+) returns table(allowed boolean, remaining int, reset_at timestamptz)
+language plpgsql
+as $$
+declare
+  v_now     timestamptz := now();
+  v_new_end timestamptz := v_now + (p_window_seconds || ' seconds')::interval;
+  v_row     public.rate_limits%rowtype;
+begin
+  insert into public.rate_limits(key, count, window_end)
+  values (p_key, 1, v_new_end)
+  on conflict (key) do update
+    set
+      count      = case when public.rate_limits.window_end < v_now then 1
+                        else public.rate_limits.count + 1 end,
+      window_end = case when public.rate_limits.window_end < v_now then v_new_end
+                        else public.rate_limits.window_end end
+  returning * into v_row;
+
+  return query select
+    (v_row.count <= p_limit),
+    greatest(0, p_limit - v_row.count),
+    v_row.window_end;
+end;
+$$;
+
 -- =========================================================================
 -- 3. Indexes
 -- =========================================================================
@@ -214,6 +256,11 @@ create index if not exists leads_tenant_id_idx
 create index if not exists magic_tokens_email_idx
   on public.magic_tokens (email);
 
+-- rate_limits: window_end supports the weekly cleanup sweep only. The
+-- primary-key lookup on `key` handles the hot check-and-increment path.
+create index if not exists rate_limits_window_end_idx
+  on public.rate_limits (window_end);
+
 -- =========================================================================
 -- 4. Triggers — auto updated_at on tenants
 -- =========================================================================
@@ -238,6 +285,7 @@ alter table public.leads             enable row level security;
 alter table public.magic_tokens      enable row level security;
 alter table public.processed_events  enable row level security;
 alter table public.worker_health     enable row level security;
+alter table public.rate_limits       enable row level security;
 
 -- =========================================================================
 -- 6. Storage — previews bucket

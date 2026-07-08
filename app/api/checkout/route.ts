@@ -13,6 +13,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getTenant } from "@/lib/tenant-store";
 import { createCheckoutSession } from "@/lib/stripe-client";
+import { applyRateLimit, clientIp } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -39,6 +40,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   if (!tenantId || typeof tenantId !== "string") {
     return NextResponse.json({ error: "tenantId is required" }, { status: 400 });
   }
+
+  // Guards Stripe session churn. Mostly annoyance-prevention: 20/hour per
+  // IP is well above any legitimate flow (typical is 1-2 sessions total).
+  const limited = await applyRateLimit({
+    key: `checkout:ip:${clientIp(request)}`,
+    limit: 20,
+    windowSeconds: 3600,
+  });
+  if (limited) return limited;
 
   const tenant = await getTenant(tenantId);
   if (!tenant) {

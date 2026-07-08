@@ -16,6 +16,7 @@ import { cookies } from "next/headers";
 import { saveEditRequest } from "@/lib/edit-requests-store";
 import { applyEditRequest } from "@/lib/edit-engine";
 import { assertOwnsTenant, type MutableCookies } from "@/lib/session";
+import { applyRateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -45,6 +46,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       { status: 403 },
     );
   }
+
+  // Each edit request calls Anthropic — real cost per request. Cap at
+  // 10/day per tenant. Enough for legitimate iteration, tight enough
+  // that a compromised session can't run up a $100 bill overnight.
+  const limited = await applyRateLimit({
+    key: `edit-request:tenant:${tenantId}`,
+    limit: 10,
+    windowSeconds: 86_400,
+  });
+  if (limited) return limited;
 
   const id = crypto.randomUUID();
   const trimmedRequest = requestText.trim();

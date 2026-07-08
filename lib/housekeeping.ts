@@ -10,6 +10,7 @@
  *   magic_tokens (expired)   7 days past expires_at
  *   sessions (orphaned)     90 days, only if no tenant references them
  *   tenants site_props      30 days after status='expired' (row kept)
+ *   rate_limits              expired buckets (window_end < now) — every sweep
  *
  * Every step is a straight DELETE — no cascades outside the schema's own
  * on-delete rules. Sessions are the only sweep that runs in two hops because
@@ -31,6 +32,7 @@ export interface HousekeepingResult {
   magicTokensDeleted: number;
   sessionsDeleted: number;
   sitePropsBlanked: number;
+  rateLimitsDeleted: number;
   ranAt: string;
 }
 
@@ -106,6 +108,18 @@ export async function runHousekeeping(): Promise<HousekeepingResult> {
     }
   }
 
+  // Rate-limit buckets: drop rows whose window has already closed. Safe to
+  // sweep aggressively — a bucket past its window is a fresh start on next
+  // check-and-increment anyway. Bounded by limit(1000) so a huge burst
+  // doesn't blow up one sweep.
+  const { data: rateLimits, error: rlErr } = await supabase()
+    .from("rate_limits")
+    .delete()
+    .lt("window_end", now.toISOString())
+    .select("key")
+    .limit(1000);
+  if (rlErr) throw new Error(`housekeeping rate_limits sweep: ${rlErr.message}`);
+
   // Expired tenants: after the 30-day grace, drop the big site_props JSON to
   // reclaim storage. Keep the row for the audit trail. updated_at is bumped
   // when the reaper flipped status to 'expired' — so it's a fine expiry
@@ -125,6 +139,7 @@ export async function runHousekeeping(): Promise<HousekeepingResult> {
     magicTokensDeleted: (usedTokens?.length ?? 0) + (expiredTokens?.length ?? 0),
     sessionsDeleted,
     sitePropsBlanked: blanked?.length ?? 0,
+    rateLimitsDeleted: rateLimits?.length ?? 0,
     ranAt: now.toISOString(),
   };
 
@@ -140,6 +155,7 @@ export async function runHousekeeping(): Promise<HousekeepingResult> {
           magicTokensDeleted: result.magicTokensDeleted,
           sessionsDeleted: result.sessionsDeleted,
           sitePropsBlanked: result.sitePropsBlanked,
+          rateLimitsDeleted: result.rateLimitsDeleted,
         },
       },
       { onConflict: "id" }
