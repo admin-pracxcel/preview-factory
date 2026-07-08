@@ -1,0 +1,22 @@
+# Preview Factory / Launcharoo robots policy.
+#
+# Marketing pages under / and customer sites served through the Cloudflare
+# Worker (launcharoo.online + BYO domains) are indexable. Internal owner
+# pages, transactional flows, and API endpoints are not.
+#
+# The raw Vercel origin (preview-factory.vercel.app) gets an
+# X-Robots-Tag: noindex via middleware in addition to this file.
+
+User-agent: *
+
+Disallow: /dashboard
+Disallow: /login
+Disallow: /welcome
+Disallow: /expired
+Disallow: /building
+Disallow: /upsell
+Disallow: /api
+Disallow: /monitoring
+
+# Sitemap can be added later once we have per-niche landing pages worth
+# advertising to crawlers.

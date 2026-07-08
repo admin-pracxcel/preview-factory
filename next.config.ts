@@ -25,6 +25,35 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "**.supabase.co" },
     ],
   },
+  // Security headers applied to every response. See docs/security-headers.md
+  // for the rationale on each one and what's deliberately NOT here (CSP is
+  // deferred to a follow-up so it can be validated in staging first).
+  async headers() {
+    const securityHeaders = [
+      // Force HTTPS for 2 years, cover all subdomains. `preload` lets us
+      // ship the domain to hstspreload.org so browsers refuse HTTP even on
+      // first visit. Do NOT add to preload list until we're confident the
+      // whole *.launcharoo.online tree is HTTPS-only forever.
+      {
+        key: "Strict-Transport-Security",
+        value: "max-age=63072000; includeSubDomains; preload",
+      },
+      // Block MIME sniffing — the browser trusts the Content-Type header
+      // and won't try to guess based on file contents. Cheap XSS defence.
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      // Nobody legitimate frames Preview Factory. DENY closes clickjacking.
+      { key: "X-Frame-Options", value: "DENY" },
+      // Send referrer to same-origin, only origin (no path) cross-origin.
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      // Deny browser features we don't use. `payment=(self)` keeps Stripe
+      // Checkout redirects working on same-origin.
+      {
+        key: "Permissions-Policy",
+        value: "camera=(), microphone=(), geolocation=(), payment=(self)",
+      },
+    ];
+    return [{ source: "/:path*", headers: securityHeaders }];
+  },
 };
 
 export default withSentryConfig(nextConfig, {

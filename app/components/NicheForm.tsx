@@ -47,19 +47,16 @@ export default function NicheForm({
       timestamp: new Date().toISOString(),
     };
 
-    const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL;
-    if (webhookUrl) {
-      try {
-        await fetch(webhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-      } catch (err) {
-        console.error("Webhook call failed:", err);
-      }
-    } else {
-      console.log("n8n webhook not configured. Payload:", payload);
+    // Server-side proxy — the actual n8n URL stays out of the browser
+    // bundle. See app/api/marketing-intake/route.ts.
+    try {
+      await fetch("/api/marketing-intake", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      console.error("Intake submit failed:", err);
     }
 
     router.push(

@@ -104,8 +104,19 @@ Affiliate tracking parameter.
 
 ### `N8N_WEBHOOK_URL`
 Webhook path on n8n for the generate workflow.
-- **Used by**: `app/api/intake/route.ts`
+- **Used by**: `app/api/intake/route.ts`, and `app/api/marketing-intake/route.ts` as a fallback if `N8N_MARKETING_WEBHOOK_URL` is unset
 - **Values**: `https://n8n.yourdomain.com/webhook/pf-generate-dev` (dev), `.../pf-generate-prod` (prod)
+
+### `N8N_MARKETING_WEBHOOK_URL` (optional)
+Dedicated webhook for the marketing-lead ping fired by NicheForm on the
+/for/[category] landing pages. When unset, `N8N_WEBHOOK_URL` is used.
+- **Used by**: `app/api/marketing-intake/route.ts`
+- **Set this** if you want marketing-form submissions on a separate workflow (recommended so form-spam alerting stays isolated from generation failures)
+
+### `NEXT_PUBLIC_N8N_WEBHOOK_URL` (deprecated — remove from Vercel)
+Was previously exposed to the browser so NicheForm could POST directly.
+Removed in Phase 11d. Server-side proxy at `/api/marketing-intake` handles this now.
+- **Action**: unset in Vercel Production. Nothing reads it anymore.
 
 ### `WORKER_SHARED_SECRET`
 Bearer secret in `x-worker-secret` header.
