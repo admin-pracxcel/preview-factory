@@ -68,8 +68,10 @@ const nextConfig: NextConfig = {
       "object-src 'none'",
       // Prevent <base href="..."> injection changing all relative URLs.
       "base-uri 'self'",
-      // Reinforces X-Frame-Options DENY.
-      "frame-ancestors 'none'",
+      // 'self' allows our own preview page to embed /preview/site/[id]
+      // in an iframe. Still blocks external sites from framing us
+      // (equivalent to X-Frame-Options: SAMEORIGIN for cross-origin).
+      "frame-ancestors 'self'",
       // Auto-upgrade any accidental http:// asset link.
       "upgrade-insecure-requests",
       // Violations POST here — see app/api/csp-report/route.ts.
@@ -88,8 +90,11 @@ const nextConfig: NextConfig = {
       // Block MIME sniffing — the browser trusts the Content-Type header
       // and won't try to guess based on file contents. Cheap XSS defence.
       { key: "X-Content-Type-Options", value: "nosniff" },
-      // Nobody legitimate frames Preview Factory. DENY closes clickjacking.
-      { key: "X-Frame-Options", value: "DENY" },
+      // SAMEORIGIN: same-origin frames (the preview page embedding
+      // /preview/site/[id]) allowed; external framing blocked. Modern
+      // browsers use frame-ancestors from CSP; this header is here for
+      // old ones.
+      { key: "X-Frame-Options", value: "SAMEORIGIN" },
       // Send referrer to same-origin, only origin (no path) cross-origin.
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
       // Deny browser features we don't use. `payment=(self)` keeps Stripe
