@@ -361,8 +361,16 @@ export default function NicheLanding({
           </div>
           <span className="text-white/30 text-sm">© 2025 Preview Factory</span>
         </div>
-        <div className="text-white/20 text-xs text-center mt-6">
-          For Australian service businesses. ABN: [to be added].
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-white/30">
+          <Link href="/privacy" className="hover:text-white/60 transition-colors">
+            Privacy Policy
+          </Link>
+          <span className="text-white/15">·</span>
+          <Link href="/terms" className="hover:text-white/60 transition-colors">
+            Terms of Service
+          </Link>
+          <span className="text-white/15">·</span>
+          <span>For Australian service businesses. ABN: [to be added].</span>
         </div>
       </footer>
     </div>
