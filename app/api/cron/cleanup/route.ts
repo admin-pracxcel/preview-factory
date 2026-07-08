@@ -8,6 +8,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { runHousekeeping } from "@/lib/housekeeping";
+import { captureCronError } from "@/lib/telemetry";
 
 export const runtime = "nodejs";
 
@@ -30,6 +31,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ ok: true, ...result });
   } catch (err) {
     console.error("[cron/cleanup] failed:", err);
+    captureCronError("cleanup", err);
     return NextResponse.json(
       { error: err instanceof Error ? err.message : "cleanup failed" },
       { status: 500 }

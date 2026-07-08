@@ -7,6 +7,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { reconcileAllPending } from "@/lib/domain-reconcile";
+import { captureCronError } from "@/lib/telemetry";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
@@ -28,6 +29,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ ok: true, ...result });
   } catch (err) {
     console.error("[cron/domain-reconcile] failed:", err);
+    captureCronError("domain-reconcile", err);
     return NextResponse.json(
       { error: err instanceof Error ? err.message : "reconcile failed" },
       { status: 500 },

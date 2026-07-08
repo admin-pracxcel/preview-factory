@@ -11,6 +11,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { runReaper } from "@/lib/reaper";
+import { captureCronError } from "@/lib/telemetry";
 
 export const runtime = "nodejs";
 
@@ -33,6 +34,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ ok: true, ...result });
   } catch (err) {
     console.error("[cron/reaper] failed:", err);
+    captureCronError("reaper", err);
     return NextResponse.json(
       { error: err instanceof Error ? err.message : "reaper failed" },
       { status: 500 }

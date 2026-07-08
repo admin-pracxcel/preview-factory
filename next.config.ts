@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const nextConfig: NextConfig = {
   images: {
@@ -26,4 +27,26 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  // Source-map upload is skipped locally (no SENTRY_AUTH_TOKEN). On Vercel
+  // Prod the token is set, so maps upload as part of the build.
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+
+  // Reduce build noise. Only print warnings/errors, not per-chunk info.
+  silent: !process.env.CI,
+
+  // Widen the source-map upload beyond the default so server-side stacks
+  // resolve to original TS lines in Sentry. Small build cost.
+  widenClientFileUpload: true,
+
+  // Sentry proxies error events through the app's own origin, so ad
+  // blockers don't drop them. Requires no extra route — Sentry SDK
+  // registers /monitoring automatically.
+  tunnelRoute: "/monitoring",
+
+  // Sentry v10 wraps React Server Components to capture errors thrown
+  // during render. Small runtime cost, big observability win.
+  reactComponentAnnotation: { enabled: true },
+});

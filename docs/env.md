@@ -133,6 +133,36 @@ Selects billing implementation.
 
 ---
 
+## Introduced in Phase 11c (error monitoring)
+
+### `SENTRY_DSN`
+Server-side Sentry DSN — where errors get sent.
+- **Used by**: `sentry.server.config.ts`, `sentry.edge.config.ts`
+- **How to get**: Sentry → Projects → your project → Settings → Client Keys (DSN)
+- **Scope**: Production only. Leaving unset in dev/preview disables Sentry (log-only fallback).
+
+### `NEXT_PUBLIC_SENTRY_DSN`
+Same DSN as above, but exposed to the browser bundle. Sentry SDK auto-tunnels through `/monitoring` so ad-blockers don't drop events.
+- **Used by**: `instrumentation-client.ts`
+- **Value**: same as `SENTRY_DSN`
+
+### `SENTRY_ORG`
+Sentry organisation slug (e.g. `pracxcel`).
+- **Used by**: `next.config.ts` withSentryConfig — required for source-map upload at build time
+- **How to get**: Sentry → your org name in top-left → slug in URL
+
+### `SENTRY_PROJECT`
+Sentry project slug (e.g. `preview-factory`).
+- **Used by**: `next.config.ts` withSentryConfig
+
+### `SENTRY_AUTH_TOKEN`
+Personal auth token with `project:releases` scope. Uploads source maps during `next build`.
+- **Used by**: `next.config.ts` withSentryConfig
+- **How to get**: Sentry → User Settings → Auth Tokens → Create New Token → scope: `project:releases`
+- **Scope**: Vercel Production build env. Not needed in dev.
+
+---
+
 ## Vercel env var scopes
 
 Set every prod var in **both** Production and Preview scopes, but with different values:
