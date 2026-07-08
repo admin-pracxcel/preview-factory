@@ -5,14 +5,47 @@ when to spend money on more.
 
 ## What you have on the Supabase free tier
 
-- **Daily automated backups**, retained for **7 days**.
-- Backups are of the whole Postgres database (all tables, all rows).
-- **No** point-in-time restore (PITR) — that's Pro+ only.
-- **No** per-table restore — restore is all-or-nothing.
+**Nothing automatic.** The free tier gives you:
+- **No** automated daily backups (those start on Pro at $25/mo)
+- **No** point-in-time restore (PITR — Team+ only)
+- **No** managed disaster recovery of any kind
 
-Practical read: if something bad happens today, you can restore to any of the
-last 7 nightly snapshots. The most data you can lose is ~24 hours (from the
-last snapshot to the incident).
+If Supabase has a database incident right now, or you accidentally drop a
+table, or a migration goes wrong — you have no restore path. This is the
+biggest single risk in the current stack.
+
+## The three ways to fix this
+
+### 1. Upgrade to Supabase Pro — $25/mo, one click
+
+Gives you: 7-day daily automated backups, one-click restore, longer log
+retention, better support SLA. Recommended once you have your first paying
+customer (i.e. $60+/mo in revenue) — the Pro cost is under 50% of one
+Sandbox subscription.
+
+### 2. Roll your own pg_dump backups on the free tier
+
+Free but manual. Options:
+
+- **Local, ad-hoc**: run `pg_dump` from your laptop when you remember.
+  Fine while there are 0-3 tenants; useless once you're busy.
+- **GitHub Actions cron**: schedule a nightly workflow that runs `pg_dump`,
+  encrypts the output with `gpg`, and uploads it as an artifact or a
+  private release. Free. Ask me to build this if you want it.
+- **Cloudflare R2 + a Worker cron**: same idea, better ergonomics. Also free.
+
+If you want option 2, tell me which flavour and I'll build the runbook.
+
+### 3. Live with the risk until you have paying customers
+
+Genuinely reasonable stance while you're pre-revenue. The downside is
+proportional to the value at risk — right now, that's a few test tenants.
+Once real customers exist, decision changes.
+
+## Recommendation
+
+Wait until your first paying customer, then upgrade to Pro. Cheaper and
+better than any DIY option, and comes with support you'll appreciate.
 
 ## What Preview Factory-specific data lives where
 
@@ -27,14 +60,16 @@ last snapshot to the incident).
 Rule of thumb: everything customer-facing is either in Supabase (backed up)
 or in a vendor account (you don't manage backups for them).
 
-## How to verify backups are actually running
+## How to verify backups are actually running (Pro plan only)
 
 Supabase → your project → **Database** → **Backups**. You should see 7 rows
 labelled "Daily backup", each with a timestamp roughly 24 hours apart.
 
-If the list is empty or last backup is older than 48h — that's a bug in
-Supabase, not you. Open a support ticket. Free tier gets email support with
-a slower SLA than paid, so if this matters, upgrading is warranted.
+On the free tier this page will be empty or show an upgrade prompt — that's
+expected, not a bug.
+
+If you're on Pro and the list is empty or last backup is older than 48h,
+open a Supabase support ticket.
 
 ## Restore posture
 
@@ -56,13 +91,16 @@ site_props, reaper flip, stuck domain.
 
 ## RTO / RPO commitments
 
-- **RTO** (recovery time objective — how fast can you be back up): ~30 min
-  for a full DB restore, ~2 min for a per-tenant SQL fix.
-- **RPO** (recovery point objective — max data loss): ~24h on full DB
-  restore (the gap since the last snapshot).
+Depends on your plan:
 
-For local service businesses this is fine. If you eventually onboard a
-customer whose leads are worth $1k+ each, PITR becomes worth the money.
+| Plan | RPO (max data loss) | RTO (time to restore) |
+|---|---|---|
+| Free (current) | **All of it** if incident occurs, ~5 min if per-tenant SQL fix | Total loss possible |
+| Pro (recommended when revenue justifies) | ~24h (last nightly) | ~30 min full DB, ~2 min per-tenant |
+| Team+ (with PITR) | ~5 min | ~30 min |
+
+For local service businesses on Pro this is fine. Free tier is only OK
+pre-revenue.
 
 ## When to upgrade to paid PITR
 
