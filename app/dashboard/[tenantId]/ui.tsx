@@ -24,6 +24,9 @@ import {
   PenLine,
   ChevronDown,
   Unplug,
+  Download,
+  Database,
+  FileSpreadsheet,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -293,6 +296,62 @@ export function EditSiteCard({ tenantId }: { tenantId: string }) {
             </div>
           </div>
         </button>
+      </div>
+    </div>
+  );
+}
+
+/* =============================================================== your data == */
+
+/**
+ * YourDataCard — two anchor-styled buttons that hit export endpoints.
+ * The endpoints set Content-Disposition: attachment, so the browser
+ * saves rather than navigates. Same-origin cookies flow automatically.
+ *
+ * Two exports:
+ *   - Full JSON bundle: tenant + leads + edit-requests. For portability
+ *     and restore-aid.
+ *   - Leads CSV: opens straight into Excel / Sheets. Owner-friendly.
+ */
+export function YourDataCard({ tenantId }: { tenantId: string }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+      <div className="mb-1 flex items-center gap-3">
+        <Download className="h-5 w-5 text-emerald-400" />
+        <h3 className="text-base font-bold text-white">Your data</h3>
+      </div>
+      <p className="mb-4 text-sm text-white/50">
+        Download a copy of everything we hold about your site — anytime, no questions asked.
+      </p>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <a
+          href={`/api/dashboard/${tenantId}/export`}
+          className="flex items-start gap-3 rounded-xl border border-white/10 bg-black/20 p-4 transition-colors hover:border-white/25 hover:bg-black/30"
+        >
+          <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-emerald-900/40">
+            <Database className="h-4 w-4 text-emerald-400" />
+          </div>
+          <div>
+            <div className="font-semibold text-white">Full data (JSON)</div>
+            <div className="mt-0.5 text-xs text-white/50">
+              Site content, leads, and every edit request
+            </div>
+          </div>
+        </a>
+        <a
+          href={`/api/dashboard/${tenantId}/export/leads.csv`}
+          className="flex items-start gap-3 rounded-xl border border-white/10 bg-black/20 p-4 transition-colors hover:border-white/25 hover:bg-black/30"
+        >
+          <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-900/40">
+            <FileSpreadsheet className="h-4 w-4 text-blue-400" />
+          </div>
+          <div>
+            <div className="font-semibold text-white">Leads (CSV)</div>
+            <div className="mt-0.5 text-xs text-white/50">
+              Opens straight into Excel or Google Sheets
+            </div>
+          </div>
+        </a>
       </div>
     </div>
   );

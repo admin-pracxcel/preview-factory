@@ -24,7 +24,7 @@ import {
 import { getTenant } from "@/lib/tenant-store";
 import { listLeads } from "@/lib/leads-store";
 import { listEditRequests } from "@/lib/edit-requests-store";
-import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard, EditSiteCard } from "./ui";
+import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard, EditSiteCard, YourDataCard } from "./ui";
 
 /* ------------------------------------------------------------------ meta */
 
@@ -185,6 +185,9 @@ export default async function DashboardPage({
             verifiedAt: tenant.customDomainVerifiedAt ?? null,
           }}
         />
+
+        {/* ── your data card ── */}
+        <YourDataCard tenantId={tenantId} />
 
         <div className="grid gap-8 lg:grid-cols-2">
 
