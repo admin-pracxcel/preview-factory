@@ -362,7 +362,6 @@ function PreviewPageInner() {
           src={iframeSrc}
           title="Your website preview"
           className="absolute inset-0 w-full h-full border-0"
-          sandbox="allow-scripts allow-same-origin allow-forms allow-top-navigation"
         />
       </div>
 
@@ -524,7 +523,6 @@ function PreviewPageInner() {
                   src={iframeSrc}
                   title="Your website preview"
                   className="absolute inset-0 w-full h-full border-0"
-                  sandbox="allow-scripts allow-same-origin allow-forms allow-top-navigation"
                 />
               </div>
               {/* Home indicator */}
@@ -550,7 +548,6 @@ function PreviewPageInner() {
                 src={iframeSrc}
                 title="Your website preview"
                 className="flex-1 w-full border-0 bg-white"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-top-navigation"
               />
             </div>
           )}
