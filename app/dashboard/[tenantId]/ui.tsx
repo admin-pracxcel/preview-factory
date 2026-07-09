@@ -292,12 +292,12 @@ export function LeadsList({ leads }: { leads: LeadForDashboard[] }) {
   return (
     <>
       {/*
-       * Cap the list at ~7 rows and scroll internally past that. Keeps the
+       * Cap the list at ~5 rows and scroll internally past that. Keeps the
        * enquiries card from towering over the change-request card in the
        * 50/50 grid on tenants with a busy inbox, and stops the whole page
        * from getting unusably tall on mobile.
        */}
-      <ul className="flex max-h-[26rem] flex-col gap-2 overflow-y-auto pr-1">
+      <ul className="flex max-h-[19rem] flex-col gap-2 overflow-y-auto pr-1">
         {leads.map((lead) => (
           <li key={lead.id}>
             <button
