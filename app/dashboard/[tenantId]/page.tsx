@@ -191,6 +191,18 @@ export default async function DashboardPage({
         {/* ── your data card ── */}
         <YourDataCard tenantId={tenantId} />
 
+        {/* ── billing card (full width) ── */}
+        <section className="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col gap-4">
+          <div className="flex items-center gap-2">
+            <ReceiptText className="h-5 w-5 text-purple-400" />
+            <h2 className="text-base font-bold">Billing</h2>
+          </div>
+          <p className="text-sm text-white/50">
+            Update your payment method, view invoices, or cancel your subscription.
+          </p>
+          <BillingButton tenantId={tenantId} />
+        </section>
+
         <div className="grid gap-8 lg:grid-cols-2">
 
           {/* ── leads table ── */}
@@ -208,68 +220,52 @@ export default async function DashboardPage({
             <LeadsList leads={leads} />
           </section>
 
-          {/* ── right column: billing + edit request ── */}
-          <div className="flex flex-col gap-6">
+          {/* ── edit request card ── */}
+          <section
+            id="edit-request-form"
+            className="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col gap-4 scroll-mt-24"
+          >
+            <div className="flex items-center gap-2">
+              <PenLine className="h-5 w-5 text-amber-400" />
+              <h2 className="text-base font-bold">Request a change</h2>
+            </div>
+            <p className="text-sm text-white/50">
+              Describe what you&apos;d like changed — phone number, email, address, hours, anything else. We&apos;ll email you when it&apos;s done, usually within 2 business hours.
+            </p>
 
-            {/* Billing card */}
-            <section className="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col gap-4">
-              <div className="flex items-center gap-2">
-                <ReceiptText className="h-5 w-5 text-purple-400" />
-                <h2 className="text-base font-bold">Billing</h2>
-              </div>
-              <p className="text-sm text-white/50">
-                Update your payment method, view invoices, or cancel your subscription.
-              </p>
-              <BillingButton tenantId={tenantId} />
-            </section>
-
-            {/* Edit request card */}
-            <section
-              id="edit-request-form"
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col gap-4 scroll-mt-24"
-            >
-              <div className="flex items-center gap-2">
-                <PenLine className="h-5 w-5 text-amber-400" />
-                <h2 className="text-base font-bold">Request a change</h2>
-              </div>
-              <p className="text-sm text-white/50">
-                Describe what you&apos;d like changed — phone number, email, address, hours, anything else. We&apos;ll email you when it&apos;s done, usually within 2 business hours.
-              </p>
-
-              {/* Recent requests */}
-              {editRequests.length > 0 && (
-                <div className="flex flex-col gap-2">
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-white/40">
-                    Recent requests
-                  </p>
-                  {editRequests.map((r) => (
-                    <div
-                      key={r.id}
-                      className="flex items-center justify-between gap-3 rounded-lg bg-black/20 px-3 py-2 text-xs"
+            {/* Recent requests */}
+            {editRequests.length > 0 && (
+              <div className="flex flex-col gap-2">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-white/40">
+                  Recent requests
+                </p>
+                {editRequests.map((r) => (
+                  <div
+                    key={r.id}
+                    className="flex items-center justify-between gap-3 rounded-lg bg-black/20 px-3 py-2 text-xs"
+                  >
+                    <span className="text-white/60 truncate flex-1">{r.request}</span>
+                    <span
+                      className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                        r.status === "applied"
+                          ? "bg-green-500/15 text-green-400"
+                          : r.status === "rejected"
+                          ? "bg-red-500/15 text-red-400"
+                          : r.status === "preview"
+                          ? "bg-blue-500/15 text-blue-400"
+                          : "bg-white/10 text-white/40"
+                      }`}
                     >
-                      <span className="text-white/60 truncate flex-1">{r.request}</span>
-                      <span
-                        className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                          r.status === "applied"
-                            ? "bg-green-500/15 text-green-400"
-                            : r.status === "rejected"
-                            ? "bg-red-500/15 text-red-400"
-                            : r.status === "preview"
-                            ? "bg-blue-500/15 text-blue-400"
-                            : "bg-white/10 text-white/40"
-                        }`}
-                      >
-                        {r.status}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
+                      {r.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
 
-              <EditRequestForm tenantId={tenantId} />
-            </section>
+            <EditRequestForm tenantId={tenantId} />
+          </section>
 
-          </div>
         </div>
 
         {/* ── footer ── */}
