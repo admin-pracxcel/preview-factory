@@ -29,9 +29,10 @@ export function renderAlliedHealthPage(
   site: SiteProps,
   slug: string[],
   basePath: string,
+  tenantId?: string,
 ): React.ReactElement | null {
   // Home
-  if (!slug || slug.length === 0) return <HomePage site={site} basePath={basePath} />;
+  if (!slug || slug.length === 0) return <HomePage site={site} basePath={basePath} tenantId={tenantId} />;
 
   const [section, key] = slug;
 

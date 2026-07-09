@@ -285,7 +285,7 @@ export default async function DashboardPage({
                 <h2 className="text-base font-bold">Request a change</h2>
               </div>
               <p className="text-sm text-white/50">
-                Describe what you&apos;d like changed in plain English. We&apos;ll send you a preview to approve before anything goes live.
+                Describe what you&apos;d like changed — phone number, email, address, hours, anything else. We&apos;ll email you when it&apos;s done, usually within 2 business hours.
               </p>
 
               {/* Recent requests */}

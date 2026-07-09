@@ -14,14 +14,19 @@ import {
   buildLocalBusinessJsonLd,
 } from "@/shared/ui";
 
-export function HomePage({ site, basePath }: { site: SiteProps; basePath: string }) {
+export function HomePage({
+  site,
+  basePath,
+  tenantId,
+}: {
+  site: SiteProps;
+  basePath: string;
+  tenantId?: string;
+}) {
   const { home, business } = site;
   const { heroImage } = resolveTheme(site.branding, site.overrides);
   const phone = home.contact?.phone || business.phone || "";
   const email = home.contact?.email || business.email || "";
-  const tenantId = basePath.startsWith("/preview/site/")
-    ? basePath.replace("/preview/site/", "")
-    : undefined;
 
   const locations = site.locations.map((l) => ({ slug: l.slug, suburb: l.suburb }));
 

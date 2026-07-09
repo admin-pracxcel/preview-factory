@@ -132,7 +132,6 @@ export function EditRequestForm({ tenantId }: { tenantId: string }) {
   const [request, setRequest] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
-  const [previewUrl, setPreviewUrl] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -150,8 +149,6 @@ export function EditRequestForm({ tenantId }: { tenantId: string }) {
         body: JSON.stringify({ tenantId, request: request.trim() }),
       });
       if (!res.ok) throw new Error("Server error");
-      const data = (await res.json()) as { id?: string; status?: string; previewUrl?: string };
-      setPreviewUrl(data.previewUrl ?? "");
       setStatus("success");
       setRequest("");
     } catch {
@@ -166,30 +163,13 @@ export function EditRequestForm({ tenantId }: { tenantId: string }) {
         <div className="grid h-12 w-12 place-items-center rounded-full bg-green-500/15">
           <CheckCircle2 className="h-6 w-6 text-green-400" />
         </div>
-        <h3 className="font-semibold text-white">Change request received</h3>
-        {previewUrl ? (
-          <>
-            <p className="text-sm text-white/50">
-              Your proposed change is ready to review. Check the preview before it goes live.
-            </p>
-            <a
-              href={previewUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
-            >
-              Review proposed change
-              <ExternalLink className="h-3.5 w-3.5" />
-            </a>
-          </>
-        ) : (
-          <p className="text-sm text-white/50">
-            Request received but processing failed. Please try again.
-          </p>
-        )}
+        <h3 className="font-semibold text-white">Request received</h3>
+        <p className="text-sm text-white/50">
+          We&apos;ll email you when it&apos;s done — usually within 2 business hours.
+        </p>
         <button
           type="button"
-          onClick={() => { setStatus("idle"); setPreviewUrl(""); }}
+          onClick={() => setStatus("idle")}
           className="mt-2 text-sm text-blue-400 hover:text-blue-300 transition-colors"
         >
           Submit another request

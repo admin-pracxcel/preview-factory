@@ -2,7 +2,7 @@
  * app/preview/site/[tenantId]/[[...slug]]/page.tsx
  *
  * Universal per-tenant site renderer.
- * Loads the tenant record from the file store, validates the SiteProps, and
+ * Loads the tenant record from the store, validates the SiteProps, and
  * dispatches to the correct category renderer based on `tenant.category`.
  *
  * Routes:
@@ -13,25 +13,19 @@
  *   /preview/site/<tenantId>/faq              → FAQ page
  *   /preview/site/<tenantId>/about            → about page
  *
- * Phase L: if ?editRequest=<id> is present and the edit request is in
- * "preview" status, the proposed SiteProps are used instead of the stored
- * tenant SiteProps, and an EditPreviewBanner is overlaid at the bottom.
- *
- * This is a server component — it reads from the local file store directly.
+ * This is a server component — it reads from the store directly.
  */
 
 import { notFound, redirect } from "next/navigation";
 import { headers } from "next/headers";
 import type { Metadata } from "next";
 import { getTenant } from "@/lib/tenant-store";
-import { getEditRequest } from "@/lib/edit-requests-store";
 import { sitePropsSchema } from "@/shared/types/site-props";
 import type { SiteProps } from "@/shared/types/site-props";
 import { renderTradesPage, tradesPageMetadata } from "@/templates/categories/trades";
 import { renderAlliedHealthPage, alliedHealthPageMetadata } from "@/templates/categories/allied-health";
 import { renderBeautyPage, beautyPageMetadata } from "@/templates/categories/beauty-aesthetics";
 import { renderFitnessPage, fitnessPageMetadata } from "@/templates/categories/fitness-wellness";
-import { EditPreviewBanner } from "@/shared/ui/edit-preview-banner";
 
 /* ----------------------------------------------------------------------- types */
 
@@ -62,19 +56,19 @@ async function renderPage(
   category: string,
   site: SiteProps,
   slug: string[],
-  tenantId: string
+  tenantId: string,
 ): Promise<React.ReactElement | null> {
   const bp = await effectiveBasePath(tenantId);
   switch (category) {
     case "allied-health":
-      return renderAlliedHealthPage(site, slug, bp);
+      return renderAlliedHealthPage(site, slug, bp, tenantId);
     case "beauty-aesthetics":
-      return renderBeautyPage(site, slug, bp);
+      return renderBeautyPage(site, slug, bp, tenantId);
     case "fitness-wellness":
-      return renderFitnessPage(site, slug, bp);
+      return renderFitnessPage(site, slug, bp, tenantId);
     default:
       // "trades" and any unknown category fall through to trades renderer
-      return renderTradesPage(site, slug, bp);
+      return renderTradesPage(site, slug, bp, tenantId);
   }
 }
 
@@ -95,54 +89,14 @@ function pageMetadata(
   }
 }
 
-/**
- * Resolve the effective SiteProps: if an editRequestId is provided and the
- * edit request is in "preview" state with valid proposedSiteProps, return
- * those; otherwise fall back to tenant.siteProps.
- */
-async function resolveProposedSite(
-  tenant: { siteProps: SiteProps },
-  editRequestId: string | undefined
-): Promise<
-  | { site: SiteProps; isPreview: true; editReqId: string; changeSummary: string; request: string }
-  | { site: SiteProps; isPreview: false }
-> {
-  if (!editRequestId) return { site: tenant.siteProps, isPreview: false };
-
-  const editReq = await getEditRequest(editRequestId);
-  if (
-    !editReq ||
-    editReq.status !== "preview" ||
-    !editReq.proposedSiteProps
-  ) {
-    return { site: tenant.siteProps, isPreview: false };
-  }
-
-  const parsed = sitePropsSchema.safeParse(editReq.proposedSiteProps);
-  if (!parsed.success) {
-    return { site: tenant.siteProps, isPreview: false };
-  }
-
-  return {
-    site: parsed.data,
-    isPreview: true,
-    editReqId: editReq.id,
-    changeSummary: editReq.changeSummary ?? "Proposed change",
-    request: editReq.request,
-  };
-}
-
 /* -------------------------------------------------------------------- routes */
 
 export async function generateMetadata({
   params,
-  searchParams,
 }: {
   params: Promise<RouteParams>;
-  searchParams: Promise<{ editRequest?: string }>;
 }): Promise<Metadata> {
   const { tenantId, slug = [] } = await params;
-  const { editRequest: editRequestId } = await searchParams;
 
   const tenant = await getTenant(tenantId);
   if (!tenant) return { title: "Not Found" };
@@ -150,23 +104,16 @@ export async function generateMetadata({
   const parseResult = sitePropsSchema.safeParse(tenant.siteProps);
   if (!parseResult.success) return { title: tenant.name };
 
-  // Use proposed site props for metadata if in preview mode
-  const resolved = await resolveProposedSite(tenant, editRequestId);
-  const site = resolved.site;
-
-  const meta = pageMetadata(tenant.category, site, slug);
+  const meta = pageMetadata(tenant.category, parseResult.data, slug);
   return { title: meta.title, description: meta.description };
 }
 
 export default async function TenantPreviewPage({
   params,
-  searchParams,
 }: {
   params: Promise<RouteParams>;
-  searchParams: Promise<{ editRequest?: string }>;
 }): Promise<React.ReactElement> {
   const { tenantId, slug = [] } = await params;
-  const { editRequest: editRequestId } = await searchParams;
 
   const tenant = await getTenant(tenantId);
   if (!tenant) notFound();
@@ -174,9 +121,6 @@ export default async function TenantPreviewPage({
 
   const parseResult = sitePropsSchema.safeParse(tenant.siteProps);
   if (!parseResult.success) {
-    // Log the actual validation issues so we can see WHAT is wrong.
-    // Silently swallowing the parse error was making this class of bug
-    // undebuggable from Vercel logs.
     const issues = parseResult.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`);
     console.error(
       `[site-render] SiteProps validation failed for tenant=${tenantId}`,
@@ -194,25 +138,7 @@ export default async function TenantPreviewPage({
     );
   }
 
-  // Resolve effective site props (may be proposed edit preview)
-  const resolved = await resolveProposedSite(tenant, editRequestId);
-
-  const page = await renderPage(tenant.category, resolved.site, slug, tenantId);
+  const page = await renderPage(tenant.category, parseResult.data, slug, tenantId);
   if (!page) notFound();
-
-  if (resolved.isPreview) {
-    return (
-      <>
-        <EditPreviewBanner
-          editRequestId={resolved.editReqId}
-          changeSummary={resolved.changeSummary}
-          request={resolved.request}
-          tenantId={tenantId}
-        />
-        {page}
-      </>
-    );
-  }
-
   return page;
 }
