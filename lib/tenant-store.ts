@@ -47,6 +47,9 @@ export interface TenantRecord {
   siteProps: SiteProps;
   /** ISO 8601 creation timestamp. */
   createdAt: string;
+  /** ISO 8601 timestamp of the last row update. Sourced from Postgres's
+   *  auto-maintained `updated_at`. Read-only — Postgres owns it. */
+  updatedAt: string;
   /** Lifecycle status. */
   status: TenantStatus;
   /** Google place_id if the intake used the Places API; undefined for fixture. */
@@ -149,6 +152,7 @@ function rowToRecord(row: TenantRow): TenantRecord {
     category: row.category,
     siteProps: (row.site_props ?? {}) as SiteProps,
     createdAt: row.created_at,
+    updatedAt: row.updated_at,
     status: toAppStatus(row.status),
     placeId: row.place_id ?? undefined,
     gbpPhotos: row.gbp_photos ?? undefined,
