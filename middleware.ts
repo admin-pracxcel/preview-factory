@@ -1,35 +1,30 @@
 /**
  * middleware.ts
- * Runs before every response. Currently used for one thing: prevent search
- * engines from indexing the raw Vercel origin (preview-factory.vercel.app).
+ * Runs before every response. Job: prevent search engines from indexing
+ * the raw Vercel origin (preview-factory.vercel.app) without touching the
+ * customer-facing hosts we route through the Cloudflare Worker.
  *
- * Customer traffic reaches Vercel via the Cloudflare Worker at
- * launcharoo.online (or a customer's own domain). Those requests carry
- * X-Forwarded-Host = launcharoo.online / customer.tld. Anyone hitting
- * preview-factory.vercel.app directly has no X-Forwarded-Host header
- * (Vercel doesn't set it) or has host === preview-factory.vercel.app.
- * In either case we tag the response noindex so it drops out of Google.
+ * How we distinguish Worker traffic from a direct-origin hit:
+ *   The Worker sets a custom X-Launcharoo-Host header on every proxied
+ *   request, carrying the customer-facing hostname. Vercel's edge strips
+ *   X-Forwarded-Host and rewrites it to the Vercel origin, so we can't
+ *   rely on that. The custom header is preserved end to end.
  *
- * The static robots.txt in public/ handles the launcharoo.online case
- * (disallow internal paths). This middleware handles the vercel.app case
- * (block everything).
+ * If X-Launcharoo-Host is present → Worker-proxied traffic → do nothing
+ * (the response is served on a real customer host and should be indexable).
+ * If it's absent → someone hit preview-factory.vercel.app directly →
+ * add X-Robots-Tag: noindex so the response drops out of Google.
+ *
+ * The dynamic /robots.txt route reinforces this on the vercel.app origin
+ * with a full Disallow.
  */
 
 import { NextResponse, type NextRequest } from "next/server";
 
-const ORIGIN_HOST = "preview-factory.vercel.app";
-
 export function middleware(request: NextRequest): NextResponse {
-  const forwardedHost = request.headers.get("x-forwarded-host");
-  const host = request.headers.get("host") ?? "";
-
-  const isDirectOriginHit =
-    !forwardedHost ||
-    forwardedHost === ORIGIN_HOST ||
-    host === ORIGIN_HOST;
-
+  const launcharooHost = request.headers.get("x-launcharoo-host");
   const response = NextResponse.next();
-  if (isDirectOriginHit) {
+  if (!launcharooHost || launcharooHost.trim().length === 0) {
     response.headers.set("X-Robots-Tag", "noindex, nofollow");
   }
   return response;

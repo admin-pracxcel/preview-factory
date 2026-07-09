@@ -40,15 +40,16 @@ function basePath(tenantId: string): string {
 /**
  * When the request came in via the Cloudflare Worker (either at
  * <slug>.launcharoo.online OR a customer's own custom domain), use an
- * empty basePath so all internal hrefs render as clean paths. The
- * Worker sets X-Forwarded-Host to the customer-facing hostname on every
- * proxied request. Anything set is a Worker-proxied request, since
- * Vercel's own edge doesn't forward that header.
+ * empty basePath so all internal hrefs render as clean paths. The Worker
+ * sets a custom X-Launcharoo-Host header on every proxied request; Vercel's
+ * edge strips X-Forwarded-Host and rewrites it to the Vercel origin, so
+ * that header is unreliable behind the two-hop proxy — the custom header
+ * is what survives.
  */
 async function effectiveBasePath(tenantId: string): Promise<string> {
   const h = await headers();
-  const fwd = h.get("x-forwarded-host") ?? "";
-  if (fwd) return "";
+  const launcharooHost = h.get("x-launcharoo-host") ?? "";
+  if (launcharooHost.trim().length > 0) return "";
   return basePath(tenantId);
 }
 

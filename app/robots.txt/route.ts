@@ -44,10 +44,6 @@ export async function GET(): Promise<Response> {
   const h = await headers();
   const host = resolvePublicHost(h);
 
-  console.log(
-    `[robots] request xfh="${h.get("x-forwarded-host") ?? ""}" host="${h.get("host") ?? ""}" resolved="${host}"`,
-  );
-
   if (host === VERCEL_ORIGIN) {
     return text(
       "# Origin — not indexable.\nUser-agent: *\nDisallow: /\n",
