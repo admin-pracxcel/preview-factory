@@ -7,7 +7,7 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { Check, Upload, Image as ImageIcon, Loader2, Search, Trash2, RefreshCw } from "lucide-react";
+import { Check, Upload, Image as ImageIcon, Loader2, Search, Trash2, RefreshCw, Undo2 } from "lucide-react";
 
 interface SwatchProps {
   hex: string;
@@ -87,6 +87,12 @@ export default function CustomisePanel({
   const [customHex, setCustomHex] = useState("");
   const [logoFilename, setLogoFilename] = useState<string | null>(null);
   const [logoUploading, setLogoUploading] = useState(false);
+  // When bg-removal ran, we upload both the original and the processed logo
+  // so the owner can toggle if the ML mis-cut their design. Both URLs live
+  // only in this session — reload wipes them and whichever variant they
+  // last picked is what's persisted.
+  const [logoOriginalUrl, setLogoOriginalUrl] = useState<string | null>(null);
+  const [logoProcessedUrl, setLogoProcessedUrl] = useState<string | null>(null);
   const [heroTab, setHeroTab] = useState<HeroTab>("stock");
   const [heroUploading, setHeroUploading] = useState(false);
   const [pexelsQuery, setPexelsQuery] = useState(defaultPexelsQuery);
@@ -174,6 +180,9 @@ export default function CustomisePanel({
       return;
     }
     setLogoUploading(true);
+    // Reset any prior toggle state — a fresh upload starts a new revert window.
+    setLogoOriginalUrl(null);
+    setLogoProcessedUrl(null);
     try {
       // Skip background removal when the image already has transparency:
       // SVGs always do, and PNGs/WebPs may. JPGs never do — those always run
@@ -181,23 +190,44 @@ export default function CustomisePanel({
       const alreadyTransparent =
         file.type === "image/svg+xml" || (await hasTransparency(file));
 
-      let toUpload: File = file;
-      if (!alreadyTransparent) {
-        const { removeBackground } = await import("@imgly/background-removal");
-        // "isnet" is the full-precision model — better edges on logos than
-        // the default fp16 variant. Larger one-time download, cached after.
-        const cleaned = await removeBackground(file, {
-          model: "isnet",
-          output: { format: "image/png", quality: 1 },
-        });
-        toUpload = new File([cleaned], `${file.name.replace(/\.[^/.]+$/, "")}.png`, {
-          type: "image/png",
-        });
+      if (alreadyTransparent) {
+        // No bg-removal, single upload — no revert option needed.
+        const url = await uploadFile(file);
+        if (url) {
+          setLogoFilename(file.name);
+          onLogoChange(url);
+        }
+        return;
       }
-      const url = await uploadFile(toUpload);
-      if (url) {
-        setLogoFilename(toUpload.name);
-        onLogoChange(url);
+
+      // Upload the original first so we can revert if the ML pass mis-cuts
+      // fine details (thin lines, similar-colour outlines).
+      const originalUrl = await uploadFile(file);
+
+      const { removeBackground } = await import("@imgly/background-removal");
+      // "isnet" is the full-precision model — better edges on logos than
+      // the default fp16 variant. Larger one-time download, cached after.
+      const cleaned = await removeBackground(file, {
+        model: "isnet",
+        output: { format: "image/png", quality: 1 },
+      });
+      const processedFile = new File(
+        [cleaned],
+        `${file.name.replace(/\.[^/.]+$/, "")}.png`,
+        { type: "image/png" },
+      );
+      const processedUrl = await uploadFile(processedFile);
+
+      if (processedUrl) {
+        setLogoFilename(processedFile.name);
+        setLogoOriginalUrl(originalUrl ?? null);
+        setLogoProcessedUrl(processedUrl);
+        onLogoChange(processedUrl);
+      } else if (originalUrl) {
+        // Processed upload failed but the original made it through — fall back
+        // to that so the owner isn't left with nothing.
+        setLogoFilename(file.name);
+        onLogoChange(originalUrl);
       }
     } catch (err) {
       alert(`Background removal failed: ${err instanceof Error ? err.message : String(err)}`);
@@ -560,10 +590,33 @@ export default function CustomisePanel({
         <p className="text-xs text-slate-500">
           Background is removed automatically (first upload downloads a ~80 MB model for sharp edges).
         </p>
+        {logoOriginalUrl && logoProcessedUrl && (
+          <button
+            type="button"
+            onClick={() => {
+              const next =
+                state.logoUrl === logoProcessedUrl
+                  ? logoOriginalUrl
+                  : logoProcessedUrl;
+              onLogoChange(next);
+            }}
+            className="flex items-center justify-center gap-2 rounded-lg border border-blue-500/40 bg-blue-500/10 text-blue-200 hover:border-blue-400/70 hover:bg-blue-500/15 text-xs font-medium py-2 transition-colors"
+          >
+            <Undo2 className="w-3.5 h-3.5" />
+            {state.logoUrl === logoProcessedUrl
+              ? "Bg removal messed it up? Use original"
+              : "Use background-removed version"}
+          </button>
+        )}
         {state.logoUrl && (
           <button
             type="button"
-            onClick={() => { setLogoFilename(null); onLogoChange(""); }}
+            onClick={() => {
+              setLogoFilename(null);
+              setLogoOriginalUrl(null);
+              setLogoProcessedUrl(null);
+              onLogoChange("");
+            }}
             className="flex items-center justify-center gap-2 rounded-lg border border-slate-700 hover:border-slate-500 text-slate-300 hover:text-white text-xs font-medium py-2 transition-colors"
           >
             <Trash2 className="w-3.5 h-3.5" />
