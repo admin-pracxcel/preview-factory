@@ -27,6 +27,9 @@ import {
   Download,
   Database,
   FileSpreadsheet,
+  Phone,
+  Mail,
+  MapPin,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -223,6 +226,186 @@ export function EditRequestForm({ tenantId }: { tenantId: string }) {
           </>
         )}
       </button>
+    </form>
+  );
+}
+
+/* ============================================================== contact edit */
+
+/**
+ * ContactDetailsCard — inline edit for phone / email / address.
+ *
+ * The three most time-sensitive fields on the site. Phone changes need to
+ * propagate immediately (a new mobile means missed calls until it does), so
+ * we bypass the concierge queue for this one card and hit the tenant store
+ * directly. Everything else stays on the concierge path.
+ */
+export function ContactDetailsCard({
+  tenantId,
+  initial,
+}: {
+  tenantId: string;
+  initial: { phone: string; email: string; address: string };
+}) {
+  const [phone, setPhone] = useState(initial.phone);
+  const [email, setEmail] = useState(initial.email);
+  const [address, setAddress] = useState(initial.address);
+  const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">(
+    "idle",
+  );
+  const [error, setError] = useState<string | null>(null);
+
+  const dirty =
+    phone !== initial.phone ||
+    email !== initial.email ||
+    address !== initial.address;
+
+  async function handleSave(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!dirty || status === "saving") return;
+    setStatus("saving");
+    setError(null);
+    try {
+      const res = await fetch(`/api/tenants/${tenantId}/contact`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone: phone.trim(),
+          email: email.trim(),
+          address: address.trim(),
+        }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        phone?: string;
+        email?: string;
+        address?: string;
+        error?: string;
+      };
+      if (!res.ok) {
+        setError(data.error ?? `Save failed (${res.status})`);
+        setStatus("error");
+        return;
+      }
+      setPhone(data.phone ?? "");
+      setEmail(data.email ?? "");
+      setAddress(data.address ?? "");
+      setStatus("saved");
+      setTimeout(
+        () => setStatus((s) => (s === "saved" ? "idle" : s)),
+        2500,
+      );
+    } catch {
+      setError("Network error. Try again.");
+      setStatus("error");
+    }
+  }
+
+  return (
+    <form
+      onSubmit={handleSave}
+      className="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col gap-5"
+    >
+      <div className="flex items-center gap-2">
+        <PenLine className="h-5 w-5 text-cyan-400" />
+        <h2 className="text-base font-bold">Contact details</h2>
+      </div>
+      <p className="-mt-2 text-sm text-white/50">
+        Update your phone, email, or address — changes go live within seconds.
+        For other edits, use &ldquo;Request a change&rdquo; below.
+      </p>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
+            Phone
+          </span>
+          <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-3 py-2.5">
+            <Phone className="h-4 w-4 shrink-0 text-white/30" />
+            <input
+              type="tel"
+              inputMode="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="04xx xxx xxx"
+              className="flex-1 bg-transparent text-sm text-white placeholder-white/25 focus:outline-none"
+              maxLength={40}
+            />
+          </div>
+        </label>
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
+            Email
+          </span>
+          <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-3 py-2.5">
+            <Mail className="h-4 w-4 shrink-0 text-white/30" />
+            <input
+              type="email"
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@yourbusiness.com.au"
+              className="flex-1 bg-transparent text-sm text-white placeholder-white/25 focus:outline-none"
+              maxLength={200}
+            />
+          </div>
+        </label>
+      </div>
+
+      <label className="flex flex-col gap-1.5">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
+          Address
+        </span>
+        <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/10 px-3 py-2.5">
+          <MapPin className="h-4 w-4 shrink-0 text-white/30" />
+          <input
+            type="text"
+            autoComplete="street-address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="12 Main Street, Chatswood NSW 2067"
+            className="flex-1 bg-transparent text-sm text-white placeholder-white/25 focus:outline-none"
+            maxLength={200}
+          />
+        </div>
+      </label>
+
+      {error && (
+        <p className="rounded-lg border border-red-500/20 bg-red-900/10 px-3 py-2 text-sm text-red-300">
+          {error}
+        </p>
+      )}
+
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-xs text-white/40">
+          {status === "saved"
+            ? "Saved — visible on your site now."
+            : dirty
+            ? "Unsaved changes."
+            : "Everything matches your live site."}
+        </p>
+        <button
+          type="submit"
+          disabled={!dirty || status === "saving"}
+          className="flex items-center gap-2 rounded-xl bg-cyan-600 px-5 py-2.5 text-sm font-bold text-white shadow transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          {status === "saving" ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Saving…
+            </>
+          ) : status === "saved" ? (
+            <>
+              <Check className="h-4 w-4" />
+              Saved
+            </>
+          ) : (
+            <>
+              <Send className="h-4 w-4" />
+              Save changes
+            </>
+          )}
+        </button>
+      </div>
     </form>
   );
 }
