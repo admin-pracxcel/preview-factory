@@ -22,7 +22,11 @@ export const dynamic = "force-dynamic";
 
 const MARKETING_HOST = "launcharoo.online";
 const VERCEL_ORIGIN = "preview-factory.vercel.app";
-const CACHE_HEADER = "public, s-maxage=3600, stale-while-revalidate=86400";
+// One route serves every host, and Vercel's edge caches by URL path alone
+// unless we opt out. Without this the first host to hit /robots.txt gets
+// its response cached and every other host sees the wrong file. Skip the
+// shared cache; browser can hold it briefly.
+const CACHE_HEADER = "private, max-age=300, must-revalidate";
 
 const DISALLOWS = [
   "/dashboard",
