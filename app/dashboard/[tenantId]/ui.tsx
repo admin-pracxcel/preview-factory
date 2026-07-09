@@ -957,7 +957,7 @@ export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardPro
       {(status === "pending_ns" || status === "pending_ssl" || status === "active") &&
         state.snapshot && <PreservedRecordsPanel snapshot={state.snapshot} />}
 
-      <ConciergeHelp />
+      <ConciergeHelp tenantId={tenantId} />
     </div>
   );
 }
@@ -965,21 +965,178 @@ export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardPro
 /**
  * Small footer inside the Custom Domain card offering hands-on help. Non-technical
  * owners often stall at "log in to your registrar and change nameservers" — this
- * gives them a concrete way to hand it off to us.
+ * pops a lightweight form modal so they don't have to leave the dashboard to ask.
  */
-function ConciergeHelp() {
+function ConciergeHelp({ tenantId }: { tenantId: string }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="mt-5 flex flex-col gap-1 rounded-xl border border-white/5 bg-black/20 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-      <div className="text-xs text-white/60">
-        Stuck on nameservers or not sure where to start? We&rsquo;ll set the
-        domain up for you.
+    <>
+      <div className="mt-5 flex flex-col gap-1 rounded-xl border border-white/5 bg-black/20 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+        <div className="text-xs text-white/60">
+          Stuck on nameservers or not sure where to start? We&rsquo;ll set the
+          domain up for you.
+        </div>
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="shrink-0 cursor-pointer rounded-lg border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 text-center text-xs font-semibold text-blue-300 transition-colors hover:border-blue-400/60 hover:text-blue-200"
+        >
+          Get help setting this up
+        </button>
       </div>
-      <a
-        href="mailto:hello@launcharoo.online?subject=Domain%20setup%20help"
-        className="shrink-0 rounded-lg border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 text-center text-xs font-semibold text-blue-300 transition-colors hover:border-blue-400/60 hover:text-blue-200"
-      >
-        Email hello@launcharoo.online
-      </a>
+      {open && (
+        <DomainHelpModal tenantId={tenantId} onClose={() => setOpen(false)} />
+      )}
+    </>
+  );
+}
+
+function DomainHelpModal({
+  tenantId,
+  onClose,
+}: {
+  tenantId: string;
+  onClose: () => void;
+}) {
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle",
+  );
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (status === "sending") return;
+    setStatus("sending");
+    setError(null);
+    try {
+      const res = await fetch(`/api/tenants/${tenantId}/domain-help`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message.trim() }),
+      });
+      if (!res.ok) {
+        const body = (await res.json().catch(() => ({}))) as { error?: string };
+        setError(body.error ?? "Something went wrong. Try again.");
+        setStatus("error");
+        return;
+      }
+      setStatus("sent");
+    } catch {
+      setError("Network error. Try again.");
+      setStatus("error");
+    }
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Get domain setup help"
+    >
+      <button
+        type="button"
+        aria-label="Close"
+        onClick={onClose}
+        className="absolute inset-0 cursor-pointer bg-black/70 backdrop-blur-sm"
+      />
+      <div className="relative w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-[#0A0F1E] shadow-2xl">
+        <div className="flex items-start justify-between gap-4 border-b border-white/5 px-6 py-4">
+          <div>
+            <h3 className="text-lg font-bold text-white">Get help setting up your domain</h3>
+            <p className="mt-0.5 text-xs text-white/50">
+              Send us the details — we&rsquo;ll take it from here.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="shrink-0 cursor-pointer rounded-lg border border-white/10 p-1.5 text-white/50 transition-colors hover:border-white/25 hover:text-white"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        {status === "sent" ? (
+          <div className="flex flex-col items-center gap-3 px-6 py-8 text-center">
+            <div className="grid h-12 w-12 place-items-center rounded-full bg-green-500/15">
+              <CheckCircle2 className="h-6 w-6 text-green-400" />
+            </div>
+            <h4 className="text-base font-semibold text-white">Request sent</h4>
+            <p className="text-sm text-white/60">
+              We&rsquo;ll get back to you by email — usually within a few hours.
+            </p>
+            <button
+              type="button"
+              onClick={onClose}
+              className="mt-2 cursor-pointer rounded-xl bg-white/10 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-white/15"
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4 px-6 py-5">
+            <label className="flex flex-col gap-1.5">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
+                What&rsquo;s stopping you? (optional)
+              </span>
+              <textarea
+                rows={5}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder={
+                  "e.g. I bought my domain at GoDaddy and I don't know where to change the nameservers. Can you do it for me?"
+                }
+                maxLength={2000}
+                className="resize-none rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-sm text-white placeholder-white/25 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+              <span className="text-[11px] text-white/30">
+                Leave it blank if you just want us to reach out — we&rsquo;ll
+                have your business and domain details already.
+              </span>
+            </label>
+
+            {error && (
+              <p className="rounded-lg border border-red-500/20 bg-red-900/10 px-3 py-2 text-sm text-red-300">
+                {error}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-bold text-white shadow transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {status === "sending" ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Sending…
+                </>
+              ) : (
+                <>
+                  <Send className="h-4 w-4" />
+                  Send request
+                </>
+              )}
+            </button>
+          </form>
+        )}
+      </div>
     </div>
   );
 }
