@@ -297,7 +297,7 @@ export function LeadsList({ leads }: { leads: LeadForDashboard[] }) {
             <button
               type="button"
               onClick={() => setSelected(lead)}
-              className="flex w-full items-center gap-3 rounded-xl border border-white/5 bg-black/20 px-3 py-2.5 text-left transition-colors hover:border-white/15 hover:bg-black/30"
+              className="flex w-full cursor-pointer items-center gap-3 rounded-xl border border-white/5 bg-black/20 px-3 py-2.5 text-left transition-colors hover:border-white/15 hover:bg-black/30"
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
