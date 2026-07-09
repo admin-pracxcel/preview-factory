@@ -38,8 +38,11 @@ const DISALLOWS = [
 
 export async function GET(): Promise<Response> {
   const h = await headers();
-  const rawHost = (h.get("x-forwarded-host") ?? h.get("host") ?? "").toLowerCase();
-  const host = rawHost.replace(/:\d+$/, "");
+  const host = resolvePublicHost(h);
+
+  console.log(
+    `[robots] request xfh="${h.get("x-forwarded-host") ?? ""}" host="${h.get("host") ?? ""}" resolved="${host}"`,
+  );
 
   if (host === VERCEL_ORIGIN) {
     return text(
@@ -72,4 +75,21 @@ function text(body: string): Response {
       "Cache-Control": CACHE_HEADER,
     },
   });
+}
+
+/**
+ * Vercel's edge appends its own hostname to X-Forwarded-Host, so requests
+ * flowing through the Cloudflare Worker arrive as a comma-separated list.
+ * Take the first entry that isn't Vercel's own origin — that's the host the
+ * customer typed. Falls back to the Host header if X-Forwarded-Host is
+ * missing entirely.
+ */
+function resolvePublicHost(h: Headers): string {
+  const xfh = h.get("x-forwarded-host") ?? "";
+  const candidates = xfh
+    .split(",")
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0 && s !== VERCEL_ORIGIN);
+  const first = candidates[0] ?? h.get("host") ?? "";
+  return first.toLowerCase().replace(/:\d+$/, "");
 }

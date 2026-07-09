@@ -48,8 +48,11 @@ interface SitemapEntry {
 
 export async function GET(): Promise<Response> {
   const h = await headers();
-  const rawHost = (h.get("x-forwarded-host") ?? h.get("host") ?? "").toLowerCase();
-  const host = rawHost.replace(/:\d+$/, ""); // strip a stray port if present
+  const host = resolvePublicHost(h);
+
+  console.log(
+    `[sitemap] request xfh="${h.get("x-forwarded-host") ?? ""}" host="${h.get("host") ?? ""}" resolved="${host}"`,
+  );
 
   if (!host || host === VERCEL_ORIGIN) {
     return notFound();
@@ -80,6 +83,27 @@ export async function GET(): Promise<Response> {
     return notFound();
   }
   return await tenantResponse(data.id as string, bareHost);
+}
+
+/**
+ * Resolve the public-facing host in the presence of multi-hop proxies.
+ *
+ * Vercel's edge appends its own hostname to X-Forwarded-Host, so a request
+ * flowing through the Cloudflare Worker arrives as e.g.
+ *   "launcharoo.online, preview-factory.vercel.app"
+ * We want the FIRST value in the list — that's the customer-facing host set
+ * by the Worker before Vercel got involved. If nothing usable is in
+ * x-forwarded-host, fall back to the immediate Host header. Then strip any
+ * stray port and lowercase.
+ */
+function resolvePublicHost(h: Headers): string {
+  const xfh = h.get("x-forwarded-host") ?? "";
+  const candidates = xfh
+    .split(",")
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0 && s !== VERCEL_ORIGIN);
+  const first = candidates[0] ?? h.get("host") ?? "";
+  return first.toLowerCase().replace(/:\d+$/, "");
 }
 
 /* ---------------------------------------------------------------- tenant */
