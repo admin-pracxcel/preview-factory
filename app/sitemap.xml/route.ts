@@ -99,15 +99,16 @@ export async function GET(): Promise<Response> {
 /**
  * Resolve the public-facing host in the presence of multi-hop proxies.
  *
- * Vercel's edge appends its own hostname to X-Forwarded-Host, so a request
- * flowing through the Cloudflare Worker arrives as e.g.
- *   "launcharoo.online, preview-factory.vercel.app"
- * We want the FIRST value in the list — that's the customer-facing host set
- * by the Worker before Vercel got involved. If nothing usable is in
- * x-forwarded-host, fall back to the immediate Host header. Then strip any
- * stray port and lowercase.
+ * The Cloudflare Worker sets a custom X-Launcharoo-Host header with the
+ * hostname the customer typed, because Vercel's edge strips or replaces
+ * X-Forwarded-Host with its own hostname before it reaches this function.
+ * Prefer the custom header; fall back to X-Forwarded-Host (list-aware) and
+ * finally the immediate Host header. Then strip any stray port and lowercase.
  */
 function resolvePublicHost(h: Headers): string {
+  const launcharoo = (h.get("x-launcharoo-host") ?? "").trim();
+  if (launcharoo) return launcharoo.toLowerCase().replace(/:\d+$/, "");
+
   const xfh = h.get("x-forwarded-host") ?? "";
   const candidates = xfh
     .split(",")

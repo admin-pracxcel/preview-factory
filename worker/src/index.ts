@@ -154,6 +154,12 @@ async function proxy(
   const headers = new Headers(request.headers);
   headers.set("X-Forwarded-Host", originalHost);
   headers.set("X-Forwarded-Proto", "https");
+  // Vercel's edge strips or replaces X-Forwarded-Host with its own hostname.
+  // We ship the customer-facing host in a custom header too so anything
+  // running inside the Next.js function can still see it after Vercel's
+  // pass. Keep the X-Forwarded-Host set above for any Vercel-native
+  // frameworks that rely on it upstream of the strip.
+  headers.set("X-Launcharoo-Host", originalHost);
 
   const method = request.method.toUpperCase();
   const hasBody = method !== "GET" && method !== "HEAD";

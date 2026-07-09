@@ -78,13 +78,18 @@ function text(body: string): Response {
 }
 
 /**
- * Vercel's edge appends its own hostname to X-Forwarded-Host, so requests
- * flowing through the Cloudflare Worker arrive as a comma-separated list.
- * Take the first entry that isn't Vercel's own origin — that's the host the
- * customer typed. Falls back to the Host header if X-Forwarded-Host is
- * missing entirely.
+ * Resolve the public-facing host in the presence of multi-hop proxies.
+ *
+ * The Cloudflare Worker sets a custom X-Launcharoo-Host header with the
+ * hostname the customer typed, because Vercel's edge strips or replaces
+ * X-Forwarded-Host with its own hostname before it reaches this function.
+ * Prefer the custom header; fall back to X-Forwarded-Host (list-aware) and
+ * finally the immediate Host header.
  */
 function resolvePublicHost(h: Headers): string {
+  const launcharoo = (h.get("x-launcharoo-host") ?? "").trim();
+  if (launcharoo) return launcharoo.toLowerCase().replace(/:\d+$/, "");
+
   const xfh = h.get("x-forwarded-host") ?? "";
   const candidates = xfh
     .split(",")
