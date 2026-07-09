@@ -49,13 +49,20 @@ interface SitemapEntry {
 export async function GET(): Promise<Response> {
   const h = await headers();
   const host = resolvePublicHost(h);
+  // Snapshot of the header inputs, used for diagnostics on 404 paths until
+  // this route is confirmed working across every host we serve.
+  const diag = {
+    xForwardedHost: h.get("x-forwarded-host") ?? "",
+    host: h.get("host") ?? "",
+    vercelHost: h.get("x-vercel-deployment-url") ?? "",
+    forwarded: h.get("forwarded") ?? "",
+    resolved: host,
+  };
 
-  console.log(
-    `[sitemap] request xfh="${h.get("x-forwarded-host") ?? ""}" host="${h.get("host") ?? ""}" resolved="${host}"`,
-  );
+  console.log(`[sitemap] request ${JSON.stringify(diag)}`);
 
   if (!host || host === VERCEL_ORIGIN) {
-    return notFound();
+    return notFound("origin_or_empty", diag);
   }
 
   const bareHost = host.startsWith("www.") ? host.slice(4) : host;
@@ -69,7 +76,7 @@ export async function GET(): Promise<Response> {
   if (bareHost.endsWith(`.${MARKETING_HOST}`)) {
     const slug = bareHost.slice(0, bareHost.length - MARKETING_HOST.length - 1);
     const tenantId = await tenantIdBySlug(slug);
-    if (!tenantId) return notFound();
+    if (!tenantId) return notFound("slug_not_found", { ...diag, slug });
     return await tenantResponse(tenantId, bareHost);
   }
 
@@ -80,7 +87,11 @@ export async function GET(): Promise<Response> {
     .eq("custom_domain", bareHost)
     .maybeSingle();
   if (!data || data.custom_domain_status !== "active") {
-    return notFound();
+    return notFound("custom_domain_not_active", {
+      ...diag,
+      bareHost,
+      customDomainStatus: data?.custom_domain_status ?? null,
+    });
   }
   return await tenantResponse(data.id as string, bareHost);
 }
@@ -110,10 +121,14 @@ function resolvePublicHost(h: Headers): string {
 
 async function tenantResponse(tenantId: string, host: string): Promise<Response> {
   const tenant = await getTenant(tenantId);
-  if (!tenant || tenant.isExpired) return notFound();
+  if (!tenant || tenant.isExpired) {
+    return notFound("tenant_missing_or_expired", { tenantId, host });
+  }
 
   const parsed = sitePropsSchema.safeParse(tenant.siteProps);
-  if (!parsed.success) return notFound();
+  if (!parsed.success) {
+    return notFound("siteprops_invalid", { tenantId, host });
+  }
 
   const entries = tenantEntries(parsed.data, tenant.updatedAt);
   return xmlResponse(entries, host);
@@ -239,6 +254,12 @@ function escapeXml(s: string): string {
     .replace(/'/g, "&apos;");
 }
 
-function notFound(): NextResponse {
-  return NextResponse.json({ error: "Not found" }, { status: 404 });
+function notFound(
+  reason: string,
+  diag: Record<string, unknown>,
+): NextResponse {
+  return NextResponse.json(
+    { error: "Not found", reason, diag },
+    { status: 404 },
+  );
 }
