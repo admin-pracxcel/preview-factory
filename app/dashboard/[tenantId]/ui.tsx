@@ -195,6 +195,8 @@ export function EditRequestForm({ tenantId }: { tenantId: string }) {
           placeholder={
             "Examples:\n" +
             "• Update my phone number to 0412 345 678\n" +
+            "• Change my email to hello@mybusiness.com.au\n" +
+            "• Update my address to 12 Main Street, Chatswood NSW 2067\n" +
             "• Add carpet cleaning to my services\n" +
             "• Change my trading hours to Mon–Fri 7am–5pm"
           }
@@ -520,6 +522,30 @@ export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardPro
 
       {(status === "pending_ns" || status === "pending_ssl" || status === "active") &&
         state.snapshot && <PreservedRecordsPanel snapshot={state.snapshot} />}
+
+      <ConciergeHelp />
+    </div>
+  );
+}
+
+/**
+ * Small footer inside the Custom Domain card offering hands-on help. Non-technical
+ * owners often stall at "log in to your registrar and change nameservers" — this
+ * gives them a concrete way to hand it off to us.
+ */
+function ConciergeHelp() {
+  return (
+    <div className="mt-5 flex flex-col gap-1 rounded-xl border border-white/5 bg-black/20 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+      <div className="text-xs text-white/60">
+        Stuck on nameservers or not sure where to start? We&rsquo;ll set the
+        domain up for you.
+      </div>
+      <a
+        href="mailto:hello@launcharoo.online?subject=Domain%20setup%20help"
+        className="shrink-0 rounded-lg border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 text-center text-xs font-semibold text-blue-300 transition-colors hover:border-blue-400/60 hover:text-blue-200"
+      >
+        Email hello@launcharoo.online
+      </a>
     </div>
   );
 }
