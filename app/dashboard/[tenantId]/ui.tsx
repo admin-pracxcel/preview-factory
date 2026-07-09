@@ -30,6 +30,8 @@ import {
   Phone,
   Mail,
   MapPin,
+  X,
+  TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -227,6 +229,255 @@ export function EditRequestForm({ tenantId }: { tenantId: string }) {
         )}
       </button>
     </form>
+  );
+}
+
+/* =================================================================== leads */
+
+export interface LeadForDashboard {
+  id: string;
+  name?: string;
+  phone?: string;
+  email?: string;
+  message?: string;
+  source: "contact-form" | "call-click" | "email-click";
+  page?: string;
+  createdAt: string;
+}
+
+function sourceLabel(source: LeadForDashboard["source"]): string {
+  if (source === "call-click") return "Phone tap";
+  if (source === "email-click") return "Email click";
+  return "Enquiry form";
+}
+
+function formatDateShort(iso: string): string {
+  return new Date(iso).toLocaleDateString("en-AU", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+function formatDateLong(iso: string): string {
+  return new Date(iso).toLocaleString("en-AU", {
+    weekday: "short",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+/**
+ * LeadsList — table of captured enquiries with per-row click-to-expand.
+ * The row summary stays lean (name / contact / type / date) so the table
+ * doesn't wrap ugly on mobile; the modal exposes the full record including
+ * the message body and the page the visitor was on when they submitted.
+ */
+export function LeadsList({ leads }: { leads: LeadForDashboard[] }) {
+  const [selected, setSelected] = useState<LeadForDashboard | null>(null);
+
+  if (leads.length === 0) {
+    return (
+      <p className="py-4 text-center text-sm text-white/40">
+        No enquiries yet. They&apos;ll appear here as soon as someone contacts you.
+      </p>
+    );
+  }
+
+  return (
+    <>
+      <ul className="flex flex-col gap-2">
+        {leads.map((lead) => (
+          <li key={lead.id}>
+            <button
+              type="button"
+              onClick={() => setSelected(lead)}
+              className="flex w-full items-center gap-3 rounded-xl border border-white/5 bg-black/20 px-3 py-2.5 text-left transition-colors hover:border-white/15 hover:bg-black/30"
+            >
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="truncate text-sm font-semibold text-white">
+                    {lead.name ?? "Anonymous"}
+                  </span>
+                  <span className="shrink-0 rounded-full bg-white/5 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white/50">
+                    {sourceLabel(lead.source)}
+                  </span>
+                </div>
+                {lead.message ? (
+                  <p className="mt-0.5 truncate text-xs text-white/45">
+                    {lead.message}
+                  </p>
+                ) : (
+                  <p className="mt-0.5 flex items-center gap-2 truncate text-xs text-white/40">
+                    {lead.phone && (
+                      <span className="flex items-center gap-1">
+                        <Phone className="h-3 w-3 text-white/30" />
+                        {lead.phone}
+                      </span>
+                    )}
+                    {lead.email && (
+                      <span className="flex items-center gap-1 truncate">
+                        <Mail className="h-3 w-3 text-white/30" />
+                        {lead.email}
+                      </span>
+                    )}
+                  </p>
+                )}
+              </div>
+              <div className="flex shrink-0 items-center gap-2">
+                <span className="hidden text-[11px] text-white/40 sm:inline whitespace-nowrap">
+                  {formatDateShort(lead.createdAt)}
+                </span>
+                <ExternalLink className="h-3.5 w-3.5 text-white/30" />
+              </div>
+            </button>
+          </li>
+        ))}
+      </ul>
+      {selected && (
+        <LeadModal lead={selected} onClose={() => setSelected(null)} />
+      )}
+    </>
+  );
+}
+
+function LeadModal({
+  lead,
+  onClose,
+}: {
+  lead: LeadForDashboard;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Enquiry details"
+    >
+      <button
+        type="button"
+        aria-label="Close"
+        onClick={onClose}
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+      />
+      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-[#0A0F1E] shadow-2xl">
+        <div className="flex items-start justify-between gap-4 border-b border-white/5 px-6 py-4">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-green-400" />
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
+                {sourceLabel(lead.source)}
+              </span>
+            </div>
+            <h3 className="mt-1 truncate text-lg font-bold text-white">
+              {lead.name ?? "Anonymous enquiry"}
+            </h3>
+            <p className="mt-0.5 text-xs text-white/40">
+              {formatDateLong(lead.createdAt)}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="shrink-0 rounded-lg border border-white/10 p-1.5 text-white/50 transition-colors hover:border-white/25 hover:text-white"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-4 px-6 py-5">
+          {(lead.phone || lead.email) && (
+            <div className="grid gap-2 sm:grid-cols-2">
+              {lead.phone && (
+                <a
+                  href={`tel:${lead.phone}`}
+                  className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 transition-colors hover:border-blue-500/40 hover:bg-blue-500/10"
+                >
+                  <div className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-blue-500/15">
+                    <Phone className="h-4 w-4 text-blue-300" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[11px] uppercase tracking-wider text-white/40">
+                      Call
+                    </p>
+                    <p className="truncate text-sm font-semibold text-white">
+                      {lead.phone}
+                    </p>
+                  </div>
+                </a>
+              )}
+              {lead.email && (
+                <a
+                  href={`mailto:${lead.email}`}
+                  className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 transition-colors hover:border-purple-500/40 hover:bg-purple-500/10"
+                >
+                  <div className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-purple-500/15">
+                    <Mail className="h-4 w-4 text-purple-300" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[11px] uppercase tracking-wider text-white/40">
+                      Email
+                    </p>
+                    <p className="truncate text-sm font-semibold text-white">
+                      {lead.email}
+                    </p>
+                  </div>
+                </a>
+              )}
+            </div>
+          )}
+
+          {lead.message && (
+            <div className="flex flex-col gap-1.5">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
+                Message
+              </span>
+              <div className="whitespace-pre-wrap rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white/85">
+                {lead.message}
+              </div>
+            </div>
+          )}
+
+          {lead.page && (
+            <div className="flex items-center justify-between gap-3 text-xs">
+              <span className="uppercase tracking-wider text-white/40">
+                Captured on
+              </span>
+              <span className="truncate font-mono text-white/60">
+                {lead.page}
+              </span>
+            </div>
+          )}
+
+          {!lead.phone && !lead.email && !lead.message && (
+            <p className="text-sm text-white/50">
+              Only a {sourceLabel(lead.source).toLowerCase()} was recorded — no
+              extra details were captured.
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 

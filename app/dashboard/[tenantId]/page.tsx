@@ -15,8 +15,6 @@ import type { Metadata } from "next";
 import {
   Globe,
   TrendingUp,
-  Phone,
-  Mail,
   LayoutDashboard,
   PenLine,
   ReceiptText,
@@ -24,7 +22,7 @@ import {
 import { getTenant } from "@/lib/tenant-store";
 import { listLeads } from "@/lib/leads-store";
 import { listEditRequests } from "@/lib/edit-requests-store";
-import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard, EditSiteCard, YourDataCard, ContactDetailsCard } from "./ui";
+import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard, EditSiteCard, YourDataCard, ContactDetailsCard, LeadsList } from "./ui";
 
 /* ------------------------------------------------------------------ meta */
 
@@ -64,20 +62,6 @@ function StatusBadge({ status }: { status: string }) {
   return (
     <span className={`rounded-full px-3 py-1 text-xs font-bold ${cls}`}>{label}</span>
   );
-}
-
-function sourceLabel(source: string) {
-  return source === "call-click" ? "Phone tap" : source === "email-click" ? "Email click" : "Enquiry form";
-}
-
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-AU", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 }
 
 /* ------------------------------------------------------------------ page */
@@ -221,61 +205,7 @@ export default async function DashboardPage({
               </span>
             </div>
 
-            {leads.length === 0 ? (
-              <p className="text-sm text-white/40 py-4 text-center">
-                No enquiries yet. They&apos;ll appear here as soon as someone contacts you.
-              </p>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-white/10">
-                      {["Name", "Contact", "Type", "Date"].map((h) => (
-                        <th
-                          key={h}
-                          className="pb-2 text-left text-[11px] font-semibold uppercase tracking-wider text-white/40"
-                        >
-                          {h}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/5">
-                    {leads.map((lead) => (
-                      <tr key={lead.id}>
-                        <td className="py-2.5 pr-3 font-medium text-white/80">
-                          {lead.name ?? "—"}
-                        </td>
-                        <td className="py-2.5 pr-3 text-white/60">
-                          <div className="flex flex-col gap-0.5">
-                            {lead.phone && (
-                              <span className="flex items-center gap-1">
-                                <Phone className="h-3 w-3 shrink-0 text-white/30" />
-                                {lead.phone}
-                              </span>
-                            )}
-                            {lead.email && (
-                              <span className="flex items-center gap-1 truncate max-w-[140px]">
-                                <Mail className="h-3 w-3 shrink-0 text-white/30" />
-                                {lead.email}
-                              </span>
-                            )}
-                          </div>
-                        </td>
-                        <td className="py-2.5 pr-3">
-                          <span className="rounded-full bg-white/5 px-2 py-0.5 text-[11px] font-medium text-white/50">
-                            {sourceLabel(lead.source)}
-                          </span>
-                        </td>
-                        <td className="py-2.5 text-[11px] text-white/40 whitespace-nowrap">
-                          {formatDate(lead.createdAt)}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+            <LeadsList leads={leads} />
           </section>
 
           {/* ── right column: billing + edit request ── */}
