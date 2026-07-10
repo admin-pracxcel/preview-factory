@@ -129,11 +129,27 @@ export default async function TenantPreviewPage({
     );
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-950 text-white p-8">
-        <div className="max-w-lg text-center">
-          <h1 className="text-2xl font-bold mb-4">Preview Unavailable</h1>
-          <p className="text-slate-400">
-            This preview was generated with an older schema. Please re-generate.
+        <div className="max-w-2xl">
+          <h1 className="text-2xl font-bold mb-4 text-center">Preview Unavailable</h1>
+          <p className="text-slate-400 mb-6 text-center">
+            The generator produced a site that didn&apos;t match the current
+            schema. Details below — share these so we can fix the root cause.
           </p>
+          <div className="rounded-xl border border-red-500/30 bg-red-950/30 p-4">
+            <p className="text-xs font-mono text-red-300 mb-2">
+              tenant: {tenantId} &middot; category: {tenant.category}
+            </p>
+            <ul className="text-xs font-mono text-red-200 space-y-1 max-h-96 overflow-y-auto">
+              {issues.slice(0, 30).map((issue) => (
+                <li key={issue}>&bull; {issue}</li>
+              ))}
+              {issues.length > 30 && (
+                <li className="text-red-400/80">
+                  &hellip; and {issues.length - 30} more
+                </li>
+              )}
+            </ul>
+          </div>
         </div>
       </div>
     );
