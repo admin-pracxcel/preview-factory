@@ -19,6 +19,7 @@ import {
   LayoutDashboard,
   PenLine,
   ReceiptText,
+  ChevronLeft,
 } from "lucide-react";
 import { getTenant } from "@/lib/tenant-store";
 import { listLeads } from "@/lib/leads-store";
@@ -119,7 +120,16 @@ export default async function DashboardPage({
               Launcharoo
             </span>
           </div>
-          <StatusBadge status={tenant.status} />
+          <div className="flex items-center gap-3">
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              All sites
+            </Link>
+            <StatusBadge status={tenant.status} />
+          </div>
         </div>
       </header>
 
