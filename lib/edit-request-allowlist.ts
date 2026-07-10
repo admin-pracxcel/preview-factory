@@ -88,3 +88,20 @@ export const EDIT_REQUEST_PATH_ALLOWLIST: readonly RegExp[] = [
 export function isEditablePath(path: string): boolean {
   return EDIT_REQUEST_PATH_ALLOWLIST.some((re) => re.test(path));
 }
+
+/**
+ * Human-readable rendering of the allowlist for LLM prompts. Turns each
+ * regex into a path pattern where `\d+` becomes `<index>` and anchors are
+ * stripped. Keeps things debuggable — an operator or reviewer can eyeball
+ * the prompt and see exactly what claude was told it may touch.
+ */
+export function describeAllowlistForPrompt(): string[] {
+  return EDIT_REQUEST_PATH_ALLOWLIST.map((re) => {
+    const s = re.source
+      .replace(/^\^/, "")
+      .replace(/\$$/, "")
+      .replace(/\\\./g, ".")
+      .replace(/\\d\+/g, "<index>");
+    return s;
+  });
+}
