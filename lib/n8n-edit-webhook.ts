@@ -23,6 +23,15 @@
 
 import { createHmac } from "node:crypto";
 
+function isHttpUrl(candidate: string): boolean {
+  try {
+    const u = new URL(candidate);
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 export interface ApprovePayload {
   /** ID of the edit_requests row that was approved. n8n fetches everything
    *  else it needs (tenant siteProps, request text, admin note) from the
@@ -40,13 +49,16 @@ export interface ApprovePayload {
 export async function fireApproveWebhook(
   payload: ApprovePayload,
 ): Promise<{ ok: boolean; reason?: string }> {
-  const url = process.env.N8N_APPROVE_WEBHOOK_URL?.trim();
-  if (!url) {
+  const raw = process.env.N8N_APPROVE_WEBHOOK_URL?.trim();
+  if (!raw || !isHttpUrl(raw)) {
     console.warn(
-      `[n8n-webhook] N8N_APPROVE_WEBHOOK_URL unset — approved editRequest ${payload.editRequestId} left for manual pickup`,
+      `[n8n-webhook] N8N_APPROVE_WEBHOOK_URL ${
+        raw ? `is not a valid http(s) URL ("${raw}") — treating as unset` : "unset"
+      } — approved editRequest ${payload.editRequestId} left for manual pickup`,
     );
     return { ok: false, reason: "webhook_url_unset" };
   }
+  const url = raw;
 
   const secret = process.env.EDIT_WORKFLOW_HMAC_SECRET?.trim();
   if (!secret) {
