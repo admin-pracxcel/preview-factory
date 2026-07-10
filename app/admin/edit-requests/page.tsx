@@ -13,7 +13,6 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { isAdminSession } from "@/lib/admin";
 import type { MutableCookies } from "@/lib/session";
-import { ApplyForm } from "./ui";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Concierge — change requests" };
@@ -75,26 +74,22 @@ export default async function AdminEditRequestsPage() {
                     {row.tenants?.name ?? row.tenant_id}
                   </h2>
                   <p className="mt-0.5 text-xs text-white/40">
-                    {row.tenants?.owner_email ?? "(no owner email)"} · {" "}
+                    {row.tenants?.owner_email ?? "(no owner email)"} &middot;{" "}
                     {new Date(row.created_at).toLocaleString("en-AU")}
                   </p>
                 </div>
-                <Link
-                  href={`/dashboard/${row.tenant_id}`}
-                  className="shrink-0 rounded-lg border border-white/15 px-3 py-1.5 text-xs font-medium text-white/70 hover:border-white/30 hover:text-white"
-                >
-                  Open dashboard
-                </Link>
               </div>
 
               <blockquote className="mb-4 whitespace-pre-wrap rounded-xl border border-white/5 bg-black/30 p-4 text-sm text-white/85">
                 {row.request}
               </blockquote>
 
-              <ApplyForm
-                requestId={row.id}
-                tenantName={row.tenants?.name ?? row.tenant_id}
-              />
+              <Link
+                href={`/admin/edit-requests/${row.id}`}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:opacity-90 transition-opacity"
+              >
+                Review &rarr;
+              </Link>
             </li>
           ))}
         </ul>
