@@ -19,6 +19,7 @@ import { cookies } from "next/headers";
 import { adminEmail, isAdminSession } from "@/lib/admin";
 import { getEditRequest, saveEditRequest } from "@/lib/edit-requests-store";
 import { fireApproveWebhook } from "@/lib/n8n-edit-webhook";
+import { verifyApprovalToken } from "@/lib/edit-request-tokens";
 import type { MutableCookies } from "@/lib/session";
 
 export const runtime = "nodejs";
@@ -32,14 +33,20 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
-  const cookieStore = (await cookies()) as unknown as MutableCookies;
-  const admin = await isAdminSession(cookieStore);
-  // 404 (not 403) so an attacker probing for admin endpoints can't distinguish
-  // "wrong auth" from "wrong URL".
-  if (!admin) return NextResponse.json({ error: "Not found" }, { status: 404 });
-
   const { id } = await params;
   if (!isUuid(id)) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  // Auth: either an admin session, or a valid signed token whose payload
+  // matches this route param. The token path lets us action approvals
+  // straight from the concierge email without requiring the recipient to
+  // already be signed in on that device.
+  const cookieStore = (await cookies()) as unknown as MutableCookies;
+  const authOutcome = await authoriseApproval(request, cookieStore, id);
+  if (!authOutcome.ok) {
+    // 404 (not 403) so an attacker probing for admin endpoints can't
+    // distinguish "wrong auth" from "wrong URL".
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
@@ -65,12 +72,13 @@ export async function POST(
     );
   }
 
+  const approver = authOutcome.actor;
   const now = new Date().toISOString();
   await saveEditRequest({
     ...editReq,
     status: "approved",
     approvedAt: now,
-    approvedBy: adminEmail() ?? undefined,
+    approvedBy: approver,
     adminNote,
   });
 
@@ -82,7 +90,7 @@ export async function POST(
     : "failed";
 
   console.log(
-    `[approve] editRequest ${id} approved by ${adminEmail() ?? "?"} — webhook ${webhookOutcome}${webhook.reason ? ` (${webhook.reason})` : ""}`,
+    `[approve] editRequest ${id} approved by ${approver} — webhook ${webhookOutcome}${webhook.reason ? ` (${webhook.reason})` : ""}`,
   );
 
   return NextResponse.json({
@@ -92,4 +100,38 @@ export async function POST(
     // problems without digging through Vercel logs.
     ...(webhook.reason ? { webhookReason: webhook.reason } : {}),
   });
+}
+
+/* ------------------------------------------------------------- auth helper */
+
+type AuthResult =
+  | { ok: true; actor: string }
+  | { ok: false };
+
+/**
+ * Accept EITHER a valid admin session OR a valid signed token in ?token=
+ * whose payload matches this route's edit request id. `actor` is what we
+ * store on `approved_by` for the audit trail — the admin email if session
+ * auth, or "email-token" if the token path was used.
+ */
+async function authoriseApproval(
+  request: NextRequest,
+  cookieStore: MutableCookies,
+  editRequestId: string,
+): Promise<AuthResult> {
+  if (await isAdminSession(cookieStore)) {
+    return { ok: true, actor: adminEmail() ?? "admin" };
+  }
+  const token = request.nextUrl.searchParams.get("token")?.trim();
+  if (token) {
+    try {
+      const verified = verifyApprovalToken(token);
+      if (verified.editRequestId === editRequestId) {
+        return { ok: true, actor: "email-token" };
+      }
+    } catch {
+      // Fall through to "not authorised".
+    }
+  }
+  return { ok: false };
 }

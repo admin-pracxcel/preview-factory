@@ -15,6 +15,7 @@ import { adminEmail, isAdminSession } from "@/lib/admin";
 import { getEditRequest, saveEditRequest } from "@/lib/edit-requests-store";
 import { getTenant } from "@/lib/tenant-store";
 import { sendEmail } from "@/lib/resend-client";
+import { verifyApprovalToken } from "@/lib/edit-request-tokens";
 import type { MutableCookies } from "@/lib/session";
 
 export const runtime = "nodejs";
@@ -31,12 +32,16 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
-  const cookieStore = (await cookies()) as unknown as MutableCookies;
-  const admin = await isAdminSession(cookieStore);
-  if (!admin) return NextResponse.json({ error: "Not found" }, { status: 404 });
-
   const { id } = await params;
   if (!isUuid(id)) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  // Same dual-auth model as the approve endpoint: admin session, or a
+  // signed token whose payload matches this route param.
+  const cookieStore = (await cookies()) as unknown as MutableCookies;
+  const authOutcome = await authoriseRejection(request, cookieStore, id);
+  if (!authOutcome.ok) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
@@ -81,7 +86,7 @@ export async function POST(
     status: "rejected",
     rejectedAt: now,
     rejectReason: reason,
-    approvedBy: adminEmail() ?? undefined,
+    approvedBy: authOutcome.actor,
     resolvedAt: now,
   });
 
@@ -109,10 +114,38 @@ export async function POST(
   }
 
   console.log(
-    `[reject] editRequest ${id} rejected by ${adminEmail() ?? "?"}`,
+    `[reject] editRequest ${id} rejected by ${authOutcome.actor}`,
   );
 
   return NextResponse.json({ ok: true });
+}
+
+/* ------------------------------------------------------------- auth helper */
+
+type AuthResult =
+  | { ok: true; actor: string }
+  | { ok: false };
+
+async function authoriseRejection(
+  request: NextRequest,
+  cookieStore: MutableCookies,
+  editRequestId: string,
+): Promise<AuthResult> {
+  if (await isAdminSession(cookieStore)) {
+    return { ok: true, actor: adminEmail() ?? "admin" };
+  }
+  const token = request.nextUrl.searchParams.get("token")?.trim();
+  if (token) {
+    try {
+      const verified = verifyApprovalToken(token);
+      if (verified.editRequestId === editRequestId) {
+        return { ok: true, actor: "email-token" };
+      }
+    } catch {
+      // Fall through.
+    }
+  }
+  return { ok: false };
 }
 
 /* ---------------------------------------------------------------- email */

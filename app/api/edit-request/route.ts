@@ -21,11 +21,15 @@ import { assertOwnsTenant, type MutableCookies } from "@/lib/session";
 import { applyRateLimit } from "@/lib/rate-limit";
 import { getTenant } from "@/lib/tenant-store";
 import { sendEmail } from "@/lib/resend-client";
+import { signApprovalToken } from "@/lib/edit-request-tokens";
 
 export const runtime = "nodejs";
 
 const CONCIERGE_INBOX =
   process.env.EDIT_REQUEST_INBOX ?? "hello@launcharoo.online";
+
+const APP_ORIGIN =
+  process.env.NEXT_PUBLIC_APP_ORIGIN?.trim() || "https://launcharoo.online";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   let body: { tenantId?: string; request?: string };
@@ -82,6 +86,22 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   console.log(`[edit-request] queued id=${id} tenant=${tenantId} for concierge review`);
 
+  // Sign a review token that unlocks the admin page + approve/reject
+  // endpoints without a session. 7-day TTL; the state machine handles
+  // single-use (post-approve status is no longer "pending"). If signing
+  // fails (env misconfig), fall back to a plain link — the recipient can
+  // still open the admin page via session auth.
+  let reviewUrl = `${APP_ORIGIN}/admin/edit-requests/${id}`;
+  try {
+    const token = signApprovalToken(id);
+    reviewUrl += `?token=${encodeURIComponent(token)}`;
+  } catch (err) {
+    console.error(
+      `[edit-request] token sign failed for ${id}, falling back to plain link:`,
+      err,
+    );
+  }
+
   // Fire the concierge notification. If sending fails we still return success
   // — the row is saved and visible in the admin queue, and the founder can
   // reconcile from there. Blocking the owner's request on Resend's uptime
@@ -96,6 +116,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         ownerEmail: tenant.ownerEmail,
         requestText: trimmedRequest,
         createdAt,
+        reviewUrl,
       }),
       text: buildConciergeEmailText({
         tenantName: tenant.name,
@@ -103,6 +124,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         ownerEmail: tenant.ownerEmail,
         requestText: trimmedRequest,
         createdAt,
+        reviewUrl,
       }),
     });
   } catch (err) {
@@ -120,6 +142,7 @@ interface ConciergeEmailInput {
   ownerEmail?: string;
   requestText: string;
   createdAt: string;
+  reviewUrl: string;
 }
 
 function buildConciergeEmailHtml(input: ConciergeEmailInput): string {
@@ -132,8 +155,10 @@ function buildConciergeEmailHtml(input: ConciergeEmailInput): string {
     <p style="margin:0 0 8px"><strong>Owner:</strong> ${owner}</p>
     <p style="margin:0 0 8px"><strong>Received:</strong> ${escapeText(new Date(input.createdAt).toLocaleString("en-AU"))}</p>
     <blockquote style="margin:16px 0;padding:12px 16px;border-left:3px solid #3b82f6;background:#f8fafc;white-space:pre-wrap">${escapeText(input.requestText)}</blockquote>
-    <p style="margin:16px 0 8px"><strong>Action it here:</strong></p>
-    <p style="margin:0"><a href="https://launcharoo.online/admin/edit-requests">https://launcharoo.online/admin/edit-requests</a></p>
+    <p style="margin:24px 0 12px">
+      <a href="${escapeAttr(input.reviewUrl)}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;font-weight:700;padding:12px 24px;border-radius:8px">Review this request</a>
+    </p>
+    <p style="color:#6b7280;font-size:12px;margin:16px 0 0">Link expires in 7 days.</p>
     <hr style="margin:24px 0;border:none;border-top:1px solid #e5e7eb">
     <p style="color:#6b7280;font-size:12px;margin:0">Tenant ID: ${escapeText(input.tenantId)}</p>
   </div>`;
@@ -148,7 +173,8 @@ Received: ${new Date(input.createdAt).toLocaleString("en-AU")}
 
 ${input.requestText}
 
-Action it here: https://launcharoo.online/admin/edit-requests
+Review this request: ${input.reviewUrl}
+(Link expires in 7 days.)
 
 Tenant ID: ${input.tenantId}
 `;
