@@ -238,6 +238,7 @@ function PreviewPageInner() {
         if (!res.ok) return;
         const body = (await res.json()) as {
           status?: string;
+          name?: string;
           slug?: string;
           customDomain?: string;
           customDomainStatus?: string;
@@ -246,6 +247,7 @@ function PreviewPageInner() {
         if (body.status === "claimed" || body.status === "past_due") {
           setIsPublished(true);
         }
+        if (body.name) setBusinessName(body.name);
         const host =
           body.customDomain && body.customDomainStatus === "active"
             ? body.customDomain
