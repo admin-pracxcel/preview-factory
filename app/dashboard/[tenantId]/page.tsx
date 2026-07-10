@@ -9,7 +9,8 @@
  * Interactive elements (copy button, billing portal, edit form) are in ui.tsx (client).
  */
 
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { cookies as nextCookies } from "next/headers";
 import Link from "next/link";
 import type { Metadata } from "next";
 import {
@@ -22,6 +23,12 @@ import {
 import { getTenant } from "@/lib/tenant-store";
 import { listLeads } from "@/lib/leads-store";
 import { listEditRequests } from "@/lib/edit-requests-store";
+import {
+  readSession,
+  assertOwnsTenant,
+  findLatestTenantForSession,
+  type MutableCookies,
+} from "@/lib/session";
 import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard, EditSiteCard, YourDataCard, LeadsList } from "./ui";
 
 /* ------------------------------------------------------------------ meta */
@@ -72,6 +79,24 @@ export default async function DashboardPage({
   params: Promise<{ tenantId: string }>;
 }) {
   const { tenantId } = await params;
+
+  // Ownership gate: only the session that created (or has been re-linked
+  // to via magic-link) this tenant may see the dashboard. A signed-in
+  // visitor on the wrong URL is redirected to their own tenant; no
+  // session at all → /login.
+  const cookieStore = (await nextCookies()) as unknown as MutableCookies;
+  const sessionId = readSession(cookieStore);
+  if (!sessionId) {
+    redirect("/login");
+  }
+  try {
+    await assertOwnsTenant(cookieStore, tenantId);
+  } catch {
+    const ownId = await findLatestTenantForSession(sessionId);
+    if (ownId) redirect(`/dashboard/${ownId}`);
+    redirect("/login");
+  }
+
   const tenant = await getTenant(tenantId);
   if (!tenant) notFound();
 

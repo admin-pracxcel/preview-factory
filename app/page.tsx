@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { cookies as nextCookies } from "next/headers";
 import { PenLine, Zap, Globe } from "lucide-react";
+import {
+  readSession,
+  findLatestTenantForSession,
+  type MutableCookies,
+} from "@/lib/session";
 
 /* -------------------------------------------------------------------------- */
 /*  Category data                                                               */
@@ -129,7 +135,16 @@ export const metadata = {
     "Launcharoo builds professional websites for Australian service businesses using your Google Business Profile. Go from zero to live in under 60 seconds.",
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Signed-in visitors (session cookie owns at least one tenant) get a
+  // "Dashboard" link instead of "Sign in" so they can hop straight back
+  // into their site.
+  const cookieStore = (await nextCookies()) as unknown as MutableCookies;
+  const sessionId = readSession(cookieStore);
+  const ownedTenantId = sessionId
+    ? await findLatestTenantForSession(sessionId)
+    : null;
+
   return (
     <div className="flex flex-col min-h-screen bg-[#0A0F1E] text-white">
 
@@ -148,12 +163,21 @@ export default function HomePage() {
             >
               How it works
             </a>
-            <a
-              href="/login"
-              className="hidden sm:block text-sm text-white/70 hover:text-white transition-colors"
-            >
-              Sign in
-            </a>
+            {ownedTenantId ? (
+              <Link
+                href={`/dashboard/${ownedTenantId}`}
+                className="hidden sm:block text-sm text-white/70 hover:text-white transition-colors"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <a
+                href="/login"
+                className="hidden sm:block text-sm text-white/70 hover:text-white transition-colors"
+              >
+                Sign in
+              </a>
+            )}
             <a
               href="#industries"
               className="px-5 py-2 rounded-full bg-white text-black font-bold text-sm hover:bg-white/90 transition-colors"

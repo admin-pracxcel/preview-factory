@@ -99,6 +99,29 @@ export async function assertOwnsTenant(
   }
 }
 
+/**
+ * Return the most recently created tenant owned by this session, or null
+ * if the session doesn't own any. Used by the preview / dashboard auth
+ * gates to redirect a signed-in visitor to *their* tenant when they land
+ * on someone else's URL, rather than bouncing them to /login.
+ */
+export async function findLatestTenantForSession(
+  sessionId: string,
+): Promise<string | null> {
+  const { data, error } = await supabase()
+    .from("tenants")
+    .select("id")
+    .eq("session_id", sessionId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (error) {
+    console.warn(`[session] latest-tenant lookup failed: ${error.message}`);
+    return null;
+  }
+  return data ? (data.id as string) : null;
+}
+
 /* ------------------------------------------------------------------ internals */
 
 async function touchSession(id: string): Promise<void> {
