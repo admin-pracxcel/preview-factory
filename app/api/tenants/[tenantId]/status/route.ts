@@ -20,6 +20,10 @@ interface StatusResponse {
   name?: string;
   /** Public subdomain fragment (Phase 10a). */
   slug?: string;
+  /** Custom domain, if the tenant configured one. */
+  customDomain?: string;
+  /** DNS/verification state of the custom domain. */
+  customDomainStatus?: string;
 }
 
 export async function GET(
@@ -30,7 +34,7 @@ export async function GET(
 
   const { data, error } = await supabase()
     .from("tenants")
-    .select("status,error,name,slug")
+    .select("status,error,name,slug,custom_domain,custom_domain_status")
     .eq("id", tenantId)
     .maybeSingle();
 
@@ -47,6 +51,10 @@ export async function GET(
       ...(data.error ? { error: data.error as string } : {}),
       ...(data.name ? { name: data.name as string } : {}),
       ...(data.slug ? { slug: data.slug as string } : {}),
+      ...(data.custom_domain ? { customDomain: data.custom_domain as string } : {}),
+      ...(data.custom_domain_status
+        ? { customDomainStatus: data.custom_domain_status as string }
+        : {}),
     },
     {
       // Never cache — status changes every few seconds.

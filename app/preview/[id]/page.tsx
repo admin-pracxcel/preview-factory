@@ -114,11 +114,14 @@ function PreviewPageInner() {
   const [toast, setToast] = useState<string | null>(null);
   const [panelOpen, setPanelOpen] = useState(false);
   const [businessName, setBusinessName] = useState("Your Business");
-  const [viewMode, setViewMode] = useState<"mobile" | "desktop">("mobile");
+  const [viewMode, setViewMode] = useState<"mobile" | "desktop">("desktop");
   /** When the tenant has already been claimed/published, hide the 3h
    *  countdown urgency + "Save my site" checkout button and show a
    *  "back to dashboard" affordance instead. Fetched once on mount. */
   const [isPublished, setIsPublished] = useState(false);
+  /** Real public host of this tenant — a custom domain if one is active,
+   *  otherwise the launcharoo subdomain. Populated by the /status fetch. */
+  const [publicHost, setPublicHost] = useState<string | null>(null);
 
   // Customisation state. Initial values come from /api/tenants/[id]/customise.
   const [customisation, setCustomisation] = useState<CustomisationState | null>(null);
@@ -232,8 +235,8 @@ function PreviewPageInner() {
     setBusinessName(getBusinessName());
   }, [id]);
 
-  // Detect whether this tenant has already been published so we can swap
-  // the countdown/checkout for an "editing your live site" affordance.
+  // Detect whether this tenant has already been published, and pick up the
+  // real public host so the desktop browser chrome shows the actual URL.
   useEffect(() => {
     if (!id || id === "unknown") return;
     let cancelled = false;
@@ -241,10 +244,23 @@ function PreviewPageInner() {
       try {
         const res = await fetch(`/api/tenants/${id}/status`);
         if (!res.ok) return;
-        const body = (await res.json()) as { status?: string };
-        if (!cancelled && (body.status === "claimed" || body.status === "past_due")) {
+        const body = (await res.json()) as {
+          status?: string;
+          slug?: string;
+          customDomain?: string;
+          customDomainStatus?: string;
+        };
+        if (cancelled) return;
+        if (body.status === "claimed" || body.status === "past_due") {
           setIsPublished(true);
         }
+        const host =
+          body.customDomain && body.customDomainStatus === "active"
+            ? body.customDomain
+            : body.slug
+            ? `${body.slug}.launcharoo.online`
+            : null;
+        if (host) setPublicHost(host);
       } catch {
         // Non-fatal — page still renders as a pre-checkout preview.
       }
@@ -402,11 +418,45 @@ function PreviewPageInner() {
   /* ---------------------------------------------------------------------- */
 
   const brandGlow = customisation?.brandColor ?? "#334155";
-  const previewHost =
-    (businessName || "your-business")
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "") + ".launcharoo.online";
+  const displayHost =
+    publicHost ??
+    (
+      (businessName || "your-business")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "") + ".launcharoo.online"
+    );
+
+  const viewportToggle = (
+    <div className="flex items-center rounded-full border border-slate-700/70 bg-slate-950/70 p-1 shrink-0">
+      <button
+        type="button"
+        onClick={() => setViewMode("desktop")}
+        aria-pressed={viewMode === "desktop"}
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+          viewMode === "desktop"
+            ? "bg-white text-slate-900"
+            : "text-slate-400 hover:text-white"
+        }`}
+      >
+        <Monitor className="w-3.5 h-3.5" />
+        Desktop
+      </button>
+      <button
+        type="button"
+        onClick={() => setViewMode("mobile")}
+        aria-pressed={viewMode === "mobile"}
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+          viewMode === "mobile"
+            ? "bg-white text-slate-900"
+            : "text-slate-400 hover:text-white"
+        }`}
+      >
+        <Smartphone className="w-3.5 h-3.5" />
+        Mobile
+      </button>
+    </div>
+  );
 
   const desktopLayout = (
     <div className="hidden md:flex flex-col h-screen bg-[#0A0F1E] overflow-hidden">
@@ -420,6 +470,7 @@ function PreviewPageInner() {
           </span>
         </div>
         <div className="flex items-center gap-2.5">
+          {viewportToggle}
           {isPublished ? (
             <>
               <button
@@ -491,61 +542,17 @@ function PreviewPageInner() {
             }}
           />
 
-          <div className="relative flex flex-col items-center gap-5 h-full px-8 pt-6 pb-8 min-h-0">
-            {/* Segmented viewport toggle */}
-            <div className="flex items-center rounded-full border border-slate-700/70 bg-slate-950/70 backdrop-blur p-1 shrink-0 shadow-lg shadow-black/20">
-              <button
-                type="button"
-                onClick={() => setViewMode("mobile")}
-                aria-pressed={viewMode === "mobile"}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors ${
-                  viewMode === "mobile"
-                    ? "bg-white text-slate-900"
-                    : "text-slate-400 hover:text-white"
-                }`}
-              >
-                <Smartphone className="w-3.5 h-3.5" />
-                Mobile
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode("desktop")}
-                aria-pressed={viewMode === "desktop"}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors ${
-                  viewMode === "desktop"
-                    ? "bg-white text-slate-900"
-                    : "text-slate-400 hover:text-white"
-                }`}
-              >
-                <Monitor className="w-3.5 h-3.5" />
-                Desktop
-              </button>
-            </div>
-
-            {/* Preview meta */}
-            <div className="text-center shrink-0">
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.18em]">
-                This is your new website
-              </p>
-              <p className="text-lg font-bold text-white mt-1 tracking-tight">
-                {businessName}
-              </p>
-              <p className="text-[11px] text-slate-500 mt-0.5 font-mono truncate max-w-[360px]">
-                {previewHost}
-              </p>
-            </div>
-
+          <div className="relative flex flex-col items-center justify-center h-full px-8 py-8 min-h-0">
             {viewMode === "mobile" ? (
               <>
                 <div
                   className="relative bg-slate-950 rounded-[2.75rem] border-[6px] border-slate-800 overflow-hidden shrink-0"
                   style={{
                     width: "380px",
-                    height: "min(780px, calc(100vh - 260px))",
+                    height: "min(780px, calc(100vh - 130px))",
                     boxShadow: `0 40px 80px -20px ${brandGlow}55, 0 20px 40px -10px rgba(0,0,0,0.5)`,
                   }}
                 >
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-slate-800 rounded-b-2xl z-10" />
                   <iframe
                     ref={desktopIframeRef}
                     src={iframeSrc}
@@ -553,11 +560,11 @@ function PreviewPageInner() {
                     className="absolute inset-0 w-full h-full border-0"
                   />
                 </div>
-                <div className="w-28 h-1 rounded-full bg-slate-700 shrink-0" />
+                <div className="w-28 h-1 rounded-full bg-slate-700 shrink-0 mt-3" />
               </>
             ) : (
               <div
-                className="w-full max-w-[1180px] flex-1 min-h-0 flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden"
+                className="w-full max-w-[1180px] h-full flex flex-col bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden"
                 style={{
                   boxShadow: `0 40px 80px -20px ${brandGlow}55, 0 20px 40px -10px rgba(0,0,0,0.5)`,
                 }}
@@ -569,7 +576,7 @@ function PreviewPageInner() {
                     <div className="w-3 h-3 rounded-full bg-green-500/80" />
                   </div>
                   <div className="ml-3 flex-1 px-3 py-1 rounded-md bg-slate-900/60 text-xs text-slate-400 font-mono truncate">
-                    {previewHost}
+                    {displayHost}
                   </div>
                 </div>
                 <iframe
