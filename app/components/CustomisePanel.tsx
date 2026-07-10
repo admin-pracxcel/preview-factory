@@ -478,12 +478,7 @@ export default function CustomisePanel({
   }
 
   return (
-    <div className="flex flex-col gap-7 bg-slate-900 rounded-2xl border border-slate-800 p-6 h-full overflow-y-auto">
-      <div>
-        <h2 className="text-lg font-semibold text-white">Customise your site</h2>
-        <p className="text-slate-400 text-xs mt-0.5">Changes apply instantly</p>
-      </div>
-
+    <div className="flex flex-col gap-7">
       {/* Brand colour */}
       <section className="flex flex-col gap-4">
         <h3 className="text-sm font-semibold text-slate-200 uppercase tracking-wide">
@@ -587,8 +582,8 @@ export default function CustomisePanel({
             </>
           )}
         </div>
-        <p className="text-xs text-slate-500">
-          Background is removed automatically (first upload downloads a ~80 MB model for sharp edges).
+        <p className="text-[11px] text-slate-500 leading-relaxed">
+          Backgrounds removed automatically. First upload fetches a one-time model.
         </p>
         {logoOriginalUrl && logoProcessedUrl && (
           <button
