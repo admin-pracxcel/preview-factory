@@ -22,7 +22,7 @@ import {
 import { getTenant } from "@/lib/tenant-store";
 import { listLeads } from "@/lib/leads-store";
 import { listEditRequests } from "@/lib/edit-requests-store";
-import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard, EditSiteCard, YourDataCard, ContactDetailsCard, LeadsList } from "./ui";
+import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard, EditSiteCard, YourDataCard, LeadsList } from "./ui";
 
 /* ------------------------------------------------------------------ meta */
 
@@ -81,21 +81,6 @@ export default async function DashboardPage({
   const liveUrl = tenant.slug
     ? `https://${tenant.slug}.launcharoo.online`
     : `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/preview/site/${tenantId}`;
-
-  // Pull the current contact details out of the tenant's SiteProps for the
-  // inline edit card. Templates prefer home.contact over business.*, so we
-  // hydrate the form the same way to avoid a "displayed vs. edited" mismatch.
-  const initialContact = {
-    phone:
-      tenant.siteProps?.home?.contact?.phone ??
-      tenant.siteProps?.business?.phone ??
-      "",
-    email:
-      tenant.siteProps?.home?.contact?.email ??
-      tenant.siteProps?.business?.email ??
-      "",
-    address: tenant.siteProps?.home?.contact?.address ?? "",
-  };
 
   return (
     <div className="min-h-screen bg-[#0A0F1E] text-white">
@@ -164,9 +149,6 @@ export default async function DashboardPage({
             ))}
           </div>
         </section>
-
-        {/* ── contact details card ── */}
-        <ContactDetailsCard tenantId={tenantId} initial={initialContact} />
 
         {/* ── edit your site card ── */}
         <EditSiteCard tenantId={tenantId} />

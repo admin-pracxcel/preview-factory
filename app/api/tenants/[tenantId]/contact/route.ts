@@ -26,6 +26,46 @@ interface ContactPatchBody {
   address?: string;
 }
 
+/**
+ * GET — read the current phone / email / address for the tenant.
+ * Used by the preview editor's Business Details section to hydrate its
+ * initial form values. Not gated on ownership: the same values render on
+ * the public site, so a read here is no more sensitive than a page view.
+ * Writes (PATCH) remain owner-gated.
+ */
+export async function GET(
+  _request: NextRequest,
+  { params }: { params: Promise<{ tenantId: string }> },
+): Promise<NextResponse> {
+  const { tenantId } = await params;
+
+  const tenant = await getTenant(tenantId);
+  if (!tenant) {
+    return NextResponse.json({ error: "Tenant not found" }, { status: 404 });
+  }
+
+  const site = (tenant.siteProps as Record<string, unknown> | undefined) ?? {};
+  const business = (site.business as Record<string, unknown> | undefined) ?? {};
+  const home = (site.home as Record<string, unknown> | undefined) ?? {};
+  const contact = (home.contact as Record<string, unknown> | undefined) ?? {};
+
+  const phone =
+    (typeof contact.phone === "string" && contact.phone) ||
+    (typeof business.phone === "string" && business.phone) ||
+    "";
+  const email =
+    (typeof contact.email === "string" && contact.email) ||
+    (typeof business.email === "string" && business.email) ||
+    "";
+  const address =
+    (typeof contact.address === "string" && contact.address) || "";
+
+  return NextResponse.json(
+    { phone, email, address },
+    { headers: { "cache-control": "no-store" } },
+  );
+}
+
 // Loose format checks. Strict RFC parsing is a rathole and Zod's .email() has
 // rejected valid AU addresses in the past — we just make sure it *looks like*
 // an email and only reject the obviously wrong. Empty string is allowed and

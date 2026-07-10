@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Share2, X, Lock, ChevronDown, Smartphone, Monitor, LayoutDashboard, CheckCircle2 } from "lucide-react";
 import CustomisePanel, { type CustomisationState } from "@/app/components/CustomisePanel";
+import BusinessDetailsSection, { type BusinessDetailsInitial } from "@/app/components/BusinessDetailsSection";
 import { derivePrimary, deriveSecondary } from "@/lib/color";
 
 /* -------------------------------------------------------------------------- */
@@ -122,6 +123,9 @@ function PreviewPageInner() {
   /** Real public host of this tenant — a custom domain if one is active,
    *  otherwise the launcharoo subdomain. Populated by the /status fetch. */
   const [publicHost, setPublicHost] = useState<string | null>(null);
+  /** Phone/email/address — hydrated from GET /api/tenants/[id]/contact. */
+  const [businessDetails, setBusinessDetails] =
+    useState<BusinessDetailsInitial | null>(null);
 
   // Customisation state. Initial values come from /api/tenants/[id]/customise.
   const [customisation, setCustomisation] = useState<CustomisationState | null>(null);
@@ -269,6 +273,52 @@ function PreviewPageInner() {
       cancelled = true;
     };
   }, [id]);
+
+  // Hydrate the Business details form with the current phone/email/address.
+  useEffect(() => {
+    if (!id || id === "unknown") return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/tenants/${id}/contact`);
+        if (!res.ok) return;
+        const body = (await res.json()) as BusinessDetailsInitial;
+        if (!cancelled) setBusinessDetails(body);
+      } catch {
+        // Non-fatal — section just stays hidden until it loads.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
+  // Business details save doesn't have a live postMessage channel yet — the
+  // simplest way to reflect a new phone/email/address in the preview is to
+  // reload the iframe once. Templates re-render server-side with fresh
+  // siteProps and the change is visible.
+  const reloadPreviewIframes = useCallback(() => {
+    for (const ref of [mobileIframeRef, desktopIframeRef]) {
+      const win = ref.current?.contentWindow;
+      if (win) {
+        try {
+          win.location.reload();
+        } catch {
+          // Some browsers refuse cross-origin reload — fall back to src reset.
+          const el = ref.current;
+          if (el) el.src = el.src;
+        }
+      }
+    }
+  }, []);
+
+  const handleBusinessDetailsSaved = useCallback(
+    (next: BusinessDetailsInitial) => {
+      setBusinessDetails(next);
+      reloadPreviewIframes();
+    },
+    [reloadPreviewIframes],
+  );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -612,7 +662,17 @@ function PreviewPageInner() {
                 : "Play with the design. Save when you love it."}
             </p>
           </div>
-          <div className="flex-1 overflow-y-auto px-6 py-6">
+          <div className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-7">
+            {businessDetails && (
+              <>
+                <BusinessDetailsSection
+                  tenantId={id}
+                  initial={businessDetails}
+                  onSaved={handleBusinessDetailsSaved}
+                />
+                <div className="border-t border-slate-800" />
+              </>
+            )}
             {customisation ? (
               <CustomisePanel
                 tenantId={id}
@@ -654,7 +714,17 @@ function PreviewPageInner() {
             <X className="w-5 h-5" />
           </button>
         </div>
-        <div className="p-4">
+        <div className="p-4 flex flex-col gap-7">
+          {businessDetails && (
+            <>
+              <BusinessDetailsSection
+                tenantId={id}
+                initial={businessDetails}
+                onSaved={handleBusinessDetailsSaved}
+              />
+              <div className="border-t border-slate-800" />
+            </>
+          )}
           {customisation ? (
             <CustomisePanel
               tenantId={id}
