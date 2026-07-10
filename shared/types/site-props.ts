@@ -104,6 +104,11 @@ export const servicePageSchema = z.object({
   icon: z.string().optional(),
   starting_price: z.string().optional(),
   hero_image: z.string().optional(),
+  /** Optional distinct image rendered inside the page body (mid-page banner).
+   *  Falls back to hero_image at render time if not set — legacy sites only
+   *  had one image, and this lets the owner swap the body one independently
+   *  without breaking older tenants. */
+  body_image: z.string().optional(),
   /** Lead paragraph(s) for the page body (supports \n line breaks). */
   intro: z.string(),
   /** Bullet benefits / inclusions. */

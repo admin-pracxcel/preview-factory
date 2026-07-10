@@ -1,0 +1,181 @@
+"use client";
+
+/**
+ * EditableImageOverlay
+ *
+ * Mounted inside SiteShell. Only activates when the site is being rendered
+ * inside the preview editor's iframe (window.parent !== window). Walks every
+ * element tagged with `data-editable-image="<dotted.path>"` and drops a
+ * hover overlay ("Replace image") on top of it. Clicking the overlay
+ * postMessages the parent, which opens the picker modal and PATCHes the
+ * chosen URL into siteProps at that path.
+ *
+ * The overlay is injected as a plain DOM child of the tagged element, so
+ * templates just need to add the data attribute — no per-image wrapper,
+ * no client-component churn, no per-category rework.
+ *
+ * On the live site (parent === self), this component returns null and
+ * neither the styles nor the overlay children are ever created.
+ */
+
+import { useEffect } from "react";
+
+const OVERLAY_CLASS = "lch-edit-overlay";
+const PILL_CLASS = "lch-edit-overlay-pill";
+
+/*
+ * Two visual modes:
+ *
+ *   default → full-cover dark overlay + centred pill. Whole area is clickable.
+ *     Used for content images (about, service, location, gallery) where
+ *     nothing else in the frame competes for the click.
+ *
+ *   corner  → only a small pill in the top-right corner is rendered. No dim
+ *     over the rest of the element, and only the pill is a click target.
+ *     Used for the home hero, which has CTAs sitting on top of the image;
+ *     a full-cover overlay would visually hide them and hijack their clicks.
+ */
+const OVERLAY_CSS = `
+  [data-editable-image] {
+    position: relative;
+  }
+
+  /* Full-cover (default) */
+  [data-editable-image]:not([data-editable-mode="corner"]) > .${OVERLAY_CLASS} {
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.55);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    cursor: pointer;
+    border-radius: inherit;
+  }
+  [data-editable-image]:not([data-editable-mode="corner"]):hover > .${OVERLAY_CLASS} {
+    opacity: 1;
+  }
+
+  /* Corner pill */
+  [data-editable-image][data-editable-mode="corner"] > .${OVERLAY_CLASS} {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 40;
+    /* Wrapper is invisible + non-blocking; only the pill inside intercepts
+       clicks so CTAs beneath the section stay usable. */
+    pointer-events: none;
+    background: transparent;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  [data-editable-image][data-editable-mode="corner"]:hover > .${OVERLAY_CLASS} {
+    opacity: 1;
+  }
+
+  [data-editable-image] > .${OVERLAY_CLASS} > .${PILL_CLASS} {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    color: #0f172a;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    /* In corner mode the wrapper is pointer-events:none; re-enable on pill. */
+    pointer-events: auto;
+    cursor: pointer;
+  }
+`;
+
+const PILL_HTML = `
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="18" rx="2"/>
+    <circle cx="8.5" cy="8.5" r="1.5"/>
+    <path d="m21 15-5-5L5 21"/>
+  </svg>
+  Replace image
+`;
+
+export function EditableImageOverlay() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.parent === window) return; // not in an iframe → live site
+
+    const styleTag = document.createElement("style");
+    styleTag.setAttribute("data-launcharoo-overlay", "");
+    styleTag.textContent = OVERLAY_CSS;
+    document.head.appendChild(styleTag);
+
+    const listeners = new WeakMap<HTMLElement, (e: MouseEvent) => void>();
+
+    function attach(el: HTMLElement) {
+      if (el.dataset.editableAttached === "true") return;
+      el.dataset.editableAttached = "true";
+
+      const overlay = document.createElement("div");
+      overlay.className = OVERLAY_CLASS;
+      const pill = document.createElement("div");
+      pill.className = PILL_CLASS;
+      pill.innerHTML = PILL_HTML;
+      overlay.appendChild(pill);
+
+      // Click handler on the pill so it fires in both modes (in corner mode
+      // the wrapper is pointer-events:none and would swallow the click).
+      const onClick = (e: MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const path = el.getAttribute("data-editable-image");
+        if (path && window.parent && window.parent !== window) {
+          window.parent.postMessage(
+            { type: "edit-image", path },
+            "*",
+          );
+        }
+      };
+      pill.addEventListener("click", onClick);
+      listeners.set(pill, onClick);
+
+      el.appendChild(overlay);
+    }
+
+    function scan() {
+      document
+        .querySelectorAll<HTMLElement>("[data-editable-image]")
+        .forEach(attach);
+    }
+
+    scan();
+    const observer = new MutationObserver(scan);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      styleTag.remove();
+      document
+        .querySelectorAll<HTMLElement>(
+          `[data-editable-image] > .${OVERLAY_CLASS}`,
+        )
+        .forEach((overlay) => {
+          const pill = overlay.querySelector<HTMLElement>(`.${PILL_CLASS}`);
+          if (pill) {
+            const handler = listeners.get(pill);
+            if (handler) pill.removeEventListener("click", handler);
+          }
+          overlay.remove();
+        });
+      document
+        .querySelectorAll<HTMLElement>('[data-editable-attached="true"]')
+        .forEach((el) => {
+          delete el.dataset.editableAttached;
+        });
+    };
+  }, []);
+
+  return null;
+}

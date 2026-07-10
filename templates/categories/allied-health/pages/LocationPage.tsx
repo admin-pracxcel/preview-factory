@@ -37,6 +37,10 @@ export function LocationPage({
     { label: page.suburb, href: href(basePath, "locations", page.slug) },
   ];
 
+  const locationIndex = site.locations.findIndex((l) => l.slug === page.slug);
+  const editablePath =
+    locationIndex >= 0 ? `locations.${locationIndex}.hero_image` : undefined;
+
   const jsonLd = [
     buildLocationJsonLd(site, page),
     buildBreadcrumbJsonLd(crumbs.map((c) => ({ name: c.label, url: c.href }))),
@@ -93,6 +97,7 @@ export function LocationPage({
         title={title}
         subtitle={page.intro}
         image={page.hero_image}
+        editablePath={editablePath}
       />
 
       <section className="py-14 sm:py-20">

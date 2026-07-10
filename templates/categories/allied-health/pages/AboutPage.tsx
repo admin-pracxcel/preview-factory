@@ -65,7 +65,10 @@ export function AboutPage({ site, basePath }: { site: SiteProps; basePath: strin
           </div>
 
           {about.photo_url && (
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl">
+            <div
+              className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl"
+              data-editable-image="about.photo_url"
+            >
               <Image
                 src={about.photo_url}
                 alt={about.heading ?? `About ${business.name}`}

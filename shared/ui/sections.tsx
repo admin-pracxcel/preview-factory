@@ -65,7 +65,11 @@ export function Hero({
   socialProof?: SocialProofItem[];
 }) {
   return (
-    <section className="relative isolate overflow-hidden bg-[var(--secondary)] text-white">
+    <section
+      className="relative isolate overflow-hidden bg-[var(--secondary)] text-white"
+      data-editable-image={heroImage ? "overrides.hero_image_url" : undefined}
+      data-editable-mode={heroImage ? "corner" : undefined}
+    >
       {heroImage && (
         <Image data-customise="hero" src={heroImage} alt="" fill priority sizes="100vw" className="object-cover" />
       )}
@@ -141,14 +145,24 @@ export function PageHero({
   title,
   subtitle,
   image,
+  editablePath,
 }: {
   eyebrow?: string;
   title: string;
   subtitle?: string;
   image?: string;
+  /** SiteProps dotted path — turns the hero image into a click-to-swap
+   *  target when the page is rendered inside the preview editor. The
+   *  section only becomes editable when both `image` and this path are
+   *  supplied, since there is nothing to swap otherwise. */
+  editablePath?: string;
 }) {
+  const editable = image && editablePath ? editablePath : undefined;
   return (
-    <section className="relative isolate overflow-hidden bg-[var(--secondary)] text-white">
+    <section
+      className="relative isolate overflow-hidden bg-[var(--secondary)] text-white"
+      data-editable-image={editable}
+    >
       {image && (
         <Image src={image} alt="" fill priority sizes="100vw" className="object-cover" />
       )}
@@ -313,7 +327,10 @@ export function AboutSection({
         <div className="grid items-center gap-10 lg:grid-cols-2">
           {photoUrl && (
             <Reveal>
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl">
+              <div
+                className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl"
+                data-editable-image="home.about.photo_url"
+              >
                 <Image
                   src={photoUrl}
                   alt={heading ?? `About ${businessName}`}
@@ -457,7 +474,10 @@ export function GalleryGrid({
         >
           {items.map((item, i) => (
             <Reveal key={item.id} delay={(i % 3) * 0.05}>
-              <figure className="group relative aspect-square overflow-hidden rounded-xl bg-zinc-100 shadow-sm">
+              <figure
+                className="group relative aspect-square overflow-hidden rounded-xl bg-zinc-100 shadow-sm"
+                data-editable-image={`home.gallery.${i}.image_url`}
+              >
                 <Image
                   data-customise="gallery"
                   data-gallery-index={i}

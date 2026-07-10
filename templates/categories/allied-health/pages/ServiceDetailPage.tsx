@@ -36,6 +36,13 @@ export function ServiceDetailPage({
     { label: page.title, href: href(basePath, "services", page.slug) },
   ];
 
+  const serviceIndex = site.services.findIndex((s) => s.slug === page.slug);
+  const heroEditablePath =
+    serviceIndex >= 0 ? `services.${serviceIndex}.hero_image` : undefined;
+  const bodyEditablePath =
+    serviceIndex >= 0 ? `services.${serviceIndex}.body_image` : undefined;
+  const bodyImage = page.body_image ?? page.hero_image;
+
   // MedicalProcedure JSON-LD for allied-health service pages
   const serviceLd: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -81,7 +88,13 @@ export function ServiceDetailPage({
   return (
     <SiteShell site={site} basePath={basePath} jsonLd={jsonLd}>
       <Breadcrumbs crumbs={crumbs} />
-      <PageHero eyebrow="Treatment" title={page.title} subtitle={page.summary} image={page.hero_image} />
+      <PageHero
+        eyebrow="Treatment"
+        title={page.title}
+        subtitle={page.summary}
+        image={page.hero_image}
+        editablePath={heroEditablePath}
+      />
 
       <section className="py-14 sm:py-20">
         <div className="mx-auto max-w-4xl px-4">
@@ -92,10 +105,13 @@ export function ServiceDetailPage({
           )}
           <p className="whitespace-pre-line text-lg leading-relaxed text-zinc-700">{page.intro}</p>
 
-          {page.hero_image && (
-            <div className="relative mt-10 aspect-[16/7] overflow-hidden rounded-2xl shadow-lg">
+          {bodyImage && (
+            <div
+              className="relative mt-10 aspect-[16/7] overflow-hidden rounded-2xl shadow-lg"
+              data-editable-image={bodyEditablePath}
+            >
               <Image
-                src={page.hero_image}
+                src={bodyImage}
                 alt={page.title}
                 fill
                 sizes="(max-width: 896px) 100vw, 896px"

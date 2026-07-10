@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Share2, X, Lock, ChevronDown, Smartphone, Monitor, LayoutDashboard, CheckCircle2 } from "lucide-react";
 import CustomisePanel, { type CustomisationState } from "@/app/components/CustomisePanel";
 import BusinessDetailsSection, { type BusinessDetailsInitial } from "@/app/components/BusinessDetailsSection";
+import ImagePickerModal from "@/app/components/ImagePickerModal";
 import { derivePrimary, deriveSecondary } from "@/lib/color";
 
 /* -------------------------------------------------------------------------- */
@@ -126,6 +127,9 @@ function PreviewPageInner() {
   /** Phone/email/address — hydrated from GET /api/tenants/[id]/contact. */
   const [businessDetails, setBusinessDetails] =
     useState<BusinessDetailsInitial | null>(null);
+  /** Non-null path → ImagePickerModal is open editing that image slot.
+   *  Set by an `edit-image` postMessage from the iframe (hover overlay). */
+  const [editingImagePath, setEditingImagePath] = useState<string | null>(null);
 
   // Customisation state. Initial values come from /api/tenants/[id]/customise.
   const [customisation, setCustomisation] = useState<CustomisationState | null>(null);
@@ -156,7 +160,6 @@ function PreviewPageInner() {
           chromeTheme: data.chrome_theme ?? "light",
           logoUrl: data.logo_url,
           logoHeightPx: data.logo_height_px ?? 36,
-          heroUrl: data.hero_image_url,
         });
         setNiche(data.niche);
       } catch {
@@ -206,12 +209,6 @@ function PreviewPageInner() {
     scheduleSave({ logo_url: url });
   }, [broadcast, scheduleSave]);
 
-  const handleHeroChange = useCallback((url: string) => {
-    setCustomisation((c) => c && { ...c, heroUrl: url });
-    broadcast({ heroUrl: url });
-    scheduleSave({ hero_image_url: url });
-  }, [broadcast, scheduleSave]);
-
   const handleChromeThemeChange = useCallback((theme: "light" | "dark") => {
     setCustomisation((c) => c && { ...c, chromeTheme: theme });
     broadcast({ chromeTheme: theme });
@@ -223,15 +220,6 @@ function PreviewPageInner() {
     broadcast({ logoHeightPx: px });
     scheduleSave({ logo_height_px: px });
   }, [broadcast, scheduleSave]);
-
-  const handleGalleryChange = useCallback((urls: string[]) => {
-    // Gallery is already persisted by the /api/.../gallery endpoint the panel
-    // called — we just need to mirror it into the live iframe.
-    for (const ref of [mobileIframeRef, desktopIframeRef]) {
-      const win = ref.current?.contentWindow;
-      if (win) win.postMessage({ type: "apply-customisation", payload: { galleryUrls: urls } }, "*");
-    }
-  }, []);
 
   useEffect(() => {
     expiryRef.current = getExpiryTimestamp(id);
@@ -318,6 +306,45 @@ function PreviewPageInner() {
       reloadPreviewIframes();
     },
     [reloadPreviewIframes],
+  );
+
+  // Iframe → parent: the click-to-swap overlay inside a tenant page fires
+  // { type: "edit-image", path } when the owner clicks a Replace pill. We
+  // pop the ImagePickerModal for that slot.
+  useEffect(() => {
+    function handle(event: MessageEvent) {
+      const data = event.data as { type?: string; path?: string };
+      if (data?.type === "edit-image" && typeof data.path === "string") {
+        setEditingImagePath(data.path);
+      }
+    }
+    window.addEventListener("message", handle);
+    return () => window.removeEventListener("message", handle);
+  }, []);
+
+  const handleImagePicked = useCallback(
+    async (url: string) => {
+      if (!editingImagePath) return;
+      try {
+        const res = await fetch(`/api/tenants/${id}/image`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ path: editingImagePath, url }),
+        });
+        if (!res.ok) {
+          // Modal stays open with no error surface for now; PATCH failures
+          // are rare and the underlying endpoint returns 400/403/409 with
+          // messages we could bubble up in a follow-up.
+          console.error("[preview] image save failed", await res.text());
+          return;
+        }
+        setEditingImagePath(null);
+        reloadPreviewIframes();
+      } catch (err) {
+        console.error("[preview] image save error", err);
+      }
+    },
+    [editingImagePath, id, reloadPreviewIframes],
   );
 
   useEffect(() => {
@@ -677,13 +704,10 @@ function PreviewPageInner() {
               <CustomisePanel
                 tenantId={id}
                 state={customisation}
-                defaultPexelsQuery={niche}
                 onBrandColorChange={handleBrandColorChange}
                 onChromeThemeChange={handleChromeThemeChange}
                 onLogoHeightChange={handleLogoHeightChange}
                 onLogoChange={handleLogoChange}
-                onHeroChange={handleHeroChange}
-                onGalleryChange={handleGalleryChange}
               />
             ) : (
               <div className="text-sm text-slate-400">Loading customisation…</div>
@@ -729,13 +753,10 @@ function PreviewPageInner() {
             <CustomisePanel
               tenantId={id}
               state={customisation}
-              defaultPexelsQuery={niche}
               onBrandColorChange={handleBrandColorChange}
               onChromeThemeChange={handleChromeThemeChange}
               onLogoHeightChange={handleLogoHeightChange}
               onLogoChange={handleLogoChange}
-              onHeroChange={handleHeroChange}
-              onGalleryChange={handleGalleryChange}
             />
           ) : (
             <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 text-sm text-slate-400">
@@ -752,6 +773,13 @@ function PreviewPageInner() {
       {mobileLayout}
       {desktopLayout}
       {mobilePanelToggle}
+      <ImagePickerModal
+        tenantId={id}
+        path={editingImagePath}
+        defaultQuery={niche}
+        onClose={() => setEditingImagePath(null)}
+        onSelect={handleImagePicked}
+      />
       {toast && <Toast message={toast} onClose={dismissToast} />}
     </>
   );

@@ -10,6 +10,7 @@ import { resolveTheme } from "./theme";
 import { href, telHref, currentYear } from "./helpers";
 import { CountdownBanner } from "./client";
 import { CustomisationListener } from "./customisation-listener";
+import { EditableImageOverlay } from "./editable-image-overlay";
 import { MobileNav } from "./mobile-nav";
 
 export interface NavItem {
@@ -375,6 +376,7 @@ export function SiteShell({
       <Footer site={site} basePath={basePath} nav={nav} logo={theme.logo} />
       <MobileCallBar site={site} />
       <CustomisationListener />
+      <EditableImageOverlay />
     </div>
   );
 }
