@@ -151,23 +151,70 @@ create table if not exists public.processed_events (
   seen_at     timestamptz not null default now()
 );
 
--- Plain-English edit requests submitted from the client dashboard (Phase L).
--- The engine reads pending rows, produces a proposed SiteProps mutation, and
--- flips status to 'preview' for the owner to approve or reject.
+-- Plain-English edit requests submitted from the client dashboard.
+--
+-- Workflow (approval-first, edits applied by an n8n workflow that shells out
+-- to `claude -p`):
+--   pending    → submitted by owner, waiting for admin review
+--   approved   → admin approved, waiting for the n8n workflow to run
+--   processing → n8n has started; claude call in flight
+--   applied    → patches validated + written to tenant siteProps
+--   rejected   → admin rejected with reason
+--   failed     → workflow ran but hit an error (parse fail, path denied,
+--                schema violation, etc). Admin can retry or handle manually.
+--   error      → legacy status kept for backwards-compat
+--   preview    → legacy status from the discarded auto-mutate engine, kept
+--                so old rows don't fail the CHECK
 create table if not exists public.edit_requests (
   id                   uuid primary key default gen_random_uuid(),
   tenant_id            uuid not null references public.tenants(id) on delete cascade,
   request              text not null,
   status               text not null default 'pending'
-                         check (status in ('pending','processing','preview','applied','rejected','error')),
+                         check (status in ('pending','approved','processing','preview','applied','rejected','failed','error')),
   created_at           timestamptz not null default now(),
   resolved_at          timestamptz,
   change_summary       text,
-  proposed_site_props  jsonb
+  proposed_site_props  jsonb,
+
+  -- Approval workflow columns (added Phase 0 of the claude-cli edit engine).
+  admin_note           text,
+  reject_reason        text,
+  approved_at          timestamptz,
+  rejected_at          timestamptz,
+  applied_at           timestamptz,
+  approved_by          text,
+  error                text,
+  -- SHA-256 hash of the single-use email token. Consumed on approve/reject
+  -- so a stolen token can't be replayed.
+  token_hash           text
 );
+
+-- Re-run-safe adds for existing databases. Idempotent — running this file
+-- against a project that pre-dates the approval columns applies them, and
+-- a project already up-to-date is a no-op.
+alter table public.edit_requests add column if not exists admin_note text;
+alter table public.edit_requests add column if not exists reject_reason text;
+alter table public.edit_requests add column if not exists approved_at timestamptz;
+alter table public.edit_requests add column if not exists rejected_at timestamptz;
+alter table public.edit_requests add column if not exists applied_at timestamptz;
+alter table public.edit_requests add column if not exists approved_by text;
+alter table public.edit_requests add column if not exists error text;
+alter table public.edit_requests add column if not exists token_hash text;
+
+-- Widen the CHECK to include the new statuses (approved, failed). Safe to run
+-- against a fresh DB since the CREATE TABLE above already lists them; only
+-- meaningful when an older DB is being migrated forward.
+do $$
+begin
+  alter table public.edit_requests drop constraint if exists edit_requests_status_check;
+  alter table public.edit_requests add constraint edit_requests_status_check
+    check (status in ('pending','approved','processing','preview','applied','rejected','failed','error'));
+end $$;
 
 create index if not exists edit_requests_tenant_id_idx
   on public.edit_requests (tenant_id, created_at desc);
+create index if not exists edit_requests_status_idx
+  on public.edit_requests (status, created_at desc);
 
 alter table public.edit_requests enable row level security;
 
