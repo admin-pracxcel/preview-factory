@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Share2, X, Lock, ChevronDown, Smartphone, Monitor, LayoutDashboard, CheckCircle2 } from "lucide-react";
+import { X, Lock, ChevronDown, Smartphone, Monitor, LayoutDashboard, CheckCircle2, ExternalLink } from "lucide-react";
 import CustomisePanel, { type CustomisationState } from "@/app/components/CustomisePanel";
 import BusinessDetailsSection, { type BusinessDetailsInitial } from "@/app/components/BusinessDetailsSection";
 import ImagePickerModal from "@/app/components/ImagePickerModal";
@@ -383,28 +383,6 @@ function PreviewPageInner() {
     }
   }
 
-  async function handleShare() {
-    const url = window.location.href;
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: "Check out my new website!",
-          text: "I just built a website in under 60 seconds. Take a look:",
-          url,
-        });
-      } catch {
-        // User cancelled
-      }
-    } else {
-      try {
-        await navigator.clipboard.writeText(url);
-        setToast("Link copied to clipboard.");
-      } catch {
-        setToast("Copy this link: " + url);
-      }
-    }
-  }
-
   // Point the iframe at the per-tenant universal renderer.
   // Falls back to the trades example if the id looks like a static category slug.
   const iframeSrc = `/preview/site/${id}`;
@@ -436,14 +414,6 @@ function PreviewPageInner() {
           >
             Customise
             <ChevronDown className="w-3 h-3" />
-          </button>
-          <button
-            type="button"
-            onClick={handleShare}
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
-            aria-label="Share"
-          >
-            <Share2 className="w-4 h-4" />
           </button>
         </div>
       </div>
@@ -503,6 +473,19 @@ function PreviewPageInner() {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-|-$/g, "") + ".launcharoo.online"
     );
+  const publicUrl = publicHost ? `https://${publicHost}` : null;
+
+  const viewSiteButton = publicUrl ? (
+    <a
+      href={publicUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-2 px-3.5 py-2 rounded-lg border border-slate-700/70 text-slate-300 hover:text-white hover:border-slate-500 hover:bg-slate-800/60 text-sm font-medium transition-colors"
+    >
+      <ExternalLink className="w-4 h-4" />
+      View site
+    </a>
+  ) : null;
 
   const viewportToggle = (
     <div className="flex items-center rounded-full border border-slate-700/70 bg-slate-950/70 p-1 shrink-0">
@@ -550,14 +533,7 @@ function PreviewPageInner() {
           {viewportToggle}
           {isPublished ? (
             <>
-              <button
-                type="button"
-                onClick={handleShare}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-lg border border-slate-700/70 text-slate-300 hover:text-white hover:border-slate-500 hover:bg-slate-800/60 text-sm font-medium transition-colors"
-              >
-                <Share2 className="w-4 h-4" />
-                Share
-              </button>
+              {viewSiteButton}
               <Link
                 href={`/dashboard/${id}`}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-slate-900 hover:bg-slate-100 text-sm font-semibold transition-colors"
@@ -569,14 +545,7 @@ function PreviewPageInner() {
           ) : (
             <>
               <CountdownBox timeLeft={timeLeft} urgency={urgency} />
-              <button
-                type="button"
-                onClick={handleShare}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-lg border border-slate-700/70 text-slate-300 hover:text-white hover:border-slate-500 hover:bg-slate-800/60 text-sm font-medium transition-colors"
-              >
-                <Share2 className="w-4 h-4" />
-                Share
-              </button>
+              {viewSiteButton}
               <div className="flex flex-col items-end">
                 <button
                   type="button"
