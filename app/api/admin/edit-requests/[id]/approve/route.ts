@@ -23,6 +23,11 @@ import type { MutableCookies } from "@/lib/session";
 
 export const runtime = "nodejs";
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+function isUuid(v: string): boolean {
+  return UUID_RE.test(v);
+}
+
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
@@ -34,6 +39,9 @@ export async function POST(
   if (!admin) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   const { id } = await params;
+  if (!isUuid(id)) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
 
   let body: { adminNote?: unknown };
   try {
