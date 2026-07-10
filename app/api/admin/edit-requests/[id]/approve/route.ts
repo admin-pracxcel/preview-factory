@@ -82,8 +82,14 @@ export async function POST(
     : "failed";
 
   console.log(
-    `[approve] editRequest ${id} approved by ${adminEmail() ?? "?"} — webhook ${webhookOutcome}`,
+    `[approve] editRequest ${id} approved by ${adminEmail() ?? "?"} — webhook ${webhookOutcome}${webhook.reason ? ` (${webhook.reason})` : ""}`,
   );
 
-  return NextResponse.json({ ok: true, webhook: webhookOutcome });
+  return NextResponse.json({
+    ok: true,
+    webhook: webhookOutcome,
+    // Surfaced only for admin routes so the caller can debug env / n8n
+    // problems without digging through Vercel logs.
+    ...(webhook.reason ? { webhookReason: webhook.reason } : {}),
+  });
 }
