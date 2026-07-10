@@ -92,9 +92,10 @@ export default async function DashboardPage({
   try {
     await assertOwnsTenant(cookieStore, tenantId);
   } catch {
+    // Wrong tenant → send to the sites list so they can pick which one to
+    // manage. Signed-in visitors who own nothing bounce to /login.
     const ownId = await findLatestTenantForSession(sessionId);
-    if (ownId) redirect(`/dashboard/${ownId}`);
-    redirect("/login");
+    redirect(ownId ? "/dashboard" : "/login");
   }
 
   const tenant = await getTenant(tenantId);

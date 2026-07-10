@@ -84,7 +84,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     secure: process.env.NODE_ENV === "production",
   });
 
-  const target = tenantIds[0];
-  console.log(`[auth:verify] signed in ${email} → tenant ${target} (rewired ${tenantIds.length})`);
-  return redirectTo(request, `/dashboard/${target}`);
+  console.log(
+    `[auth:verify] signed in ${email} → /dashboard (rewired ${tenantIds.length})`,
+  );
+  return redirectTo(request, "/dashboard");
 }

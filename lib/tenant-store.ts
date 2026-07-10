@@ -287,6 +287,53 @@ export async function createQueuedTenant(
 }
 
 /**
+ * Lightweight summary used by the dashboard list view. We don't need to hydrate
+ * full siteProps just to render a card, so this pulls only the visible fields.
+ */
+export interface TenantSummary {
+  id: string;
+  name: string;
+  slug?: string;
+  status: TenantStatus;
+  customDomain?: string;
+  customDomainStatus?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * List every tenant owned by this session, newest first. Used by /dashboard
+ * to render the "your sites" grid. Magic-link verify rewires session_id
+ * across all email-owned tenants, so this covers the cross-device case too.
+ */
+export async function listTenantsForSession(
+  sessionId: string,
+): Promise<TenantSummary[]> {
+  const { data, error } = await supabase()
+    .from(TABLE)
+    .select(
+      "id, name, slug, status, custom_domain, custom_domain_status, created_at, updated_at",
+    )
+    .eq("session_id", sessionId)
+    .order("created_at", { ascending: false })
+    .limit(50);
+  if (error) {
+    throw new Error(`listTenantsForSession failed: ${error.message}`);
+  }
+  return (data ?? []).map((row) => ({
+    id: row.id as string,
+    name: (row.name as string | null) ?? "Untitled",
+    slug: (row.slug as string | null) ?? undefined,
+    status: toAppStatus(row.status as DBStatus),
+    customDomain: (row.custom_domain as string | null) ?? undefined,
+    customDomainStatus:
+      (row.custom_domain_status as string | null) ?? undefined,
+    createdAt: row.created_at as string,
+    updatedAt: (row.updated_at as string | null) ?? (row.created_at as string),
+  }));
+}
+
+/**
  * List all tenant IDs, newest first. Caps at 1000 rows. Used only by admin
  * flows and legacy scripts.
  */

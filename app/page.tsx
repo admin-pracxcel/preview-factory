@@ -137,13 +137,13 @@ export const metadata = {
 
 export default async function HomePage() {
   // Signed-in visitors (session cookie owns at least one tenant) get a
-  // "Dashboard" link instead of "Sign in" so they can hop straight back
-  // into their site.
+  // "Dashboard" link instead of "Sign in" so they can hop straight to
+  // their sites list.
   const cookieStore = (await nextCookies()) as unknown as MutableCookies;
   const sessionId = readSession(cookieStore);
-  const ownedTenantId = sessionId
-    ? await findLatestTenantForSession(sessionId)
-    : null;
+  const hasOwnedTenant = sessionId
+    ? (await findLatestTenantForSession(sessionId)) !== null
+    : false;
 
   return (
     <div className="flex flex-col min-h-screen bg-[#0A0F1E] text-white">
@@ -163,9 +163,9 @@ export default async function HomePage() {
             >
               How it works
             </a>
-            {ownedTenantId ? (
+            {hasOwnedTenant ? (
               <Link
-                href={`/dashboard/${ownedTenantId}`}
+                href="/dashboard"
                 className="hidden sm:block text-sm text-white/70 hover:text-white transition-colors"
               >
                 Dashboard

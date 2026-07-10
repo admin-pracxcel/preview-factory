@@ -38,11 +38,10 @@ export default async function PreviewPage({
   try {
     await assertOwnsTenant(cookieStore, id);
   } catch {
-    // Session exists but doesn't own this tenant. Send them to their own,
-    // or to /login if they have no tenants at all.
+    // Session exists but doesn't own this tenant. Bounce to the sites
+    // list so they can pick what to edit, or to /login if they own nothing.
     const ownId = await findLatestTenantForSession(sessionId);
-    if (ownId) redirect(`/preview/${ownId}`);
-    redirect("/login");
+    redirect(ownId ? "/dashboard" : "/login");
   }
 
   return <PreviewClient />;
