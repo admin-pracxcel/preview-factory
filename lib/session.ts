@@ -79,6 +79,11 @@ export function readSession(
  * Verify the session cookie owns a given tenant. Used by /api/claim, custom
  * domain endpoints, and anywhere else that needs "this browser created this
  * tenant" as a lightweight auth check pre-magic-link.
+ *
+ * Admin bypass: if ADMIN_EMAIL is configured and this session owns any
+ * tenant claimed under that email, the check passes regardless of which
+ * tenant is being accessed. This lets the founder support / edit any
+ * client's site from the same UI clients use.
  */
 export async function assertOwnsTenant(
   cookies: MutableCookies | ReadonlyCookies,
@@ -95,8 +100,30 @@ export async function assertOwnsTenant(
   if (error) throw new Error(`tenant lookup failed: ${error.message}`);
   if (!data) throw new Error(`tenant ${tenantId} not found`);
   if (data.session_id !== sessionId) {
+    // Not the owning session — is this session an admin? Inlined (rather
+    // than importing lib/admin) to avoid a module cycle: admin already
+    // depends on session.
+    if (await isSessionAdmin(sessionId)) return;
     throw new Error("session does not own this tenant");
   }
+}
+
+async function isSessionAdmin(sessionId: string): Promise<boolean> {
+  const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  if (!email) return false;
+  const { data, error } = await supabase()
+    .from("tenants")
+    .select("id")
+    .eq("session_id", sessionId)
+    .eq("owner_email", email)
+    .not("claimed_at", "is", null)
+    .limit(1)
+    .maybeSingle();
+  if (error) {
+    console.warn(`[session] admin lookup failed: ${error.message}`);
+    return false;
+  }
+  return Boolean(data);
 }
 
 /**

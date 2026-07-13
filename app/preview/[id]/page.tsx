@@ -18,6 +18,7 @@ import {
   findLatestTenantForSession,
   type MutableCookies,
 } from "@/lib/session";
+import { isAdminSession } from "@/lib/admin";
 import PreviewClient from "./PreviewClient";
 
 export const dynamic = "force-dynamic";
@@ -35,13 +36,17 @@ export default async function PreviewPage({
     redirect("/login");
   }
 
-  try {
-    await assertOwnsTenant(cookieStore, id);
-  } catch {
-    // Session exists but doesn't own this tenant. Bounce to the sites
-    // list so they can pick what to edit, or to /login if they own nothing.
-    const ownId = await findLatestTenantForSession(sessionId);
-    redirect(ownId ? "/dashboard" : "/login");
+  // Admin sessions can open any tenant's preview editor for support / review.
+  const admin = await isAdminSession(cookieStore);
+  if (!admin) {
+    try {
+      await assertOwnsTenant(cookieStore, id);
+    } catch {
+      // Session exists but doesn't own this tenant. Bounce to the sites
+      // list so they can pick what to edit, or to /login if they own nothing.
+      const ownId = await findLatestTenantForSession(sessionId);
+      redirect(ownId ? "/dashboard" : "/login");
+    }
   }
 
   return <PreviewClient />;

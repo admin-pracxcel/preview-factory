@@ -23,7 +23,6 @@ import {
   type TenantSummary,
 } from "@/lib/tenant-store";
 import { LogoutButton } from "@/app/components/LogoutButton";
-import { isAdminSession } from "@/lib/admin";
 
 export const dynamic = "force-dynamic";
 
@@ -81,11 +80,6 @@ export default async function DashboardListPage() {
   const sessionId = readSession(cookieStore);
   if (!sessionId) {
     redirect("/login");
-  }
-
-  // Admins get their own dashboard at /admin. Owners stay on /dashboard.
-  if (await isAdminSession(cookieStore)) {
-    redirect("/admin");
   }
 
   const tenants = await listTenantsForSession(sessionId);

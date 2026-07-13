@@ -33,6 +33,7 @@ import {
 } from "@/lib/session";
 import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard, EditSiteCard, LeadsList } from "./ui";
 import { LogoutButton } from "@/app/components/LogoutButton";
+import { isAdminSession } from "@/lib/admin";
 
 /* ------------------------------------------------------------------ meta */
 
@@ -92,13 +93,17 @@ export default async function DashboardPage({
   if (!sessionId) {
     redirect("/login");
   }
-  try {
-    await assertOwnsTenant(cookieStore, tenantId);
-  } catch {
-    // Wrong tenant → send to the sites list so they can pick which one to
-    // manage. Signed-in visitors who own nothing bounce to /login.
-    const ownId = await findLatestTenantForSession(sessionId);
-    redirect(ownId ? "/dashboard" : "/login");
+  // Admin sessions can open any tenant's dashboard for support / review.
+  const admin = await isAdminSession(cookieStore);
+  if (!admin) {
+    try {
+      await assertOwnsTenant(cookieStore, tenantId);
+    } catch {
+      // Wrong tenant → send to the sites list so they can pick which one to
+      // manage. Signed-in visitors who own nothing bounce to /login.
+      const ownId = await findLatestTenantForSession(sessionId);
+      redirect(ownId ? "/dashboard" : "/login");
+    }
   }
 
   const tenant = await getTenant(tenantId);
