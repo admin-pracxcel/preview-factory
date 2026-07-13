@@ -14,6 +14,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { isAdminSession } from "@/lib/admin";
 import type { MutableCookies } from "@/lib/session";
+import { LogoutButton } from "@/app/components/LogoutButton";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Concierge — change requests" };
@@ -257,12 +258,26 @@ function Shell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-[#0A0F1E] text-white">
       <header className="border-b border-white/5 px-6 py-4">
         <div className="mx-auto flex max-w-4xl items-center justify-between">
-          <span className="font-[family-name:var(--font-sora)] text-lg font-extrabold">
-            Launcharoo
-          </span>
-          <span className="text-xs uppercase tracking-widest text-white/40">
-            Concierge
-          </span>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/admin"
+              className="font-[family-name:var(--font-sora)] text-lg font-extrabold hover:text-white/80 transition-colors"
+            >
+              Launcharoo
+            </Link>
+            <span className="text-xs uppercase tracking-widest text-white/40">
+              Concierge
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/admin"
+              className="rounded-lg px-3 py-1.5 text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+            >
+              Dashboard
+            </Link>
+            <LogoutButton />
+          </div>
         </div>
       </header>
       <main className="mx-auto max-w-4xl px-6 py-10">

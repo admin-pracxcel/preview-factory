@@ -32,6 +32,7 @@ import {
   type MutableCookies,
 } from "@/lib/session";
 import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard, EditSiteCard, LeadsList } from "./ui";
+import { LogoutButton } from "@/app/components/LogoutButton";
 
 /* ------------------------------------------------------------------ meta */
 
@@ -130,6 +131,7 @@ export default async function DashboardPage({
               All sites
             </Link>
             <StatusBadge status={tenant.status} />
+            <LogoutButton />
           </div>
         </div>
       </header>
