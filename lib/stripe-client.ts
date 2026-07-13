@@ -191,6 +191,60 @@ export interface StripeSubscription {
   /** Unix seconds. Only set when the customer scheduled a future cancel. */
   cancel_at: number | null;
   cancel_at_period_end: boolean;
+  /** Unix seconds. Start of the current billing period (~= last paid date). */
+  current_period_start?: number | null;
+  /** Unix seconds. End of the current billing period (~= next bill date). */
+  current_period_end?: number | null;
+  /** Unix seconds. When the subscription first became active. */
+  start_date?: number | null;
+  /** Currency + unit amount for the primary plan item, if available. */
+  items?: {
+    data?: Array<{
+      price?: {
+        unit_amount?: number | null;
+        currency?: string | null;
+        recurring?: { interval?: string | null } | null;
+      } | null;
+    }>;
+  };
+}
+
+/**
+ * Retrieve a Stripe subscription by id. Returns null if the id is falsy, the
+ * API key is missing, or Stripe returns non-2xx. Never throws — the admin
+ * view degrades gracefully if Stripe is down.
+ */
+export async function retrieveSubscription(
+  subscriptionId: string | null | undefined,
+): Promise<StripeSubscription | null> {
+  if (!subscriptionId) return null;
+  const secretKey = process.env.STRIPE_SECRET_KEY;
+  if (!secretKey) return null;
+
+  try {
+    const res = await fetch(
+      `https://api.stripe.com/v1/subscriptions/${encodeURIComponent(
+        subscriptionId,
+      )}`,
+      {
+        headers: { Authorization: `Bearer ${secretKey}` },
+        cache: "no-store",
+      },
+    );
+    if (!res.ok) {
+      console.warn(
+        `[stripe-client] retrieveSubscription(${subscriptionId}) failed: ${res.status}`,
+      );
+      return null;
+    }
+    return (await res.json()) as StripeSubscription;
+  } catch (err) {
+    console.warn(
+      `[stripe-client] retrieveSubscription(${subscriptionId}) threw:`,
+      err,
+    );
+    return null;
+  }
 }
 
 /**

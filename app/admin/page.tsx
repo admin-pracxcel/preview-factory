@@ -211,15 +211,21 @@ export default async function AdminHomePage() {
                         {publicHost && <> &middot; {publicHost}</>}
                       </p>
                     </div>
-                    <div className="flex shrink-0 items-center gap-3">
+                    <div className="flex shrink-0 items-center gap-2">
                       <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white/60">
                         {t.status}
                       </span>
                       <Link
-                        href={`/dashboard/${t.id}`}
-                        className="text-xs font-semibold text-blue-300 hover:text-blue-200"
+                        href={`/admin/tenants/${t.id}`}
+                        className="rounded-lg border border-white/15 px-2.5 py-1 text-xs font-semibold text-white/80 hover:border-white/30 hover:bg-white/5 hover:text-white transition-colors"
                       >
-                        Open →
+                        View
+                      </Link>
+                      <Link
+                        href={`/dashboard/${t.id}`}
+                        className="rounded-lg border border-blue-500/30 bg-blue-500/10 px-2.5 py-1 text-xs font-semibold text-blue-200 hover:border-blue-400/60 hover:bg-blue-500/20 hover:text-blue-100 transition-colors"
+                      >
+                        Dashboard
                       </Link>
                     </div>
                   </li>
