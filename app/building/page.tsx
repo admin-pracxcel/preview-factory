@@ -84,7 +84,6 @@ const CHECKLIST = [
   "6 service pages",
   "8 suburb pages",
   "Local SEO structure",
-  "Call tracking",
 ];
 
 /* -------------------------------------------------------------------------- */
