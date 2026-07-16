@@ -197,21 +197,31 @@ function renderNotReadyState(
 ): React.ReactElement {
   const isFailed = status === "failed";
   const isBuilding = status === "queued" || status === "running";
+  // "done"/"claimed" but no site_props means the generation pipeline flipped
+  // the tenant to done without a valid payload — treat it the same as a
+  // failed run (it *is* failed) and shout in the server logs so we notice.
+  const isBrokenDone =
+    (status === "done" || status === "claimed") && !isBuilding && !isFailed;
+  if (isBrokenDone) {
+    console.error(
+      `[site-render] tenant=${tenantId} status=${status} has NULL site_props — generation pipeline flipped status without writing content`,
+    );
+  }
   const displayName = tenantName?.trim() || "Your site";
 
-  const title = isFailed
+  const title = isFailed || isBrokenDone
     ? "We couldn't finish building your site"
     : isBuilding
       ? `${displayName} is still being built`
       : `${displayName} isn't available yet`;
 
-  const body = isFailed
+  const body = isFailed || isBrokenDone
     ? "Our generator ran into an error while producing this site. We've been notified and will get it back on track — please contact support if this persists."
     : isBuilding
       ? "This usually takes about a minute. Refresh the page shortly and your site will be here."
       : "There's no site content for this tenant yet. If you were expecting to see one, contact support.";
 
-  const badgeClass = isFailed
+  const badgeClass = isFailed || isBrokenDone
     ? "border-red-500/30 bg-red-500/10 text-red-200"
     : isBuilding
       ? "border-blue-500/30 bg-blue-500/10 text-blue-200"
