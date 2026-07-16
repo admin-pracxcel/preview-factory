@@ -129,10 +129,20 @@ export async function assembleImages(siteProps: SiteProps, gbp: GbpData): Promis
   }
 
   const plans = buildQueryPlans(remaining, siteProps, gbp);
+  // Fan out all Pexels searches concurrently — they don't depend on each
+  // other. Dedupe still runs after, sequentially, so the "seen" set behaves
+  // exactly the same as the old serial loop. Turns ~5-15 sequential 200-500ms
+  // requests into one round-trip bounded by the slowest response.
+  const searchResults = await Promise.all(
+    plans.map((plan) =>
+      plan.slots.length === 0
+        ? Promise.resolve({ plan, hits: [] as Awaited<ReturnType<typeof searchPexelsHits>> })
+        : searchPexelsHits(plan.query, plan.count).then((hits) => ({ plan, hits })),
+    ),
+  );
   const seen = new Set<number>();
-  for (const plan of plans) {
+  for (const { plan, hits } of searchResults) {
     if (plan.slots.length === 0) continue;
-    const hits = await searchPexelsHits(plan.query, plan.count);
     const fresh = hits.filter((h) => !seen.has(h.id));
     fresh.slice(0, plan.slots.length).forEach((h, i) => {
       seen.add(h.id);

@@ -162,33 +162,33 @@ export async function generateSiteForApi(
   hardenCtas(phaseAData, gbpData, resolved);
   console.log(`[generator-api] phase A done in ${Math.round((Date.now() - phaseAStart) / 1000)}s.`);
 
-  // Phase B — expand each service stub into a detail page (one batched call).
-  console.log("[generator-api] phase B — service details...");
-  const phaseBStart = Date.now();
-  const rawB = await callClaude(
-    systemPrompt,
-    buildPhaseBMessage(gbpData, phaseA.data),
-    PHASE_B_JSON_SCHEMA,
-  );
+  // Phases B and C run in parallel. Both consume phaseA.data and produce
+  // independent outputs (services vs locations), so serialising them was
+  // just leaving ~60-90s of wall time on the table. Two concurrent Claude
+  // calls are well within Anthropic's default per-key concurrency.
+  console.log("[generator-api] phase B + C — service + location details (parallel)...");
+  const phaseBCStart = Date.now();
+  const [rawB, rawC] = await Promise.all([
+    callClaude(
+      systemPrompt,
+      buildPhaseBMessage(gbpData, phaseA.data),
+      PHASE_B_JSON_SCHEMA,
+    ),
+    callClaude(
+      systemPrompt,
+      buildPhaseCMessage(gbpData, phaseA.data),
+      PHASE_C_JSON_SCHEMA,
+    ),
+  ]);
   const phaseB = parseAndValidateAgainst(rawB, phaseBGenerationSchema);
   if (!phaseB.ok) {
     throw new Error(`Phase B validation failed:\n${phaseB.errors}`);
   }
-  console.log(`[generator-api] phase B done in ${Math.round((Date.now() - phaseBStart) / 1000)}s.`);
-
-  // Phase C — expand each location stub into a detail page.
-  console.log("[generator-api] phase C — location details...");
-  const phaseCStart = Date.now();
-  const rawC = await callClaude(
-    systemPrompt,
-    buildPhaseCMessage(gbpData, phaseA.data),
-    PHASE_C_JSON_SCHEMA,
-  );
   const phaseC = parseAndValidateAgainst(rawC, phaseCGenerationSchema);
   if (!phaseC.ok) {
     throw new Error(`Phase C validation failed:\n${phaseC.errors}`);
   }
-  console.log(`[generator-api] phase C done in ${Math.round((Date.now() - phaseCStart) / 1000)}s.`);
+  console.log(`[generator-api] phase B + C done in ${Math.round((Date.now() - phaseBCStart) / 1000)}s.`);
 
   // Phase D — merge stubs + details, run the image assembler (which fills the
   // required `image_url` slots on gallery items and `hero_image` on detail
