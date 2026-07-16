@@ -24,7 +24,15 @@ import type { SiteProps } from "@/shared/types/site-props";
 
 export type TenantStatus = "preview" | "paid" | "published";
 
-type DBStatus =
+/**
+ * Raw lifecycle status from the DB — exposed on `TenantRecord.generationStatus`
+ * so callers can distinguish "generation hasn't run yet" (`queued`/`running`)
+ * from "generation failed" from "generation succeeded and site_props is
+ * populated". The coarser app-facing `TenantStatus` collapses all of these
+ * into "preview", which is not enough for the preview renderer to render a
+ * useful state.
+ */
+export type GenerationStatus =
   | "queued"
   | "running"
   | "done"
@@ -33,6 +41,8 @@ type DBStatus =
   | "past_due"
   | "cancelled"
   | "expired";
+
+type DBStatus = GenerationStatus;
 
 export interface TenantRecord {
   /** UUID generated at intake time. Used as the tenant/preview ID. */
@@ -43,8 +53,19 @@ export interface TenantRecord {
   niche: string;
   /** Template category directory name, e.g. "trades", "allied-health". */
   category: string;
-  /** Validated SiteProps blob. */
+  /** Validated SiteProps blob. Empty object when generation hasn't populated
+   *  it yet — check `hasSiteProps` before treating this as a valid site. */
   siteProps: SiteProps;
+  /** True when the underlying `site_props` column is a non-null object. False
+   *  for queued / running / failed tenants and for expired tenants whose
+   *  site_props has been blanked by housekeeping. Callers rendering the site
+   *  should branch on this before running the SiteProps schema, otherwise the
+   *  empty-object fallback below produces a misleading "schema violation". */
+  hasSiteProps: boolean;
+  /** Raw DB lifecycle status. Preserved separately from the coarser app-facing
+   *  `status` so preview / dashboard code can distinguish queued vs running
+   *  vs failed vs done — all of which collapse to "preview" on `status`. */
+  generationStatus: GenerationStatus;
   /** ISO 8601 creation timestamp. */
   createdAt: string;
   /** ISO 8601 timestamp of the last row update. Sourced from Postgres's
@@ -145,12 +166,19 @@ interface TenantRow {
 }
 
 function rowToRecord(row: TenantRow): TenantRecord {
+  const rawProps = row.site_props;
+  const hasSiteProps =
+    rawProps != null &&
+    typeof rawProps === "object" &&
+    Object.keys(rawProps as object).length > 0;
   return {
     id: row.id,
     name: row.name ?? row.site_props?.business?.name ?? "",
     niche: row.niche ?? "",
     category: row.category,
-    siteProps: (row.site_props ?? {}) as SiteProps,
+    siteProps: (rawProps ?? {}) as SiteProps,
+    hasSiteProps,
+    generationStatus: (row.status ?? "queued") as GenerationStatus,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     status: toAppStatus(row.status),

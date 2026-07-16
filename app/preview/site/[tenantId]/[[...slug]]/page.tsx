@@ -19,7 +19,7 @@
 import { notFound, redirect } from "next/navigation";
 import { headers } from "next/headers";
 import type { Metadata } from "next";
-import { getTenant } from "@/lib/tenant-store";
+import { getTenant, type GenerationStatus } from "@/lib/tenant-store";
 import { sitePropsSchema } from "@/shared/types/site-props";
 import type { SiteProps } from "@/shared/types/site-props";
 import { renderTradesPage, tradesPageMetadata } from "@/templates/categories/trades";
@@ -101,6 +101,14 @@ export async function generateMetadata({
 
   const tenant = await getTenant(tenantId);
   if (!tenant) return { title: "Not Found" };
+  if (!tenant.hasSiteProps) {
+    return {
+      title:
+        tenant.generationStatus === "failed"
+          ? `${tenant.name || "Your site"} — generation failed`
+          : `${tenant.name || "Your site"} — building`,
+    };
+  }
 
   const parseResult = sitePropsSchema.safeParse(tenant.siteProps);
   if (!parseResult.success) return { title: tenant.name };
@@ -119,6 +127,14 @@ export default async function TenantPreviewPage({
   const tenant = await getTenant(tenantId);
   if (!tenant) notFound();
   if (tenant.isExpired) redirect(`/expired/${tenantId}`);
+
+  // Guard against rendering before generation has produced a site. Without
+  // this branch, `siteProps` is the empty-object fallback from rowToRecord
+  // and Zod reports every top-level key as "expected object, received
+  // undefined" — misleading noise for what's really just a not-ready state.
+  if (!tenant.hasSiteProps) {
+    return renderNotReadyState(tenantId, tenant.generationStatus, tenant.name);
+  }
 
   const parseResult = sitePropsSchema.safeParse(tenant.siteProps);
   if (!parseResult.success) {
@@ -158,4 +174,65 @@ export default async function TenantPreviewPage({
   const page = await renderPage(tenant.category, parseResult.data, slug, tenantId);
   if (!page) notFound();
   return page;
+}
+
+/**
+ * Friendly page shown when we hit the site URL before generation has
+ * populated site_props. Splits into three real cases:
+ *   - queued / running → your site is still being built
+ *   - failed           → generation failed, we've been notified
+ *   - anything else with empty site_props (shouldn't happen in prod, but the
+ *     housekeeping blank-out for expired sites could land here if the reaper
+ *     step ran but the row wasn't flipped to 'expired' — cover it anyway)
+ *
+ * This deliberately does NOT auto-refresh — a running generation typically
+ * takes 30-90s, and stapling a polling loop into a public site render is a
+ * lot of complexity for a state that is normally resolved before anyone
+ * visits this URL. Refresh instructions are enough.
+ */
+function renderNotReadyState(
+  tenantId: string,
+  status: GenerationStatus,
+  tenantName: string,
+): React.ReactElement {
+  const isFailed = status === "failed";
+  const isBuilding = status === "queued" || status === "running";
+  const displayName = tenantName?.trim() || "Your site";
+
+  const title = isFailed
+    ? "We couldn't finish building your site"
+    : isBuilding
+      ? `${displayName} is still being built`
+      : `${displayName} isn't available yet`;
+
+  const body = isFailed
+    ? "Our generator ran into an error while producing this site. We've been notified and will get it back on track — please contact support if this persists."
+    : isBuilding
+      ? "This usually takes about a minute. Refresh the page shortly and your site will be here."
+      : "There's no site content for this tenant yet. If you were expecting to see one, contact support.";
+
+  const badgeClass = isFailed
+    ? "border-red-500/30 bg-red-500/10 text-red-200"
+    : isBuilding
+      ? "border-blue-500/30 bg-blue-500/10 text-blue-200"
+      : "border-white/10 bg-white/5 text-white/60";
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-slate-950 p-8 text-white">
+      <div className="max-w-lg text-center">
+        <span
+          className={`inline-block rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-widest ${badgeClass}`}
+        >
+          {status}
+        </span>
+        <h1 className="mt-4 font-[family-name:var(--font-sora)] text-2xl font-extrabold sm:text-3xl">
+          {title}
+        </h1>
+        <p className="mt-3 text-sm text-slate-400">{body}</p>
+        <p className="mt-6 text-[11px] font-mono text-slate-600">
+          tenant: {tenantId}
+        </p>
+      </div>
+    </div>
+  );
 }
