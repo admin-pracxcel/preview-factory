@@ -125,6 +125,9 @@ function BuildingPageInner() {
   // by our poll under some conditions).
   const [hasSiteProps, setHasSiteProps] = useState(false);
   const [intakeError, setIntakeError] = useState<string | null>(null);
+  // Reassurance banner when generation is running longer than the animation
+  // budget. NOT an error — the poll keeps going. Set at a soft threshold.
+  const [takingLonger, setTakingLonger] = useState(false);
   const [animationReady, setAnimationReady] = useState(false);
   const intakeStartedRef = useRef(false);
 
@@ -258,9 +261,14 @@ function BuildingPageInner() {
     // Reset any stale status from a previous mount before polling.
     setTenantStatus(null);
     setHasSiteProps(false);
+    setTakingLonger(false);
 
     let cancelled = false;
-    const TIMEOUT_MS = 6 * 60 * 1000; // 6 minutes hard cap
+    // Soft threshold — swap the animation copy for reassurance, but keep polling.
+    const SOFT_WARN_MS = 4 * 60 * 1000;
+    // Hard cap — give up polling and tell the user to hang out. Set well above
+    // observed real-world generation times (~5–6 min for a full trades site).
+    const TIMEOUT_MS = 15 * 60 * 1000;
     const startedAt = Date.now();
 
     const tick = async () => {
@@ -292,10 +300,16 @@ function BuildingPageInner() {
         ) {
           return;
         }
-        // Hard timeout — surface as a friendly error, stop polling.
-        if (Date.now() - startedAt > TIMEOUT_MS) {
+        const elapsed = Date.now() - startedAt;
+        // Soft warning kicks in after a few minutes — keeps the user informed
+        // without derailing the flow. Polling continues.
+        if (elapsed > SOFT_WARN_MS) setTakingLonger(true);
+        // Hard cap — only fires if generation truly hung. Real n8n runs land
+        // well before this; if we hit it, the tenant will probably surface as
+        // 'failed' or need admin attention.
+        if (elapsed > TIMEOUT_MS) {
           setIntakeError(
-            "Generation is taking longer than expected. Please refresh in a minute or contact support.",
+            "Your site is taking unusually long to build. You can safely close this page — we'll email you the link when it's ready, or check your dashboard.",
           );
           return;
         }
@@ -363,9 +377,11 @@ function BuildingPageInner() {
     (tenantStatus === "done" || tenantStatus === "claimed") && hasSiteProps;
   const activeDesignLabel = generationDone
     ? "Site is ready"
-    : animationReady
-      ? "Finalising your site…"
-      : DESIGN_STEPS[currentDesignStep]?.label ?? "Building your site";
+    : takingLonger
+      ? "This one's taking a bit longer — hang tight"
+      : animationReady
+        ? "Finalising your site…"
+        : DESIGN_STEPS[currentDesignStep]?.label ?? "Building your site";
 
   return (
     <div className="flex flex-col flex-1 min-h-screen bg-slate-950 text-white relative overflow-hidden">
