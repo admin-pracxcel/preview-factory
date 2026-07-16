@@ -24,6 +24,11 @@ interface StatusResponse {
   customDomain?: string;
   /** DNS/verification state of the custom domain. */
   customDomainStatus?: string;
+  /** True when site_props is a non-empty object. The /building page uses this
+   *  in addition to status=done to decide when it's safe to redirect —
+   *  otherwise a race between status flipping and the app-side read can send
+   *  the user to the preview before there's anything to render. */
+  hasSiteProps?: boolean;
 }
 
 export async function GET(
@@ -34,7 +39,7 @@ export async function GET(
 
   const { data, error } = await supabase()
     .from("tenants")
-    .select("status,error,name,slug,custom_domain,custom_domain_status")
+    .select("status,error,name,slug,custom_domain,custom_domain_status,site_props")
     .eq("id", tenantId)
     .maybeSingle();
 
@@ -45,9 +50,21 @@ export async function GET(
     return NextResponse.json({ error: "Tenant not found" }, { status: 404 });
   }
 
+  // Whether the SiteProps blob has actually landed. The n8n "Finish tenant"
+  // node writes status + site_props in one atomic PATCH, but a client that
+  // polls and reads through Supabase's REST API can still observe status=done
+  // before site_props catches up (network reorder / different connections /
+  // Postgres visibility). The /building page uses this to hold the redirect
+  // until we're sure the preview iframe will actually render.
+  const hasSiteProps =
+    data.site_props != null &&
+    typeof data.site_props === "object" &&
+    Object.keys(data.site_props as object).length > 0;
+
   return NextResponse.json(
     {
       status: data.status as string,
+      hasSiteProps,
       ...(data.error ? { error: data.error as string } : {}),
       ...(data.name ? { name: data.name as string } : {}),
       ...(data.slug ? { slug: data.slug as string } : {}),

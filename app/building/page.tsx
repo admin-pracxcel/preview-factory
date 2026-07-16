@@ -119,6 +119,11 @@ function BuildingPageInner() {
   const [gbpData, setGbpData] = useState<GbpCardData | null>(null);
   const [tenantId, setTenantId] = useState<string | null>(null);
   const [tenantStatus, setTenantStatus] = useState<string | null>(null);
+  // Tracks whether site_props has actually landed. status=done alone isn't
+  // enough to redirect — the /preview iframe would hit our "not ready" fallback
+  // if we jumped the gun (the n8n write can be observed slightly out of order
+  // by our poll under some conditions).
+  const [hasSiteProps, setHasSiteProps] = useState(false);
   const [intakeError, setIntakeError] = useState<string | null>(null);
   const [animationReady, setAnimationReady] = useState(false);
   const intakeStartedRef = useRef(false);
@@ -252,6 +257,7 @@ function BuildingPageInner() {
     if (!tenantId) return;
     // Reset any stale status from a previous mount before polling.
     setTenantStatus(null);
+    setHasSiteProps(false);
 
     let cancelled = false;
     const TIMEOUT_MS = 6 * 60 * 1000; // 6 minutes hard cap
@@ -264,17 +270,25 @@ function BuildingPageInner() {
           cache: "no-store",
         });
         if (!res.ok) throw new Error(`status HTTP ${res.status}`);
-        const data = (await res.json()) as { status: string; error?: string };
+        const data = (await res.json()) as {
+          status: string;
+          error?: string;
+          hasSiteProps?: boolean;
+        };
         if (cancelled) return;
         setTenantStatus(data.status);
+        const siteReady = data.hasSiteProps === true;
+        setHasSiteProps(siteReady);
         if (data.status === "failed" && data.error) {
           setIntakeError(data.error);
         }
-        // Once terminal, stop polling.
+        // Terminal states: failed always stops; done/claimed only stops once
+        // site_props is confirmed present, so we don't redirect into an empty
+        // preview.
+        if (data.status === "failed") return;
         if (
-          data.status === "done" ||
-          data.status === "claimed" ||
-          data.status === "failed"
+          (data.status === "done" || data.status === "claimed") &&
+          siteReady
         ) {
           return;
         }
@@ -305,14 +319,15 @@ function BuildingPageInner() {
     const ready =
       animationReady &&
       tenantId &&
-      (tenantStatus === "done" || tenantStatus === "claimed");
+      (tenantStatus === "done" || tenantStatus === "claimed") &&
+      hasSiteProps;
     if (!ready) return;
     setDesignProgress(100);
     const t = setTimeout(() => {
       router.push(`/preview/${tenantId}`);
     }, 600);
     return () => clearTimeout(t);
-  }, [animationReady, tenantId, tenantStatus, router]);
+  }, [animationReady, tenantId, tenantStatus, hasSiteProps, router]);
 
   /* ---------------------------------------------------------------------- */
   /*  Phone submit handler                                                    */
@@ -341,7 +356,11 @@ function BuildingPageInner() {
   //   1. While animation timer running → cycle through DESIGN_STEPS
   //   2. After animation timer elapses (intake still in flight) → "Finalising your site…"
   //   3. After tenantId arrives → "Site is ready"
-  const generationDone = tenantStatus === "done" || tenantStatus === "claimed";
+  // "Done" for the UI's purposes means the tenant is ready to preview — not
+  // just that status flipped. Otherwise we'd flash "Site is ready" for a beat
+  // before the redirect while site_props was still catching up.
+  const generationDone =
+    (tenantStatus === "done" || tenantStatus === "claimed") && hasSiteProps;
   const activeDesignLabel = generationDone
     ? "Site is ready"
     : animationReady
