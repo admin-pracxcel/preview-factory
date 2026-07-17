@@ -77,6 +77,8 @@ export interface TenantRecord {
   placeId?: string;
   /** Original GBP photo URLs captured at intake. */
   gbpPhotos?: string[];
+  /** Owner mobile captured at intake, used for SMS notifications and edits. */
+  phone?: string;
   /** ISO 8601 timestamp set when the site is published. */
   publishedAt?: string;
   /** Stripe Checkout session ID associated with the payment. */
@@ -151,6 +153,7 @@ interface TenantRow {
   niche: string | null;
   place_id: string | null;
   gbp_photos: string[] | null;
+  phone: string | null;
   claimed_at: string | null;
   owner_email: string | null;
   billing_customer_id: string | null;
@@ -184,6 +187,7 @@ function rowToRecord(row: TenantRow): TenantRecord {
     status: toAppStatus(row.status),
     placeId: row.place_id ?? undefined,
     gbpPhotos: row.gbp_photos ?? undefined,
+    phone: row.phone ?? undefined,
     publishedAt: row.claimed_at ?? undefined,
     stripeCustomerId: row.billing_customer_id ?? undefined,
     stripeSubscriptionId: row.billing_subscription_id ?? undefined,
@@ -210,6 +214,7 @@ function recordToUpsert(record: TenantRecord): Record<string, unknown> {
     niche: record.niche,
     place_id: record.placeId ?? null,
     gbp_photos: record.gbpPhotos ?? null,
+    phone: record.phone ?? null,
     // claimed_at only set when the app-facing status implies claim
     claimed_at:
       record.status === "paid" || record.status === "published"
@@ -290,6 +295,10 @@ export interface CreateQueuedTenantInput {
   placeId?: string;
   gbpPhotos?: string[];
   sessionId?: string;
+  /** Owner mobile captured in the intake confirm step (before generation
+   *  starts). Persisted so we can SMS the preview link on build complete
+   *  and reach out for edits post-claim. */
+  phone?: string;
 }
 
 export async function createQueuedTenant(
@@ -305,6 +314,7 @@ export async function createQueuedTenant(
       place_id: input.placeId ?? null,
       gbp_photos: input.gbpPhotos ?? null,
       session_id: input.sessionId ?? null,
+      phone: input.phone ?? null,
     })
     .select("id")
     .single();

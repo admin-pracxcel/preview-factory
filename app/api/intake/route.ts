@@ -38,6 +38,9 @@ interface IntakeBody {
   suburb?: string;
   /** Form-supplied category slug (e.g. "beauty", "fitness"). Authoritative when set. */
   category?: string;
+  /** Owner mobile captured in the intake confirm step. Persisted on the
+   *  tenant row so we can SMS the preview link and reach out for edits. */
+  phone?: string;
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
@@ -55,6 +58,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     niche,
     suburb,
     category: formCategory,
+    phone,
   } = body;
 
   if (!niche || typeof niche !== "string") {
@@ -101,6 +105,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       placeId,
       gbpPhotos: gbpData.photos ?? [],
       sessionId,
+      phone: phone?.trim() || undefined,
     });
 
     // 4b. Reserve a public subdomain slug for <slug>.launcharoo.online. The

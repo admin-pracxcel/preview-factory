@@ -100,14 +100,63 @@ export async function fetchByPlaceId(placeId: string, niche: string): Promise<Gb
 }
 
 /**
+ * Convert a Google Maps feature ID (`0xHEX:0xHEX`) into a modern
+ * `ChIJ…` place_id via the legacy Place Details endpoint.
+ *
+ * The modern Places API v1 doesn't accept FIDs. The legacy endpoint does,
+ * and returns the ChIJ we can then feed into `fetchPlacesApiDetails`. This
+ * is the only reliable way to resolve a specific Google Maps URL to its
+ * exact listing without a text-search guess.
+ *
+ * Returns null if the API rejects the FID (business genuinely doesn't
+ * exist, or legacy endpoint no longer available on this key) — caller
+ * should fall back to biased text search.
+ */
+export async function resolveFtidToPlaceId(
+  ftid: string,
+  apiKey: string,
+): Promise<string | null> {
+  const url = `https://maps.googleapis.com/maps/api/place/details/json?ftid=${encodeURIComponent(ftid)}&fields=place_id&key=${encodeURIComponent(apiKey)}`;
+  try {
+    const res = await fetch(url);
+    const rawBody = await res.text();
+    console.log(
+      `[places-client] legacy ftid lookup status=${res.status} body=${rawBody.slice(0, 400)}`,
+    );
+    let body: { status?: string; result?: { place_id?: string }; error_message?: string };
+    try {
+      body = JSON.parse(rawBody);
+    } catch {
+      console.warn(`[places-client] legacy ftid returned non-JSON`);
+      return null;
+    }
+    if (body.status === "OK" && body.result?.place_id) {
+      return body.result.place_id;
+    }
+    console.warn(
+      `[places-client] ftid=${ftid} resolve failed: status=${body.status ?? "?"} ${body.error_message ?? ""}`,
+    );
+    return null;
+  } catch (err) {
+    console.warn(`[places-client] ftid resolve threw:`, err);
+    return null;
+  }
+}
+
+/**
  * Search for a business by name (with optional suburb for location scope)
  * using Places text search.
  * Falls back to the built-in fixture if GOOGLE_PLACES_API_KEY is not set.
+ *
+ * `bias` (when supplied) constrains the search to a circle around the given
+ * point — used by the pasted-Maps-link flow so we resolve to the exact
+ * listing the user pointed at, not a same-named duplicate elsewhere.
  */
 export async function fetchByName(
   name: string,
   niche: string,
-  suburb?: string
+  suburb?: string,
+  bias?: { lat: number; lng: number; radiusMeters?: number }
 ): Promise<GbpData> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
   if (!apiKey) {
@@ -140,40 +189,60 @@ export async function fetchByName(
 
   const attemptLog: string[] = [];
 
+  // When we have a pin (paste-Maps-link flow), try each query twice: first
+  // with a soft locationBias circle so top results skew toward the pasted
+  // pin, then unbiased. Bias alone was returning same-name duplicates from
+  // other suburbs; hard restriction was excluding valid service-area
+  // listings whose indexed location differs from the map pin. Two-pass
+  // strikes the balance — the near-pin listing wins when it exists, and
+  // otherwise we still find *something*.
+  const passes = bias ? [{ bias }, { bias: undefined }] : [{ bias: undefined }];
+
   for (const textQuery of queries) {
-    const searchRes = await fetch("https://places.googleapis.com/v1/places:searchText", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Goog-Api-Key": apiKey,
-        "X-Goog-FieldMask": "places.id,places.displayName",
-      },
-      body: JSON.stringify({ textQuery }),
-    });
+    for (const pass of passes) {
+      const searchBody: Record<string, unknown> = { textQuery };
+      if (pass.bias) {
+        searchBody.locationBias = {
+          circle: {
+            center: { latitude: pass.bias.lat, longitude: pass.bias.lng },
+            radius: pass.bias.radiusMeters ?? 10_000,
+          },
+        };
+      }
+      const searchRes = await fetch("https://places.googleapis.com/v1/places:searchText", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Goog-Api-Key": apiKey,
+          "X-Goog-FieldMask": "places.id,places.displayName",
+        },
+        body: JSON.stringify(searchBody),
+      });
 
-    const rawBody = await searchRes.text();
-    if (!searchRes.ok) {
-      throw new Error(
-        `Places text search failed: ${searchRes.status} ${rawBody}`
-      );
+      const rawBody = await searchRes.text();
+      if (!searchRes.ok) {
+        throw new Error(
+          `Places text search failed: ${searchRes.status} ${rawBody}`
+        );
+      }
+
+      let parsed: { places?: Array<{ id: string; displayName?: { text?: string } }> };
+      try {
+        parsed = JSON.parse(rawBody);
+      } catch {
+        throw new Error(`Places text search returned non-JSON: ${rawBody.slice(0, 200)}`);
+      }
+
+      const first = parsed.places?.[0];
+      if (first?.id) {
+        console.log(
+          `[places-client] matched "${textQuery}"${pass.bias ? ` (bias @ ${pass.bias.lat},${pass.bias.lng} ±${pass.bias.radiusMeters ?? 10_000}m)` : ""} → ${first.displayName?.text ?? "?"} (${first.id})`
+        );
+        return fetchPlacesApiDetails(first.id, niche, apiKey);
+      }
+
+      attemptLog.push(`  "${textQuery}"${pass.bias ? " [biased]" : ""} → ${rawBody.slice(0, 120)}`);
     }
-
-    let parsed: { places?: Array<{ id: string; displayName?: { text?: string } }> };
-    try {
-      parsed = JSON.parse(rawBody);
-    } catch {
-      throw new Error(`Places text search returned non-JSON: ${rawBody.slice(0, 200)}`);
-    }
-
-    const first = parsed.places?.[0];
-    if (first?.id) {
-      console.log(
-        `[places-client] matched "${textQuery}" → ${first.displayName?.text ?? first.id}`
-      );
-      return fetchPlacesApiDetails(first.id, niche, apiKey);
-    }
-
-    attemptLog.push(`  "${textQuery}" → ${rawBody.slice(0, 160)}`);
   }
 
   // No Places match — business is likely not in Google's curated directory
@@ -274,6 +343,9 @@ async function fetchPlacesApiDetails(
   }
 
   const place = (await res.json()) as PlacesApiPlace;
+  console.log(
+    `[places-client] details for ${placeId}: name="${place.displayName?.text}" phone="${place.nationalPhoneNumber ?? ""}" reviews=${place.reviews?.length ?? 0} photos=${place.photos?.length ?? 0} rating=${place.rating ?? "n/a"} (${place.userRatingCount ?? 0} ratings)`,
+  );
   const data = mapToGbpData(place, niche);
 
   // Resolve up to 8 photo references to direct image URLs. The Places photo
