@@ -7,6 +7,7 @@ import { X, Lock, ChevronDown, Smartphone, Monitor, LayoutDashboard, CheckCircle
 import CustomisePanel, { type CustomisationState } from "@/app/components/CustomisePanel";
 import BusinessDetailsSection, { type BusinessDetailsInitial } from "@/app/components/BusinessDetailsSection";
 import ImagePickerModal from "@/app/components/ImagePickerModal";
+import ChangeRequestsPanel from "./ChangeRequestsPanel";
 import { derivePrimary, deriveSecondary } from "@/lib/color";
 
 /* -------------------------------------------------------------------------- */
@@ -683,6 +684,13 @@ function PreviewPageInner() {
             ) : (
               <div className="text-sm text-slate-400">Loading customisation…</div>
             )}
+            <div className="border-t border-slate-800" />
+            <ChangeRequestsPanel
+              tenantId={id}
+              isPublished={isPublished}
+              checkingOut={checkingOut}
+              onCheckoutClick={handleSave}
+            />
           </div>
         </aside>
       </div>
@@ -734,6 +742,13 @@ function PreviewPageInner() {
               Loading customisation…
             </div>
           )}
+          <div className="border-t border-slate-800" />
+          <ChangeRequestsPanel
+            tenantId={id}
+            isPublished={isPublished}
+            checkingOut={checkingOut}
+            onCheckoutClick={handleSave}
+          />
         </div>
       </div>
     </div>

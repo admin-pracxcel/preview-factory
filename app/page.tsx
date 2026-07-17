@@ -17,25 +17,25 @@ const CATEGORIES = [
     label: "Trades",
     desc: "Electricians, plumbers, builders and more",
     href: "/for/trades",
-    image: "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800&q=80",
+    image: "/images/categories/trades.png",
   },
   {
     label: "Allied Health",
     desc: "Physios, chiros, massage therapists and more",
     href: "/for/allied-health",
-    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
+    image: "/images/categories/allied-health.png",
   },
   {
     label: "Beauty & Aesthetics",
     desc: "Hair salons, nail bars, beauty therapists and more",
     href: "/for/beauty",
-    image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80",
+    image: "/images/categories/beauty-aesthetics.png",
   },
   {
     label: "Fitness & Wellness",
     desc: "Personal trainers, gyms, yoga studios and more",
     href: "/for/fitness",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80",
+    image: "/images/categories/fitness-wellness.png",
   },
 ];
 
@@ -84,8 +84,7 @@ function CategoryTile({
   return (
     <Link
       href={href}
-      className="group relative flex flex-col justify-end overflow-hidden rounded-2xl"
-      style={{ minHeight: "400px" }}
+      className="group relative flex flex-col justify-end overflow-hidden rounded-2xl min-h-[300px] sm:min-h-[400px]"
     >
       <Image
         src={image}
@@ -210,18 +209,16 @@ export default async function HomePage() {
 
           {/* Headline */}
           <h1
-            className="font-[family-name:var(--font-sora)] text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight text-white leading-[1.05] mb-6"
+            className="font-[family-name:var(--font-sora)] text-4xl sm:text-6xl lg:text-8xl font-extrabold tracking-tight text-white leading-[1.1] sm:leading-[1.05] mb-6"
           >
-            The fastest way
-            <br />
-            to get your business{" "}
+            The fastest way to{" "}
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              online.
+              get your business online.
             </span>
           </h1>
 
           {/* Sub */}
-          <p className="text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
+          <p className="text-white/60 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
             We pull your Google Business Profile and build a complete professional website automatically. Live in under 60 seconds. No agency. No web designer.
           </p>
 
@@ -254,8 +251,8 @@ export default async function HomePage() {
       {/* ------------------------------------------------------------------ */}
       {/* Stats bar                                                            */}
       {/* ------------------------------------------------------------------ */}
-      <div className="w-full bg-white/5 border-y border-white/10 py-8 px-6">
-        <div className="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+      <div className="w-full bg-white/5 border-y border-white/10 py-4 sm:py-8 px-6">
+        <div className="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-4 sm:gap-8 text-center">
           {[
             { value: "1,200+", label: "businesses previewed" },
             { value: "4.9 ★", label: "average rating" },
@@ -263,8 +260,8 @@ export default async function HomePage() {
             { value: "$0", label: "setup fee" },
           ].map((stat) => (
             <div key={stat.label}>
-              <div className="text-3xl font-extrabold text-white">{stat.value}</div>
-              <div className="text-sm text-white/50 mt-1">{stat.label}</div>
+              <div className="text-lg sm:text-3xl font-extrabold text-white leading-tight">{stat.value}</div>
+              <div className="text-[11px] sm:text-sm text-white/50 mt-0.5 sm:mt-1">{stat.label}</div>
             </div>
           ))}
         </div>

@@ -48,7 +48,7 @@ export default function BeautyPage() {
   return (
     <NicheLanding
       category="beauty"
-      heroImage="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=1600&q=80"
+      heroImage="/images/categories/beauty-aesthetics.png"
       tag="For Beauty & Aesthetics"
       headline="A website your clients will love. Live in 60 seconds."
       subheadline="Built from your Google listing. Show off your work, fill your appointment book."

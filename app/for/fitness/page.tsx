@@ -48,7 +48,7 @@ export default function FitnessPage() {
   return (
     <NicheLanding
       category="fitness"
-      heroImage="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80"
+      heroImage="/images/categories/fitness-wellness.png"
       tag="For Fitness & Wellness"
       headline="Fill your classes and your calendar. From today."
       subheadline="Get your fitness or wellness business online in 60 seconds. Built from your Google listing."

@@ -52,7 +52,7 @@ export default function TradesPage() {
   return (
     <NicheLanding
       category="trades"
-      heroImage="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1600&q=80"
+      heroImage="/images/categories/trades.png"
       tag="For Tradies"
       headline="More local jobs. Starting today."
       subheadline="Enter your details and see your finished website in 60 seconds. Built from your Google listing — no setup, no agency."

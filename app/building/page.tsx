@@ -577,7 +577,7 @@ function BuildingPageInner() {
           </div>
 
           {/* Bottom note */}
-          <div className="mt-14 text-center text-slate-700 text-xs">
+          <div className="mt-14 text-center text-slate-300 text-xs">
             Your site is being built from your Google Business Profile data.
           </div>
         </div>
