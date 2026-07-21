@@ -285,22 +285,22 @@ function Footer({
           </nav>
         </div>
 
-        <div className="mt-8 flex flex-col gap-1 border-t border-current/10 pt-6 text-xs opacity-50 sm:flex-row sm:items-center sm:justify-between">
-          <p>
+        <div className="mt-8 flex flex-col gap-2 border-t border-current/10 pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
+          <p className="opacity-50">
             © {currentYear()} {business.name}. All rights reserved.
+            {business.abn && <> · ABN {business.abn}</>}
           </p>
-          {business.abn && <p>ABN {business.abn}</p>}
-        </div>
-        <div className="mt-3 text-center text-xs opacity-40">
-          <span>Built with ❤ by </span>
-          <a
-            href="https://launcharoo.online"
-            rel="nofollow noopener"
-            target="_blank"
-            className="underline underline-offset-2 hover:opacity-100"
-          >
-            Launcharoo
-          </a>
+          <p>
+            <span className="opacity-50">Built with ❤ by </span>
+            <a
+              href="https://launcharoo.online"
+              rel="nofollow noopener"
+              target="_blank"
+              className="text-[#345dfb] hover:text-[#1e3ee0] underline underline-offset-2 transition-colors"
+            >
+              Launcharoo
+            </a>
+          </p>
         </div>
       </div>
     </footer>
