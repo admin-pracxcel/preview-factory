@@ -39,7 +39,10 @@ Finish job → GET tenant row → IF (not notified & has phone) → KrispCall se
 **Node A — Supabase GET: has this tenant already been notified?**
 
 - **Method**: `GET`
-- **URL**: `{{ $env.SUPABASE_URL }}/rest/v1/tenants?id=eq.{{ $json.tenant_id }}&select=phone,name,preview_notified_at`
+- **URL** (copy this exact string — do NOT include any surrounding backticks):
+  ```
+  {{ $env.SUPABASE_URL }}/rest/v1/tenants?id=eq.{{ $json.tenant_id }}&select=phone,name,preview_notified_at
+  ```
 - **Headers**:
   - `apikey`: `={{ $env.SUPABASE_SERVICE_ROLE_KEY }}`
   - `Authorization`: `Bearer {{ $env.SUPABASE_SERVICE_ROLE_KEY }}`
@@ -68,7 +71,10 @@ skip — the workflow ends cleanly).
 **Node D — Supabase PATCH: mark as notified**
 
 - **Method**: `PATCH`
-- **URL**: `{{ $env.SUPABASE_URL }}/rest/v1/tenants?id=eq.{{ $('Load queued job').item.json.tenant_id }}`
+- **URL** (copy exact — no surrounding backticks):
+  ```
+  {{ $env.SUPABASE_URL }}/rest/v1/tenants?id=eq.{{ $('Load queued job').item.json.tenant_id }}
+  ```
 - **Headers**:
   - `apikey`: `={{ $env.SUPABASE_SERVICE_ROLE_KEY }}`
   - `Authorization`: `Bearer {{ $env.SUPABASE_SERVICE_ROLE_KEY }}`
