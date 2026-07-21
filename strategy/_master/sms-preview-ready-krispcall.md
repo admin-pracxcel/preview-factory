@@ -23,10 +23,18 @@ ALTER TABLE tenants
   ADD COLUMN IF NOT EXISTS preview_notified_at TIMESTAMPTZ;
 ```
 
-### 2. Add three nodes to the Generate Real workflow
+### 2. Add four nodes at the tail of the Generate Real workflow
 
-Add these at the very end, after the node that PATCHes `site_props` onto the
-tenant row.
+Attachment point: hook the first new node off **Finish job**, not
+**Finish tenant**. The existing tail is
+`... → Ok? → Finish tenant → Finish job → (end)`; the SMS chain extends past
+Finish job so an SMS failure never blocks the job runner from picking up the
+next queued generation.
+
+The new chain:
+```
+Finish job → GET tenant row → IF (not notified & has phone) → KrispCall send → PATCH preview_notified_at
+```
 
 **Node A — Supabase GET: has this tenant already been notified?**
 
