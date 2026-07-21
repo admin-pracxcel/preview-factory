@@ -120,6 +120,30 @@ export async function POST(
     );
   }
 
+  // ---- 0. Zero-patches: workflow declined the request --------------------
+  // Claude may return an empty `patches` array when everything the customer
+  // asked for was out of scope, ambiguous, or blocked by the allowlist. The
+  // n8n workflow forwards this to us as-is. Nothing to persist, but we do
+  // want a paper trail: mark the row failed with Claude's reasons and email
+  // admin so someone can follow up manually.
+  if (patches.value.length === 0) {
+    const reason =
+      outOfScope.length > 0
+        ? `workflow declined: ${outOfScope.slice(0, 5).join(" | ")}`
+        : "workflow produced no patches";
+    await markFailed(editReq.id, reason);
+    await notifyAdminOfFailure({
+      editRequestId: editReq.id,
+      tenantName: tenant.name,
+      reason,
+      outOfScope,
+    });
+    console.log(
+      `[apply-patches] editRequest ${id} → 0 patches, marked failed: ${reason}`,
+    );
+    return NextResponse.json({ ok: true, applied: 0, declined: true });
+  }
+
   // ---- 1. Path allowlist -------------------------------------------------
   const denied = patches.value.filter((p) => !isEditablePath(p.path));
   if (denied.length > 0) {
@@ -246,9 +270,6 @@ type PatchesErr = { error: string };
 function validatePatchesShape(input: unknown): PatchesOk | PatchesErr {
   if (!Array.isArray(input)) {
     return { error: "`patches` must be an array" };
-  }
-  if (input.length === 0) {
-    return { error: "`patches` must contain at least one entry" };
   }
   if (input.length > 100) {
     return { error: "`patches` cannot exceed 100 entries" };
