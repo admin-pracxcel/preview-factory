@@ -23,6 +23,7 @@ import { supabase } from "@/lib/supabase";
 import { isAdminSession } from "@/lib/admin";
 import type { MutableCookies } from "@/lib/session";
 import { LogoutButton } from "@/app/components/LogoutButton";
+import { DeleteTenantButton } from "./DeleteTenantButton";
 
 export const dynamic = "force-dynamic";
 
@@ -224,6 +225,7 @@ export default async function AdminHomePage() {
                       >
                         Dashboard
                       </Link>
+                      <DeleteTenantButton tenantId={t.id} tenantName={t.name || ""} />
                     </div>
                   </li>
                 );
