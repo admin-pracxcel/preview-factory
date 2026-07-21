@@ -18,6 +18,7 @@
 
 import { createHmac } from "node:crypto";
 import { priceFor, type PlanKey } from "@/lib/plans";
+import { priceForAddon, type AddonPlanKey } from "@/lib/addon-plans";
 
 /* -------------------------------------------------------------------- types */
 
@@ -99,6 +100,111 @@ export async function createCheckoutSession(
   if (!res.ok) {
     const err = await res.text();
     throw new Error(`Stripe Checkout creation failed: ${res.status} ${err}`);
+  }
+
+  const session = (await res.json()) as { id: string; url: string };
+  return { url: session.url, sessionId: session.id, mock: false };
+}
+
+/**
+ * Create a Stripe Checkout session for an ADDON subscription.
+ *
+ * Mirrors createCheckoutSession but hits a different mock endpoint and
+ * carries addon-specific metadata (addonKey + addonPlanKey) so the
+ * webhook can route the completed event to tenant_addons instead of the
+ * main tenant row.
+ *
+ * Reuses the tenant's existing Stripe Customer if we have one. Falls
+ * through to guest checkout otherwise — Stripe will create a fresh
+ * Customer on the completed session.
+ */
+export async function createAddonCheckoutSession(input: {
+  tenantId: string;
+  businessName: string;
+  baseUrl: string;
+  addonPlanKey: AddonPlanKey;
+  /** Existing Stripe customer id from the main subscription, if any. */
+  existingStripeCustomerId?: string;
+  /** Owner email — used for guest checkout when there's no existing customer. */
+  ownerEmail?: string;
+}): Promise<CheckoutResult> {
+  const secretKey = process.env.STRIPE_SECRET_KEY;
+
+  if (!secretKey) {
+    console.warn(
+      "[stripe-client] STRIPE_SECRET_KEY not set — mock addon checkout.",
+    );
+    return {
+      url: `${input.baseUrl}/api/checkout/addon/mock-success?tenantId=${encodeURIComponent(
+        input.tenantId,
+      )}&addonPlanKey=${encodeURIComponent(input.addonPlanKey)}`,
+      mock: true,
+    };
+  }
+
+  const successUrl = `${input.baseUrl}/dashboard/${encodeURIComponent(
+    input.tenantId,
+  )}?addon_success=${encodeURIComponent(input.addonPlanKey)}`;
+  const cancelUrl = `${input.baseUrl}/dashboard/${encodeURIComponent(
+    input.tenantId,
+  )}?addon_cancelled=${encodeURIComponent(input.addonPlanKey)}`;
+  const price = priceForAddon(input.addonPlanKey);
+
+  const params = new URLSearchParams();
+  params.set("mode", "subscription");
+  params.set("success_url", successUrl);
+  params.set("cancel_url", cancelUrl);
+  params.set("metadata[tenantId]", input.tenantId);
+  params.set("metadata[businessName]", input.businessName);
+  params.set("metadata[addonKey]", price.addonKey);
+  params.set("metadata[addonPlanKey]", input.addonPlanKey);
+  // Also stamp on the subscription itself so customer.subscription.updated
+  // / .deleted events carry it back without needing a checkout lookup.
+  params.set("subscription_data[metadata][tenantId]", input.tenantId);
+  params.set("subscription_data[metadata][addonKey]", price.addonKey);
+  params.set("subscription_data[metadata][addonPlanKey]", input.addonPlanKey);
+
+  if (input.existingStripeCustomerId) {
+    params.set("customer", input.existingStripeCustomerId);
+  } else if (input.ownerEmail) {
+    params.set("customer_email", input.ownerEmail);
+  }
+
+  if (price.priceId) {
+    params.set("line_items[0][price]", price.priceId);
+    params.set("line_items[0][quantity]", "1");
+  } else {
+    // Fallback for the dev / pre-Stripe-setup path.
+    params.set("line_items[0][price_data][currency]", "aud");
+    params.set(
+      "line_items[0][price_data][unit_amount]",
+      String(price.unitAmount),
+    );
+    params.set(
+      "line_items[0][price_data][recurring][interval]",
+      price.interval,
+    );
+    params.set(
+      "line_items[0][price_data][product_data][name]",
+      `Launcharoo ${price.displayName}`,
+    );
+    params.set("line_items[0][quantity]", "1");
+  }
+
+  const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${secretKey}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: params.toString(),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(
+      `Stripe addon checkout creation failed: ${res.status} ${err}`,
+    );
   }
 
   const session = (await res.json()) as { id: string; url: string };
