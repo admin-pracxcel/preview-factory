@@ -291,6 +291,17 @@ function Footer({
           </p>
           {business.abn && <p>ABN {business.abn}</p>}
         </div>
+        <div className="mt-3 text-center text-xs opacity-40">
+          <span>Built with ❤ by </span>
+          <a
+            href="https://launcharoo.online"
+            rel="nofollow noopener"
+            target="_blank"
+            className="underline underline-offset-2 hover:opacity-100"
+          >
+            Launcharoo
+          </a>
+        </div>
       </div>
     </footer>
   );
