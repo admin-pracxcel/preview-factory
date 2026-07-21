@@ -23,7 +23,7 @@ import type { MutableCookies } from "@/lib/session";
 import { ActionPanel } from "./ui";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Concierge — review request" };
+export const metadata: Metadata = { title: "Admin — review request" };
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -126,7 +126,7 @@ function Shell({ children }: { children: React.ReactNode }) {
             className="h-6 w-auto"
           />
           <span className="text-xs uppercase tracking-widest text-white/40">
-            Concierge
+            Admin
           </span>
         </div>
       </header>

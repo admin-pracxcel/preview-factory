@@ -16,7 +16,6 @@ import type { Metadata } from "next";
 import {
   Globe,
   TrendingUp,
-  LayoutDashboard,
   PenLine,
   ReceiptText,
   ChevronLeft,
@@ -128,14 +127,13 @@ export default async function DashboardPage({
       {/* ── top nav ── */}
       <header className="border-b border-white/5 px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <div className="flex items-center gap-3">
-            <LayoutDashboard className="h-5 w-5 text-blue-400" />
+          <Link href="/" aria-label="Launcharoo">
             <img
               src="/images/launcharoo-logo-white.webp"
               alt="Launcharoo"
               className="h-6 w-auto"
             />
-          </div>
+          </Link>
           <div className="flex items-center gap-3">
             <Link
               href="/dashboard"

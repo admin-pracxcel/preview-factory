@@ -7,6 +7,7 @@ import {
   findLatestTenantForSession,
   type MutableCookies,
 } from "@/lib/session";
+import { isAdminSession } from "@/lib/admin";
 
 /* -------------------------------------------------------------------------- */
 /*  Category data                                                               */
@@ -140,9 +141,12 @@ export default async function HomePage() {
   // their sites list.
   const cookieStore = (await nextCookies()) as unknown as MutableCookies;
   const sessionId = readSession(cookieStore);
-  const hasOwnedTenant = sessionId
-    ? (await findLatestTenantForSession(sessionId)) !== null
-    : false;
+  const [hasOwnedTenant, isAdmin] = await Promise.all([
+    sessionId
+      ? findLatestTenantForSession(sessionId).then((t) => t !== null)
+      : Promise.resolve(false),
+    isAdminSession(cookieStore),
+  ]);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#0A0F1E] text-white">
@@ -166,7 +170,14 @@ export default async function HomePage() {
             >
               How it works
             </a>
-            {hasOwnedTenant ? (
+            {isAdmin ? (
+              <Link
+                href="/admin"
+                className="hidden sm:block text-sm text-white/70 hover:text-white transition-colors"
+              >
+                Admin Panel
+              </Link>
+            ) : hasOwnedTenant ? (
               <Link
                 href="/dashboard"
                 className="hidden sm:block text-sm text-white/70 hover:text-white transition-colors"

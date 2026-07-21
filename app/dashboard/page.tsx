@@ -16,7 +16,7 @@ import { redirect } from "next/navigation";
 import { cookies as nextCookies } from "next/headers";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { LayoutDashboard, Plus, Globe, ArrowRight } from "lucide-react";
+import { Plus, Globe, ArrowRight } from "lucide-react";
 import { readSession, type MutableCookies } from "@/lib/session";
 import {
   listTenantsForSession,
@@ -89,14 +89,13 @@ export default async function DashboardListPage() {
       {/* Top nav */}
       <header className="border-b border-white/5 px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <div className="flex items-center gap-3">
-            <LayoutDashboard className="h-5 w-5 text-blue-400" />
+          <Link href="/" aria-label="Launcharoo">
             <img
               src="/images/launcharoo-logo-white.webp"
               alt="Launcharoo"
               className="h-6 w-auto"
             />
-          </div>
+          </Link>
           <LogoutButton variant="text" />
         </div>
       </header>

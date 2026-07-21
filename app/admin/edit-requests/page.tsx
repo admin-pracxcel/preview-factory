@@ -17,7 +17,7 @@ import type { MutableCookies } from "@/lib/session";
 import { LogoutButton } from "@/app/components/LogoutButton";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Concierge — change requests" };
+export const metadata = { title: "Admin — change requests" };
 
 type Status =
   | "pending"
@@ -267,7 +267,7 @@ function Shell({ children }: { children: React.ReactNode }) {
               />
             </Link>
             <span className="text-xs uppercase tracking-widest text-white/40">
-              Concierge
+              Admin
             </span>
           </div>
           <div className="flex items-center gap-2">

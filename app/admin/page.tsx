@@ -18,12 +18,7 @@ import { cookies as nextCookies } from "next/headers";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import {
-  Inbox,
-  Users,
-  ArrowRight,
-  LayoutDashboard,
-} from "lucide-react";
+import { Inbox, Users, ArrowRight } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { isAdminSession } from "@/lib/admin";
 import type { MutableCookies } from "@/lib/session";
@@ -32,7 +27,7 @@ import { LogoutButton } from "@/app/components/LogoutButton";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Concierge — Launcharoo",
+  title: "Admin — Launcharoo",
 };
 
 interface PipelineCounts {
@@ -71,12 +66,11 @@ async function loadPipeline(): Promise<PipelineCounts> {
   return { pending, inProgress, resolved };
 }
 
-async function loadRecentTenants(limit = 10): Promise<RecentTenant[]> {
+async function loadRecentTenants(): Promise<RecentTenant[]> {
   const { data, error } = await supabase()
     .from("tenants")
     .select("id, name, slug, status, owner_email, created_at")
-    .order("created_at", { ascending: false })
-    .limit(limit);
+    .order("created_at", { ascending: false });
   if (error) {
     console.error("[admin:home] tenants load failed:", error);
     return [];
@@ -111,14 +105,15 @@ export default async function AdminHomePage() {
       <header className="border-b border-white/5 px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
           <div className="flex items-center gap-3">
-            <LayoutDashboard className="h-5 w-5 text-blue-400" />
-            <img
-              src="/images/launcharoo-logo-white.webp"
-              alt="Launcharoo"
-              className="h-6 w-auto"
-            />
+            <Link href="/" aria-label="Launcharoo">
+              <img
+                src="/images/launcharoo-logo-white.webp"
+                alt="Launcharoo"
+                className="h-6 w-auto"
+              />
+            </Link>
             <span className="ml-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-amber-300">
-              Concierge
+              Admin
             </span>
           </div>
           <div className="flex items-center gap-2">
@@ -136,7 +131,7 @@ export default async function AdminHomePage() {
       <main className="mx-auto max-w-5xl px-6 py-10 flex flex-col gap-10">
         <div>
           <h1 className="font-[family-name:var(--font-sora)] text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Concierge dashboard
+            Admin dashboard
           </h1>
           <p className="mt-1 text-sm text-white/40">
             Everything on the platform, from one place.
@@ -186,7 +181,7 @@ export default async function AdminHomePage() {
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <Users className="h-5 w-5 text-green-400" />
-              <h2 className="text-base font-bold">Recent tenants</h2>
+              <h2 className="text-base font-bold">All tenants</h2>
               <span className="rounded-full bg-green-500/15 px-2.5 py-0.5 text-xs font-bold text-green-400">
                 {totalTenants} total
               </span>
