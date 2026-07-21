@@ -136,7 +136,7 @@ export default function NicheLanding({
           </p>
 
           {/* Form card — frosted glass */}
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 sm:p-8 max-w-md w-full">
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-6 sm:p-8 w-full">
             <NicheForm
               subNiches={subNiches}
               category={category}
@@ -325,7 +325,7 @@ export default function NicheLanding({
               Takes 60 seconds. No credit card. No commitment.
             </p>
           </div>
-          <div className="w-full max-w-md">
+          <div className="w-full">
             <NicheForm
               subNiches={subNiches}
               category={category}

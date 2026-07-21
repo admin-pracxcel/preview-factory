@@ -176,7 +176,7 @@ export default function NicheForm({
   }
 
   return (
-    <div className={`bg-white rounded-2xl shadow-2xl p-4 sm:p-8 w-full mx-auto ${step === "confirm" ? "max-w-[806px]" : "max-w-[538px]"}`}>
+    <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-8 w-full mx-auto max-w-full">
       {step === "form" ? (
         <FormStep
           subNiche={subNiche}
@@ -394,24 +394,36 @@ function ConfirmStep({
             Found your business
           </h2>
         </div>
-        <div className="rounded-xl border border-slate-200 overflow-hidden">
-          {heroPhoto && (
-            <div className="relative w-full aspect-[16/9] bg-slate-100">
-              <Image
-                src={heroPhoto}
-                alt={gbpData.name}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 448px"
-                unoptimized
-              />
-            </div>
-          )}
-          <div className="p-3 sm:p-4">
-            <div className="flex items-start justify-between gap-3">
+        <div className="rounded-xl border border-slate-200 p-3 sm:p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+            {heroPhoto && (
+              <div className="relative w-full h-[150px] sm:w-1/4 sm:h-auto sm:aspect-square shrink-0 rounded-lg overflow-hidden bg-slate-100">
+                <Image
+                  src={heroPhoto}
+                  alt={gbpData.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, 200px"
+                  unoptimized
+                />
+              </div>
+            )}
+            <div className="flex-1 min-w-0 flex flex-col gap-1">
               <h3 className="font-extrabold text-slate-900 text-base leading-tight">{gbpData.name}</h3>
+              {displayAddress && (
+                <p className="flex items-start gap-1.5 text-sm text-slate-600 leading-snug">
+                  <MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                  <span>{displayAddress}</span>
+                </p>
+              )}
+              {gbpData.phone && (
+                <p className="flex items-center gap-1.5 text-sm text-slate-600">
+                  <PhoneIcon className="w-4 h-4 text-slate-400 shrink-0" />
+                  <span>{gbpData.phone}</span>
+                </p>
+              )}
               {rating && (
-                <div className="flex items-center gap-1 shrink-0 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-amber-700 text-xs font-bold">
+                <div className="mt-1 flex items-center gap-1 w-fit rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-amber-700 text-xs font-bold">
                   <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                   {rating}
                   {typeof reviewCount === "number" && (
@@ -420,18 +432,6 @@ function ConfirmStep({
                 </div>
               )}
             </div>
-            {displayAddress && (
-              <p className="mt-2 flex items-start gap-1.5 text-sm text-slate-600 leading-snug">
-                <MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
-                <span>{displayAddress}</span>
-              </p>
-            )}
-            {gbpData.phone && (
-              <p className="mt-1 flex items-center gap-1.5 text-sm text-slate-600">
-                <PhoneIcon className="w-4 h-4 text-slate-400 shrink-0" />
-                <span>{gbpData.phone}</span>
-              </p>
-            )}
           </div>
         </div>
         <div className="mt-3 flex justify-center">
