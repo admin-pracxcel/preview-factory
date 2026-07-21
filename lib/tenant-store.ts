@@ -111,6 +111,9 @@ export interface TenantRecord {
   assignedNameservers?: string[];
   /** ISO 8601 of when SSL provisioned and the site went live at the custom domain. */
   customDomainVerifiedAt?: string;
+  /** ISO 8601 of when the "preview ready" SMS was sent (via ClickSend).
+   *  Idempotency guard so a duplicate n8n webhook call can't double-send. */
+  previewNotifiedAt?: string;
   /** Snapshot of the customer's live DNS at the moment we scanned before
    *  taking over (Phase 10b-ii). Used to seed the new Cloudflare zone so
    *  their email keeps working after the nameserver flip. */
@@ -171,6 +174,7 @@ interface TenantRow {
   assigned_nameservers: string[] | null;
   custom_domain_verified_at: string | null;
   dns_records_snapshot: unknown;
+  preview_notified_at: string | null;
 }
 
 function rowToRecord(row: TenantRow): TenantRecord {
@@ -206,6 +210,7 @@ function rowToRecord(row: TenantRow): TenantRecord {
     assignedNameservers: row.assigned_nameservers ?? undefined,
     customDomainVerifiedAt: row.custom_domain_verified_at ?? undefined,
     dnsRecordsSnapshot: row.dns_records_snapshot ?? undefined,
+    previewNotifiedAt: row.preview_notified_at ?? undefined,
   };
 }
 
@@ -237,6 +242,7 @@ function recordToUpsert(record: TenantRecord): Record<string, unknown> {
     assigned_nameservers: record.assignedNameservers ?? null,
     custom_domain_verified_at: record.customDomainVerifiedAt ?? null,
     dns_records_snapshot: record.dnsRecordsSnapshot ?? null,
+    preview_notified_at: record.previewNotifiedAt ?? null,
   };
 }
 
