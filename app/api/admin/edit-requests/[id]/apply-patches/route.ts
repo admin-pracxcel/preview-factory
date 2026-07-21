@@ -67,8 +67,14 @@ export async function POST(
   const sig = request.headers.get("x-launcharoo-signature");
   const verify = verifyInboundSignature(sig, rawBody);
   if (!verify.ok) {
+    // Extra breadcrumbs so we can distinguish "n8n sent double-stringified
+    // body" from "shared secret mismatch" from "clock skew" in Vercel logs.
+    const preview = rawBody.slice(0, 60).replace(/\s+/g, " ");
+    const startsWith = rawBody[0] ?? "";
     console.warn(
-      `[apply-patches] rejected editRequest ${id}: ${verify.reason ?? "unknown"}`,
+      `[apply-patches] rejected editRequest ${id}: ${verify.reason ?? "unknown"} ` +
+        `sigHeaderPresent=${sig !== null} bodyLen=${rawBody.length} ` +
+        `bodyStarts="${startsWith}" preview="${preview}"`,
     );
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
