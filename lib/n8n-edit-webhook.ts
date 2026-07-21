@@ -54,9 +54,15 @@ export interface VerifyResult {
 
 /**
  * Max age of a signature timestamp we'll accept, in seconds. Anything
- * older is treated as a replay attempt. 5 minutes matches Stripe.
+ * older is treated as a replay attempt.
+ *
+ * Set to 15 min. Stripe uses 5, but they're internet-scale and adversarial
+ * replay matters differently there. Ours is a private webhook secured by a
+ * shared HMAC secret — the timestamp is a defence-in-depth measure, not the
+ * primary gate. 15 min tolerates modest clock skew on self-hosted n8n and
+ * "re-run partial execution" flows where the signature was minted earlier.
  */
-const MAX_SIG_AGE_SECONDS = 5 * 60;
+const MAX_SIG_AGE_SECONDS = 15 * 60;
 
 export function verifyInboundSignature(
   headerValue: string | null,
