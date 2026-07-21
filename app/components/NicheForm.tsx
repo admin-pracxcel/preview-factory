@@ -176,7 +176,7 @@ export default function NicheForm({
   }
 
   return (
-    <div className={`bg-white rounded-2xl shadow-2xl p-4 sm:p-8 w-full mx-auto ${step === "confirm" ? "max-w-2xl" : "max-w-md"}`}>
+    <div className={`bg-white rounded-2xl shadow-2xl p-4 sm:p-8 w-full mx-auto ${step === "confirm" ? "max-w-[806px]" : "max-w-[538px]"}`}>
       {step === "form" ? (
         <FormStep
           subNiche={subNiche}
