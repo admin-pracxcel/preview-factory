@@ -127,6 +127,14 @@ export default async function TenantPreviewPage({
   const tenant = await getTenant(tenantId);
   if (!tenant) notFound();
   if (tenant.isExpired) redirect(`/expired/${tenantId}`);
+  // Soft expiry: 3 hours from creation for unclaimed previews. Enforced at
+  // request time (not by the reaper) so the customer sees /expired the
+  // instant the window closes, not on the next daily reaper sweep. The
+  // reaper still runs at 24h to blank site_props and free storage.
+  if (!tenant.publishedAt) {
+    const ageMs = Date.now() - new Date(tenant.createdAt).getTime();
+    if (ageMs > 3 * 3600_000) redirect(`/expired/${tenantId}`);
+  }
 
   // Guard against rendering before generation has produced a site. Without
   // this branch, `siteProps` is the empty-object fallback from rowToRecord

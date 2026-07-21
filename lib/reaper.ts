@@ -3,14 +3,18 @@
  * Marks unclaimed and post-grace-period cancelled tenants as expired.
  *
  * Policy:
- *   - Unclaimed:  claimed_at IS NULL AND created_at < now() - 24h
- *   - Cancelled:  status='cancelled' AND cancelled_at < now() - 7d
+ *   - Unclaimed:  claimed_at IS NULL AND created_at < now() - 24h.
+ *                 Flip status='expired' AND blank site_props in a single
+ *                 sweep — no separate 30-day hard-delete step. The public
+ *                 slug page already shows /expired from the 3-hour mark
+ *                 based on age alone (see app/preview/site/... page.tsx),
+ *                 so 24h is purely the storage-reclaim cutoff.
+ *   - Cancelled:  status='cancelled' AND cancelled_at < now() - 7d.
+ *                 Status flip only — cancelled subscribers keep their
+ *                 site_props through the housekeeping 30-day grace.
  *
- * "Expired" is a soft-delete signal. site_props are still on the row so
- * support can un-expire if a real customer complains. The 30-day hard-delete
- * of site_props runs in the Phase 8c housekeeping job.
- *
- * Idempotent. Safe to re-run.
+ * Keeps the row (owner_email, phone, name, timestamps) for follow-up +
+ * analytics. Idempotent, safe to re-run.
  */
 
 import { supabase } from "@/lib/supabase";
@@ -34,7 +38,7 @@ export async function runReaper(): Promise<ReaperResult> {
   // unclaimed row — claimed_at IS NULL is the single truth for "hasn't paid".
   const { data: unclaimed, error: unclaimedErr } = await supabase()
     .from("tenants")
-    .update({ status: "expired" })
+    .update({ status: "expired", site_props: null })
     .is("claimed_at", null)
     .lt("created_at", unclaimedCutoff.toISOString())
     .neq("status", "expired")

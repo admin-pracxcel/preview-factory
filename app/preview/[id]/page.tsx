@@ -19,6 +19,7 @@ import {
   type MutableCookies,
 } from "@/lib/session";
 import { isAdminSession } from "@/lib/admin";
+import { getTenant } from "@/lib/tenant-store";
 import PreviewClient from "./PreviewClient";
 
 export const dynamic = "force-dynamic";
@@ -46,6 +47,18 @@ export default async function PreviewPage({
       // list so they can pick what to edit, or to /login if they own nothing.
       const ownId = await findLatestTenantForSession(sessionId);
       redirect(ownId ? "/dashboard" : "/login");
+    }
+  }
+
+  // Soft expiry: same 3h rule as the public slug page. Owners viewing
+  // their own preview editor after 3h see /expired too. Admin bypasses so
+  // support can still open a customer's row post-expiry.
+  if (!admin) {
+    const tenant = await getTenant(id);
+    if (tenant && !tenant.publishedAt) {
+      if (tenant.isExpired) redirect(`/expired/${id}`);
+      const ageMs = Date.now() - new Date(tenant.createdAt).getTime();
+      if (ageMs > 3 * 3600_000) redirect(`/expired/${id}`);
     }
   }
 

@@ -41,20 +41,23 @@ Finish job → GET tenant row → IF (not notified & has phone) → KrispCall se
 - **Method**: `GET`
 - **URL** (copy this exact string — do NOT include any surrounding backticks):
   ```
-  {{ $env.SUPABASE_URL }}/rest/v1/tenants?id=eq.{{ $json.tenant_id }}&select=phone,name,preview_notified_at
+  {{ $env.SUPABASE_URL }}/rest/v1/tenants?id=eq.{{ $json.tenant_id }}&select=phone,name,slug,preview_notified_at
   ```
 - **Headers**:
   - `apikey`: `={{ $env.SUPABASE_SERVICE_ROLE_KEY }}`
   - `Authorization`: `Bearer {{ $env.SUPABASE_SERVICE_ROLE_KEY }}`
 - **Response**: single-row array. Extract the first item.
 
-**Node B — IF: skip if already notified or no phone**
+**Node B — IF: skip if already notified, no phone, or no slug**
 
 - **Condition 1 (AND)**: `{{ $json.preview_notified_at }}` — Is Empty
 - **Condition 2 (AND)**: `{{ $json.phone }}` — Is Not Empty
+- **Condition 3 (AND)**: `{{ $json.slug }}` — Is Not Empty
 
 Wire the "true" branch to node C. The "false" branch goes nowhere (silent
-skip — the workflow ends cleanly).
+skip — the workflow ends cleanly). Slug should always be present since
+intake reserves it before generation, but the guard covers the rare case
+where `reserveSlug` failed and left it null.
 
 **Node C — KrispCall Send SMS** (your existing node)
 
@@ -63,10 +66,12 @@ skip — the workflow ends cleanly).
 - **From**: your KrispCall number.
 - **Body**:
   ```
-  Your Launcharoo preview for {{ $json.name || 'your business' }} is ready: {{ $env.LAUNCHAROO_ORIGIN }}/preview/{{ $('Load queued job').item.json.tenant_id }} — Reply STOP to opt out.
+  Your Launcharoo preview for {{ $json.name || 'your business' }} is ready: https://{{ $json.slug }}.launcharoo.online — Preview expires in 3 hours. Reply STOP to opt out.
   ```
-  Adjust the `$('Load queued job')` reference name to whatever node holds
-  `tenant_id` earlier in your workflow.
+  We send the public slug URL rather than the editor URL because the slug
+  URL is auth-free and opens cleanly on any device (the customer's phone
+  won't have their intake session cookie). To subscribe, they still come
+  back to `/preview/<id>` on the device where they filled the intake.
 
 **Node D — Supabase PATCH: mark as notified**
 

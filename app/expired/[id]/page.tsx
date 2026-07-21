@@ -90,7 +90,7 @@ export default async function ExpiredPage({ params }: PageProps) {
 
           {/* Footer note */}
           <p className="text-white/20 text-xs mt-8">
-            Preview data is retained for 30 days after expiry.
+            Preview data is retained until 24 hours after you started, then cleared.
           </p>
 
         </div>
