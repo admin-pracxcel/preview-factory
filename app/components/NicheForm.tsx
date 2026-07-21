@@ -32,15 +32,10 @@ function generateLeadId(): string {
   return `lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
-/**
- * TEMPORARY (2026-07-21): permissive check — any input with 8+ digits, optional
- * leading `+`. Reverted here so the founder can test KrispCall SMS end-to-end
- * using an Indian number (+91). Restore the AU-only regex once testing is done:
- *   return /^(\+614|04)\d{8}$/.test(input.replace(/[\s-]/g, ""));
- */
+/** AU mobile: `+614XXXXXXXX` or `04XXXXXXXX`, whitespace/dashes ignored. */
 function isValidAuMobile(input: string): boolean {
-  const cleaned = input.replace(/[\s\-()]/g, "");
-  return /^\+?\d{8,15}$/.test(cleaned);
+  const cleaned = input.replace(/[\s-]/g, "");
+  return /^(\+614|04)\d{8}$/.test(cleaned);
 }
 
 type Step = "form" | "confirm";
@@ -146,7 +141,7 @@ export default function NicheForm({
   async function handleBuildMySite() {
     if (!gbpData) return;
     if (!isValidAuMobile(phone)) {
-      setPhoneError("Enter a valid mobile number (with country code, e.g. +91 70XXXXXXXX).");
+      setPhoneError("Enter a valid Australian mobile (e.g. 04XX XXX XXX).");
       return;
     }
     setPhoneError("");
