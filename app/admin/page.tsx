@@ -23,7 +23,7 @@ import { supabase } from "@/lib/supabase";
 import { isAdminSession } from "@/lib/admin";
 import type { MutableCookies } from "@/lib/session";
 import { LogoutButton } from "@/app/components/LogoutButton";
-import { DeleteTenantButton } from "./DeleteTenantButton";
+import { TenantsList } from "./TenantsList";
 
 export const dynamic = "force-dynamic";
 
@@ -189,49 +189,15 @@ export default async function AdminHomePage() {
             </div>
           </div>
 
-          {tenants.length === 0 ? (
-            <p className="text-sm text-white/40">No tenants yet.</p>
-          ) : (
-            <ul className="flex flex-col gap-2">
-              {tenants.map((t) => {
-                const publicHost = t.slug ? `${t.slug}.launcharoo.online` : null;
-                return (
-                  <li
-                    key={t.id}
-                    className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3"
-                  >
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-semibold text-white">
-                        {t.name || "(untitled)"}
-                      </p>
-                      <p className="mt-0.5 truncate text-xs text-white/40">
-                        {t.owner_email ?? "(no owner)"}
-                        {publicHost && <> &middot; {publicHost}</>}
-                      </p>
-                    </div>
-                    <div className="flex shrink-0 items-center gap-2">
-                      <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white/60">
-                        {t.status}
-                      </span>
-                      <Link
-                        href={`/admin/tenants/${t.id}`}
-                        className="rounded-lg border border-white/15 px-2.5 py-1 text-xs font-semibold text-white/80 hover:border-white/30 hover:bg-white/5 hover:text-white transition-colors"
-                      >
-                        View
-                      </Link>
-                      <Link
-                        href={`/dashboard/${t.id}`}
-                        className="rounded-lg border border-blue-500/30 bg-blue-500/10 px-2.5 py-1 text-xs font-semibold text-blue-200 hover:border-blue-400/60 hover:bg-blue-500/20 hover:text-blue-100 transition-colors"
-                      >
-                        Dashboard
-                      </Link>
-                      <DeleteTenantButton tenantId={t.id} tenantName={t.name || ""} />
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
+          <TenantsList
+            tenants={tenants.map((t) => ({
+              id: t.id,
+              name: t.name,
+              slug: t.slug,
+              status: t.status,
+              owner_email: t.owner_email,
+            }))}
+          />
         </section>
       </main>
     </div>
