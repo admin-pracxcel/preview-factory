@@ -10,15 +10,9 @@
  * gone (already done upstream).
  */
 
-import { useState, useEffect, useRef, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CheckCircle2, Loader2, Building2 } from "lucide-react";
-
-/* -------------------------------------------------------------------------- */
-/*  Types                                                                       */
-/* -------------------------------------------------------------------------- */
-
-type Phase = "lookup" | "found" | "designing";
+import { CheckCircle2, Loader2 } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
 /*  Progress bar                                                                */
@@ -76,7 +70,6 @@ function BuildingPageInner() {
   const searchParams = useSearchParams();
   const tenantId = searchParams.get("tenantId");
 
-  const [phase, setPhase] = useState<Phase>("lookup");
   const [businessName, setBusinessName] = useState<string>("Your Business");
   const [designProgress, setDesignProgress] = useState(0);
   const [currentDesignStep, setCurrentDesignStep] = useState(0);
@@ -87,7 +80,6 @@ function BuildingPageInner() {
   const [intakeError, setIntakeError] = useState<string | null>(null);
   const [takingLonger, setTakingLonger] = useState(false);
   const [animationReady, setAnimationReady] = useState(false);
-  const foundLatchedRef = useRef(false);
 
   /* ---------------------------------------------------------------------- */
   /*  Status polling — every 2s. First tick fires immediately.                */
@@ -120,11 +112,7 @@ function BuildingPageInner() {
         };
         if (cancelled) return;
 
-        if (data.name && !foundLatchedRef.current) {
-          setBusinessName(data.name);
-          setPhase("found");
-          foundLatchedRef.current = true;
-        }
+        if (data.name) setBusinessName(data.name);
 
         setTenantStatus(data.status);
         const siteReady = data.hasSiteProps === true;
@@ -157,28 +145,10 @@ function BuildingPageInner() {
   }, [tenantId]);
 
   /* ---------------------------------------------------------------------- */
-  /*  Phase sequencing — lookup → found → designing                            */
-  /*                                                                          */
-  /*  We flip lookup → found from the first status poll (when we get the      */
-  /*  business name). Then a short beat and we drop into designing so the     */
-  /*  optimistic animation starts running independently of the actual gen.    */
+  /*  Designing animation — starts on mount and drives the progress bar +     */
+  /*  checklist reveals independently of the real generation status.          */
   /* ---------------------------------------------------------------------- */
   useEffect(() => {
-    if (phase !== "found") return;
-    const t = setTimeout(() => setPhase("designing"), 1200);
-    return () => clearTimeout(t);
-  }, [phase]);
-
-  /* ---------------------------------------------------------------------- */
-  /*  Designing animation — progress bar + checklist reveals                  */
-  /* ---------------------------------------------------------------------- */
-  useEffect(() => {
-    if (phase !== "designing") return;
-
-    setDesignProgress(0);
-    setCurrentDesignStep(0);
-    setVisibleChecklistItems(0);
-
     let step = 0;
     const stepInterval = setInterval(() => {
       if (step < DESIGN_STEPS.length - 1) {
@@ -216,7 +186,7 @@ function BuildingPageInner() {
       clearInterval(checklistInterval);
       clearTimeout(animationCompleteTimer);
     };
-  }, [phase]);
+  }, []);
 
   /* ---------------------------------------------------------------------- */
   /*  Redirect on ready                                                       */
@@ -238,8 +208,6 @@ function BuildingPageInner() {
   /* ---------------------------------------------------------------------- */
   /*  Derived                                                                 */
   /* ---------------------------------------------------------------------- */
-  const showFound = phase !== "lookup";
-  const showDesigning = phase === "designing";
   const generationDone =
     (tenantStatus === "done" || tenantStatus === "claimed") && hasSiteProps;
   const activeDesignLabel = generationDone
@@ -276,91 +244,44 @@ function BuildingPageInner() {
             </p>
           </div>
 
-          <div className="flex flex-col gap-7">
-
-            {/* Step 1 — Google lookup */}
-            <div className="flex items-start gap-4">
-              <div className="w-6 h-6 shrink-0 mt-0.5">
-                {phase === "lookup" ? (
-                  <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
-                ) : (
-                  <CheckCircle2 className="w-6 h-6 text-green-400" />
-                )}
-              </div>
-              <div className="flex flex-col gap-1 flex-1">
-                <p className={`font-semibold text-sm ${phase === "lookup" ? "text-white" : "text-slate-300"}`}>
-                  {phase === "lookup" ? (
-                    <>Confirming <span className="text-blue-400">{businessName}</span> on Google…</>
-                  ) : (
-                    <>Found on Google</>
-                  )}
-                </p>
-
-                {phase === "lookup" && (
-                  <div className="flex items-center gap-1.5 mt-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-600 animate-bounce [animation-delay:0ms]" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-600 animate-bounce [animation-delay:150ms]" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-600 animate-bounce [animation-delay:300ms]" />
-                  </div>
-                )}
-
-                {showFound && (
-                  <div className="mt-3 bg-slate-900 border border-slate-700 rounded-2xl p-5 animate-in fade-in slide-in-from-bottom-2 duration-500 shadow-xl">
-                    <div className="flex items-start gap-3">
-                      <Building2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
-                      <span className="text-sm text-white font-bold">{businessName}</span>
-                    </div>
-                    <p className="text-xs text-green-500 font-medium mt-4 text-center">
-                      ✓ Google Business Profile matched
-                    </p>
-                  </div>
-                )}
-              </div>
+          <div className="flex items-start gap-4">
+            <div className="w-6 h-6 shrink-0 mt-0.5">
+              {generationDone ? (
+                <CheckCircle2 className="w-6 h-6 text-green-400" />
+              ) : (
+                <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
+              )}
             </div>
+            <div className="flex flex-col gap-3 flex-1">
+              <p className="font-semibold text-sm text-white">
+                Designing your site
+              </p>
 
-            {/* Step 2 — Designing */}
-            {showDesigning && (
-              <div className="flex items-start gap-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                <div className="w-6 h-6 shrink-0 mt-0.5">
-                  {generationDone ? (
-                    <CheckCircle2 className="w-6 h-6 text-green-400" />
-                  ) : (
-                    <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
-                  )}
-                </div>
-                <div className="flex flex-col gap-3 flex-1">
-                  <p className="font-semibold text-sm text-white">
-                    Designing your site
+              <ProgressBar progress={designProgress} label={activeDesignLabel} />
+
+              {visibleChecklistItems > 0 && (
+                <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col gap-2">
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
+                    What you are getting
                   </p>
-
-                  <ProgressBar progress={designProgress} label={activeDesignLabel} />
-
-                  {visibleChecklistItems > 0 && (
-                    <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col gap-2">
-                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">
-                        What you are getting
-                      </p>
-                      {CHECKLIST.slice(0, visibleChecklistItems).map((item, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center gap-2 text-sm animate-in fade-in slide-in-from-left-2 duration-300"
-                        >
-                          <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-                          <span className="text-slate-300">{item}</span>
-                        </div>
-                      ))}
+                  {CHECKLIST.slice(0, visibleChecklistItems).map((item, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-2 text-sm animate-in fade-in slide-in-from-left-2 duration-300"
+                    >
+                      <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
+                      <span className="text-slate-300">{item}</span>
                     </div>
-                  )}
-
-                  {intakeError && (
-                    <p className="text-sm text-red-400 font-medium">
-                      Sorry — couldn&apos;t build your site: {intakeError}
-                    </p>
-                  )}
+                  ))}
                 </div>
-              </div>
-            )}
+              )}
 
+              {intakeError && (
+                <p className="text-sm text-red-400 font-medium">
+                  Sorry — couldn&apos;t build your site: {intakeError}
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="mt-14 text-center text-slate-300 text-xs">
