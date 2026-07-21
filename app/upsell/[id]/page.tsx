@@ -108,9 +108,11 @@ export default function UpsellPage() {
     <div className="flex flex-col min-h-screen bg-[#0A0F1E] text-white">
       {/* Header */}
       <header className="px-6 py-5 max-w-4xl mx-auto w-full flex items-center justify-between">
-        <div className="text-xl font-[family-name:var(--font-sora)] font-extrabold text-white">
-          Launcharoo
-        </div>
+        <img
+          src="/images/launcharoo-logo-white.webp"
+          alt="Launcharoo"
+          className="h-6 w-auto"
+        />
         <Link
           href={`/welcome/${id}`}
           className="text-white/50 hover:text-white transition-colors text-sm flex items-center gap-1.5"

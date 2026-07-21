@@ -11,9 +11,10 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { getTenant } from "@/lib/tenant-store";
+import { getTenant, saveTenant } from "@/lib/tenant-store";
 import { createCheckoutSession } from "@/lib/stripe-client";
 import { applyRateLimit, clientIp } from "@/lib/rate-limit";
+import { PLAN_KEYS, type PlanKey } from "@/lib/plans";
 
 export const runtime = "nodejs";
 
@@ -29,16 +30,22 @@ function resolveBaseUrl(request: NextRequest): string {
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  let body: { tenantId?: string };
+  let body: { tenantId?: string; planKey?: string };
   try {
-    body = (await request.json()) as { tenantId?: string };
+    body = (await request.json()) as { tenantId?: string; planKey?: string };
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const { tenantId } = body;
+  const { tenantId, planKey } = body;
   if (!tenantId || typeof tenantId !== "string") {
     return NextResponse.json({ error: "tenantId is required" }, { status: 400 });
+  }
+  if (!planKey || typeof planKey !== "string" || !PLAN_KEYS.includes(planKey as PlanKey)) {
+    return NextResponse.json(
+      { error: "planKey is required and must be one of the supported tiers." },
+      { status: 400 },
+    );
   }
 
   // Guards Stripe session churn. Mostly annoyance-prevention: 20/hour per
@@ -73,9 +80,32 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     });
   }
 
+  // Persist the chosen plan on the tenant BEFORE the Stripe session is
+  // created. Two reasons:
+  //   1. Stripe's webhook may point at a different deployment (e.g. prod)
+  //      that doesn't yet know how to read `metadata.planKey`. Writing here
+  //      makes the tier stick regardless of which environment handles the
+  //      subscription lifecycle event.
+  //   2. Idempotent: if the user opens the picker, picks Growth, backs out,
+  //      then picks Pro, the last /api/checkout call wins.
+  // Non-fatal: if the write fails we still let checkout proceed — the
+  // tenant just ends up on the legacy fallback quota rather than blocking
+  // payment.
+  try {
+    await saveTenant({ ...tenant, planKey: planKey as PlanKey });
+    console.log(`[checkout] persisted planKey=${planKey} on tenant ${tenant.id}`);
+  } catch (err) {
+    console.warn(`[checkout] failed to persist planKey on ${tenant.id}:`, err);
+  }
+
   try {
     const baseUrl = resolveBaseUrl(request);
-    const result = await createCheckoutSession(tenant.id, tenant.name, baseUrl);
+    const result = await createCheckoutSession(
+      tenant.id,
+      tenant.name,
+      baseUrl,
+      planKey as PlanKey,
+    );
 
     return NextResponse.json({
       checkoutUrl: result.url,

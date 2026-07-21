@@ -24,7 +24,8 @@ import {
 } from "lucide-react";
 import { getTenant } from "@/lib/tenant-store";
 import { listLeads } from "@/lib/leads-store";
-import { listEditRequests } from "@/lib/edit-requests-store";
+import { listEditRequests, countEditRequestsThisMonth } from "@/lib/edit-requests-store";
+import { splitPlanKey, tierOf } from "@/lib/plans";
 import {
   readSession,
   assertOwnsTenant,
@@ -111,6 +112,12 @@ export default async function DashboardPage({
 
   const leads = (await listLeads(tenantId)).slice(0, 20);
   const editRequests = (await listEditRequests(tenantId)).slice(0, 5);
+  const editsUsedThisMonth = await countEditRequestsThisMonth(tenantId);
+
+  // Derive a small quota card for the "Request a change" section. Mirrors
+  // the plan-aware logic in ChangeRequestsPanel; kept inline because this
+  // is a server component and the visual is small.
+  const quota = deriveQuotaForDashboard(tenant.planKey, editsUsedThisMonth);
 
   const liveUrl = tenant.slug
     ? `https://${tenant.slug}.launcharoo.online`
@@ -123,9 +130,11 @@ export default async function DashboardPage({
         <div className="mx-auto flex max-w-5xl items-center justify-between">
           <div className="flex items-center gap-3">
             <LayoutDashboard className="h-5 w-5 text-blue-400" />
-            <span className="font-[family-name:var(--font-sora)] text-lg font-extrabold">
-              Launcharoo
-            </span>
+            <img
+              src="/images/launcharoo-logo-white.webp"
+              alt="Launcharoo"
+              className="h-6 w-auto"
+            />
           </div>
           <div className="flex items-center gap-3">
             <Link
@@ -261,8 +270,13 @@ export default async function DashboardPage({
               <PenLine className="h-5 w-5 text-amber-400" />
               <h2 className="text-base font-bold">Request a change</h2>
             </div>
+
+            {/* Plan-aware quota — prominent so the owner knows their monthly
+                headroom at a glance without opening the preview modal. */}
+            <QuotaCard quota={quota} />
+
             <p className="text-sm text-white/50">
-              Describe what you&apos;d like changed — phone number, email, address, hours, anything else. We&apos;ll email you when it&apos;s done, usually within 2 business hours.
+              Describe the change in plain English — copy tweaks, new sections, gallery updates, or anything else on the site. We&apos;ll email you when it&apos;s done. Basic details like phone, hours and address can be edited directly on your preview page.
             </p>
 
             {/* Recent requests */}
@@ -311,6 +325,162 @@ export default async function DashboardPage({
           </a>
         </footer>
       </main>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*  Quota card — shows plan-aware "N of 20 requests left this month"           */
+/* -------------------------------------------------------------------------- */
+
+interface DashboardQuota {
+  kind: "starter" | "growth" | "pro" | "legacy" | "no-plan";
+  used: number;
+  cap?: number;
+  remaining?: number;
+  percentUsed?: number;
+  exhausted?: boolean;
+  headline: string;
+  sub: string;
+  tint: "emerald" | "amber" | "slate";
+}
+
+function deriveQuotaForDashboard(planKey: string | undefined, used: number): DashboardQuota {
+  const parts = splitPlanKey(planKey);
+  if (!parts) {
+    return planKey
+      ? {
+          kind: "legacy",
+          used,
+          headline: "Unlimited requests",
+          sub: "Your plan doesn't cap monthly requests. Fair use applies.",
+          tint: "emerald",
+        }
+      : {
+          kind: "no-plan",
+          used,
+          headline: "No active subscription",
+          sub: "Requests are unlocked once you subscribe.",
+          tint: "slate",
+        };
+  }
+  const tier = tierOf(parts.tier);
+  if (parts.tier === "starter") {
+    return {
+      kind: "starter",
+      used,
+      headline: "Not included on Starter",
+      sub: "Upgrade to Growth (20/mo) or Pro (unlimited) to submit change requests.",
+      tint: "amber",
+    };
+  }
+  if (parts.tier === "growth") {
+    const cap = tier.editsCap;
+    const remaining = Math.max(0, cap - used);
+    const percentUsed = Math.min(100, Math.round((used / cap) * 100));
+    const exhausted = remaining === 0;
+    return {
+      kind: "growth",
+      used,
+      cap,
+      remaining,
+      percentUsed,
+      exhausted,
+      headline: exhausted
+        ? "You've used all 20 requests this month"
+        : `${remaining} of ${cap} requests left this month`,
+      sub: exhausted
+        ? "Quota resets on the 1st. Need more? Upgrade to Pro for unlimited requests under fair use."
+        : `Growth includes 20 change requests per calendar month. Resets on the 1st.`,
+      tint: exhausted ? "amber" : "emerald",
+    };
+  }
+  // pro
+  const softCap = tier.fairUseSoftCap ?? Infinity;
+  const hardCap = tier.fairUseHardCap ?? Infinity;
+  if (used >= hardCap) {
+    return {
+      kind: "pro",
+      used,
+      headline: "Fair-use ceiling reached",
+      sub: "You've hit the monthly fair-use ceiling. Reach out to hello@launcharoo.online for headroom.",
+      tint: "amber",
+    };
+  }
+  if (used >= softCap) {
+    return {
+      kind: "pro",
+      used,
+      headline: `${used} requests this month`,
+      sub: "Above the fair-use soft cap. We may follow up on very heavy usage.",
+      tint: "amber",
+    };
+  }
+  return {
+    kind: "pro",
+    used,
+    headline: "Unlimited requests",
+    sub: "Pro includes unlimited change requests within fair use. Resets on the 1st.",
+    tint: "emerald",
+  };
+}
+
+function QuotaCard({ quota }: { quota: DashboardQuota }) {
+  const chip =
+    quota.tint === "emerald"
+      ? {
+          border: "border-emerald-500/30",
+          bg: "bg-emerald-500/10",
+          text: "text-emerald-300",
+          barBg: "bg-emerald-500/15",
+          bar: "bg-emerald-400",
+        }
+      : quota.tint === "amber"
+      ? {
+          border: "border-amber-500/30",
+          bg: "bg-amber-500/10",
+          text: "text-amber-300",
+          barBg: "bg-amber-500/15",
+          bar: "bg-amber-400",
+        }
+      : {
+          border: "border-white/10",
+          bg: "bg-white/5",
+          text: "text-white/70",
+          barBg: "bg-white/10",
+          bar: "bg-white/40",
+        };
+
+  return (
+    <div className={`rounded-xl border ${chip.border} ${chip.bg} p-4 flex flex-col gap-3`}>
+      <div className="flex items-center justify-between gap-4">
+        <div className="min-w-0">
+          <p className={`text-base font-bold ${chip.text}`}>{quota.headline}</p>
+          <p className="mt-1 text-xs text-white/60">{quota.sub}</p>
+        </div>
+        {quota.kind === "growth" && (
+          <div className="shrink-0 text-right">
+            <div className={`text-2xl font-extrabold ${chip.text}`}>
+              {quota.remaining}
+              <span className="text-sm text-white/40 font-medium">
+                {" "}
+                / {quota.cap}
+              </span>
+            </div>
+            <div className="text-[10px] uppercase tracking-wider text-white/40 font-semibold">
+              left
+            </div>
+          </div>
+        )}
+      </div>
+      {quota.kind === "growth" && quota.percentUsed != null && (
+        <div className={`h-1.5 rounded-full overflow-hidden ${chip.barBg}`}>
+          <div
+            className={`h-full ${chip.bar} transition-all duration-500 ease-out`}
+            style={{ width: `${quota.percentUsed}%` }}
+          />
+        </div>
+      )}
     </div>
   );
 }

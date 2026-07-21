@@ -125,11 +125,12 @@ export default async function StatusPage() {
   return (
     <div className="flex flex-col flex-1 min-h-screen bg-[#0A0F1E] text-white">
       <header className="px-6 py-5 max-w-3xl mx-auto w-full">
-        <Link
-          href="/"
-          className="text-xl font-[family-name:var(--font-sora)] font-extrabold text-white"
-        >
-          Launcharoo
+        <Link href="/" aria-label="Launcharoo">
+          <img
+            src="/images/launcharoo-logo-white.webp"
+            alt="Launcharoo"
+            className="h-6 w-auto"
+          />
         </Link>
       </header>
 

@@ -79,6 +79,10 @@ export interface TenantRecord {
   gbpPhotos?: string[];
   /** Owner mobile captured at intake, used for SMS notifications and edits. */
   phone?: string;
+  /** Which pricing tier this tenant subscribed to. One of the
+   *  `PlanKey` values from `lib/plans.ts` (e.g. "growth-monthly").
+   *  Written by the Stripe webhook after checkout completes. */
+  planKey?: string;
   /** ISO 8601 timestamp set when the site is published. */
   publishedAt?: string;
   /** Stripe Checkout session ID associated with the payment. */
@@ -154,6 +158,7 @@ interface TenantRow {
   place_id: string | null;
   gbp_photos: string[] | null;
   phone: string | null;
+  plan_key: string | null;
   claimed_at: string | null;
   owner_email: string | null;
   billing_customer_id: string | null;
@@ -188,6 +193,7 @@ function rowToRecord(row: TenantRow): TenantRecord {
     placeId: row.place_id ?? undefined,
     gbpPhotos: row.gbp_photos ?? undefined,
     phone: row.phone ?? undefined,
+    planKey: row.plan_key ?? undefined,
     publishedAt: row.claimed_at ?? undefined,
     stripeCustomerId: row.billing_customer_id ?? undefined,
     stripeSubscriptionId: row.billing_subscription_id ?? undefined,
@@ -215,6 +221,7 @@ function recordToUpsert(record: TenantRecord): Record<string, unknown> {
     place_id: record.placeId ?? null,
     gbp_photos: record.gbpPhotos ?? null,
     phone: record.phone ?? null,
+    plan_key: record.planKey ?? null,
     // claimed_at only set when the app-facing status implies claim
     claimed_at:
       record.status === "paid" || record.status === "published"

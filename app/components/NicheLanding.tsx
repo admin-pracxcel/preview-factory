@@ -80,9 +80,13 @@ export default function NicheLanding({
       {/* Navigation — absolute, transparent over hero                         */}
       {/* ------------------------------------------------------------------ */}
       <header className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-5 max-w-6xl mx-auto w-full">
-        <div className="text-lg font-[family-name:var(--font-sora)] font-extrabold text-white tracking-tight drop-shadow-sm">
-          Launcharoo
-        </div>
+        <Link href="/" aria-label="Launcharoo" className="drop-shadow-sm">
+          <img
+            src="/images/launcharoo-logo-white.webp"
+            alt="Launcharoo"
+            className="h-6 w-auto"
+          />
+        </Link>
         <Link
           href="/"
           className="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors"
@@ -340,9 +344,11 @@ export default function NicheLanding({
       {/* ------------------------------------------------------------------ */}
       <footer className="bg-[#040812] border-t border-white/10 py-10 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="font-[family-name:var(--font-sora)] font-extrabold text-white text-base">
-            Launcharoo
-          </div>
+          <img
+            src="/images/launcharoo-logo-white.webp"
+            alt="Launcharoo"
+            className="h-6 w-auto"
+          />
           <div className="flex gap-6">
             {[
               { label: "Trades", href: "/for/trades" },

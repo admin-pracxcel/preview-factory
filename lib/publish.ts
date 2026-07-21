@@ -33,6 +33,10 @@ export interface PublishInput {
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;
   ownerEmail?: string;
+  /** Plan the tenant chose in the picker before checkout. One of the
+   *  `PlanKey` values from `lib/plans.ts`. Persisted on the tenant so the
+   *  quota checks and dashboard billing card have a stable reference. */
+  planKey?: string;
 }
 
 export async function publishTenant(
@@ -44,6 +48,10 @@ export async function publishTenant(
 
   const publishedAt = tenant.publishedAt ?? new Date().toISOString();
 
+  console.log(
+    `[publish] tenant=${tenantId} input.planKey=${input.planKey ?? "(none)"} existing.planKey=${tenant.planKey ?? "(none)"}`,
+  );
+
   await saveTenant({
     ...tenant,
     status: "published",
@@ -52,6 +60,7 @@ export async function publishTenant(
     ...(input.stripeCustomerId ? { stripeCustomerId: input.stripeCustomerId } : {}),
     ...(input.stripeSubscriptionId ? { stripeSubscriptionId: input.stripeSubscriptionId } : {}),
     ...(input.ownerEmail ? { ownerEmail: input.ownerEmail.toLowerCase() } : {}),
+    ...(input.planKey ? { planKey: input.planKey } : {}),
   });
 
   const liveUrl = `/preview/site/${tenantId}`;

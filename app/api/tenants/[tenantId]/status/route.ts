@@ -10,6 +10,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { countEditRequestsThisMonth } from "@/lib/edit-requests-store";
 
 export const runtime = "nodejs";
 
@@ -29,6 +30,12 @@ interface StatusResponse {
    *  otherwise a race between status flipping and the app-side read can send
    *  the user to the preview before there's anything to render. */
   hasSiteProps?: boolean;
+  /** Which pricing tier this tenant is on (e.g. "growth-monthly"). Undefined
+   *  before checkout. Drives the plan-aware ChangeRequestsPanel copy. */
+  planKey?: string;
+  /** Edit requests submitted this calendar month, non-rejected. Used to
+   *  render "X of 20 left" on Growth and enforce the fair-use cap on Pro. */
+  editsUsedThisMonth?: number;
 }
 
 export async function GET(
@@ -39,7 +46,7 @@ export async function GET(
 
   const { data, error } = await supabase()
     .from("tenants")
-    .select("status,error,name,slug,custom_domain,custom_domain_status,site_props")
+    .select("status,error,name,slug,custom_domain,custom_domain_status,site_props,plan_key")
     .eq("id", tenantId)
     .maybeSingle();
 
@@ -61,6 +68,13 @@ export async function GET(
     typeof data.site_props === "object" &&
     Object.keys(data.site_props as object).length > 0;
 
+  // Month-to-date edit count only matters once the tenant has a plan.
+  // Skipping the query for pre-claim tenants keeps the /building poll fast.
+  const planKey = (data.plan_key as string | null) ?? undefined;
+  const editsUsedThisMonth = planKey
+    ? await countEditRequestsThisMonth(tenantId)
+    : undefined;
+
   return NextResponse.json(
     {
       status: data.status as string,
@@ -72,6 +86,8 @@ export async function GET(
       ...(data.custom_domain_status
         ? { customDomainStatus: data.custom_domain_status as string }
         : {}),
+      ...(planKey ? { planKey } : {}),
+      ...(editsUsedThisMonth != null ? { editsUsedThisMonth } : {}),
     },
     {
       // Never cache — status changes every few seconds.

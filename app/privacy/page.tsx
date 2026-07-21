@@ -24,11 +24,12 @@ export default function PrivacyPage() {
     <div className="min-h-screen bg-[#0A0F1E] text-white/85">
       <header className="border-b border-white/5 px-6 py-4">
         <div className="mx-auto max-w-3xl">
-          <Link
-            href="/"
-            className="font-[family-name:var(--font-sora)] text-lg font-extrabold text-white"
-          >
-            Launcharoo
+          <Link href="/" aria-label="Launcharoo">
+            <img
+              src="/images/launcharoo-logo-white.webp"
+              alt="Launcharoo"
+              className="h-6 w-auto"
+            />
           </Link>
         </div>
       </header>

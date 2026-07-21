@@ -106,17 +106,19 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       const ownerEmail =
         session.customer_details?.email ?? session.customer_email ?? undefined;
 
+      const planKey = session.metadata?.planKey ?? undefined;
       try {
         const result = await publishTenant(tenantId, {
           stripeSessionId: session.id,
           stripeCustomerId: session.customer ?? undefined,
           stripeSubscriptionId: session.subscription ?? undefined,
           ownerEmail,
+          planKey,
         });
         console.log(
           `[webhook] tenant ${tenantId} published. liveUrl=${result.liveUrl}${
             ownerEmail ? ` owner=${ownerEmail}` : ""
-          }`
+          }${planKey ? ` plan=${planKey}` : " (no plan_key in metadata!)"}`,
         );
       } catch (err) {
         console.error(`[webhook] publishTenant failed for ${tenantId}:`, err);

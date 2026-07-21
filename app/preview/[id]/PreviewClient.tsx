@@ -8,6 +8,8 @@ import CustomisePanel, { type CustomisationState } from "@/app/components/Custom
 import BusinessDetailsSection, { type BusinessDetailsInitial } from "@/app/components/BusinessDetailsSection";
 import ImagePickerModal from "@/app/components/ImagePickerModal";
 import ChangeRequestsPanel from "./ChangeRequestsPanel";
+import PlanPicker from "./PlanPicker";
+import type { PlanKey } from "@/lib/plans";
 import { derivePrimary, deriveSecondary } from "@/lib/color";
 
 /* -------------------------------------------------------------------------- */
@@ -122,6 +124,8 @@ function PreviewPageInner() {
    *  countdown urgency + "Save my site" checkout button and show a
    *  "back to dashboard" affordance instead. Fetched once on mount. */
   const [isPublished, setIsPublished] = useState(false);
+  const [planKey, setPlanKey] = useState<string | undefined>(undefined);
+  const [editsUsedThisMonth, setEditsUsedThisMonth] = useState<number | undefined>(undefined);
   /** Real public host of this tenant — a custom domain if one is active,
    *  otherwise the launcharoo subdomain. Populated by the /status fetch. */
   const [publicHost, setPublicHost] = useState<string | null>(null);
@@ -243,12 +247,18 @@ function PreviewPageInner() {
           slug?: string;
           customDomain?: string;
           customDomainStatus?: string;
+          planKey?: string;
+          editsUsedThisMonth?: number;
         };
         if (cancelled) return;
         if (body.status === "claimed" || body.status === "past_due") {
           setIsPublished(true);
         }
         if (body.name) setBusinessName(body.name);
+        if (body.planKey) setPlanKey(body.planKey);
+        if (typeof body.editsUsedThisMonth === "number") {
+          setEditsUsedThisMonth(body.editsUsedThisMonth);
+        }
         const host =
           body.customDomain && body.customDomainStatus === "active"
             ? body.customDomain
@@ -361,28 +371,39 @@ function PreviewPageInner() {
 
   const dismissToast = useCallback(() => setToast(null), []);
 
-  const [checkingOut, setCheckingOut] = useState(false);
+  // Plan picker + checkout wiring. `busyPlan` is the tier the user has
+  // just clicked in the modal — it drives the per-card spinner and
+  // suppresses duplicate submissions until the redirect fires. The picker
+  // opens from two entrypoints:
+  //   1. The "Save my site" CTA (mobile bar + desktop top bar)
+  //   2. ChangeRequestsPanel's "Subscribe to unlock" / "Upgrade" button
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [busyPlan, setBusyPlan] = useState<PlanKey | null>(null);
+  const checkingOut = busyPlan != null;
 
-  async function handleSave() {
-    if (checkingOut) return;
-    setCheckingOut(true);
+  const openPicker = useCallback(() => setPickerOpen(true), []);
+  const closePicker = useCallback(() => setPickerOpen(false), []);
+
+  async function handleChoosePlan(planKey: PlanKey) {
+    if (busyPlan) return;
+    setBusyPlan(planKey);
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tenantId: id }),
+        body: JSON.stringify({ tenantId: id, planKey }),
       });
       if (!res.ok) {
         const err = (await res.json()) as { error?: string };
         setToast(err.error ?? "Checkout failed. Please try again.");
+        setBusyPlan(null);
         return;
       }
       const data = (await res.json()) as { checkoutUrl: string };
       window.location.href = data.checkoutUrl;
     } catch {
       setToast("Could not start checkout. Check your connection.");
-    } finally {
-      setCheckingOut(false);
+      setBusyPlan(null);
     }
   }
 
@@ -445,11 +466,11 @@ function PreviewPageInner() {
           <>
             <button
               type="button"
-              onClick={handleSave}
+              onClick={openPicker}
               disabled={checkingOut}
               className="w-full py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:opacity-60 text-white font-bold text-base shadow-lg shadow-blue-900/40 transition-colors"
             >
-              {checkingOut ? "Taking you to checkout…" : <>Save my site &mdash; $49/mo<span className="ml-2 line-through text-blue-300 font-normal text-sm">$149</span></>}
+              {checkingOut ? "Taking you to checkout…" : "Save my site — choose a plan"}
             </button>
             <div className="flex items-center justify-center gap-1.5 mt-2">
               <Lock className="w-3 h-3 text-slate-500" />
@@ -526,7 +547,11 @@ function PreviewPageInner() {
       {/* Top bar */}
       <header className="flex items-center justify-between px-8 py-3.5 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md shrink-0 z-20">
         <div className="flex items-center gap-3 min-w-0">
-          <span className="text-base font-bold text-white shrink-0">Launcharoo</span>
+          <img
+            src="/images/launcharoo-logo-white.webp"
+            alt="Launcharoo"
+            className="h-6 w-auto shrink-0"
+          />
           <span className="hidden lg:block h-4 w-px bg-slate-700/60 shrink-0" />
           <span className="hidden lg:block text-sm text-slate-400 truncate max-w-[260px]">
             {businessName}
@@ -552,11 +577,11 @@ function PreviewPageInner() {
               <div className="flex flex-col items-end">
                 <button
                   type="button"
-                  onClick={handleSave}
+                  onClick={openPicker}
                   disabled={checkingOut}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 active:bg-blue-700 disabled:opacity-60 text-white text-sm font-bold transition-colors shadow-lg shadow-blue-900/30"
                 >
-                  {checkingOut ? "Taking you to checkout…" : <>Save my site &mdash; $49/mo<span className="line-through text-blue-300 font-normal text-xs ml-1">$149</span></>}
+                  {checkingOut ? "Taking you to checkout…" : "Save my site — choose a plan"}
                 </button>
                 <div className="flex items-center gap-1 mt-1">
                   <Lock className="w-3 h-3 text-slate-600" />
@@ -689,7 +714,9 @@ function PreviewPageInner() {
               tenantId={id}
               isPublished={isPublished}
               checkingOut={checkingOut}
-              onCheckoutClick={handleSave}
+              onCheckoutClick={openPicker}
+              planKey={planKey}
+              editsUsedThisMonth={editsUsedThisMonth}
             />
           </div>
         </aside>
@@ -747,7 +774,9 @@ function PreviewPageInner() {
             tenantId={id}
             isPublished={isPublished}
             checkingOut={checkingOut}
-            onCheckoutClick={handleSave}
+            onCheckoutClick={openPicker}
+            planKey={planKey}
+            editsUsedThisMonth={editsUsedThisMonth}
           />
         </div>
       </div>
@@ -765,6 +794,12 @@ function PreviewPageInner() {
         defaultQuery={niche}
         onClose={() => setEditingImagePath(null)}
         onSelect={handleImagePicked}
+      />
+      <PlanPicker
+        open={pickerOpen}
+        onClose={closePicker}
+        onChoosePlan={handleChoosePlan}
+        busyPlan={busyPlan}
       />
       {toast && <Toast message={toast} onClose={dismissToast} />}
     </>

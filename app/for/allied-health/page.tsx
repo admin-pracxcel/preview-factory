@@ -48,7 +48,7 @@ export default function AlliedHealthPage() {
   return (
     <NicheLanding
       category="allied-health"
-      heroImage="/images/categories/allied-health.png"
+      heroImage="/images/categories/allied-health-v2.png"
       tag="For Allied Health"
       headline="More local patients. Starting this week."
       subheadline="See your finished allied health website in 60 seconds. AHPRA-compliant, built from your Google listing."

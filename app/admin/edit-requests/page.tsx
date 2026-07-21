@@ -259,11 +259,12 @@ function Shell({ children }: { children: React.ReactNode }) {
       <header className="border-b border-white/5 px-6 py-4">
         <div className="mx-auto flex max-w-4xl items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link
-              href="/admin"
-              className="font-[family-name:var(--font-sora)] text-lg font-extrabold hover:text-white/80 transition-colors"
-            >
-              Launcharoo
+            <Link href="/admin" aria-label="Launcharoo" className="opacity-90 hover:opacity-100 transition-opacity">
+              <img
+                src="/images/launcharoo-logo-white.webp"
+                alt="Launcharoo"
+                className="h-6 w-auto"
+              />
             </Link>
             <span className="text-xs uppercase tracking-widest text-white/40">
               Concierge

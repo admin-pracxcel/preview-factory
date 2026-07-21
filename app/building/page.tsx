@@ -261,7 +261,11 @@ function BuildingPageInner() {
         <div className="w-full max-w-md mx-auto flex flex-col gap-0">
 
           <div className="mb-10 text-center">
-            <div className="text-lg font-bold text-white mb-2">Launcharoo</div>
+            <img
+              src="/images/launcharoo-logo-white.webp"
+              alt="Launcharoo"
+              className="h-6 w-auto mx-auto mb-3"
+            />
             <h1 className="text-2xl font-[family-name:var(--font-sora)] font-extrabold text-white leading-tight">
               Building{" "}
               <span className="text-blue-400">{businessName}&apos;s</span>{" "}

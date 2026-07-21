@@ -91,9 +91,11 @@ export default async function DashboardListPage() {
         <div className="mx-auto flex max-w-5xl items-center justify-between">
           <div className="flex items-center gap-3">
             <LayoutDashboard className="h-5 w-5 text-blue-400" />
-            <span className="font-[family-name:var(--font-sora)] text-lg font-extrabold">
-              Launcharoo
-            </span>
+            <img
+              src="/images/launcharoo-logo-white.webp"
+              alt="Launcharoo"
+              className="h-6 w-auto"
+            />
           </div>
           <LogoutButton variant="text" />
         </div>

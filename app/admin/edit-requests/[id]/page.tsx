@@ -120,9 +120,11 @@ function Shell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-[#0A0F1E] text-white">
       <header className="border-b border-white/5 px-6 py-4">
         <div className="mx-auto flex max-w-3xl items-center justify-between">
-          <span className="font-[family-name:var(--font-sora)] text-lg font-extrabold">
-            Launcharoo
-          </span>
+          <img
+            src="/images/launcharoo-logo-white.webp"
+            alt="Launcharoo"
+            className="h-6 w-auto"
+          />
           <span className="text-xs uppercase tracking-widest text-white/40">
             Concierge
           </span>

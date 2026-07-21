@@ -17,25 +17,25 @@ const CATEGORIES = [
     label: "Trades",
     desc: "Electricians, plumbers, builders and more",
     href: "/for/trades",
-    image: "/images/categories/trades.png",
+    image: "/images/categories/trades-v2.png",
   },
   {
     label: "Allied Health",
     desc: "Physios, chiros, massage therapists and more",
     href: "/for/allied-health",
-    image: "/images/categories/allied-health.png",
+    image: "/images/categories/allied-health-v2.png",
   },
   {
     label: "Beauty & Aesthetics",
     desc: "Hair salons, nail bars, beauty therapists and more",
     href: "/for/beauty",
-    image: "/images/categories/beauty-aesthetics.png",
+    image: "/images/categories/beauty-aesthetics-v2.png",
   },
   {
     label: "Fitness & Wellness",
     desc: "Personal trainers, gyms, yoga studios and more",
     href: "/for/fitness",
-    image: "/images/categories/fitness-wellness.png",
+    image: "/images/categories/fitness-wellness-v2.png",
   },
 ];
 
@@ -152,9 +152,13 @@ export default async function HomePage() {
       {/* ------------------------------------------------------------------ */}
       <header className="sticky top-0 z-30 bg-black/95 border-b border-white/5 backdrop-blur-md">
         <div className="flex items-center justify-between px-6 py-4 max-w-6xl mx-auto w-full">
-          <div className="text-xl font-[family-name:var(--font-sora)] font-extrabold text-white tracking-tight">
-            Launcharoo
-          </div>
+          <Link href="/" aria-label="Launcharoo">
+            <img
+              src="/images/launcharoo-logo-white.webp"
+              alt="Launcharoo"
+              className="h-6 w-auto"
+            />
+          </Link>
           <div className="flex items-center gap-6">
             <a
               href="#how-it-works"
@@ -480,9 +484,11 @@ export default async function HomePage() {
       {/* ------------------------------------------------------------------ */}
       <footer className="bg-[#040812] border-t border-white/10 py-10 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="font-[family-name:var(--font-sora)] font-extrabold text-white text-base">
-            Launcharoo
-          </div>
+          <img
+            src="/images/launcharoo-logo-white.webp"
+            alt="Launcharoo"
+            className="h-6 w-auto"
+          />
           <div className="flex gap-6">
             {CATEGORIES.map((cat) => (
               <Link

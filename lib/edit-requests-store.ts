@@ -157,3 +157,27 @@ export async function listEditRequests(tenantId: string): Promise<EditRequest[]>
   }
   return (data ?? []).map((r) => rowToRecord(r as EditRequestRow));
 }
+
+/**
+ * Count edit requests submitted by this tenant in the current calendar
+ * month (UTC). Used by the plan-aware ChangeRequestsPanel + the pre-submit
+ * quota check to enforce the Growth/Pro caps from `lib/plans.ts`.
+ *
+ * Counts every non-rejected row — pending/processing/preview/applied all
+ * consume the quota; only rejected doesn't.
+ */
+export async function countEditRequestsThisMonth(tenantId: string): Promise<number> {
+  const now = new Date();
+  const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
+  const { count, error } = await supabase()
+    .from(TABLE)
+    .select("id", { count: "exact", head: true })
+    .eq("tenant_id", tenantId)
+    .neq("status", "rejected")
+    .gte("created_at", monthStart.toISOString());
+  if (error) {
+    console.warn(`[edit-requests] month count failed for ${tenantId}:`, error.message);
+    return 0;
+  }
+  return count ?? 0;
+}

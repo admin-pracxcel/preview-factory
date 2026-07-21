@@ -17,6 +17,7 @@
  */
 
 import { createHmac } from "node:crypto";
+import { priceFor, type PlanKey } from "@/lib/plans";
 
 /* -------------------------------------------------------------------- types */
 
@@ -38,21 +39,22 @@ export interface CheckoutResult {
 export async function createCheckoutSession(
   tenantId: string,
   businessName: string,
-  baseUrl: string
+  baseUrl: string,
+  planKey: PlanKey
 ): Promise<CheckoutResult> {
   const secretKey = process.env.STRIPE_SECRET_KEY;
 
   if (!secretKey) {
     console.warn("[stripe-client] STRIPE_SECRET_KEY not set — mock checkout.");
     return {
-      url: `${baseUrl}/api/checkout/mock-success?tenantId=${encodeURIComponent(tenantId)}`,
+      url: `${baseUrl}/api/checkout/mock-success?tenantId=${encodeURIComponent(tenantId)}&planKey=${encodeURIComponent(planKey)}`,
       mock: true,
     };
   }
 
   const successUrl = `${baseUrl}/welcome/${encodeURIComponent(tenantId)}`;
   const cancelUrl = `${baseUrl}/preview/${encodeURIComponent(tenantId)}`;
-  const priceId = process.env.STRIPE_PRICE_ID;
+  const price = priceFor(planKey);
 
   const params = new URLSearchParams();
   params.set("mode", "subscription");
@@ -60,20 +62,26 @@ export async function createCheckoutSession(
   params.set("cancel_url", cancelUrl);
   params.set("metadata[tenantId]", tenantId);
   params.set("metadata[businessName]", businessName);
+  // Recorded so the webhook can persist which plan the tenant subscribed
+  // to without needing to reverse-map the priceId back to a tier.
+  params.set("metadata[planKey]", planKey);
 
-  if (priceId) {
-    params.set("line_items[0][price]", priceId);
+  if (price.priceId) {
+    params.set("line_items[0][price]", price.priceId);
     params.set("line_items[0][quantity]", "1");
   } else {
-    // Dynamic price: $49/mo AUD
+    // Fallback: inline price_data when the tier's STRIPE_PRICE_* env var
+    // hasn't been configured yet. Lets the tier flow run end-to-end
+    // pre-Stripe-setup without breaking.
     params.set("line_items[0][price_data][currency]", "aud");
-    params.set("line_items[0][price_data][unit_amount]", "4900");
-    params.set("line_items[0][price_data][recurring][interval]", "month");
+    params.set("line_items[0][price_data][unit_amount]", String(price.unitAmount));
+    params.set("line_items[0][price_data][recurring][interval]", price.interval);
     params.set(
       "line_items[0][price_data][product_data][name]",
-      `Preview Factory — ${businessName}`
+      `Launcharoo ${price.tierName} — ${businessName}`
     );
-    params.set("line_items[0][price_data][product_data][description]",
+    params.set(
+      "line_items[0][price_data][product_data][description]",
       "Your local business website, hosted and maintained."
     );
     params.set("line_items[0][quantity]", "1");

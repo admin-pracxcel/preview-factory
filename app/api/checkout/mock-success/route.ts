@@ -16,15 +16,16 @@ export const runtime = "nodejs";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const tenantId = request.nextUrl.searchParams.get("tenantId");
+  const planKey = request.nextUrl.searchParams.get("planKey") ?? undefined;
 
   if (!tenantId) {
     return NextResponse.json({ error: "tenantId query param required" }, { status: 400 });
   }
 
   try {
-    const result = await publishTenant(tenantId);
+    const result = await publishTenant(tenantId, { planKey });
     console.log(
-      `[mock-success] tenant ${tenantId} published. liveUrl=${result.liveUrl}`
+      `[mock-success] tenant ${tenantId} published. liveUrl=${result.liveUrl}${planKey ? ` plan=${planKey}` : ""}`
     );
   } catch (err) {
     console.error("[mock-success]", err);

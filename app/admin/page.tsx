@@ -112,9 +112,11 @@ export default async function AdminHomePage() {
         <div className="mx-auto flex max-w-5xl items-center justify-between">
           <div className="flex items-center gap-3">
             <LayoutDashboard className="h-5 w-5 text-blue-400" />
-            <span className="font-[family-name:var(--font-sora)] text-lg font-extrabold">
-              Launcharoo
-            </span>
+            <img
+              src="/images/launcharoo-logo-white.webp"
+              alt="Launcharoo"
+              className="h-6 w-auto"
+            />
             <span className="ml-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-amber-300">
               Concierge
             </span>
