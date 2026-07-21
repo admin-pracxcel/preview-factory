@@ -10,7 +10,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, XCircle, Loader2, ChevronLeft } from "lucide-react";
+import { CheckCircle2, XCircle, Loader2, ChevronLeft, RotateCw } from "lucide-react";
 
 interface Props {
   editRequestId: string;
@@ -199,6 +199,96 @@ export function ActionPanel({ editRequestId, token }: Props) {
         >
           <XCircle className="h-4 w-4" />
           Reject
+        </button>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------ retry panel */
+
+interface RetryPanelProps {
+  editRequestId: string;
+}
+
+/**
+ * Shown when status === "failed". Admin adds context that will be appended
+ * to the accumulated adminNote, then Claude re-runs with the fuller history.
+ */
+export function RetryPanel({ editRequestId }: RetryPanelProps) {
+  const router = useRouter();
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleRetry() {
+    const trimmed = note.trim();
+    if (trimmed.length < 3) {
+      setError("Add at least a few words of context so Claude has something new to work with.");
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/admin/edit-requests/${editRequestId}/retry`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ adminNote: trimmed }),
+      });
+      const body = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        webhook?: string;
+      };
+      if (!res.ok) {
+        throw new Error(body.error ?? `Retry failed (${res.status})`);
+      }
+      router.refresh();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+      setBusy(false);
+    }
+  }
+
+  return (
+    <section className="mt-6 flex flex-col gap-4 rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] p-5">
+      <div>
+        <p className="text-[11px] font-semibold uppercase tracking-wider text-amber-300/80">
+          Retry with more context
+        </p>
+        <p className="mt-1 text-xs text-white/50">
+          Claude will re-run with your note appended to the earlier admin note.
+          Use this to clarify what was ambiguous, point to a specific page or
+          section, or supply the exact wording you want.
+        </p>
+      </div>
+      <textarea
+        rows={4}
+        value={note}
+        onChange={(e) => setNote(e.target.value)}
+        disabled={busy}
+        maxLength={2000}
+        placeholder={`e.g. "The customer meant the homepage hero, not the about page. Change the headline to 'Melbourne's fastest response time.'"`}
+        className="resize-none rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white placeholder-white/25 focus:border-amber-400 focus:outline-none disabled:opacity-60"
+      />
+      {error && <p className="text-xs text-red-300">{error}</p>}
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={handleRetry}
+          disabled={busy || note.trim().length < 3}
+          className="flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-sm font-bold text-slate-950 transition-opacity hover:opacity-90 disabled:opacity-40"
+        >
+          {busy ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              Re-running…
+            </>
+          ) : (
+            <>
+              <RotateCw className="h-4 w-4" />
+              Retry with this context
+            </>
+          )}
         </button>
       </div>
     </section>

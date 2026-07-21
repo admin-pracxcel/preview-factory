@@ -20,7 +20,7 @@ import { getEditRequest } from "@/lib/edit-requests-store";
 import { getTenant } from "@/lib/tenant-store";
 import { verifyApprovalToken } from "@/lib/edit-request-tokens";
 import type { MutableCookies } from "@/lib/session";
-import { ActionPanel } from "./ui";
+import { ActionPanel, RetryPanel } from "./ui";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Admin — review request" };
@@ -97,17 +97,20 @@ export default async function EditRequestDetailPage({
       {editReq.status === "pending" ? (
         <ActionPanel editRequestId={id} token={token ?? null} />
       ) : (
-        <ResolvedSummary
-          status={editReq.status}
-          adminNote={editReq.adminNote}
-          rejectReason={editReq.rejectReason}
-          approvedBy={editReq.approvedBy}
-          approvedAt={editReq.approvedAt}
-          rejectedAt={editReq.rejectedAt}
-          appliedAt={editReq.appliedAt}
-          error={editReq.error}
-          changeSummary={editReq.changeSummary}
-        />
+        <>
+          <ResolvedSummary
+            status={editReq.status}
+            adminNote={editReq.adminNote}
+            rejectReason={editReq.rejectReason}
+            approvedBy={editReq.approvedBy}
+            approvedAt={editReq.approvedAt}
+            rejectedAt={editReq.rejectedAt}
+            appliedAt={editReq.appliedAt}
+            error={editReq.error}
+            changeSummary={editReq.changeSummary}
+          />
+          {editReq.status === "failed" && <RetryPanel editRequestId={id} />}
+        </>
       )}
     </Shell>
   );
