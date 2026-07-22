@@ -53,7 +53,7 @@ Open **Stripe Dashboard → Products → + Add product**. Repeat 3 times.
 | ------------------------- | ------------------------------------------------- |
 | `Launcharoo SEO`          | Local citations, blog posts, and GBP posts.       |
 | `Launcharoo Google Ads`   | Google Ads campaign management. Ad spend billed directly to your Google Ads account. |
-| `Launcharoo Social Ads`   | Meta / TikTok Ads campaign management. Ad spend billed directly to your ad platform. |
+| `Launcharoo Social Ads`   | Meta Ads (Facebook and Instagram) campaign management. Ad spend billed directly to your Meta Business account. |
 
 For each Product, leave "One time" **unchecked** and set the type to
 **Recurring**. Currency = **AUD**. Tax behaviour = **exclusive** (matches

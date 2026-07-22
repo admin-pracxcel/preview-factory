@@ -66,12 +66,12 @@ export async function GET(): Promise<Response> {
     return xmlResponse(marketingEntries(), MARKETING_HOST);
   }
 
-  // Subdomain of the marketing host → tenant by slug
+  // Slug subdomain of the marketing host — treated as a staging URL, not
+  // an indexable destination. Robots.txt on this host already disallows
+  // everything; a 404 sitemap tells any crawler that follows the sitemap
+  // path directly there's nothing to enumerate.
   if (bareHost.endsWith(`.${MARKETING_HOST}`)) {
-    const slug = bareHost.slice(0, bareHost.length - MARKETING_HOST.length - 1);
-    const tenantId = await tenantIdBySlug(slug);
-    if (!tenantId) return notFound();
-    return await tenantResponse(tenantId, bareHost);
+    return notFound();
   }
 
   // Anything else → try as a custom domain

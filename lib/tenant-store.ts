@@ -114,6 +114,10 @@ export interface TenantRecord {
   /** ISO 8601 of when the "preview ready" SMS was sent (via ClickSend).
    *  Idempotency guard so a duplicate n8n webhook call can't double-send. */
   previewNotifiedAt?: string;
+  /** ISO 8601 of when the addon walkthrough was first shown to the owner.
+   *  Set once, on first dashboard load after custom domain verification, so
+   *  the walkthrough never auto-opens again (Phase 3 — addons). */
+  funnelShownAt?: string;
   /** Snapshot of the customer's live DNS at the moment we scanned before
    *  taking over (Phase 10b-ii). Used to seed the new Cloudflare zone so
    *  their email keeps working after the nameserver flip. */
@@ -175,6 +179,7 @@ interface TenantRow {
   custom_domain_verified_at: string | null;
   dns_records_snapshot: unknown;
   preview_notified_at: string | null;
+  funnel_shown_at: string | null;
 }
 
 function rowToRecord(row: TenantRow): TenantRecord {
@@ -211,6 +216,7 @@ function rowToRecord(row: TenantRow): TenantRecord {
     customDomainVerifiedAt: row.custom_domain_verified_at ?? undefined,
     dnsRecordsSnapshot: row.dns_records_snapshot ?? undefined,
     previewNotifiedAt: row.preview_notified_at ?? undefined,
+    funnelShownAt: row.funnel_shown_at ?? undefined,
   };
 }
 
@@ -243,6 +249,7 @@ function recordToUpsert(record: TenantRecord): Record<string, unknown> {
     custom_domain_verified_at: record.customDomainVerifiedAt ?? null,
     dns_records_snapshot: record.dnsRecordsSnapshot ?? null,
     preview_notified_at: record.previewNotifiedAt ?? null,
+    funnel_shown_at: record.funnelShownAt ?? null,
   };
 }
 
@@ -291,6 +298,23 @@ export async function updateTenantStatus(
     throw new Error(`updateTenantStatus(${id}) failed: ${error.message}`);
   }
   if (!data) throw new Error(`Tenant ${id} not found`);
+}
+
+/**
+ * Stamp `funnel_shown_at = now()` on a tenant. Called once when the addon
+ * walkthrough auto-opens so it never opens again. Idempotent — only writes
+ * when the column is still null. Silently no-ops when the tenant doesn't
+ * exist (nothing to do).
+ */
+export async function markFunnelShown(id: string): Promise<void> {
+  const { error } = await supabase()
+    .from(TABLE)
+    .update({ funnel_shown_at: new Date().toISOString() })
+    .eq("id", id)
+    .is("funnel_shown_at", null);
+  if (error) {
+    throw new Error(`markFunnelShown(${id}) failed: ${error.message}`);
+  }
 }
 
 /**

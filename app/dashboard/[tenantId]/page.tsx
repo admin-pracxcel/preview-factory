@@ -32,8 +32,10 @@ import {
   type MutableCookies,
 } from "@/lib/session";
 import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard, EditSiteCard, LeadsList } from "./ui";
+import { AutoOpenAddonFunnel, GrowthServicesCard } from "./AddonFunnel";
 import { LogoutButton } from "@/app/components/LogoutButton";
 import { isAdminSession } from "@/lib/admin";
+import { listActiveAddonsForTenant } from "@/lib/addon-store";
 
 /* ------------------------------------------------------------------ meta */
 
@@ -112,6 +114,8 @@ export default async function DashboardPage({
   const leads = (await listLeads(tenantId)).slice(0, 20);
   const editRequests = (await listEditRequests(tenantId)).slice(0, 5);
   const editsUsedThisMonth = await countEditRequestsThisMonth(tenantId);
+  const activeAddons = await listActiveAddonsForTenant(tenantId);
+  const activeAddonKeys = activeAddons.map((a) => a.addonKey);
 
   // Derive a small quota card for the "Request a change" section. Mirrors
   // the plan-aware logic in ChangeRequestsPanel; kept inline because this
@@ -122,8 +126,19 @@ export default async function DashboardPage({
     ? `https://${tenant.slug}.launcharoo.online`
     : `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/preview/site/${tenantId}`;
 
+  // Trigger the addon walkthrough exactly once, on the first dashboard load
+  // after the custom domain is verified. Admins never see it — they'd trip
+  // it repeatedly across tenants they don't own.
+  const shouldShowAddonFunnel =
+    !admin &&
+    tenant.status === "published" &&
+    !!tenant.customDomainVerifiedAt &&
+    !tenant.funnelShownAt;
+
   return (
     <div className="min-h-screen bg-[#0A0F1E] text-white">
+      {shouldShowAddonFunnel && <AutoOpenAddonFunnel tenantId={tenantId} />}
+
       {/* ── top nav ── */}
       <header className="border-b border-white/5 px-6 py-4">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
@@ -200,6 +215,14 @@ export default async function DashboardPage({
             ))}
           </div>
         </section>
+
+        {/* ── grow your business (addons upsell — always visible) ── */}
+        {tenant.status === "published" && (
+          <GrowthServicesCard
+            tenantId={tenantId}
+            activeAddonKeys={activeAddonKeys}
+          />
+        )}
 
         {/* ── edit your site card ── */}
         <EditSiteCard tenantId={tenantId} />

@@ -101,20 +101,119 @@ export async function generateMetadata({
 
   const tenant = await getTenant(tenantId);
   if (!tenant) return { title: "Not Found" };
+
+  // Indexability rule: only the tenant's verified custom domain is a real,
+  // canonical home for this content. Everything else (preview URL on
+  // vercel/marketing host, and the auto-assigned <slug>.launcharoo.online
+  // subdomain) is treated as staging and marked noindex — the customer
+  // owns the SEO value on their own domain, and having a slug subdomain
+  // rank first would create duplicate-content problems the day they
+  // connect a custom domain.
+  const h = await headers();
+  const launcharooHost = (h.get("x-launcharoo-host")?.trim() ?? "").toLowerCase();
+  const customDomainHost = (tenant.customDomain ?? "").toLowerCase();
+  const isVerifiedCustomDomain =
+    !!tenant.customDomainVerifiedAt &&
+    !!customDomainHost &&
+    launcharooHost === customDomainHost;
+  const isIndexable = isVerifiedCustomDomain;
+
   if (!tenant.hasSiteProps) {
     return {
       title:
         tenant.generationStatus === "failed"
           ? `${tenant.name || "Your site"} — generation failed`
           : `${tenant.name || "Your site"} — building`,
+      robots: { index: false, follow: false },
     };
   }
 
   const parseResult = sitePropsSchema.safeParse(tenant.siteProps);
-  if (!parseResult.success) return { title: tenant.name };
+  if (!parseResult.success) {
+    return { title: tenant.name, robots: { index: false, follow: false } };
+  }
 
-  const meta = pageMetadata(tenant.category, parseResult.data, slug);
-  return { title: meta.title, description: meta.description };
+  const site = parseResult.data;
+  const meta = pageMetadata(tenant.category, site, slug);
+
+  // Canonical always points at the customer's verified custom domain when
+  // they have one — even when the crawler reached us via the slug host.
+  // That's how we tell Google "index the custom domain, not this staging
+  // subdomain". If there's no custom domain yet, we still emit a canonical
+  // pointing at the current host so a scraper reproducing the page can't
+  // confuse origins, but we're noindex either way.
+  const canonicalHost =
+    (isVerifiedCustomDomain ? customDomainHost : "") ||
+    customDomainHost ||
+    launcharooHost ||
+    (tenant.slug ? `${tenant.slug}.launcharoo.online` : "");
+  const canonicalPath = slug.length ? `/${slug.join("/")}` : "/";
+  const canonicalUrl = canonicalHost
+    ? `https://${canonicalHost}${canonicalPath}`
+    : undefined;
+
+  const ogImage = pickOgImage(site, slug);
+  const businessName = site.business?.name ?? tenant.name;
+
+  return {
+    title: meta.title,
+    description: meta.description,
+    robots: isIndexable
+      ? { index: true, follow: true }
+      : { index: false, follow: false },
+    alternates: canonicalUrl ? { canonical: canonicalUrl } : undefined,
+    openGraph: {
+      type: "website",
+      title: meta.title,
+      description: meta.description,
+      url: canonicalUrl,
+      siteName: businessName,
+      locale: "en_AU",
+      images: ogImage ? [{ url: ogImage, alt: businessName }] : undefined,
+    },
+    twitter: {
+      card: ogImage ? "summary_large_image" : "summary",
+      title: meta.title,
+      description: meta.description,
+      images: ogImage ? [ogImage] : undefined,
+    },
+  };
+}
+
+/**
+ * Resolve the best image to embed as og:image / twitter:image for a given
+ * page. Sub-pages prefer their own hero (a service page should share as
+ * the service's own hero photo, not the site-wide one); everything falls
+ * back to the site hero, then the first gallery item, then nothing.
+ */
+function pickOgImage(site: SiteProps, slug: string[]): string | undefined {
+  const [section, pageSlug] = slug;
+
+  if (section === "services" && pageSlug) {
+    const svc = site.services?.find((s) => s.slug === pageSlug);
+    const perPage = svc?.seo?.og_image || svc?.hero_image || svc?.body_image;
+    if (perPage) return perPage;
+  }
+  if (section === "locations" && pageSlug) {
+    const loc = site.locations?.find((l) => l.slug === pageSlug);
+    const perPage = loc?.seo?.og_image || loc?.hero_image;
+    if (perPage) return perPage;
+  }
+  if (section === "areas" && pageSlug) {
+    const area = site.service_areas?.find((a) => a.slug === pageSlug);
+    if (area?.seo?.og_image) return area.seo.og_image;
+    // Service-area pages have no hero_image of their own; fall through to
+    // the site hero so social shares don't lose the image entirely.
+  }
+
+  const siteHero =
+    site.overrides?.hero_image_url ||
+    site.branding?.hero_image_url ||
+    undefined;
+  if (siteHero) return siteHero;
+
+  const firstGallery = site.home?.gallery?.[0]?.image_url;
+  return firstGallery || undefined;
 }
 
 export default async function TenantPreviewPage({

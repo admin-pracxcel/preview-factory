@@ -117,9 +117,9 @@ export const ADS_ADDONS: readonly AdsSpec[] = [
     name: "Social Ads",
     headline: "$150/month management + your ad spend",
     features: [
-      "Meta (Facebook & Instagram) or TikTok — you choose",
+      "Meta ads across Facebook and Instagram",
       "Creative, targeting, and A/B testing built in",
-      "Ad spend billed to your Meta / TikTok Business account (not to us)",
+      "Ad spend billed to your Meta Business account, not to us",
       "Monthly performance report",
     ],
   },

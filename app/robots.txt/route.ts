@@ -50,6 +50,21 @@ export async function GET(): Promise<Response> {
     );
   }
 
+  // Tenant slug subdomains (<slug>.launcharoo.online) are treated as
+  // staging hosts. The SEO value belongs to the customer's own domain, so
+  // even before they connect one we don't want Google indexing the slug
+  // host and later competing with the custom domain for the same content.
+  const bareHost = host.startsWith("www.") ? host.slice(4) : host;
+  const isSlugSubdomain =
+    bareHost.endsWith(`.${MARKETING_HOST}`) && bareHost !== MARKETING_HOST;
+  if (isSlugSubdomain) {
+    return text(
+      "# Launcharoo slug subdomain — not indexable.\n" +
+      "# The canonical home for this site is the customer's own domain.\n" +
+      "User-agent: *\nDisallow: /\n",
+    );
+  }
+
   const publicHost = host || MARKETING_HOST;
   const body = [
     "# Launcharoo robots policy.",

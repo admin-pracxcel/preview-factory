@@ -30,6 +30,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 /* ================================================================ copy btn == */
 
@@ -563,6 +564,7 @@ interface CustomDomainCardProps {
 }
 
 export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardProps) {
+  const router = useRouter();
   const [state, setState] = useState<CustomDomainState>(initialState);
   const [domainInput, setDomainInput] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -579,7 +581,15 @@ export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardPro
       const res = await fetch(`/api/dashboard/custom-domain?tenantId=${encodeURIComponent(tenantId)}`);
       if (!res.ok) return;
       const body = (await res.json()) as CustomDomainState;
+      const prevStatus = state.status ?? null;
       setState(body);
+      // When the domain has just flipped to active, re-run the server
+      // component so it picks up `customDomainVerifiedAt` and mounts the
+      // addon walkthrough. Without this the customer would need to
+      // manually refresh to see the popup fire.
+      if (body.status === "active" && prevStatus !== "active") {
+        router.refresh();
+      }
     } catch {
       // ignore
     }

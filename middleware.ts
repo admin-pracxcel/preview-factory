@@ -21,12 +21,33 @@
 
 import { NextResponse, type NextRequest } from "next/server";
 
+const MARKETING_HOST = "launcharoo.online";
+
 export function middleware(request: NextRequest): NextResponse {
-  const launcharooHost = request.headers.get("x-launcharoo-host");
+  const launcharooHost = (request.headers.get("x-launcharoo-host") ?? "")
+    .trim()
+    .toLowerCase();
   const response = NextResponse.next();
-  if (!launcharooHost || launcharooHost.trim().length === 0) {
+
+  // Direct-origin hit (no Worker header) → noindex the Vercel origin.
+  if (!launcharooHost) {
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    return response;
+  }
+
+  // Slug subdomain of the marketing host (e.g. acme.launcharoo.online) is
+  // treated as a staging URL — the customer's own domain is the canonical
+  // home for their content. Marketing root (launcharoo.online) itself is
+  // NOT a slug subdomain and stays indexable.
+  const bareHost = launcharooHost.startsWith("www.")
+    ? launcharooHost.slice(4)
+    : launcharooHost;
+  const isSlugSubdomain =
+    bareHost.endsWith(`.${MARKETING_HOST}`) && bareHost !== MARKETING_HOST;
+  if (isSlugSubdomain) {
     response.headers.set("X-Robots-Tag", "noindex, nofollow");
   }
+
   return response;
 }
 

@@ -1,16 +1,24 @@
 /**
  * app/preview/[id]/page.tsx
  *
- * Ownership gate for the preview editor. Anonymous sessions can only see
- * the tenants they created; a signed-in visitor who lands on someone
- * else's URL gets bounced to their own most-recent tenant, and someone
- * with no session at all gets sent to /login.
+ * Ownership gate for the preview editor, with a deliberate carve-out:
+ * unclaimed previews are viewable by anyone with the link. That's how a
+ * customer who started on desktop can open the SMS preview link on their
+ * phone and click Claim, without getting bounced to /login for a session
+ * the phone has never had.
  *
- * The interactive editor is a client component (PreviewClient) — this
- * server component is just the guard around it.
+ * Rules:
+ *   - Tenant not found                → 404
+ *   - Tenant expired (soft or hard)   → /expired  (no auth needed)
+ *   - Tenant is claimed (published)   → session must own it, or admin
+ *   - Tenant is unclaimed (preview)   → open access, no session required
+ *
+ * Note: the underlying edit APIs (contact, photo, copy) stay session-
+ * gated via assertOwnsTenant. Cross-device access on an unclaimed
+ * preview is view + claim only — a leaked link can't be vandalised.
  */
 
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { cookies as nextCookies } from "next/headers";
 import {
   readSession,
@@ -32,35 +40,41 @@ export default async function PreviewPage({
   const { id } = await params;
   const cookieStore = (await nextCookies()) as unknown as MutableCookies;
 
-  const sessionId = readSession(cookieStore);
-  if (!sessionId) {
-    redirect("/login");
-  }
+  const tenant = await getTenant(id);
+  if (!tenant) notFound();
 
-  // Admin sessions can open any tenant's preview editor for support / review.
+  // Expiry: same 3h soft-expiry rule as the public slug page, plus the
+  // hard-expiry flag from the reaper. Everyone lands on /expired past the
+  // window, no auth required.
   const admin = await isAdminSession(cookieStore);
   if (!admin) {
+    if (tenant.isExpired) redirect(`/expired/${id}`);
+    if (!tenant.publishedAt) {
+      const ageMs = Date.now() - new Date(tenant.createdAt).getTime();
+      if (ageMs > 3 * 3600_000) redirect(`/expired/${id}`);
+    }
+  }
+
+  const isClaimed = tenant.status === "published" || !!tenant.publishedAt;
+
+  // Claimed tenants keep the strict ownership gate. A random visitor with
+  // the link should NOT be able to open the editor for a paid site.
+  if (isClaimed && !admin) {
+    const sessionId = readSession(cookieStore);
+    if (!sessionId) {
+      redirect("/login");
+    }
     try {
       await assertOwnsTenant(cookieStore, id);
     } catch {
-      // Session exists but doesn't own this tenant. Bounce to the sites
-      // list so they can pick what to edit, or to /login if they own nothing.
       const ownId = await findLatestTenantForSession(sessionId);
       redirect(ownId ? "/dashboard" : "/login");
     }
   }
 
-  // Soft expiry: same 3h rule as the public slug page. Owners viewing
-  // their own preview editor after 3h see /expired too. Admin bypasses so
-  // support can still open a customer's row post-expiry.
-  if (!admin) {
-    const tenant = await getTenant(id);
-    if (tenant && !tenant.publishedAt) {
-      if (tenant.isExpired) redirect(`/expired/${id}`);
-      const ageMs = Date.now() - new Date(tenant.createdAt).getTime();
-      if (ageMs > 3 * 3600_000) redirect(`/expired/${id}`);
-    }
-  }
+  // Unclaimed → fall through and render the editor for anyone. Edit APIs
+  // still enforce session ownership, so cross-device visitors can view
+  // and click Claim/Buy but can't mutate the site.
 
   return <PreviewClient />;
 }
