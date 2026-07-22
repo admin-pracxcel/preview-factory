@@ -54,7 +54,12 @@ const OVERLAY_CSS = `
     cursor: pointer;
     border-radius: inherit;
   }
-  [data-editable-image]:not([data-editable-mode="corner"]):hover > .${OVERLAY_CLASS} {
+  /* Activation is driven by JS (see below) instead of CSS :hover, so a
+     fixed header stacked above the image doesn't spuriously flip the
+     overlay on. CSS :hover matches any pointer inside the image's
+     bounding box, regardless of what's on top; JS checks the actual
+     topmost element at pointer position via elementFromPoint. */
+  [data-editable-image][data-lch-active="true"]:not([data-editable-mode="corner"]) > .${OVERLAY_CLASS} {
     opacity: 1;
   }
 
@@ -71,7 +76,7 @@ const OVERLAY_CSS = `
     opacity: 0;
     transition: opacity 0.15s ease;
   }
-  [data-editable-image][data-editable-mode="corner"]:hover > .${OVERLAY_CLASS} {
+  [data-editable-image][data-editable-mode="corner"][data-lch-active="true"] > .${OVERLAY_CLASS} {
     opacity: 1;
   }
 
@@ -159,8 +164,40 @@ export function EditableImageOverlay() {
     const observer = new MutationObserver(scan);
     observer.observe(document.body, { childList: true, subtree: true });
 
+    // Activation via pointermove + elementFromPoint. This is the fix for
+    // the "fixed nav triggers the image overlay behind it" bug: CSS
+    // :hover fires whenever the pointer is inside the image's bounding
+    // box, but a fixed header stacked above is what actually receives
+    // events. elementFromPoint tells us the real topmost element, so we
+    // activate only when the topmost element is a descendant of the
+    // image (which includes the overlay + pill).
+    let activeEl: HTMLElement | null = null;
+    const setActive = (next: HTMLElement | null) => {
+      if (activeEl === next) return;
+      if (activeEl) delete activeEl.dataset.lchActive;
+      activeEl = next;
+      if (activeEl) activeEl.dataset.lchActive = "true";
+    };
+    const onPointerMove = (e: PointerEvent) => {
+      const top = document.elementFromPoint(e.clientX, e.clientY) as
+        | HTMLElement
+        | null;
+      const owner = top?.closest<HTMLElement>("[data-editable-image]") ?? null;
+      setActive(owner);
+    };
+    const onPointerLeave = () => setActive(null);
+    document.addEventListener("pointermove", onPointerMove);
+    document.addEventListener("pointerleave", onPointerLeave);
+    window.addEventListener("blur", onPointerLeave);
+    document.addEventListener("scroll", onPointerLeave, { passive: true, capture: true });
+
     return () => {
       observer.disconnect();
+      document.removeEventListener("pointermove", onPointerMove);
+      document.removeEventListener("pointerleave", onPointerLeave);
+      window.removeEventListener("blur", onPointerLeave);
+      document.removeEventListener("scroll", onPointerLeave, { capture: true } as EventListenerOptions);
+      setActive(null);
       styleTag.remove();
       document
         .querySelectorAll<HTMLElement>(
