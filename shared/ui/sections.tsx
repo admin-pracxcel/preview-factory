@@ -28,7 +28,7 @@ import type {
   SocialProofItem,
 } from "@/shared/types/template-props";
 import { resolveIcon } from "./icons";
-import { telHref, href } from "./helpers";
+import { telHref, href, resolveHref } from "./helpers";
 import { Reveal, Stars } from "./client";
 
 type Cta = { label: string; href: string };
@@ -55,6 +55,7 @@ export function Hero({
   ctaPrimary,
   ctaSecondary,
   socialProof,
+  basePath = "",
 }: {
   headline: string;
   subheadline?: string;
@@ -63,7 +64,12 @@ export function Hero({
   ctaPrimary: Cta;
   ctaSecondary?: Cta;
   socialProof?: SocialProofItem[];
+  basePath?: string;
 }) {
+  const primaryHref = resolveHref(ctaPrimary.href, basePath) ?? ctaPrimary.href;
+  const secondaryHref = ctaSecondary
+    ? (resolveHref(ctaSecondary.href, basePath) ?? ctaSecondary.href)
+    : undefined;
   return (
     <section
       className="relative isolate overflow-hidden bg-[var(--secondary)] text-white"
@@ -91,15 +97,15 @@ export function Hero({
           )}
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
-              href={ctaPrimary.href}
+              href={primaryHref}
               className="flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-4 text-base font-bold text-[var(--accent-fg)] shadow-lg transition-transform hover:brightness-110 active:scale-95"
             >
               <Phone className="h-5 w-5" strokeWidth={2.5} />
               {ctaPrimary.label}
             </a>
-            {ctaSecondary && (
+            {ctaSecondary && secondaryHref && (
               <a
-                href={ctaSecondary.href}
+                href={secondaryHref}
                 className="flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/5 px-7 py-4 text-base font-semibold text-white backdrop-blur transition-colors hover:bg-white/15"
               >
                 {ctaSecondary.label}
@@ -190,13 +196,16 @@ export function OfferBand({
   price,
   code,
   cta,
+  basePath = "",
 }: {
   headline: string;
   description?: string;
   price?: string;
   code?: string;
   cta?: Cta;
+  basePath?: string;
 }) {
+  const ctaHref = cta ? (resolveHref(cta.href, basePath) ?? cta.href) : undefined;
   return (
     <Reveal>
       <section className="bg-[var(--primary)] text-[var(--primary-fg)]">
@@ -217,9 +226,9 @@ export function OfferBand({
               )}
             </div>
           </div>
-          {cta && (
+          {cta && ctaHref && (
             <a
-              href={cta.href}
+              href={ctaHref}
               className="shrink-0 rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-bold text-[var(--accent-fg)] shadow-md transition-transform hover:brightness-110 active:scale-95"
             >
               {cta.label}
@@ -570,6 +579,7 @@ export function ContactSection({
   hours,
   cta,
   tenantId,
+  basePath = "",
 }: {
   heading?: string;
   phone?: string;
@@ -579,7 +589,9 @@ export function ContactSection({
   cta?: Cta;
   /** When set, enables enquiry form + call-click tracking tied to this tenant. */
   tenantId?: string;
+  basePath?: string;
 }) {
+  const ctaHref = cta ? (resolveHref(cta.href, basePath) ?? cta.href) : undefined;
   return (
     <section id="contact" className="scroll-mt-20 py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-4">
@@ -627,9 +639,9 @@ export function ContactSection({
                   </p>
                 )}
               </div>
-              {cta && (
+              {cta && ctaHref && (
                 <a
-                  href={cta.href}
+                  href={ctaHref}
                   className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-4 text-base font-bold text-[var(--accent-fg)] shadow-lg transition-transform hover:brightness-110 active:scale-95"
                 >
                   <Phone className="h-5 w-5" strokeWidth={2.5} />
@@ -755,11 +767,14 @@ export function CtaBand({
   heading,
   body,
   cta,
+  basePath = "",
 }: {
   heading: string;
   body?: string;
   cta: Cta;
+  basePath?: string;
 }) {
+  const ctaHref = resolveHref(cta.href, basePath) ?? cta.href;
   return (
     <section className="bg-[var(--primary)] text-white">
       <div className="mx-auto flex max-w-6xl flex-col items-start gap-5 px-4 py-12 sm:flex-row sm:items-center sm:justify-between sm:py-16">
@@ -768,7 +783,7 @@ export function CtaBand({
           {body && <p className="mt-2 max-w-xl text-white/80">{body}</p>}
         </div>
         <a
-          href={cta.href}
+          href={ctaHref}
           className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-[var(--accent)] px-7 py-4 text-base font-bold text-[var(--accent-fg)] shadow-lg transition-transform hover:brightness-110 active:scale-95"
         >
           <Phone className="h-5 w-5" strokeWidth={2.5} />

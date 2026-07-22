@@ -21,3 +21,28 @@ export function href(base: string, ...segments: Array<string | undefined>): stri
 export function currentYear(): number {
   return new Date().getFullYear();
 }
+
+/**
+ * Prepend `basePath` to an internal href when needed.
+ *
+ * The generator produces CTA hrefs like "/services/emergency-plumbing"
+ * or "/contact" — clean paths that assume the site lives at the domain
+ * root. When the site actually renders under a mount point (the
+ * `/preview/site/<tenantId>` preview iframe, for example), those hrefs
+ * 404 unless the mount point is prepended. This normalises for the
+ * common CTA / nav paths without touching absolute URLs, anchors,
+ * tel:, mailto: or hrefs that already include the base.
+ */
+export function resolveHref(
+  href: string | undefined,
+  basePath: string,
+): string | undefined {
+  if (!href) return href;
+  // Anything that's not a plain absolute-path is left alone —
+  // #anchors, tel:, mailto:, https://, etc.
+  if (!href.startsWith("/")) return href;
+  if (!basePath) return href;
+  // Already prefixed? Leave it.
+  if (href === basePath || href.startsWith(`${basePath}/`)) return href;
+  return `${basePath}${href}`;
+}

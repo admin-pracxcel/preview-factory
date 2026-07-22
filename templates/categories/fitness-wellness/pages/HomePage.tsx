@@ -53,6 +53,7 @@ export function HomePage({
         ctaPrimary={home.hero.cta_primary}
         ctaSecondary={home.hero.cta_secondary}
         socialProof={home.social_proof?.items}
+        basePath={basePath}
       />
 
       {home.offer && (
@@ -62,6 +63,7 @@ export function HomePage({
           price={home.offer.price}
           code={home.offer.code}
           cta={home.offer.cta}
+          basePath={basePath}
         />
       )}
 
@@ -108,6 +110,7 @@ export function HomePage({
         hours={home.contact?.hours}
         cta={home.contact?.cta}
         tenantId={tenantId}
+        basePath={basePath}
       />
     </SiteShell>
   );
