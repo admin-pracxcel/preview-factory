@@ -225,14 +225,27 @@ export default async function TenantPreviewPage({
 
   const tenant = await getTenant(tenantId);
   if (!tenant) notFound();
-  if (tenant.isExpired) redirect(`/expired/${tenantId}`);
+
+  // When the request arrived via the Cloudflare Worker on a customer host
+  // (slug subdomain or custom domain), every path on that host is proxied
+  // back to this tenant renderer. A relative redirect to /expired/<id>
+  // would loop forever because the Worker would just rewrite it back into
+  // /preview/site/<id>/expired/<id>. Redirect to the absolute marketing
+  // host instead so the browser exits the tenant host entirely.
+  const requestHeaders = await headers();
+  const customerHost = (requestHeaders.get("x-launcharoo-host") ?? "").trim();
+  const expiredUrl = customerHost
+    ? `https://launcharoo.online/expired/${tenantId}`
+    : `/expired/${tenantId}`;
+
+  if (tenant.isExpired) redirect(expiredUrl);
   // Soft expiry: 3 hours from creation for unclaimed previews. Enforced at
   // request time (not by the reaper) so the customer sees /expired the
   // instant the window closes, not on the next daily reaper sweep. The
   // reaper still runs at 24h to blank site_props and free storage.
   if (!tenant.publishedAt) {
     const ageMs = Date.now() - new Date(tenant.createdAt).getTime();
-    if (ageMs > 3 * 3600_000) redirect(`/expired/${tenantId}`);
+    if (ageMs > 3 * 3600_000) redirect(expiredUrl);
   }
 
   // Guard against rendering before generation has produced a site. Without
