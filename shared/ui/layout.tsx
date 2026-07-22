@@ -93,7 +93,7 @@ function Header({
 }) {
   const phone = sitePhone(site);
   return (
-    <header className="sticky top-0 z-40 border-b border-black/10 bg-[var(--chrome-bg)] text-[var(--chrome-fg)] shadow-sm">
+    <header className="sticky top-0 z-[60] border-b border-black/10 bg-[var(--chrome-bg)] text-[var(--chrome-fg)] shadow-sm">
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         {/* Logo / business name */}
         <a href={href(basePath)} className="flex min-w-0 items-center gap-2.5">
