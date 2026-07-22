@@ -301,6 +301,49 @@ export async function updateTenantStatus(
 }
 
 /**
+ * Recovery result. `siteProps` = true when the row still has site data;
+ * false when the reaper's 24h cleanup has already blanked it and there's
+ * nothing to restore.
+ */
+export interface RecoverTenantResult {
+  ok: boolean;
+  reason?: "not_found" | "no_site_props" | "already_claimed";
+  siteProps?: boolean;
+}
+
+/**
+ * "Un-expire" a tenant that hit its 3h soft-expiry window. Bumps
+ * `created_at` forward so the request-time expiry check passes, and flips
+ * DB status from `expired` back to `done` if the reaper had marked it.
+ *
+ * Only works while site_props is still populated (within the 24h reaper
+ * window). After that, the data is gone and the customer needs to
+ * regenerate from intake.
+ *
+ * No-op for already-claimed tenants — those don't expire.
+ */
+export async function recoverTenant(id: string): Promise<RecoverTenantResult> {
+  const tenant = await getTenant(id);
+  if (!tenant) return { ok: false, reason: "not_found" };
+  if (tenant.publishedAt) return { ok: false, reason: "already_claimed" };
+  if (!tenant.hasSiteProps) {
+    return { ok: false, reason: "no_site_props", siteProps: false };
+  }
+
+  const now = new Date().toISOString();
+  const patch: Record<string, unknown> = { created_at: now };
+  // If the reaper flipped status to expired, put it back to done so the
+  // renderer stops treating it as expired.
+  if (tenant.generationStatus === "expired") patch.status = "done";
+
+  const { error } = await supabase().from(TABLE).update(patch).eq("id", id);
+  if (error) {
+    throw new Error(`recoverTenant(${id}) failed: ${error.message}`);
+  }
+  return { ok: true, siteProps: true };
+}
+
+/**
  * Stamp `funnel_shown_at = now()` on a tenant. Called once when the addon
  * walkthrough auto-opens so it never opens again. Idempotent — only writes
  * when the column is still null. Silently no-ops when the tenant doesn't

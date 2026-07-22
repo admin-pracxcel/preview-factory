@@ -71,7 +71,7 @@ export default async function ExpiredPage({ params }: PageProps) {
 
           {/* Primary CTA */}
           <Link
-            href={`/?recover=true&id=${encodeURIComponent(id)}`}
+            href={`/recover/${encodeURIComponent(id)}`}
             className="mt-8 w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl shadow-xl shadow-blue-900/40 transition-colors"
           >
             <Undo2 className="w-5 h-5" />
