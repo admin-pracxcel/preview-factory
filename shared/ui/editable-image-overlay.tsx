@@ -178,11 +178,41 @@ export function EditableImageOverlay() {
       activeEl = next;
       if (activeEl) activeEl.dataset.lchActive = "true";
     };
+    const isInsideStickyOrFixed = (el: HTMLElement): boolean => {
+      let node: HTMLElement | null = el;
+      while (node && node !== document.body) {
+        const pos = window.getComputedStyle(node).position;
+        if (pos === "sticky" || pos === "fixed") return true;
+        node = node.parentElement;
+      }
+      return false;
+    };
+
     const onPointerMove = (e: PointerEvent) => {
-      const top = document.elementFromPoint(e.clientX, e.clientY) as
-        | HTMLElement
-        | null;
-      const owner = top?.closest<HTMLElement>("[data-editable-image]") ?? null;
+      // elementsFromPoint returns every element under the cursor, front-to-
+      // back. We want to activate an editable image only when it is truly
+      // the frontmost target and NOT shadowed by a sticky or fixed
+      // container (e.g. the tenant site's sticky header covering an image
+      // that has scrolled behind it). Some tenant layouts render the image
+      // above the header in the paint order due to nested transforms, so
+      // elementFromPoint alone can point at the image even when the user
+      // actually sees the header. We walk the front-to-back stack and stop
+      // as soon as we see a sticky/fixed ancestor, which means the user's
+      // pixel is really on that fixed chrome — leave every image alone.
+      const stack = document.elementsFromPoint(e.clientX, e.clientY);
+      let owner: HTMLElement | null = null;
+      for (const el of stack) {
+        if (!(el instanceof HTMLElement)) continue;
+        if (isInsideStickyOrFixed(el)) {
+          owner = null;
+          break;
+        }
+        const match = el.closest<HTMLElement>("[data-editable-image]");
+        if (match) {
+          owner = match;
+          break;
+        }
+      }
       setActive(owner);
     };
     const onPointerLeave = () => setActive(null);
