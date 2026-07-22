@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PenLine, Zap, Globe, ExternalLink } from "lucide-react";
 import NicheForm from "./NicheForm";
+import DesktopPreviewFrame from "./DesktopPreviewFrame";
 
 /* -------------------------------------------------------------------------- */
 /*  Types                                                                       */
@@ -138,7 +139,7 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
           </div>
 
           <div className="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-white/40">
-            <span>✓ 60-second live site</span>
+            <span>✓ Live in minutes</span>
             <span>✓ Built from Google data</span>
             <span>✓ Cancel anytime</span>
             <span>✓ No web designer needed</span>
@@ -243,26 +244,27 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
                 Open <ExternalLink className="h-3.5 w-3.5" />
               </a>
             </div>
-            {/* Live iframe of the example site */}
-            <div className="relative bg-white">
-              <iframe
-                src={config.exampleHref}
-                title={config.exampleAlt}
-                loading="lazy"
-                className="block w-full h-[560px] sm:h-[720px] bg-white"
-              />
-              {/* Bottom fade so long pages don't look cut off, plus prominent open link */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0A0F1E] via-[#0A0F1E]/70 to-transparent" />
-              <a
-                href={config.exampleHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-[#0A0F1E] shadow-xl hover:bg-blue-50 transition-colors"
-              >
-                Explore the full example
-                <ExternalLink className="h-4 w-4" />
-              </a>
-            </div>
+            {/* Live iframe of the example site, rendered at desktop
+                viewport width and CSS-scaled to fit the card. */}
+            <DesktopPreviewFrame
+              src={`${config.exampleHref}?embed=1`}
+              title={config.exampleAlt}
+              className="h-[560px] sm:h-[720px]"
+              overlay={
+                <>
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0A0F1E] via-[#0A0F1E]/70 to-transparent" />
+                  <a
+                    href={config.exampleHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-[#0A0F1E] shadow-xl hover:bg-blue-50 transition-colors"
+                  >
+                    Explore the full example
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                </>
+              }
+            />
           </div>
         </div>
       </section>
@@ -275,7 +277,7 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
               How it works
             </p>
             <h2 className="font-[family-name:var(--font-sora)] font-extrabold text-4xl text-white tracking-tight mb-4">
-              From zero to live in 60 seconds
+              From zero to live in minutes
             </h2>
             <p className="text-white/50 text-lg max-w-xl mx-auto">
               No agency. No designer. No waiting.
@@ -293,7 +295,7 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
                 number: "02",
                 Icon: Zap,
                 heading: "We build your site",
-                body: "We pull your Google Business Profile and generate a complete multi-page website in under 60 seconds.",
+                body: "We pull your Google Business Profile and generate a complete multi-page website. Minutes, not months.",
               },
               {
                 number: "03",
@@ -371,7 +373,7 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
               Build your site
             </h2>
             <p className="text-white/50 text-lg max-w-xl mx-auto">
-              Enter your details. Your preview is ready in about 60 seconds.
+              Enter your details. Your preview is ready in minutes.
             </p>
           </div>
           <div className="max-w-[806px] mx-auto">

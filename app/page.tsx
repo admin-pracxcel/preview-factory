@@ -130,9 +130,9 @@ function Stars({ count }: { count: number }) {
 /* -------------------------------------------------------------------------- */
 
 export const metadata = {
-  title: "Launcharoo — Your Australian business website, live in 60 seconds",
+  title: "Launcharoo — Your Australian business website, live in minutes",
   description:
-    "Launcharoo builds professional websites for Australian service businesses using your Google Business Profile. Go from zero to live in under 60 seconds.",
+    "Launcharoo builds professional websites for Australian service businesses using your Google Business Profile. Live in minutes, not months.",
 };
 
 export default async function HomePage() {
@@ -234,7 +234,7 @@ export default async function HomePage() {
 
           {/* Sub */}
           <p className="text-white/60 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
-            We pull your Google Business Profile and build a complete professional website automatically. Live in under 60 seconds. No agency. No web designer.
+            We pull your Google Business Profile and build a complete professional website automatically. Live in minutes, not months. No agency. No web designer.
           </p>
 
           {/* CTA row */}
@@ -255,7 +255,7 @@ export default async function HomePage() {
 
           {/* Trust strip */}
           <div className="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-white/40">
-            <span>✓ 60-second live site</span>
+            <span>✓ Live in minutes</span>
             <span>✓ Built from Google data</span>
             <span>✓ Cancel anytime</span>
             <span>✓ No web designer needed</span>
@@ -271,7 +271,7 @@ export default async function HomePage() {
           {[
             { value: "1,200+", label: "businesses previewed" },
             { value: "4.9 ★", label: "average rating" },
-            { value: "60 sec", label: "average build time" },
+            { value: "Minutes", label: "average build time" },
             { value: "$0", label: "setup fee" },
           ].map((stat) => (
             <div key={stat.label}>
@@ -314,7 +314,7 @@ export default async function HomePage() {
               How it works
             </p>
             <h2 className="font-[family-name:var(--font-sora)] font-extrabold text-4xl text-white tracking-tight mb-4">
-              From zero to live in 60 seconds
+              From zero to live in minutes
             </h2>
             <p className="text-white/50 text-lg max-w-xl mx-auto">
               No agency. No designer. No waiting.
@@ -332,7 +332,7 @@ export default async function HomePage() {
                 number: "02",
                 Icon: Zap,
                 heading: "We build your site",
-                body: "We pull your Google Business Profile and generate a complete multi-page website in under 60 seconds.",
+                body: "We pull your Google Business Profile and generate a complete multi-page website. Minutes, not months.",
               },
               {
                 number: "03",
@@ -421,8 +421,8 @@ export default async function HomePage() {
             {[
               {
                 icon: "⚡",
-                title: "60 seconds to live",
-                body: "From form submit to a real, live URL. Not a mockup. A working website indexed by Google.",
+                title: "Minutes, not months",
+                body: "From form submit to a real, live URL. Not a mockup. A working website indexed by Google, ready before the kettle boils twice.",
               },
               {
                 icon: "📍",
@@ -446,8 +446,8 @@ export default async function HomePage() {
               },
               {
                 icon: "💬",
-                title: "Update via SMS",
-                body: "Need to change your hours or add a service? Just text us. No logins, no portals.",
+                title: "One-click change requests",
+                body: "Need to change your hours or add a service? Submit a change request from your dashboard. We update your site within 2 hours.",
               },
             ].map((item) => (
               <div
@@ -471,7 +471,7 @@ export default async function HomePage() {
       <section className="w-full bg-gradient-to-b from-blue-700 to-blue-900 py-24 px-6">
         <div className="max-w-2xl mx-auto text-center flex flex-col gap-6">
           <h2 className="font-[family-name:var(--font-sora)] font-extrabold text-4xl sm:text-5xl text-white tracking-tight">
-            See yours in 60 seconds.
+            See yours in minutes.
           </h2>
           <p className="text-blue-100 text-lg">
             No credit card. No commitment. Just your site, live, now.

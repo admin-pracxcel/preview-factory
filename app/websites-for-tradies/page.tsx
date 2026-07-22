@@ -3,7 +3,7 @@ import NicheHomeLanding, { type NicheHomeLandingConfig } from "@/app/components/
 export const metadata = {
   title: "Websites for Australian Tradies | Launcharoo",
   description:
-    "A professional tradie website live in 60 seconds. Sparkies, plumbers, chippies, roofers, painters. Built from your Google Business Profile. No web designer needed.",
+    "A professional tradie website live in minutes, not months. Sparkies, plumbers, chippies, roofers, painters. Built from your Google Business Profile. No web designer needed.",
   alternates: { canonical: "https://launcharoo.online/websites-for-tradies" },
 };
 
@@ -24,14 +24,14 @@ const CONFIG: NicheHomeLandingConfig = {
   heroHeadline1: "The website every Aussie tradie",
   heroHeadline2: "should have.",
   heroSub:
-    "Sparkies, plumbers, chippies, roofers, painters. We pull your Google listing and build the whole site in under a minute. No agency. No designer. No stuffing around.",
+    "Sparkies, plumbers, chippies, roofers, painters. We pull your Google listing and build the whole site in minutes, not months. No agency. No designer. No stuffing around.",
   accentClass: "bg-orange-600 hover:bg-orange-500 active:bg-orange-700",
   exampleHref: "/preview/trades",
   exampleAlt: "Electrician example site",
   stats: [
     { value: "800+", label: "tradies live" },
     { value: "3.2×", label: "more calls in 60 days" },
-    { value: "60 sec", label: "average build time" },
+    { value: "Minutes", label: "average build time" },
     { value: "$0", label: "setup fee" },
   ],
   painPoints: [
@@ -113,11 +113,11 @@ const CONFIG: NicheHomeLandingConfig = {
     },
     {
       q: "What if my Google Business Profile has wrong info?",
-      a: "You can update any details before your site goes live. Just message us via SMS after you receive your preview link.",
+      a: "You can edit key details (phone, hours, business name, hero image, and more) directly on your preview page. Once your site is live, submit anything else through the change request form on your dashboard.",
     },
     {
       q: "Can I display my licence numbers?",
-      a: "Yes. ARC, Master Builders, electrical or plumbing licence, whichever you have. Add them via SMS after your preview and we will publish them within 2 hours.",
+      a: "Yes. ARC, Master Builders, electrical or plumbing licence, whichever you have. Submit them via a change request from your dashboard and we will publish them within 2 hours.",
     },
     {
       q: "Do I need a designer?",
@@ -125,10 +125,10 @@ const CONFIG: NicheHomeLandingConfig = {
     },
     {
       q: "What does it cost?",
-      a: "Free to preview. Plans start at $19/month once you decide to keep it. No setup fee, no contracts, cancel anytime.",
+      a: "Free to preview. Plans start at $29/month once you decide to keep it. No setup fee, no contracts, cancel anytime.",
     },
   ],
-  ctaHeadline: "See your tradie website in 60 seconds.",
+  ctaHeadline: "See your tradie website in minutes.",
   ctaSub: "No credit card. No commitment. Just your site, live, now.",
 };
 

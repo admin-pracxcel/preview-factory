@@ -106,6 +106,11 @@ export function EditableImageOverlay() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.parent === window) return; // not in an iframe → live site
+    // Marketing embeds (e.g. the "See a real example" iframe on niche
+    // landing pages) render the same tenant route but with ?embed=1 to
+    // opt out of edit affordances. Keep hover overlays only for the
+    // owner's preview editor iframe.
+    if (new URLSearchParams(window.location.search).get("embed") === "1") return;
 
     const styleTag = document.createElement("style");
     styleTag.setAttribute("data-launcharoo-overlay", "");

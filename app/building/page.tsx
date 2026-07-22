@@ -240,7 +240,7 @@ function BuildingPageInner() {
               website
             </h1>
             <p className="text-slate-400 text-sm mt-2">
-              Sit tight — this takes about 60 seconds
+              Sit tight — this takes a few minutes
             </p>
           </div>
 

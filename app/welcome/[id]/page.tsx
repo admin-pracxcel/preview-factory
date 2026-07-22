@@ -160,7 +160,7 @@ export default function WelcomePage() {
       try {
         await navigator.share({
           title: "My new business website",
-          text: "Check out my new site — built in under 60 seconds:",
+          text: "Check out my new site — built in minutes:",
           url: siteUrl,
         });
       } catch {

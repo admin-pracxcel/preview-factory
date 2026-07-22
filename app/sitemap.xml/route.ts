@@ -197,9 +197,9 @@ function marketingEntries(): SitemapEntry[] {
     entry("/for/beauty", 0.9, "monthly"),
     entry("/for/fitness", 0.9, "monthly"),
     entry("/websites-for-tradies", 0.9, "monthly"),
-    entry("/websites-for-physios", 0.9, "monthly"),
-    entry("/websites-for-hair-salons", 0.9, "monthly"),
-    entry("/websites-for-gyms", 0.9, "monthly"),
+    entry("/websites-for-allied-health", 0.9, "monthly"),
+    entry("/websites-for-beauty", 0.9, "monthly"),
+    entry("/websites-for-fitness", 0.9, "monthly"),
     entry("/privacy", 0.3, "yearly"),
     entry("/terms", 0.3, "yearly"),
   ];

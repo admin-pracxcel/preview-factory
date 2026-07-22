@@ -1,10 +1,10 @@
 import NicheHomeLanding, { type NicheHomeLandingConfig } from "@/app/components/NicheHomeLanding";
 
 export const metadata = {
-  title: "Websites for Hair Salons & Beauty Clinics | Launcharoo",
+  title: "Websites for Beauty & Aesthetics | Launcharoo",
   description:
-    "A gallery-forward salon website live in 60 seconds. Hair, nails, brows, cosmetic clinics. Booking-ready, mobile-first, built from your Google listing.",
-  alternates: { canonical: "https://launcharoo.online/websites-for-hair-salons" },
+    "A gallery-forward beauty website live in minutes, not months. Hair, nails, brows, cosmetic clinics. Booking-ready, mobile-first, built from your Google listing.",
+  alternates: { canonical: "https://launcharoo.online/websites-for-beauty" },
 };
 
 const CONFIG: NicheHomeLandingConfig = {
@@ -19,18 +19,18 @@ const CONFIG: NicheHomeLandingConfig = {
     "Makeup Artist",
     "Other beauty",
   ],
-  tag: "For salons and clinics",
+  tag: "For Beauty & Aesthetics",
   heroHeadline1: "A website as gorgeous",
   heroHeadline2: "as your work.",
   heroSub:
-    "Hair salons, nail bars, brow bars, cosmetic clinics. Gallery-forward, booking-ready, mobile-first. Live in under a minute, ready to send to your Instagram bio.",
+    "Hair salons, nail bars, brow bars, cosmetic clinics. Gallery-forward, booking-ready, mobile-first. Live in minutes, not months, ready to send to your Instagram bio.",
   accentClass: "bg-fuchsia-600 hover:bg-fuchsia-500 active:bg-fuchsia-700",
   exampleHref: "/preview/beauty-aesthetics",
   exampleAlt: "Hair salon example site",
   stats: [
     { value: "400+", label: "salons live" },
     { value: "6.1×", label: "more DM bookings" },
-    { value: "60 sec", label: "average build time" },
+    { value: "Minutes", label: "average build time" },
     { value: "$0", label: "setup fee" },
   ],
   painPoints: [
@@ -64,12 +64,12 @@ const CONFIG: NicheHomeLandingConfig = {
     {
       icon: "📅",
       title: "Bring your own booking",
-      body: "Fresha, Timely, Booktopia, Vagaro. Send us your booking link or embed after preview, we drop it into the booking block for you.",
+      body: "Fresha, Timely, Booktopia, Vagaro. Submit your booking link or embed via a change request, we drop it into the booking block for you.",
     },
     {
       icon: "💅",
       title: "Treatment menu with prices",
-      body: "Full service list with duration and price. Updated by SMS the day after a price change, no admin work.",
+      body: "Full service list with duration and price. Submit updates via a quick change request the day after a price change. No admin work on your end.",
     },
     {
       icon: "👩‍🎨",
@@ -108,7 +108,7 @@ const CONFIG: NicheHomeLandingConfig = {
   faqs: [
     {
       q: "Can I use my existing booking system?",
-      a: "Yes. Fresha, Timely, Booktopia, Vagaro, Square, whatever you use. After your preview, send us the booking link or embed and we will wire it in within 2 hours.",
+      a: "Yes. Fresha, Timely, Booktopia, Vagaro, Square, whatever you use. Submit the booking link or embed via a change request from your dashboard and we will wire it in within 2 hours.",
     },
     {
       q: "Can I show my Instagram feed?",
@@ -116,18 +116,18 @@ const CONFIG: NicheHomeLandingConfig = {
     },
     {
       q: "How do I update my price list?",
-      a: "Text us the new prices. We update your site within 2 hours. No portal, no logins, no wrestling with a page builder.",
+      a: "Submit the new prices via a change request from your dashboard. We update your site within 2 hours. No wrestling with a page builder.",
     },
     {
       q: "What if my Google profile has wrong information?",
-      a: "SMS us after your preview link arrives. We update any details within 2 hours.",
+      a: "You can edit key details right on your preview page. After you subscribe, submit anything else through the change request form on your dashboard. We action requests within 2 hours.",
     },
     {
       q: "What does it cost?",
-      a: "Free to preview. Plans start at $19/month once you decide to keep it. No setup fee, no contracts, cancel anytime.",
+      a: "Free to preview. Plans start at $29/month once you decide to keep it. No setup fee, no contracts, cancel anytime.",
     },
   ],
-  ctaHeadline: "See your salon website in 60 seconds.",
+  ctaHeadline: "See your beauty website in minutes.",
   ctaSub: "No credit card. No commitment. Just your site, live, now.",
 };
 

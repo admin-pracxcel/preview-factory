@@ -1,10 +1,10 @@
 import NicheHomeLanding, { type NicheHomeLandingConfig } from "@/app/components/NicheHomeLanding";
 
 export const metadata = {
-  title: "Websites for Allied Health Clinics | Launcharoo",
+  title: "Websites for Allied Health | Launcharoo",
   description:
-    "A professional clinic website live in 60 seconds. Physios, chiros, massage, podiatry, psych. Online booking ready, AHPRA-compliant, built from your Google listing.",
-  alternates: { canonical: "https://launcharoo.online/websites-for-physios" },
+    "A professional allied health website live in minutes, not months. Physios, chiros, massage, podiatry, psych. Online booking ready, AHPRA-compliant, built from your Google listing.",
+  alternates: { canonical: "https://launcharoo.online/websites-for-allied-health" },
 };
 
 const CONFIG: NicheHomeLandingConfig = {
@@ -24,14 +24,14 @@ const CONFIG: NicheHomeLandingConfig = {
   heroHeadline1: "Websites that fill your",
   heroHeadline2: "appointment book.",
   heroSub:
-    "Physios, chiros, massage therapists, podiatrists, psychologists. Online booking, patient forms, and HICAPS-ready copy. Live in under a minute. AHPRA-compliant by default.",
+    "Physios, chiros, massage therapists, podiatrists, psychologists. Online booking, patient forms, and HICAPS-ready copy. Live in minutes, not months. AHPRA-compliant by default.",
   accentClass: "bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700",
   exampleHref: "/preview/allied-health",
   exampleAlt: "Physiotherapy clinic example site",
   stats: [
     { value: "300+", label: "clinics live" },
     { value: "4.7×", label: "more booked appointments" },
-    { value: "60 sec", label: "average build time" },
+    { value: "Minutes", label: "average build time" },
     { value: "$0", label: "setup fee" },
   ],
   painPoints: [
@@ -113,22 +113,22 @@ const CONFIG: NicheHomeLandingConfig = {
     },
     {
       q: "Can I list my AHPRA registration number?",
-      a: "Yes. After your preview goes live, SMS us your registration number and we will add it to your about page within 2 hours.",
+      a: "Yes. Submit your registration number via the change request form on your dashboard and we will add it to your about page within 2 hours.",
     },
     {
       q: "Does it connect to Cliniko / Halaxy / Nookal?",
-      a: "Yes. Send us your booking widget embed code after your preview and we will drop it into the booking block within 2 hours.",
+      a: "Yes. Submit your booking widget embed code via a change request from your dashboard and we will drop it into the booking block within 2 hours.",
     },
     {
       q: "What if my Google profile has wrong information?",
-      a: "SMS us after you receive your preview link. We will update any details within 2 hours.",
+      a: "You can edit key details right on your preview page. After you subscribe, submit anything else through the change request form on your dashboard. We action requests within 2 hours.",
     },
     {
       q: "What does it cost?",
-      a: "Free to preview. Plans start at $19/month once you decide to keep it. No setup fee, no contracts, cancel anytime.",
+      a: "Free to preview. Plans start at $29/month once you decide to keep it. No setup fee, no contracts, cancel anytime.",
     },
   ],
-  ctaHeadline: "See your clinic website in 60 seconds.",
+  ctaHeadline: "See your clinic website in minutes.",
   ctaSub: "No credit card. No commitment. Just your site, live, now.",
 };
 
