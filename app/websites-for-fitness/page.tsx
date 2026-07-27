@@ -25,7 +25,7 @@ const CONFIG: NicheHomeLandingConfig = {
   heroHeadline2: "actually want to visit.",
   heroSub:
     "Personal trainers, CrossFit boxes, yoga studios, Pilates, martial arts. Class schedule, transformation gallery, free trial form. Live in minutes, not months.",
-  accentClass: "bg-lime-600 hover:bg-lime-500 active:bg-lime-700",
+  accentClass: "bg-blue-600 hover:bg-blue-500 active:bg-blue-700",
   exampleHref: "/preview/fitness-wellness",
   exampleAlt: "Personal trainer example site",
   stats: [

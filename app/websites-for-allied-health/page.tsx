@@ -25,7 +25,7 @@ const CONFIG: NicheHomeLandingConfig = {
   heroHeadline2: "appointment book.",
   heroSub:
     "Physios, chiros, massage therapists, podiatrists, psychologists. Online booking, patient forms, and HICAPS-ready copy. Live in minutes, not months. AHPRA-compliant by default.",
-  accentClass: "bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700",
+  accentClass: "bg-blue-600 hover:bg-blue-500 active:bg-blue-700",
   exampleHref: "/preview/allied-health",
   exampleAlt: "Physiotherapy clinic example site",
   stats: [

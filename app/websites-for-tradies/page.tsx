@@ -25,7 +25,7 @@ const CONFIG: NicheHomeLandingConfig = {
   heroHeadline2: "should have.",
   heroSub:
     "Sparkies, plumbers, chippies, roofers, painters. We pull your Google listing and build the whole site in minutes, not months. No agency. No designer. No stuffing around.",
-  accentClass: "bg-orange-600 hover:bg-orange-500 active:bg-orange-700",
+  accentClass: "bg-blue-600 hover:bg-blue-500 active:bg-blue-700",
   exampleHref: "/preview/trades",
   exampleAlt: "Electrician example site",
   stats: [

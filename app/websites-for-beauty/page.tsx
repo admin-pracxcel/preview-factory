@@ -24,7 +24,7 @@ const CONFIG: NicheHomeLandingConfig = {
   heroHeadline2: "as your work.",
   heroSub:
     "Hair salons, nail bars, brow bars, cosmetic clinics. Gallery-forward, booking-ready, mobile-first. Live in minutes, not months, ready to send to your Instagram bio.",
-  accentClass: "bg-fuchsia-600 hover:bg-fuchsia-500 active:bg-fuchsia-700",
+  accentClass: "bg-blue-600 hover:bg-blue-500 active:bg-blue-700",
   exampleHref: "/preview/beauty-aesthetics",
   exampleAlt: "Hair salon example site",
   stats: [
