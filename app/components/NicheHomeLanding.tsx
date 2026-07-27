@@ -452,30 +452,9 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
             alt="Launcharoo"
             className="h-6 w-auto"
           />
-          <div className="flex gap-6">
-            <Link href="/" className="text-white/40 hover:text-white/70 text-sm transition-colors">
-              Home
-            </Link>
-            <Link href="/for/trades" className="text-white/40 hover:text-white/70 text-sm transition-colors">
-              Trades
-            </Link>
-            <Link href="/for/allied-health" className="text-white/40 hover:text-white/70 text-sm transition-colors">
-              Allied Health
-            </Link>
-            <Link href="/for/beauty" className="text-white/40 hover:text-white/70 text-sm transition-colors">
-              Beauty
-            </Link>
-            <Link href="/for/fitness" className="text-white/40 hover:text-white/70 text-sm transition-colors">
-              Fitness
-            </Link>
-          </div>
           <span className="text-white/30 text-sm">© {new Date().getFullYear()} Launcharoo</span>
         </div>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-white/30">
-          <Link href="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
-          <span className="text-white/15">·</span>
-          <Link href="/terms" className="hover:text-white/60 transition-colors">Terms of Service</Link>
-          <span className="text-white/15">·</span>
           <span>For Australian service businesses.</span>
         </div>
       </footer>
