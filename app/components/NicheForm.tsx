@@ -204,7 +204,7 @@ export default function NicheForm({
       <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mt-4 text-xs text-slate-500">
         <span className="flex items-center gap-1">
           <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />
-          60 seconds to live
+          Live in minutes
         </span>
         <span className="flex items-center gap-1">
           <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />

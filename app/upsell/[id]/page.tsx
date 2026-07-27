@@ -135,7 +135,7 @@ export default function UpsellPage() {
               Your site is live.
             </h1>
             <p className="text-white/50 text-lg max-w-md mx-auto leading-relaxed">
-              While you are here, these add-ons take less than 30 seconds to activate and are used by our top-performing clients.
+              While you are here, these add-ons activate in a minute and are used by our top-performing clients.
             </p>
           </div>
 

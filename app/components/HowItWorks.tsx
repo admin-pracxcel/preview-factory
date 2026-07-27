@@ -5,13 +5,13 @@ const STEPS = [
     number: "01",
     icon: PenLine,
     heading: "Enter your details",
-    body: "Tell us your business name, what you specialise in, and your suburb. That is it. Takes under 30 seconds.",
+    body: "Tell us your business name, what you specialise in, and your suburb. That is it. Takes a minute.",
   },
   {
     number: "02",
     icon: Zap,
     heading: "We build your site",
-    body: "We pull your Google Business Profile and generate a complete multi-page website in under 60 seconds. No templates, no filler content.",
+    body: "We pull your Google Business Profile and generate a complete multi-page website in minutes. No templates, no filler content.",
   },
   {
     number: "03",
@@ -31,7 +31,7 @@ export default function HowItWorks() {
             How it works
           </p>
           <h2 className="font-[family-name:var(--font-sora)] font-extrabold text-4xl text-white tracking-tight mb-4">
-            From zero to live in 60 seconds
+            From zero to live in minutes
           </h2>
           <p className="text-white/50 text-lg max-w-2xl mx-auto">
             No agency. No designer. No waiting.

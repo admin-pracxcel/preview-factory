@@ -46,7 +46,7 @@ const MASTER_TESTIMONIALS = [
     role: "Electrician, Penrith NSW",
     initials: "DS",
     quote:
-      "I was getting maybe 5 calls a week from Google. Now I get 22. The site went live in about 45 seconds and looked exactly like what I'd pay an agency $5,000 for.",
+      "I was getting maybe 5 calls a week from Google. Now I get 22. The site went live in minutes and looked exactly like what I'd pay an agency $5,000 for.",
     rating: 5,
   },
   {
@@ -326,7 +326,7 @@ export default async function HomePage() {
                 number: "01",
                 Icon: PenLine,
                 heading: "Enter your details",
-                body: "Your business name, specialty, and suburb. Done in 30 seconds.",
+                body: "Your business name, specialty, and suburb. Done in a minute.",
               },
               {
                 number: "02",

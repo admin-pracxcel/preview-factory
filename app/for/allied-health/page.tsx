@@ -2,7 +2,7 @@ import NicheLanding from "@/app/components/NicheLanding";
 
 export const metadata = {
   title: "Website for Allied Health | Launcharoo",
-  description: "Fill your appointment book with a professional clinic website, live in 60 seconds. Built from your Google Business Profile.",
+  description: "Fill your appointment book with a professional clinic website, live in minutes. Built from your Google Business Profile.",
 };
 
 const TESTIMONIALS = [
@@ -51,7 +51,7 @@ export default function AlliedHealthPage() {
       heroImage="/images/categories/allied-health-v2.png"
       tag="For Allied Health"
       headline="More local patients. Starting this week."
-      subheadline="See your finished allied health website in 60 seconds. AHPRA-compliant, built from your Google listing."
+      subheadline="See your finished allied health website in minutes. AHPRA-compliant, built from your Google listing."
       subNiches={[
         "Physiotherapist",
         "Chiropractor",

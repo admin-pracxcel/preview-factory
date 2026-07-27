@@ -289,7 +289,7 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
                 number: "01",
                 Icon: PenLine,
                 heading: "Enter your details",
-                body: "Your business name, specialty and suburb. Done in 30 seconds.",
+                body: "Your business name, specialty and suburb. Done in a minute.",
               },
               {
                 number: "02",

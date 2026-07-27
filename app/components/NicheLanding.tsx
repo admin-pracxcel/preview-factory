@@ -178,7 +178,7 @@ export default function NicheLanding({
               A complete website, built for local search
             </h2>
             <p className="text-slate-500 text-lg max-w-xl mx-auto">
-              Every site includes these pages and features — generated from your Google Business Profile in under 60 seconds.
+              Every site includes these pages and features — generated from your Google Business Profile in minutes.
             </p>
             <p className="text-slate-400 text-sm mt-3 max-w-lg mx-auto">{previewCaption}</p>
           </div>
@@ -322,7 +322,7 @@ export default function NicheLanding({
               Ready to see yours?
             </h2>
             <p className="text-slate-400 text-lg">
-              Takes 60 seconds. No credit card. No commitment.
+              Takes minutes. No credit card. No commitment.
             </p>
           </div>
           <div className="w-full">

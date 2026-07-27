@@ -88,7 +88,7 @@ const CONFIG: NicheHomeLandingConfig = {
       name: "Dave S.",
       role: "Electrician, Penrith NSW",
       quote:
-        "I was getting maybe 5 calls a week from Google. Now I get 22. The site went live in about 45 seconds and looked exactly like what I would pay an agency $5,000 for.",
+        "I was getting maybe 5 calls a week from Google. Now I get 22. The site went live in minutes and looked exactly like what I would pay an agency $5,000 for.",
       rating: 5,
     },
     {

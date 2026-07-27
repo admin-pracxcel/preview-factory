@@ -2,7 +2,7 @@ import NicheLanding from "@/app/components/NicheLanding";
 
 export const metadata = {
   title: "Website for Beauty & Aesthetics | Launcharoo",
-  description: "Show your work and book more clients. A gallery-forward beauty website, live in 60 seconds.",
+  description: "Show your work and book more clients. A gallery-forward beauty website, live in minutes.",
 };
 
 const TESTIMONIALS = [
@@ -50,7 +50,7 @@ export default function BeautyPage() {
       category="beauty"
       heroImage="/images/categories/beauty-aesthetics-v2.png"
       tag="For Beauty & Aesthetics"
-      headline="A website your clients will love. Live in 60 seconds."
+      headline="A website your clients will love. Live in minutes."
       subheadline="Built from your Google listing. Show off your work, fill your appointment book."
       subNiches={[
         "Hair Salon",

@@ -2,7 +2,7 @@ import NicheLanding from "@/app/components/NicheLanding";
 
 export const metadata = {
   title: "Website for Fitness & Wellness | Launcharoo",
-  description: "Get more clients and fill your classes. A fitness website live in 60 seconds, built from your Google profile.",
+  description: "Get more clients and fill your classes. A fitness website live in minutes, built from your Google profile.",
 };
 
 const TESTIMONIALS = [
@@ -51,7 +51,7 @@ export default function FitnessPage() {
       heroImage="/images/categories/fitness-wellness-v2.png"
       tag="For Fitness & Wellness"
       headline="Fill your classes and your calendar. From today."
-      subheadline="Get your fitness or wellness business online in 60 seconds. Built from your Google listing."
+      subheadline="Get your fitness or wellness business online in minutes. Built from your Google listing."
       subNiches={[
         "Personal Trainer",
         "Gym",

@@ -2,7 +2,7 @@ import NicheLanding from "@/app/components/NicheLanding";
 
 export const metadata = {
   title: "Website for Tradies | Launcharoo",
-  description: "Get a professional tradie website live in 60 seconds. Built from your Google Business Profile. No web designer needed.",
+  description: "Get a professional tradie website live in minutes. Built from your Google Business Profile. No web designer needed.",
 };
 
 const TESTIMONIALS = [
@@ -10,7 +10,7 @@ const TESTIMONIALS = [
     name: "Dave S.",
     role: "Electrician, Penrith NSW",
     quote:
-      "I was getting maybe 5 calls a week from Google. Now I get 22. The site went live in about 45 seconds and looked exactly like what I'd pay an agency $5,000 for.",
+      "I was getting maybe 5 calls a week from Google. Now I get 22. The site went live in minutes and looked exactly like what I'd pay an agency $5,000 for.",
     rating: 5 as const,
   },
   {
@@ -55,7 +55,7 @@ export default function TradesPage() {
       heroImage="/images/categories/trades-v2.png"
       tag="For Tradies"
       headline="More local jobs. Starting today."
-      subheadline="Enter your details and see your finished website in 60 seconds. Built from your Google listing — no setup, no agency."
+      subheadline="Enter your details and see your finished website in minutes. Built from your Google listing — no setup, no agency."
       subNiches={[
         "Electrician",
         "Plumber",
@@ -68,7 +68,7 @@ export default function TradesPage() {
         "Other trade",
       ]}
       previewRoute="/preview/trades"
-      previewCaption="Your site will include 6 service pages, call tracking, and local SEO. Built in under 60 seconds."
+      previewCaption="Your site will include 6 service pages, call tracking, and local SEO. Built in minutes."
       testimonials={TESTIMONIALS}
       faqs={FAQS}
       accentClass="bg-orange-600 hover:bg-orange-500 active:bg-orange-700"
