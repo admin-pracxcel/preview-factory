@@ -125,7 +125,7 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
               href="#intake"
               className={`${config.accentClass} text-white font-bold px-8 py-4 rounded-2xl text-base transition-all shadow-xl shadow-blue-900/50`}
             >
-              See my website now
+              See my free website now
             </a>
             <a
               href={config.exampleHref}
@@ -152,7 +152,7 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
         <div className="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-4 sm:gap-8 text-center">
           {config.stats.map((stat) => (
             <div key={stat.label}>
-              <div className="text-lg sm:text-3xl font-extrabold text-white leading-tight">{stat.value}</div>
+              <div className="text-lg sm:text-3xl font-extrabold text-blue-500 leading-tight">{stat.value}</div>
               <div className="text-[11px] sm:text-sm text-white/50 mt-0.5 sm:mt-1">{stat.label}</div>
             </div>
           ))}
