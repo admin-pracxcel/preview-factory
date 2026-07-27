@@ -125,7 +125,7 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
               href="#intake"
               className={`${config.accentClass} text-white font-bold px-8 py-4 rounded-2xl text-base transition-all shadow-xl shadow-blue-900/50`}
             >
-              See my free website now
+              See my website now for free
             </a>
             <a
               href={config.exampleHref}
