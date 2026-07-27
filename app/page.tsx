@@ -271,7 +271,7 @@ export default async function HomePage() {
           {[
             { value: "1,200+", label: "businesses previewed" },
             { value: "4.9 ★", label: "average rating" },
-            { value: "Minutes", label: "average build time" },
+            { value: "Minutes", label: "to live URL" },
             { value: "$0", label: "setup fee" },
           ].map((stat) => (
             <div key={stat.label}>

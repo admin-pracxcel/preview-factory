@@ -31,7 +31,7 @@ const CONFIG: NicheHomeLandingConfig = {
   stats: [
     { value: "250+", label: "gyms live" },
     { value: "5.4×", label: "more free-trial signups" },
-    { value: "Minutes", label: "average build time" },
+    { value: "Minutes", label: "to live URL" },
     { value: "$0", label: "setup fee" },
   ],
   painPoints: [

@@ -31,7 +31,7 @@ const CONFIG: NicheHomeLandingConfig = {
   stats: [
     { value: "800+", label: "tradies live" },
     { value: "3.2×", label: "more calls in 60 days" },
-    { value: "Minutes", label: "average build time" },
+    { value: "Minutes", label: "to live URL" },
     { value: "$0", label: "setup fee" },
   ],
   painPoints: [

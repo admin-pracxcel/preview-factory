@@ -30,7 +30,7 @@ const CONFIG: NicheHomeLandingConfig = {
   stats: [
     { value: "400+", label: "salons live" },
     { value: "6.1×", label: "more DM bookings" },
-    { value: "Minutes", label: "average build time" },
+    { value: "Minutes", label: "to live URL" },
     { value: "$0", label: "setup fee" },
   ],
   painPoints: [

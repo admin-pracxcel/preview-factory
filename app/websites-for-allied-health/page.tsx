@@ -31,7 +31,7 @@ const CONFIG: NicheHomeLandingConfig = {
   stats: [
     { value: "300+", label: "clinics live" },
     { value: "4.7×", label: "more booked appointments" },
-    { value: "Minutes", label: "average build time" },
+    { value: "Minutes", label: "to live URL" },
     { value: "$0", label: "setup fee" },
   ],
   painPoints: [
