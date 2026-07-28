@@ -28,10 +28,26 @@ Both automations are fully hands-off after subscribe. Non-technical customers do
 
 Two independent cron-driven automations, wired to the tenant's active SEO subscription and never blocking each other. Both fire from the same 06:00 AEST tick and share one cadence engine so their schedules stay in lockstep.
 
+**All Claude calls happen inside n8n via Claude Code.** Vercel routes never call `api.anthropic.com`. Vercel exposes read endpoints (which tenants are due, tenant context) and write endpoints (validated inserts / GBP-publish). n8n owns the workflow, the LLM invocation, and the fan-out loop.
+
 ```
 n8n cron (06:00 AEST daily)
-   ├─▶ POST /api/cron/seo/blog-tick  →  for each due tenant: generate + insert blog_post
-   └─▶ POST /api/cron/seo/gbp-tick   →  for each due tenant with GBP conn: generate + POST to Business Profile API
+   │
+   ├─▶ GET  /api/admin/seo/due-tenants?kind=blog   → list of due tenants + full generation context
+   │      │
+   │      ▼
+   │   for each tenant: n8n → Claude Code → generated post JSON
+   │      │
+   │      ▼
+   │   POST /api/admin/seo/blog-posts (per tenant)  → Zod-validate + insert into blog_posts
+   │
+   └─▶ GET  /api/admin/seo/due-tenants?kind=gbp    → list of due tenants that also have an active GBP connection
+          │
+          ▼
+       for each tenant: n8n → Claude Code → generated GBP post JSON
+          │
+          ▼
+       POST /api/admin/gbp/publish/[tenantId]      → Vercel reads refresh_token, exchanges, calls Business Profile API
 ```
 
 ## 4. Data model
@@ -141,33 +157,44 @@ Behaviour by tier:
 
 ## 6. Blog automation flow
 
+**n8n workflow** (`n8n/seo-blog-tick.json`), triggered by a cron node at 06:00 AEST daily:
+
 ```
-06:00 AEST daily
-n8n cron
-   │
-   ▼
-POST /api/cron/seo/blog-tick   (Vercel; secured with x-cron-secret header)
-   │
-   ▼
-for each tenant_addons row where addon_key='seo' AND status='active':
-   if !isPublishDay(tenant):                     skip → log 'skipped'
-   if last_blog_tick_at is today (AEST calendar day): skip → log 'skipped' (idempotency)
-   generate + publish
-   set last_blog_tick_at = now()
+1. HTTP Request: GET https://<app>/api/admin/seo/due-tenants?kind=blog
+      auth: x-cron-secret header
+      response: [
+        {
+          tenantId, category, business_name, services[], suburb, brand_voice,
+          recent_titles[]   // last 10, for dedup guard
+        }, ...
+      ]
+
+2. Split-in-Batches over the array. For each tenant:
+
+   2a. Claude Code node — runs the category prompt (trades/allied-health/
+       beauty/fitness) with the tenant context. Returns strict JSON:
+         { title, slug, excerpt, body_md, cover_image_query }
+
+   2b. HTTP Request: GET Pexels API with cover_image_query
+         → cover_image_url (falls back to category default if 0 hits)
+
+   2c. HTTP Request: POST https://<app>/api/admin/seo/blog-posts
+         body: { tenantId, ...postJson, cover_image_url }
+         Vercel Zod-validates and inserts blog_posts + seo_publish_log rows,
+         stamps tenant_addons.last_blog_tick_at.
+
+3. If any per-tenant step fails: continue the loop (don't fail the whole
+   cron), and n8n logs the failure to seo_publish_log via a POST to
+   /api/admin/seo/log-failure.
 ```
 
-### Generation (per tenant, per fire)
+### Vercel endpoints
 
-1. Load tenant context: category, business name, services, suburb, brand voice.
-2. Load last 10 `blog_posts.title` for this tenant (dedup guard).
-3. Call Anthropic Sonnet 4.6 with a category-aware system prompt at `lib/seo/blog-prompts/<category>.md` — one prompt per category (trades, allied-health, beauty, fitness). Response is strict JSON:
-   ```
-   { title, slug, excerpt, body_md, cover_image_query }
-   ```
-4. Zod-validate. If invalid or Anthropic 5xx: retry once, then log `failed` with reason. Never insert a partial row.
-5. Fetch cover image from Pexels using `cover_image_query` (fallback: category default hero).
-6. INSERT `blog_posts`; INSERT `seo_publish_log` status `success`.
-7. Fire-and-forget POST to n8n webhook `blog-published` (leaves room for future features: internal-linking pass, customer notification email).
+- `GET /api/admin/seo/due-tenants?kind=blog|gbp` — walks `tenant_addons` where `addon_key='seo' AND status='active'`, applies `isPublishDay(...)`, filters `last_(blog|gbp)_tick_at` for AEST-calendar-day idempotency, joins tenant context (category, services, suburb, brand voice, last 10 blog titles) and — for `kind=gbp` only — inner-joins `tenant_gbp_connections` where `status='active'`.
+- `POST /api/admin/seo/blog-posts` — Zod-validates `{tenantId, title, slug, excerpt, body_md, cover_image_url, generation_meta}`, inserts into `blog_posts`, inserts `seo_publish_log` row `status='success'`, stamps `tenant_addons.last_blog_tick_at`.
+- `POST /api/admin/seo/log-failure` — inserts `seo_publish_log` row `status='failed'` with the reason string.
+
+All three routes require `x-cron-secret: $CRON_SECRET` header. No auth cookie, no user session.
 
 ### Rendering (SSR, no client)
 
@@ -175,9 +202,6 @@ for each tenant_addons row where addon_key='seo' AND status='active':
 - `app/preview/site/[tenantId]/blog/[slug]/page.tsx` — post page. Renders `body_md` via `react-markdown`, Article JSON-LD, canonical, OG image = `cover_image_url`.
 - Nav in `shared/ui/sections.tsx` gets a "Blog" link when the tenant has ≥1 published post (server-computed).
 - `app/sitemap.xml/route.ts` appends `/blog` and each `/blog/<slug>` per tenant.
-
-### Cost guard
-Sonnet 4.6 per post ≈ $0.02. Pro tier × 16 ≈ $0.32/tenant/mo. Immaterial vs $79/mo revenue.
 
 ## 7. GBP OAuth + posting
 
@@ -199,31 +223,44 @@ Sonnet 4.6 per post ≈ $0.02. Pro tier × 16 ≈ $0.32/tenant/mo. Immaterial vs
 
 ### Posting flow (same 06:00 AEST tick)
 
+**n8n workflow** (`n8n/seo-gbp-tick.json`):
+
 ```
-POST /api/cron/seo/gbp-tick
-   │
-   ▼
-for each tenant_addons row where addon_key='seo' AND status='active':
-   if !isPublishDay(tenant): skip
-   if last_gbp_tick_at is today: skip (idempotency)
-   conn = tenant_gbp_connections where tenant_id=…, status='active'
-   if !conn: log 'skipped' reason='gbp_not_connected'; skip
-   generate GBP post (Anthropic — shorter format, one CTA)
-   exchange refresh_token → access_token
-   POST mybusinessbusinessinformation.../locations/{loc}/localPosts
-     body: {
-       summary,
-       callToAction: { actionType: 'LEARN_MORE', url: tenant.live_url },
-       media: [{ googleUrl: cover_image_url }]
-     }
-   if 200:      log 'success', set last_gbp_tick_at
-   if 401/403:  mark conn.status='revoked', log 'failed'
-   if 5xx:      log 'failed', retry tomorrow
+1. HTTP Request: GET /api/admin/seo/due-tenants?kind=gbp
+      response: same shape as blog, plus gbp_location_name for
+      Claude Code to reference in the post copy. Only returns
+      tenants whose tenant_gbp_connections is active.
+
+2. Split-in-Batches. For each tenant:
+
+   2a. Claude Code node — GBP-specific prompt (shorter format,
+       one CTA). Returns:
+         { summary, cta_label, cover_image_query }
+
+   2b. HTTP Request: GET Pexels API → cover_image_url
+
+   2c. HTTP Request: POST /api/admin/gbp/publish/[tenantId]
+         body: { summary, cta_label, cover_image_url }
+         Vercel handles the whole Google side: reads encrypted
+         refresh_token, exchanges for access_token, POSTs to
+         Business Profile API. Returns { status, googlePostId } or
+         { status:'failed', reason }.
+
+3. Vercel-side response classification (inside /api/admin/gbp/publish):
+   - 200:      log 'success', set last_gbp_tick_at, return 200
+   - 401/403:  mark tenant_gbp_connections.status='revoked',
+               log 'failed' reason='revoked', return 200 with
+               classification so n8n doesn't retry
+   - 5xx:      log 'failed' reason='google_5xx', return 502 so
+               n8n keeps the failure visible but doesn't retry
+               inside the same run (next day's cron retries)
 ```
+
+Refresh tokens never leave Vercel. Claude Code never sees a Google credential. n8n never sees the refresh token.
 
 GBP posts are generated independently of that day's blog post — shorter, more casual, one CTA. They share topic themes for the week but never echo the blog title verbatim.
 
-Refresh-token rotation is handled silently in the exchange step.
+Refresh-token rotation is handled silently inside `/api/admin/gbp/publish` during the exchange step.
 
 ### Risk: GBP local-posts API is access-restricted
 
@@ -249,9 +286,10 @@ Three new surfaces in `app/dashboard/[tenantId]/`:
 
 | Failure | Blog behaviour | GBP behaviour | Customer sees |
 |---|---|---|---|
-| Anthropic 5xx | Retry once; log `failed`; skip today | Same | Nothing (silent) |
+| Claude Code fails inside n8n | n8n's per-node retry (max 2); after that skip tenant, log `failed`, continue loop | Same | Nothing (silent) |
+| Vercel write-endpoint 5xx | n8n retries the POST once; then logs `failed`, continues | Same | Nothing |
 | GBP token revoked | Blog unaffected | Skip; mark revoked; banner + email | Banner + email |
-| GBP API 5xx | Blog unaffected | Retry tomorrow | Nothing |
+| GBP API 5xx | Blog unaffected | Retry tomorrow (next cron run) | Nothing |
 | Customer cancels SEO | Stop; keep existing posts live | Stop; keep OAuth 30 days then delete | Posts stay on site |
 
 ## 9. Human-must-do additions
