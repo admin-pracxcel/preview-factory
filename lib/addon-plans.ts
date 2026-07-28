@@ -48,7 +48,7 @@ export const SEO_TIERS: readonly SeoTierSpec[] = [
     id: "starter",
     name: "Starter",
     features: [
-      "Local citations across 30+ AU directories",
+      "Local citations across Australia's top directories",
       "4 blog posts per month, written and published for you",
       "4 Google Business Profile posts per month",
     ],

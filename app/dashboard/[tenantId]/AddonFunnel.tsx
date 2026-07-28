@@ -435,7 +435,7 @@ const DRAWER_CONTENT: Record<AddonKey, DrawerContent> = {
     sections: [
       {
         title: "Local directory presence",
-        body: "We list you consistently across 30+ Australian directories (True Local, White Pages, Yellow Pages, Yelp AU, Hotfrog, StartLocal, Aussie Web, and more). Same name, address and phone everywhere. It sounds boring, but it's one of the strongest local ranking signals Google uses.",
+        body: "We list you consistently across Australia's top directories: True Local, White Pages, Yellow Pages, Yelp AU, Hotfrog, StartLocal, Aussie Web, and more. Same name, address and phone everywhere. It sounds boring, but it's one of the strongest local ranking signals Google uses.",
       },
       {
         title: "Blog posts written and published for you",
