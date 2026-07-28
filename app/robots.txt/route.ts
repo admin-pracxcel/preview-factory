@@ -35,7 +35,6 @@ const DISALLOWS = [
   "/welcome",
   "/expired",
   "/building",
-  "/upsell",
   "/api",
   "/monitoring",
 ];
