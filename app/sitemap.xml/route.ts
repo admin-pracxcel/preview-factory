@@ -24,6 +24,7 @@ import { getTenant } from "@/lib/tenant-store";
 import { tenantIdBySlug } from "@/lib/slug";
 import { supabase } from "@/lib/supabase";
 import { sitePropsSchema, type SiteProps } from "@/shared/types/site-props";
+import { listPostsByTenant } from "@/lib/blog-posts-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -118,6 +119,26 @@ async function tenantResponse(tenantId: string, host: string): Promise<Response>
   if (!parsed.success) return notFound();
 
   const entries = tenantEntries(parsed.data, tenant.updatedAt);
+
+  // blog URLs — only appended when the tenant has published posts
+  const posts = await listPostsByTenant(tenantId, { limit: 500 });
+  if (posts.length > 0) {
+    entries.push({
+      path: "/blog",
+      lastmod: posts[0].publishedAt,
+      changefreq: "weekly",
+      priority: 0.7,
+    });
+    for (const p of posts) {
+      entries.push({
+        path: `/blog/${p.slug}`,
+        lastmod: p.publishedAt,
+        changefreq: "monthly",
+        priority: 0.6,
+      });
+    }
+  }
+
   return xmlResponse(entries, host);
 }
 

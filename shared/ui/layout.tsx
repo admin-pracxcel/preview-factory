@@ -25,7 +25,7 @@ export interface NavItem {
  * Service and location collections become dropdown menus; scalar pages
  * (About, FAQ, Contact) remain flat links.
  */
-export function deriveNav(site: SiteProps, basePath: string): NavItem[] {
+export function deriveNav(site: SiteProps, basePath: string, showBlog?: boolean): NavItem[] {
   const base = href(basePath);
   const items: NavItem[] = [];
 
@@ -62,6 +62,7 @@ export function deriveNav(site: SiteProps, basePath: string): NavItem[] {
   if (site.about) items.push({ label: "About", href: href(basePath, "about") });
   else if (site.home.about) items.push({ label: "About", href: `${base}#about` });
   if (site.faq) items.push({ label: "FAQ", href: href(basePath, "faq") });
+  if (showBlog) items.push({ label: "Blog", href: href(basePath, "blog") });
   items.push({ label: "Contact", href: `${base}#contact` });
   return items;
 }
@@ -360,16 +361,18 @@ export function Breadcrumbs({ crumbs }: { crumbs: NavItem[] }) {
 export function SiteShell({
   site,
   basePath,
+  showBlog = false,
   jsonLd = [],
   children,
 }: {
   site: SiteProps;
   basePath: string;
+  showBlog?: boolean;
   jsonLd?: Array<Record<string, unknown>>;
   children: React.ReactNode;
 }) {
   const theme = resolveTheme(site.branding, site.overrides);
-  const nav = deriveNav(site, basePath);
+  const nav = deriveNav(site, basePath, showBlog);
   return (
     <div
       data-theme-root

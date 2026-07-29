@@ -18,10 +18,12 @@ export function HomePage({
   site,
   basePath,
   tenantId,
+  showBlog = false,
 }: {
   site: SiteProps;
   basePath: string;
   tenantId?: string;
+  showBlog?: boolean;
 }) {
   const { home, business } = site;
   const { heroImage } = resolveTheme(site.branding, site.overrides);
@@ -31,7 +33,7 @@ export function HomePage({
   const locations = site.locations.map((l) => ({ slug: l.slug, suburb: l.suburb }));
 
   return (
-    <SiteShell site={site} basePath={basePath} jsonLd={[buildLocalBusinessJsonLd(site, heroImage)]}>
+    <SiteShell site={site} basePath={basePath} showBlog={showBlog} jsonLd={[buildLocalBusinessJsonLd(site, heroImage)]}>
       <Hero
         headline={home.hero.headline}
         subheadline={home.hero.subheadline}

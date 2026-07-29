@@ -26,6 +26,7 @@ import { renderTradesPage, tradesPageMetadata } from "@/templates/categories/tra
 import { renderAlliedHealthPage, alliedHealthPageMetadata } from "@/templates/categories/allied-health";
 import { renderBeautyPage, beautyPageMetadata } from "@/templates/categories/beauty-aesthetics";
 import { renderFitnessPage, fitnessPageMetadata } from "@/templates/categories/fitness-wellness";
+import { countByTenant } from "@/lib/blog-posts-store";
 
 /* ----------------------------------------------------------------------- types */
 
@@ -58,18 +59,19 @@ async function renderPage(
   site: SiteProps,
   slug: string[],
   tenantId: string,
+  showBlog: boolean,
 ): Promise<React.ReactElement | null> {
   const bp = await effectiveBasePath(tenantId);
   switch (category) {
     case "allied-health":
-      return renderAlliedHealthPage(site, slug, bp, tenantId);
+      return renderAlliedHealthPage(site, slug, bp, tenantId, showBlog);
     case "beauty-aesthetics":
-      return renderBeautyPage(site, slug, bp, tenantId);
+      return renderBeautyPage(site, slug, bp, tenantId, showBlog);
     case "fitness-wellness":
-      return renderFitnessPage(site, slug, bp, tenantId);
+      return renderFitnessPage(site, slug, bp, tenantId, showBlog);
     default:
       // "trades" and any unknown category fall through to trades renderer
-      return renderTradesPage(site, slug, bp, tenantId);
+      return renderTradesPage(site, slug, bp, tenantId, showBlog);
   }
 }
 
@@ -291,7 +293,8 @@ export default async function TenantPreviewPage({
     );
   }
 
-  const page = await renderPage(tenant.category, parseResult.data, slug, tenantId);
+  const showBlog = (await countByTenant(tenantId)) > 0;
+  const page = await renderPage(tenant.category, parseResult.data, slug, tenantId, showBlog);
   if (!page) notFound();
   return page;
 }

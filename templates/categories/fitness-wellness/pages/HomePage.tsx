@@ -18,10 +18,12 @@ export function HomePage({
   site,
   basePath,
   tenantId,
+  showBlog = false,
 }: {
   site: SiteProps;
   basePath: string;
   tenantId?: string;
+  showBlog?: boolean;
 }) {
   const { home, business } = site;
   const { heroImage } = resolveTheme(site.branding, site.overrides);
@@ -44,7 +46,7 @@ export function HomePage({
   ];
 
   return (
-    <SiteShell site={site} basePath={basePath} jsonLd={jsonLd}>
+    <SiteShell site={site} basePath={basePath} showBlog={showBlog} jsonLd={jsonLd}>
       <Hero
         headline={home.hero.headline}
         subheadline={home.hero.subheadline}
