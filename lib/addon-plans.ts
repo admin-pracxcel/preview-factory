@@ -21,8 +21,10 @@
  * setup.
  */
 
+import type { SeoTier } from "./seo-cadence";
+
+export type { SeoTier };
 export type AddonKey = "seo" | "google_ads" | "social_ads";
-export type SeoTier = "starter" | "growth" | "pro";
 export type BillingCycle = "monthly" | "annual";
 
 export type SeoPlanKey = `seo-${SeoTier}-${BillingCycle}`;
