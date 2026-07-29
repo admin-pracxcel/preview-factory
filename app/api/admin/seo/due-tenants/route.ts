@@ -42,7 +42,8 @@ export async function GET(req: Request): Promise<NextResponse> {
   }
   const { kind } = parseResult.data;
 
-  const todayAest = todayInAest();
+  const now = new Date();
+  const todayKey = aestDateKey(now);
   const origin = new URL(req.url).origin;
 
   // Pull all active SEO addon rows joined with the tenant.
@@ -79,13 +80,13 @@ export async function GET(req: Request): Promise<NextResponse> {
     const publishToday = isPublishDay({
       subscribedAt: new Date(row.subscribed_at),
       tier,
-      today: todayAest,
+      today: now,
     });
     if (!publishToday) continue;
 
     const lastTickAt =
       kind === "blog" ? row.last_blog_tick_at : row.last_gbp_tick_at;
-    if (lastTickAt && sameAestCalendarDay(new Date(lastTickAt), todayAest)) {
+    if (lastTickAt && aestDateKey(new Date(lastTickAt)) === todayKey) {
       continue; // idempotency guard: already ran today
     }
 
@@ -118,17 +119,11 @@ export async function GET(req: Request): Promise<NextResponse> {
   return NextResponse.json({ tenants: dueTenants });
 }
 
-/** Right-now converted to the current AEST wall-clock instant (as a Date). */
-function todayInAest(): Date {
-  const now = new Date();
-  const aestMs = now.getTime() + 10 * 60 * 60 * 1000; // +10 hours (ignoring DST for MVP)
-  return new Date(aestMs);
-}
-
-function sameAestCalendarDay(a: Date, b: Date): boolean {
-  const key = (d: Date) => {
-    const shifted = new Date(d.getTime() + 10 * 60 * 60 * 1000);
-    return `${shifted.getUTCFullYear()}-${shifted.getUTCMonth()}-${shifted.getUTCDate()}`;
-  };
-  return key(a) === key(b);
+/** ISO-like YYYY-MM-DD in AEST (fixed +10h, no DST). Shift happens exactly once. */
+function aestDateKey(d: Date): string {
+  const shifted = new Date(d.getTime() + 10 * 60 * 60 * 1000);
+  const y = shifted.getUTCFullYear();
+  const m = String(shifted.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(shifted.getUTCDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
 }
