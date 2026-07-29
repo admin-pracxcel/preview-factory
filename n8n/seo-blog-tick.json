@@ -56,7 +56,7 @@
       "parameters": {
         "resource": "conversation",
         "operation": "send",
-        "systemPromptFile": "={{ $env.BLOG_PROMPT_DIR }}/blog-{{$json.category}}.md",
+        "systemPromptFile": "={{ $env.BLOG_PROMPT_DIR + '/blog-' + $json.category + '.md' }}",
         "userMessage": "={{ JSON.stringify($json) }}"
       }
     },
