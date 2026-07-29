@@ -243,6 +243,21 @@ Your developer handles all of these from the deployment checklist:
 
 ---
 
+## SEO automation setup
+
+Your developer will set up the SEO blog automation workflows to run on a schedule. This requires a shared secret for authentication.
+
+### CRON_SECRET (SEO automation)
+
+The n8n SEO cron workflows authenticate to Vercel with a shared `x-cron-secret` header. Set the same value on both sides.
+
+1. Generate a random secret: `openssl rand -hex 32`.
+2. Vercel → Project Settings → Environment Variables → add `CRON_SECRET = <value>` for Production + Preview + Development. Redeploy.
+3. n8n instance → environment file (or container env vars) → set `CRON_SECRET=<same value>`. Restart n8n.
+4. Sanity check: `curl -H "x-cron-secret: <value>" https://<prod-domain>/api/admin/seo/due-tenants?kind=blog` returns 200 with a `{"tenants":[...]}` payload. Curl without the header returns 401.
+
+---
+
 ## If you get stuck
 
 The most common early blockers for non-technical founders, in order of frequency:

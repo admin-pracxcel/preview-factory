@@ -117,6 +117,16 @@ STRIPE_PRICE_ADDON_SOCIAL_ADS_ANNUAL
 Trigger a redeploy after adding, so the values are available in the
 Serverless Function environment.
 
+## SEO automation env vars (Vercel)
+
+In addition to the Stripe price IDs above, the SEO automation needs:
+
+```
+CRON_SECRET
+```
+
+Value: 32-byte random hex (see [what-human-must-do.md](./what-human-must-do.md#cron_secret-seo-automation)). The same value must be set on the n8n instance so the two sides authenticate.
+
 ## Step 5 — Confirm the webhook covers addon events
 
 Your existing webhook endpoint (`/api/webhooks/stripe`) will pick up the
