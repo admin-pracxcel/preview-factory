@@ -33,6 +33,7 @@ import {
 } from "@/lib/session";
 import { CopyButton, BillingButton, EditRequestForm, CustomDomainCard, EditSiteCard, LeadsList } from "./ui";
 import { AutoOpenAddonFunnel, GrowthServicesCard } from "./AddonFunnel";
+import { SeoStatusCard } from "./SeoStatusCard";
 import { LogoutButton } from "@/app/components/LogoutButton";
 import { isAdminSession } from "@/lib/admin";
 import { listActiveAddonsForTenant } from "@/lib/addon-store";
@@ -116,6 +117,7 @@ export default async function DashboardPage({
   const editsUsedThisMonth = await countEditRequestsThisMonth(tenantId);
   const activeAddons = await listActiveAddonsForTenant(tenantId);
   const activeAddonKeys = activeAddons.map((a) => a.addonKey);
+  const seoSub = activeAddons.find((a) => a.addonKey === "seo");
 
   // Derive a small quota card for the "Request a change" section. Mirrors
   // the plan-aware logic in ChangeRequestsPanel; kept inline because this
@@ -215,6 +217,9 @@ export default async function DashboardPage({
             ))}
           </div>
         </section>
+
+        {/* ── SEO blog status (visible when tenant has an active SEO addon) ── */}
+        {seoSub && <SeoStatusCard tenantId={tenantId} subscription={seoSub} />}
 
         {/* ── grow your business (addons upsell — always visible) ── */}
         {tenant.status === "published" && (
