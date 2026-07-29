@@ -45,3 +45,14 @@ ALTER TABLE seo_publish_log ENABLE ROW LEVEL SECURITY;
 
 -- No policies added — service_role bypasses RLS. Anon/authenticated cannot
 -- read or write these tables directly.
+
+-- Constrain blog_posts.status to known values (idempotent).
+DO $$ BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'blog_posts_status_check'
+  ) THEN
+    ALTER TABLE blog_posts
+      ADD CONSTRAINT blog_posts_status_check
+      CHECK (status IN ('published', 'failed'));
+  END IF;
+END $$;
