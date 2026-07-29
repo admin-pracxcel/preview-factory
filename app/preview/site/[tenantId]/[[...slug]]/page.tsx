@@ -293,7 +293,7 @@ export default async function TenantPreviewPage({
     );
   }
 
-  const showBlog = (await countByTenant(tenantId)) > 0;
+  const showBlog = slug.length === 0 ? (await countByTenant(tenantId)) > 0 : false;
   const page = await renderPage(tenant.category, parseResult.data, slug, tenantId, showBlog);
   if (!page) notFound();
   return page;
