@@ -245,16 +245,27 @@ Your developer handles all of these from the deployment checklist:
 
 ## SEO automation setup
 
-Your developer will set up the SEO blog automation workflows to run on a schedule. This requires a shared secret for authentication.
+The SEO blog automation runs from n8n on a schedule. It authenticates to Vercel with a shared `x-cron-secret` header. The n8n workflow is self-contained — no n8n container edits or env vars are required. Configuration lives in a "Set config" node inside the workflow itself.
 
-### CRON_SECRET (SEO automation)
-
-The n8n SEO cron workflows authenticate to Vercel with a shared `x-cron-secret` header. Set the same value on both sides.
+### CRON_SECRET
 
 1. Generate a random secret: `openssl rand -hex 32`.
 2. Vercel → Project Settings → Environment Variables → add `CRON_SECRET = <value>` for Production + Preview + Development. Redeploy.
-3. n8n instance → environment file (or container env vars) → set `CRON_SECRET=<same value>`. Restart n8n.
-4. Sanity check: `curl -H "x-cron-secret: <value>" https://<prod-domain>/api/admin/seo/due-tenants?kind=blog` returns 200 with a `{"tenants":[...]}` payload. Curl without the header returns 401.
+3. Sanity check: `curl -H "x-cron-secret: <value>" https://<prod-domain>/api/admin/seo/due-tenants?kind=blog` returns 200 with a `{"tenants":[...]}` payload. Curl without the header returns 401.
+
+### Import the workflow into n8n
+
+1. In n8n → Workflows → **Import from File** → select `n8n/seo-blog-tick.json` from the repo.
+2. Open the imported workflow → click the **Set config** node.
+3. Fill in three placeholder values (leave the four `prompt_*` fields untouched):
+   - `APP_BASE_URL` → your production domain, e.g. `https://mysitehq.com.au` (no trailing slash)
+   - `CRON_SECRET` → the same hex value you set on Vercel
+   - `PEXELS_API_KEY` → free API key from [pexels.com/api](https://www.pexels.com/api/)
+4. Save the workflow. Do NOT re-export it back to git — the plaintext secrets should live only inside n8n.
+5. Manually trigger one execution (Execute Workflow) to verify Claude Code generates a post and the Vercel endpoints accept it. Fix anything red before toggling Active.
+6. Toggle the workflow to **Active**. It will now fire daily at 06:00 AEST.
+
+To update a prompt: edit the relevant `strategy/_master/claude-code-prompts/blog-*.md` file, then run `node n8n/build-seo-blog-tick.mjs` to regenerate the workflow JSON, then re-import into n8n (re-entering the three config values).
 
 ---
 
