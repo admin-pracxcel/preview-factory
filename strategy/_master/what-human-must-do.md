@@ -257,15 +257,15 @@ The SEO blog automation runs from n8n on a schedule. It authenticates to Vercel 
 
 1. In n8n → Workflows → **Import from File** → select `n8n/seo-blog-tick.json` from the repo.
 2. Open the imported workflow → click the **Set config** node.
-3. Fill in three placeholder values (leave the four `prompt_*` fields untouched):
+3. Fill in the three placeholder values:
    - `APP_BASE_URL` → your production domain, e.g. `https://mysitehq.com.au` (no trailing slash)
    - `CRON_SECRET` → the same hex value you set on Vercel
    - `PEXELS_API_KEY` → free API key from [pexels.com/api](https://www.pexels.com/api/)
 4. Save the workflow. Do NOT re-export it back to git — the plaintext secrets should live only inside n8n.
-5. Manually trigger one execution (Execute Workflow) to verify Claude Code generates a post and the Vercel endpoints accept it. Fix anything red before toggling Active.
+5. Manually trigger one execution (Execute Workflow) to verify the generator runs and the Vercel endpoints accept the post. Fix anything red before toggling Active.
 6. Toggle the workflow to **Active**. It will now fire daily at 06:00 AEST.
 
-To update a prompt: edit the relevant `strategy/_master/claude-code-prompts/blog-*.md` file, then run `node n8n/build-seo-blog-tick.mjs` to regenerate the workflow JSON, then re-import into n8n (re-entering the three config values).
+The workflow shells out to `scripts/seo-blog-generate.ts` in the repo checked out on the n8n container at `/opt/preview-factory`. The container self-updates via `git fetch && git reset --hard origin/main` at the start of every run, so edits to the prompt files under `strategy/_master/claude-code-prompts/` ship the moment you push them — no re-import needed.
 
 ---
 

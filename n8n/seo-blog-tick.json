@@ -50,30 +50,6 @@
               "name": "PEXELS_API_KEY",
               "type": "string",
               "value": "REPLACE_ME_WITH_PEXELS_KEY"
-            },
-            {
-              "id": "c4",
-              "name": "prompt_trades",
-              "type": "string",
-              "value": "# Blog post prompt: Trades\n\nYou are the ghost-writer for an Australian trades business. Given the JSON payload in the next message, write ONE blog post that would rank in local Google search and read like the tradie would actually write it.\n\n## Input schema\n```json\n{\n  \"tenantId\": \"uuid\",\n  \"businessName\": \"Smith Electrical\",\n  \"category\": \"trades\",\n  \"services\": [\"Emergency callouts\", \"Switchboard upgrades\", \"...\"],\n  \"suburb\": \"Penrith\",\n  \"brandVoice\": \"direct, no-nonsense, friendly\",\n  \"recentTitles\": [\"last 10 titles to avoid duplicating\"]\n}\n```\n\n## Output schema - MUST be a single JSON object, no prose around it\n\n```json\n{\n  \"title\": \"string, max 200 chars\",\n  \"slug\": \"lowercase-kebab, matches ^[a-z0-9]+(?:-[a-z0-9]+)*$\",\n  \"excerpt\": \"1-2 sentence hook, max 500 chars\",\n  \"body_md\": \"Markdown body, 400-800 words\",\n  \"cover_image_query\": \"3-6 word Pexels search query\"\n}\n```\n\n## Rules\n\n- Australian English. No em-dashes anywhere in the body, title, or excerpt. Use commas, full stops, or brackets.\n- Not sales-y. No \"In today's fast-paced world\", \"Here's the thing\", or agency cliches.\n- Write like a tradie explaining to a mate. Short sentences. Concrete examples.\n- Use the tenant's actual services and suburb where it makes sense. Do not invent services they don't offer.\n- Never repeat any title in `recentTitles`. Pick a fresh angle.\n- Topic must be genuinely useful to a homeowner searching Google - \"5 signs your switchboard needs upgrading\", \"What to do when your power trips at 2am\", \"How to spot a dodgy quote\". Not \"Welcome to our blog\".\n- Body must include a soft CTA at the end: \"If you're in [suburb] and this sounds like your place, [businessName] can help - give us a bell.\" Never invent contact details.\n- Titles should include a suburb or \"Australia\" tag where natural, for local SEO (\"...in Penrith\", \"How Aussies...\").\n\n## Slug rules\n\n- Lowercase, kebab-case, no more than 8 words.\n- Must match `^[a-z0-9]+(?:-[a-z0-9]+)*$` - no leading/trailing/double dashes.\n- Do not start with a date or number.\n\n## Return ONLY the JSON object. No preamble, no code fence.\n"
-            },
-            {
-              "id": "c5",
-              "name": "prompt_allied_health",
-              "type": "string",
-              "value": "# Blog post prompt: Allied health\n\nYou are the ghost-writer for an Australian allied-health practice. Given the JSON payload in the next message, write ONE blog post that would rank in local Google search and read like the practitioner would actually write it.\n\n## Input schema\n```json\n{\n  \"tenantId\": \"uuid\",\n  \"businessName\": \"Peak Physio\",\n  \"category\": \"allied-health\",\n  \"services\": [\"Physiotherapy\", \"Sports injury assessment\", \"...\"],\n  \"suburb\": \"Bendigo\",\n  \"brandVoice\": \"warm, professional, clear\",\n  \"recentTitles\": [\"last 10 titles to avoid duplicating\"]\n}\n```\n\n## Output schema - MUST be a single JSON object, no prose around it\n\n```json\n{\n  \"title\": \"string, max 200 chars\",\n  \"slug\": \"lowercase-kebab, matches ^[a-z0-9]+(?:-[a-z0-9]+)*$\",\n  \"excerpt\": \"1-2 sentence hook, max 500 chars\",\n  \"body_md\": \"Markdown body, 400-800 words\",\n  \"cover_image_query\": \"3-6 word Pexels search query\"\n}\n```\n\n## Rules\n\n- Australian English. No em-dashes anywhere in the body, title, or excerpt. Use commas, full stops, or brackets.\n- AHPRA compliance: no testimonials in the body, no clinical outcome claims, no \"cure\", \"guaranteed\", or \"best\". Frame everything as general information, not personal medical advice.\n- Always include a line like: \"This is general information only. Book an appointment with a qualified practitioner for advice specific to your situation.\" Preferably near the end.\n- Voice: warm, professional, clear. Not a tradie-mate tone. Think \"your friendly local physio explaining a common issue\".\n- Topics that always work: \"What is [condition]?\", \"When to see a physio about [pain]\", \"5 stretches for [common issue]\", \"Why does [X] hurt after [Y]?\".\n- Never repeat any title in `recentTitles`. Pick a fresh angle.\n- Topic must be genuinely useful to someone searching Google - \"How to manage lower back pain at your desk\", \"When to see a physio about persistent knee pain\", \"Why your shoulder feels tight after swimming\". Not \"Welcome to our blog\".\n- Body must include a soft CTA at the end: \"If you're in [suburb] and would like to discuss this further, the team at [businessName] is here to help.\" Never invent contact details.\n- Titles should include a suburb or \"Australia\" tag where natural, for local SEO (\"...in Bendigo\", \"How Australians...\").\n\n## Slug rules\n\n- Lowercase, kebab-case, no more than 8 words.\n- Must match `^[a-z0-9]+(?:-[a-z0-9]+)*$` - no leading/trailing/double dashes.\n- Do not start with a date or number.\n\n## Return ONLY the JSON object. No preamble, no code fence.\n"
-            },
-            {
-              "id": "c6",
-              "name": "prompt_beauty",
-              "type": "string",
-              "value": "# Blog post prompt: Beauty\n\nYou are the ghost-writer for an Australian beauty or aesthetics business. Given the JSON payload in the next message, write ONE blog post that would rank in local Google search and read like the business owner would actually write it.\n\n## Input schema\n```json\n{\n  \"tenantId\": \"uuid\",\n  \"businessName\": \"Glow Studio\",\n  \"category\": \"beauty\",\n  \"services\": [\"Facials\", \"Waxing\", \"Hydrafacial\", \"...\"],\n  \"suburb\": \"Paddington\",\n  \"brandVoice\": \"aspirational, warm, grounded\",\n  \"recentTitles\": [\"last 10 titles to avoid duplicating\"]\n}\n```\n\n## Output schema - MUST be a single JSON object, no prose around it\n\n```json\n{\n  \"title\": \"string, max 200 chars\",\n  \"slug\": \"lowercase-kebab, matches ^[a-z0-9]+(?:-[a-z0-9]+)*$\",\n  \"excerpt\": \"1-2 sentence hook, max 500 chars\",\n  \"body_md\": \"Markdown body, 400-800 words\",\n  \"cover_image_query\": \"3-6 word Pexels search query\"\n}\n```\n\n## Rules\n\n- Australian English. No em-dashes anywhere in the body, title, or excerpt. Use commas, full stops, or brackets.\n- Voice: aspirational but grounded. \"Your skin will thank you\" not \"transform your life\". Warm, not clinical.\n- No before-and-after language (\"get rid of\", \"banish\"). Frame positively.\n- Never claim a treatment cures, permanently fixes, or is medically approved unless the input says so.\n- Topics that work: \"How to prep your skin before a facial\", \"What actually happens during a Hydrafacial\", \"Choosing between waxing and IPL for [suburb] women\", \"Winter skincare in [suburb]\".\n- Never repeat any title in `recentTitles`. Pick a fresh angle.\n- Topic must be genuinely useful to someone searching Google - \"How to care for your skin after waxing\", \"What happens during a facial treatment\", \"Preparing for a beauty appointment in [suburb]\". Not \"Welcome to our blog\".\n- Body must include a soft CTA at the end: \"Ready to book? The team at [businessName] in [suburb] is ready to help.\" Never invent contact details.\n- Titles should include a suburb or \"Australia\" tag where natural, for local SEO (\"...in Paddington\", \"How Australians...\").\n\n## Slug rules\n\n- Lowercase, kebab-case, no more than 8 words.\n- Must match `^[a-z0-9]+(?:-[a-z0-9]+)*$` - no leading/trailing/double dashes.\n- Do not start with a date or number.\n\n## Return ONLY the JSON object. No preamble, no code fence.\n"
-            },
-            {
-              "id": "c7",
-              "name": "prompt_fitness",
-              "type": "string",
-              "value": "# Blog post prompt: Fitness\n\nYou are the ghost-writer for an Australian fitness or wellness business. Given the JSON payload in the next message, write ONE blog post that would rank in local Google search and read like the trainer would actually write it.\n\n## Input schema\n```json\n{\n  \"tenantId\": \"uuid\",\n  \"businessName\": \"Strong & Steady Gym\",\n  \"category\": \"fitness\",\n  \"services\": [\"Personal training\", \"Group classes\", \"Online coaching\", \"...\"],\n  \"suburb\": \"Newtown\",\n  \"brandVoice\": \"energetic, direct, motivating\",\n  \"recentTitles\": [\"last 10 titles to avoid duplicating\"]\n}\n```\n\n## Output schema - MUST be a single JSON object, no prose around it\n\n```json\n{\n  \"title\": \"string, max 200 chars\",\n  \"slug\": \"lowercase-kebab, matches ^[a-z0-9]+(?:-[a-z0-9]+)*$\",\n  \"excerpt\": \"1-2 sentence hook, max 500 chars\",\n  \"body_md\": \"Markdown body, 400-800 words\",\n  \"cover_image_query\": \"3-6 word Pexels search query\"\n}\n```\n\n## Rules\n\n- Australian English. No em-dashes anywhere in the body, title, or excerpt. Use commas, full stops, or brackets.\n- Voice: energetic, direct, motivating without being cheesy. \"Show up three days a week and you'll see it in six\" not \"unlock your inner warrior\".\n- Never claim health outcomes (\"lose 10kg guaranteed\", \"cure back pain\"). Talk about training habits, form, and consistency.\n- Topics that work: \"3 mistakes beginners make in their first month\", \"Should you train at 6am or 6pm?\", \"What to eat before an early gym session in [suburb]\", \"Why deadlifts scare people (and shouldn't)\".\n- Body should assume the reader is beginner-to-intermediate, not a competitive athlete, unless the tenant's services suggest otherwise.\n- Never repeat any title in `recentTitles`. Pick a fresh angle.\n- Topic must be genuinely useful to someone searching Google - \"Getting started with weight training at any age\", \"Recovery tips after your first week of training\", \"Finding time to train in [suburb]\". Not \"Welcome to our blog\".\n- Body must include a soft CTA at the end: \"Ready to get going? The team at [businessName] in [suburb] is here to help you start.\" Never invent contact details.\n- Titles should include a suburb or \"Australia\" tag where natural, for local SEO (\"...in Newtown\", \"How Australians...\").\n\n## Slug rules\n\n- Lowercase, kebab-case, no more than 8 words.\n- Must match `^[a-z0-9]+(?:-[a-z0-9]+)*$` - no leading/trailing/double dashes.\n- Do not start with a date or number.\n\n## Return ONLY the JSON object. No preamble, no code fence.\n"
             }
           ]
         },
@@ -140,19 +116,79 @@
       }
     },
     {
-      "id": "sb00cafe-0000-4000-8000-000000000004",
-      "name": "Claude Code generate post",
-      "type": "n8n-nodes-claude-code.claudeCode",
-      "typeVersion": 1,
+      "id": "sb00cafe-0000-4000-8000-00000000000a",
+      "name": "Prep payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
         1104,
         176
       ],
       "parameters": {
-        "resource": "conversation",
-        "operation": "send",
-        "systemMessage": "={{ $('Set config').item.json['prompt_' + $json.category.replace('-', '_')] }}",
-        "userMessage": "={{ JSON.stringify($json) }}"
+        "language": "javaScript",
+        "jsCode": "// Base64-encode the tenant payload so the shell command can safely\n// pass it via printf | base64 -d — same convention as the generator\n// workflow's Prep payload node.\nconst tenant = $input.item.json;\nconst payload_b64 = Buffer.from(JSON.stringify(tenant), 'utf8').toString('base64');\nreturn [{ ...tenant, payload_b64 }];"
+      }
+    },
+    {
+      "id": "sb00cafe-0000-4000-8000-000000000004",
+      "name": "Run generator",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1328,
+        176
+      ],
+      "parameters": {
+        "executeOnce": true,
+        "command": "=sh -c 'set -e; export PATH=\"/home/node/.n8n/node_modules/.bin:$PATH\"; cd /opt/preview-factory; git -c safe.directory=/opt/preview-factory fetch --quiet origin main; git -c safe.directory=/opt/preview-factory reset --hard --quiet origin/main; npm install --omit=dev --no-audit --no-fund --loglevel=error >/dev/null 2>&1; set -a; . ./.env; set +a; set +e; printf %s \"{{ $json.payload_b64 }}\" | base64 -d | npx --no-install tsx scripts/seo-blog-generate.ts; exit 0'"
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "id": "sb00cafe-0000-4000-8000-00000000000b",
+      "name": "Parse envelope",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1552,
+        176
+      ],
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Parse the CLI's stdout envelope. Same discipline as the generator\n// workflow: whatever the Execute Command node gives us, produce one item\n// with { ok, transient, error_code, error_message, post, meta } so\n// downstream nodes have a stable shape.\nconst item = $input.item.json || {};\nconst stdout = item.stdout || '';\nconst stderr = item.stderr || '';\nconst exitCode = (typeof item.exitCode === 'number') ? item.exitCode : null;\nconst runError = item.error || null;\n\nconst lines = stdout.split(/\\r?\\n/).map(s => s.trim()).filter(Boolean);\nconst last = lines[lines.length - 1] || '';\n\nlet env = null;\ntry { env = JSON.parse(last); } catch (_) { /* fall through */ }\n\nif (!env || env.v !== 1 || typeof env.ok !== 'boolean') {\n  const parts = [];\n  if (runError) {\n    const emsg = (runError.message || runError.description || JSON.stringify(runError)).toString();\n    parts.push('shell_error=' + emsg);\n  }\n  if (exitCode !== null && exitCode !== 0) parts.push('exit=' + exitCode);\n  if (stderr) parts.push('stderr=' + stderr.trim().slice(0, 300));\n  if (last && !env) parts.push('last_stdout=' + last.slice(0, 300));\n  if (parts.length === 0) parts.push('no output from Execute Command');\n  return [{\n    ok: false,\n    transient: false,\n    error_code: 'cli_bad_envelope',\n    error_message: parts.join(' | ').slice(0, 500),\n    post: null,\n    meta: null,\n  }];\n}\n\nif (env.ok) {\n  return [{\n    ok: true,\n    transient: false,\n    error_code: null,\n    error_message: null,\n    post: env.post,\n    meta: env.meta || null,\n  }];\n}\n\nconst code = env.error?.code || 'generation_failed';\nconst transient = ['rate_limited', 'timeout', 'claude_cli_error'].includes(code);\nreturn [{\n  ok: false,\n  transient,\n  error_code: code,\n  error_message: (env.error?.message || 'unknown').slice(0, 500),\n  post: null,\n  meta: null,\n}];"
+      }
+    },
+    {
+      "id": "sb00cafe-0000-4000-8000-00000000000c",
+      "name": "Ok?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1776,
+        176
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cond-ok",
+              "leftValue": "={{ $json.ok }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
       }
     },
     {
@@ -161,8 +197,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1328,
-        176
+        2000,
+        80
       ],
       "parameters": {
         "method": "GET",
@@ -172,7 +208,7 @@
           "parameters": [
             {
               "name": "query",
-              "value": "={{ $json.cover_image_query }}"
+              "value": "={{ $json.post.cover_image_query }}"
             },
             {
               "name": "per_page",
@@ -205,8 +241,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1552,
-        176
+        2224,
+        80
       ],
       "parameters": {
         "method": "POST",
@@ -226,7 +262,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({\n  tenantId: $node['For each tenant'].json.tenantId,\n  slug: $node['Claude Code generate post'].json.slug,\n  title: $node['Claude Code generate post'].json.title,\n  excerpt: $node['Claude Code generate post'].json.excerpt,\n  bodyMd: $node['Claude Code generate post'].json.body_md,\n  coverImageUrl: ($node['Pexels cover image'].json.photos && $node['Pexels cover image'].json.photos[0]) ? $node['Pexels cover image'].json.photos[0].src.large : undefined,\n  generationMeta: { model: 'claude-code', prompt: $node['For each tenant'].json.category }\n}) }}",
+        "jsonBody": "={{ JSON.stringify({\n  tenantId: $node['For each tenant'].json.tenantId,\n  slug: $node['Parse envelope'].json.post.slug,\n  title: $node['Parse envelope'].json.post.title,\n  excerpt: $node['Parse envelope'].json.post.excerpt,\n  bodyMd: $node['Parse envelope'].json.post.body_md,\n  coverImageUrl: ($node['Pexels cover image'].json.photos && $node['Pexels cover image'].json.photos[0]) ? $node['Pexels cover image'].json.photos[0].src.large : undefined,\n  generationMeta: { model: 'claude-code', prompt: $node['For each tenant'].json.category, duration_ms: $node['Parse envelope'].json.meta?.duration_ms }\n}) }}",
         "options": {
           "response": {
             "response": {
@@ -248,7 +284,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1552,
+        2224,
         400
       ],
       "parameters": {
@@ -269,7 +305,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({\n  tenantId: $node['For each tenant'].json.tenantId,\n  kind: 'blog',\n  reason: 'publish_failed_after_retries: ' + JSON.stringify($json).slice(0, 200)\n}) }}",
+        "jsonBody": "={{ JSON.stringify({\n  tenantId: $node['For each tenant'].json.tenantId,\n  kind: 'blog',\n  reason: ($node['Parse envelope'].json.error_code || 'publish_failed') + ': ' + (($node['Parse envelope'].json.error_message || JSON.stringify($json)).toString().slice(0, 200))\n}) }}",
         "options": {
           "response": {
             "response": {
@@ -330,18 +366,65 @@
       "main": [
         [
           {
-            "node": "Claude Code generate post",
+            "node": "Prep payload",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Claude Code generate post": {
+    "Prep payload": {
+      "main": [
+        [
+          {
+            "node": "Run generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run generator": {
+      "main": [
+        [
+          {
+            "node": "Parse envelope",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Parse envelope",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse envelope": {
+      "main": [
+        [
+          {
+            "node": "Ok?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ok?": {
       "main": [
         [
           {
             "node": "Pexels cover image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log failure",
             "type": "main",
             "index": 0
           }
@@ -400,6 +483,6 @@
   "meta": {
     "instanceId": "preview-factory"
   },
-  "versionId": "8010b810-0000-4810-8810-000000008011",
+  "versionId": "8010b810-0000-4810-8810-000000008012",
   "tags": []
 }
