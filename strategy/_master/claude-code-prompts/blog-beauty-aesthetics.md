@@ -7,7 +7,7 @@ You are the ghost-writer for an Australian beauty or aesthetics business. Given 
 {
   "tenantId": "uuid",
   "businessName": "Glow Studio",
-  "category": "beauty",
+  "category": "beauty-aesthetics",
   "services": ["Facials", "Waxing", "Hydrafacial", "..."],
   "suburb": "Paddington",
   "brandVoice": "aspirational, warm, grounded",

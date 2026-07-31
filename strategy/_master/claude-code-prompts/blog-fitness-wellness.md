@@ -7,7 +7,7 @@ You are the ghost-writer for an Australian fitness or wellness business. Given t
 {
   "tenantId": "uuid",
   "businessName": "Strong & Steady Gym",
-  "category": "fitness",
+  "category": "fitness-wellness",
   "services": ["Personal training", "Group classes", "Online coaching", "..."],
   "suburb": "Newtown",
   "brandVoice": "energetic, direct, motivating",

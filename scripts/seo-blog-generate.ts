@@ -10,7 +10,7 @@
  *   {
  *     "tenantId": "uuid",
  *     "tier": "starter" | "growth" | "pro",
- *     "category": "trades" | "allied-health" | "beauty" | "fitness",
+ *     "category": "trades" | "allied-health" | "beauty-aesthetics" | "fitness-wellness",
  *     "businessName": "...",
  *     "services": ["..."],
  *     "suburb": "...",
@@ -76,7 +76,12 @@ const POST_SCHEMA = {
   },
 } as const;
 
-const ALLOWED_CATEGORIES = new Set(["trades", "allied-health", "beauty", "fitness"]);
+const ALLOWED_CATEGORIES = new Set([
+  "trades",
+  "allied-health",
+  "beauty-aesthetics",
+  "fitness-wellness",
+]);
 
 function emit(env: Envelope): never {
   process.stdout.write(JSON.stringify(env) + "\n");
