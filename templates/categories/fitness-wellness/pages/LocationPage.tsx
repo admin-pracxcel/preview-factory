@@ -22,10 +22,12 @@ export function LocationPage({
   site,
   basePath,
   page,
+  showBlog = false,
 }: {
   site: SiteProps;
   basePath: string;
   page: LocationPageData;
+  showBlog?: boolean;
 }) {
   const crumbs = [
     { label: "Home", href: href(basePath) },
@@ -82,7 +84,7 @@ export function LocationPage({
   const title = page.headline ?? `${site.business.name} — Personal Training in ${page.suburb}`;
 
   return (
-    <SiteShell site={site} basePath={basePath} jsonLd={jsonLd}>
+    <SiteShell site={site} basePath={basePath} jsonLd={jsonLd} showBlog={showBlog}>
       <Breadcrumbs crumbs={crumbs} />
       <PageHero
         eyebrow={`${page.suburb}${page.state ? ", " + page.state : ""}`}

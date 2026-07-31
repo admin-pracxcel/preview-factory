@@ -39,18 +39,18 @@ export function renderAlliedHealthPage(
 
   if (section === "services" && key) {
     const page = site.services.find((s) => s.slug === key);
-    return page ? <ServiceDetailPage site={site} basePath={basePath} page={page} /> : null;
+    return page ? <ServiceDetailPage site={site} basePath={basePath} page={page} showBlog={showBlog} /> : null;
   }
   if (section === "locations" && key) {
     const page = site.locations.find((l) => l.slug === key);
-    return page ? <LocationPage site={site} basePath={basePath} page={page} /> : null;
+    return page ? <LocationPage site={site} basePath={basePath} page={page} showBlog={showBlog} /> : null;
   }
   if (section === "areas" && key) {
     const page = site.service_areas.find((a) => a.slug === key);
-    return page ? <ServiceAreaPage site={site} basePath={basePath} page={page} /> : null;
+    return page ? <ServiceAreaPage site={site} basePath={basePath} page={page} showBlog={showBlog} /> : null;
   }
-  if (section === "faq" && site.faq) return <FaqPage site={site} basePath={basePath} />;
-  if (section === "about" && site.about) return <AboutPage site={site} basePath={basePath} />;
+  if (section === "faq" && site.faq) return <FaqPage site={site} basePath={basePath} showBlog={showBlog} />;
+  if (section === "about" && site.about) return <AboutPage site={site} basePath={basePath} showBlog={showBlog} />;
 
   return null;
 }

@@ -17,7 +17,7 @@ import {
 } from "@/shared/ui";
 import { primaryCta } from "../cta";
 
-export function FaqPage({ site, basePath }: { site: SiteProps; basePath: string }) {
+export function FaqPage({ site, basePath, showBlog = false }: { site: SiteProps; basePath: string; showBlog?: boolean }) {
   const faq = site.faq;
   if (!faq) return null;
 
@@ -35,7 +35,7 @@ export function FaqPage({ site, basePath }: { site: SiteProps; basePath: string 
   const cta = primaryCta(site, basePath);
 
   return (
-    <SiteShell site={site} basePath={basePath} jsonLd={jsonLd}>
+    <SiteShell site={site} basePath={basePath} jsonLd={jsonLd} showBlog={showBlog}>
       <Breadcrumbs crumbs={crumbs} />
       <PageHero
         eyebrow="Help"

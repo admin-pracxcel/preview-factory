@@ -15,7 +15,7 @@ import {
 } from "@/shared/ui";
 import { primaryCta } from "../cta";
 
-export function AboutPage({ site, basePath }: { site: SiteProps; basePath: string }) {
+export function AboutPage({ site, basePath, showBlog = false }: { site: SiteProps; basePath: string; showBlog?: boolean }) {
   const about = site.about;
   if (!about) return null;
   const { business } = site;
@@ -33,7 +33,7 @@ export function AboutPage({ site, basePath }: { site: SiteProps; basePath: strin
   const cta = primaryCta(site, basePath);
 
   return (
-    <SiteShell site={site} basePath={basePath} jsonLd={jsonLd}>
+    <SiteShell site={site} basePath={basePath} jsonLd={jsonLd} showBlog={showBlog}>
       <Breadcrumbs crumbs={crumbs} />
       <PageHero eyebrow="About" title={about.heading ?? `About ${business.name}`} />
 

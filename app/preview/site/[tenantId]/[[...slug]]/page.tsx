@@ -293,7 +293,10 @@ export default async function TenantPreviewPage({
     );
   }
 
-  const showBlog = slug.length === 0 ? (await countByTenant(tenantId)) > 0 : false;
+  // Blog nav must appear on every sub-page, not just home — the header is
+  // rendered by SiteShell on every route. countByTenant is a HEAD count on
+  // an indexed table, cheap enough to run per render.
+  const showBlog = (await countByTenant(tenantId)) > 0;
   const page = await renderPage(tenant.category, parseResult.data, slug, tenantId, showBlog);
   if (!page) notFound();
   return page;

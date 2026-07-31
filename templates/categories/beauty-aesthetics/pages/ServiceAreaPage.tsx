@@ -19,10 +19,12 @@ export function ServiceAreaPage({
   site,
   basePath,
   page,
+  showBlog = false,
 }: {
   site: SiteProps;
   basePath: string;
   page: ServiceAreaPageData;
+  showBlog?: boolean;
 }) {
   const crumbs = [
     { label: "Home", href: href(basePath) },
@@ -56,7 +58,7 @@ export function ServiceAreaPage({
   const cta = primaryCta(site, basePath);
 
   return (
-    <SiteShell site={site} basePath={basePath} jsonLd={jsonLd}>
+    <SiteShell site={site} basePath={basePath} jsonLd={jsonLd} showBlog={showBlog}>
       <Breadcrumbs crumbs={crumbs} />
       <PageHero
         eyebrow={`${page.suburb}${page.state ? ", " + page.state : ""}`}
