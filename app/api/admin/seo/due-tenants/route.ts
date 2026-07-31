@@ -46,12 +46,14 @@ export async function GET(req: Request): Promise<NextResponse> {
   const todayKey = aestDateKey(now);
   const origin = new URL(req.url).origin;
 
-  // Pull all active SEO addon rows joined with the tenant.
-  // live_url is NOT a column on tenants — omitted from SELECT and computed below.
+  // Only select the tick column relevant to this kind. `last_gbp_tick_at`
+  // lands with the GBP plan migration; selecting it here would 500 until
+  // then. live_url is NOT a column on tenants — computed from origin below.
+  const tickColumn = kind === "blog" ? "last_blog_tick_at" : "last_gbp_tick_at";
   const { data, error } = await supabase()
     .from("tenant_addons")
     .select(
-      `id, tenant_id, plan_key, subscribed_at, last_blog_tick_at, last_gbp_tick_at,
+      `id, tenant_id, plan_key, subscribed_at, ${tickColumn},
        tenants!inner ( id, site_props, category )`,
     )
     .eq("addon_key", "seo")
@@ -84,8 +86,10 @@ export async function GET(req: Request): Promise<NextResponse> {
     });
     if (!publishToday) continue;
 
-    const lastTickAt =
-      kind === "blog" ? row.last_blog_tick_at : row.last_gbp_tick_at;
+    const lastTickAt = (row as Record<string, unknown>)[tickColumn] as
+      | string
+      | null
+      | undefined;
     if (lastTickAt && aestDateKey(new Date(lastTickAt)) === todayKey) {
       continue; // idempotency guard: already ran today
     }
