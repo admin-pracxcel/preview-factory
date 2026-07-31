@@ -304,8 +304,14 @@ const workflow = {
     "Split tenants array": {
       main: [[{ node: "For each tenant", type: "main", index: 0 }]],
     },
+    // splitInBatches v3 outputs are [done, loop]. main[0] fires once after
+    // the loop exhausts (nothing to do — workflow ends). main[1] fires
+    // per iteration and is where the real work goes.
     "For each tenant": {
-      main: [[{ node: "Prep payload", type: "main", index: 0 }]],
+      main: [
+        [],
+        [{ node: "Prep payload", type: "main", index: 0 }],
+      ],
     },
     "Prep payload": {
       main: [[{ node: "Run generator", type: "main", index: 0 }]],
