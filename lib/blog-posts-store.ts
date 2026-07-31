@@ -11,13 +11,21 @@ import { supabase } from "@/lib/supabase";
 
 const TABLE = "blog_posts";
 
+export interface BlogFaq {
+  question: string;
+  answer: string;
+}
+
 export interface BlogPost {
   id: string;
   tenantId: string;
   slug: string;
   title: string;
   excerpt: string;
+  tldr?: string;
   bodyMd: string;
+  keyTakeaways?: string[];
+  faqs?: BlogFaq[];
   coverImageUrl?: string;
   status: "published" | "failed";
   publishedAt: string;
@@ -31,12 +39,35 @@ interface BlogPostRow {
   slug: string;
   title: string;
   excerpt: string;
+  tldr: string | null;
   body_md: string;
+  key_takeaways: unknown;
+  faqs: unknown;
   cover_image_url: string | null;
   status: "published" | "failed";
   published_at: string;
   generation_meta: Record<string, unknown> | null;
   created_at: string;
+}
+
+function asStringArray(value: unknown): string[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const out = value.filter((v): v is string => typeof v === "string");
+  return out.length > 0 ? out : undefined;
+}
+
+function asFaqArray(value: unknown): BlogFaq[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const out: BlogFaq[] = [];
+  for (const v of value) {
+    if (v && typeof v === "object") {
+      const rec = v as Record<string, unknown>;
+      const question = typeof rec.question === "string" ? rec.question : null;
+      const answer = typeof rec.answer === "string" ? rec.answer : null;
+      if (question && answer) out.push({ question, answer });
+    }
+  }
+  return out.length > 0 ? out : undefined;
 }
 
 function rowToRecord(row: BlogPostRow): BlogPost {
@@ -46,7 +77,10 @@ function rowToRecord(row: BlogPostRow): BlogPost {
     slug: row.slug,
     title: row.title,
     excerpt: row.excerpt,
+    tldr: row.tldr ?? undefined,
     bodyMd: row.body_md,
+    keyTakeaways: asStringArray(row.key_takeaways),
+    faqs: asFaqArray(row.faqs),
     coverImageUrl: row.cover_image_url ?? undefined,
     status: row.status,
     publishedAt: row.published_at,
@@ -60,7 +94,10 @@ export interface CreateBlogPostInput {
   slug: string;
   title: string;
   excerpt: string;
+  tldr?: string;
   bodyMd: string;
+  keyTakeaways?: string[];
+  faqs?: BlogFaq[];
   coverImageUrl?: string;
   generationMeta?: Record<string, unknown>;
 }
@@ -73,7 +110,10 @@ export async function insertBlogPost(input: CreateBlogPostInput): Promise<BlogPo
       slug: input.slug,
       title: input.title,
       excerpt: input.excerpt,
+      tldr: input.tldr ?? null,
       body_md: input.bodyMd,
+      key_takeaways: input.keyTakeaways ?? null,
+      faqs: input.faqs ?? null,
       cover_image_url: input.coverImageUrl ?? null,
       generation_meta: input.generationMeta ?? null,
     })

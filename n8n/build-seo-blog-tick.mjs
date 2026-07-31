@@ -251,7 +251,10 @@ const workflow = {
           "  slug: $node['Parse envelope'].json.post.slug,\n" +
           "  title: $node['Parse envelope'].json.post.title,\n" +
           "  excerpt: $node['Parse envelope'].json.post.excerpt,\n" +
+          "  tldr: $node['Parse envelope'].json.post.tldr,\n" +
           "  bodyMd: $node['Parse envelope'].json.post.body_md,\n" +
+          "  keyTakeaways: $node['Parse envelope'].json.post.key_takeaways,\n" +
+          "  faqs: $node['Parse envelope'].json.post.faqs,\n" +
           "  coverImageUrl: ($node['Pexels cover image'].json.photos && $node['Pexels cover image'].json.photos[0]) ? $node['Pexels cover image'].json.photos[0].src.large : undefined,\n" +
           "  generationMeta: { model: 'claude-code', prompt: $node['For each tenant'].json.category, duration_ms: $node['Parse envelope'].json.meta?.duration_ms }\n" +
           "}) }}",

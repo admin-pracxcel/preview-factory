@@ -5,6 +5,11 @@ import { insertBlogPost } from "@/lib/blog-posts-store";
 import { logSuccess } from "@/lib/seo-publish-log-store";
 import { supabase } from "@/lib/supabase";
 
+const faqSchema = z.object({
+  question: z.string().min(1).max(300),
+  answer: z.string().min(1).max(2000),
+});
+
 const bodySchema = z.object({
   tenantId: z.string().uuid(),
   slug: z
@@ -14,7 +19,10 @@ const bodySchema = z.object({
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "slug must be lowercase kebab-case"),
   title: z.string().min(1).max(200),
   excerpt: z.string().min(1).max(500),
+  tldr: z.string().min(1).max(600).optional(),
   bodyMd: z.string().min(50),
+  keyTakeaways: z.array(z.string().min(1).max(300)).min(1).max(10).optional(),
+  faqs: z.array(faqSchema).min(1).max(10).optional(),
   coverImageUrl: z.string().url().optional(),
   generationMeta: z.record(z.string(), z.unknown()).optional(),
 });
@@ -44,7 +52,10 @@ export async function POST(req: Request): Promise<NextResponse> {
     slug: input.slug,
     title: input.title,
     excerpt: input.excerpt,
+    tldr: input.tldr,
     bodyMd: input.bodyMd,
+    keyTakeaways: input.keyTakeaways,
+    faqs: input.faqs,
     coverImageUrl: input.coverImageUrl,
     generationMeta: input.generationMeta,
   });

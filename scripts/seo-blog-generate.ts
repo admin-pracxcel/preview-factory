@@ -46,11 +46,19 @@ interface BlogJobPayload {
   liveUrl?: string;
 }
 
+interface GeneratedFaq {
+  question: string;
+  answer: string;
+}
+
 interface GeneratedPost {
   title: string;
   slug: string;
   excerpt: string;
+  tldr: string;
   body_md: string;
+  key_takeaways: string[];
+  faqs: GeneratedFaq[];
   cover_image_query: string;
 }
 
@@ -61,7 +69,16 @@ type Envelope =
 const POST_SCHEMA = {
   type: "object",
   additionalProperties: false,
-  required: ["title", "slug", "excerpt", "body_md", "cover_image_query"],
+  required: [
+    "title",
+    "slug",
+    "excerpt",
+    "tldr",
+    "body_md",
+    "key_takeaways",
+    "faqs",
+    "cover_image_query",
+  ],
   properties: {
     title: { type: "string", minLength: 1, maxLength: 200 },
     slug: {
@@ -71,7 +88,28 @@ const POST_SCHEMA = {
       pattern: "^[a-z0-9]+(?:-[a-z0-9]+)*$",
     },
     excerpt: { type: "string", minLength: 1, maxLength: 500 },
-    body_md: { type: "string", minLength: 200 },
+    tldr: { type: "string", minLength: 60, maxLength: 600 },
+    body_md: { type: "string", minLength: 400 },
+    key_takeaways: {
+      type: "array",
+      minItems: 3,
+      maxItems: 6,
+      items: { type: "string", minLength: 8, maxLength: 220 },
+    },
+    faqs: {
+      type: "array",
+      minItems: 3,
+      maxItems: 6,
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["question", "answer"],
+        properties: {
+          question: { type: "string", minLength: 6, maxLength: 200 },
+          answer: { type: "string", minLength: 40, maxLength: 800 },
+        },
+      },
+    },
     cover_image_query: { type: "string", minLength: 1, maxLength: 100 },
   },
 } as const;
