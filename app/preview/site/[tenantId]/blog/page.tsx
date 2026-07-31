@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { getTenant } from "@/lib/tenant-store";
 import { listPostsByTenant } from "@/lib/blog-posts-store";
 import { SiteShell, Breadcrumbs } from "@/shared/ui/layout";
-import { readingTimeMinutes, formatDateAU } from "@/lib/blog-formatting";
+import { readingTimeMinutes, formatDateAU, upgradePexelsCoverUrl } from "@/lib/blog-formatting";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -100,7 +100,7 @@ export default async function BlogIndexPage({ params }: PageProps) {
                     {p.coverImageUrl ? (
                       <div className="relative aspect-[16/10] overflow-hidden bg-zinc-100">
                         <Image
-                          src={p.coverImageUrl}
+                          src={upgradePexelsCoverUrl(p.coverImageUrl) ?? p.coverImageUrl}
                           alt={p.title}
                           fill
                           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"

@@ -16,6 +16,7 @@ import {
   extractH2s,
   formatDateAU,
   readingTimeMinutes,
+  upgradePexelsCoverUrl,
 } from "@/lib/blog-formatting";
 import { TableOfContents } from "./toc";
 import { FaqAccordion } from "./faq-accordion";
@@ -156,7 +157,7 @@ function ArticleHero({ post, readMins }: { post: BlogPost; readMins: number }) {
         <div className="mx-auto max-w-4xl px-4 pb-14 sm:pb-20">
           <div className="relative aspect-[16/9] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/10">
             <Image
-              src={post.coverImageUrl}
+              src={upgradePexelsCoverUrl(post.coverImageUrl) ?? post.coverImageUrl}
               alt={post.title}
               fill
               sizes="(min-width: 1024px) 900px, 100vw"
@@ -251,7 +252,7 @@ function RelatedPosts({
               {p.coverImageUrl && (
                 <div className="relative aspect-[16/10] overflow-hidden bg-zinc-100">
                   <Image
-                    src={p.coverImageUrl}
+                    src={upgradePexelsCoverUrl(p.coverImageUrl) ?? p.coverImageUrl}
                     alt={p.title}
                     fill
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"

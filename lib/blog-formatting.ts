@@ -16,6 +16,23 @@ export function readingTimeMinutes(bodyMd: string): number {
   return Math.max(1, Math.round(words / 225));
 }
 
+/**
+ * Upgrade a Pexels image URL from its stored `large` variant (940x650) to
+ * the `large2x` variant (1880x1300) by doubling the w/h query params.
+ * Same rendered size, but 2x-DPR displays get a crisp source. Pexels URLs
+ * that don't match the pattern (or aren't Pexels) pass through unchanged.
+ * Applied at render time so existing rows benefit without a DB update.
+ */
+export function upgradePexelsCoverUrl(url: string | undefined): string | undefined {
+  if (!url) return url;
+  if (!url.includes("images.pexels.com")) return url;
+  // Only rewrite the exact `large` variant (940x650). Leave large2x, original,
+  // and any other size Pexels serves untouched so this stays idempotent —
+  // running the upgrader twice on the same URL must not keep doubling it.
+  if (!/[?&]w=940(?:&|$)/.test(url) || !/[?&]h=650(?:&|$)/.test(url)) return url;
+  return url.replace(/([?&])w=940(?=&|$)/, "$1w=1880").replace(/([?&])h=650(?=&|$)/, "$1h=1300");
+}
+
 /** Australian long date: "5 July 2026". */
 export function formatDateAU(iso: string): string {
   return new Date(iso).toLocaleDateString("en-AU", {
