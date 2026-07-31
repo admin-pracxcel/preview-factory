@@ -126,7 +126,13 @@ export async function callClaudeCli(args: CallClaudeCliArgs): Promise<string> {
           reject(new Error(`claude CLI returned error result (${subtype}, http=${status})${detail}`));
           return;
         }
-        if (typeof m.result === "string") {
+        // With --json-schema, Claude puts the structured JSON in
+        // `structured_output` and leaves `result` empty (the model's
+        // free-form message text). Prefer structured_output when present;
+        // fall back to the text result otherwise.
+        if (m.structured_output !== undefined && m.structured_output !== null) {
+          collectedText = JSON.stringify(m.structured_output);
+        } else if (typeof m.result === "string") {
           collectedText = m.result;
         }
       }
