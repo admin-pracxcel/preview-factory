@@ -92,6 +92,49 @@ function fail(code: string, message: string): never {
   emit({ v: 1, ok: false, error: { code, message: message.slice(0, 500) } });
 }
 
+/**
+ * Extract the first balanced JSON object from a possibly-wrapped response.
+ * Handles three cases the model tends to produce even when told not to:
+ *   1. Pure JSON — return as-is.
+ *   2. Fenced (```json { ... } ``` or ``` { ... } ```) — unwrap.
+ *   3. JSON preceded/followed by narration — find first `{`, walk to
+ *      matching `}` respecting string literals and escapes.
+ * Returns null when no plausible JSON object is present.
+ */
+function extractJsonObject(text: string): string | null {
+  const trimmed = text.trim();
+  if (trimmed.startsWith("{") && trimmed.endsWith("}")) return trimmed;
+
+  const fence = trimmed.match(/```(?:json)?\s*\n?([\s\S]*?)\n?```/);
+  if (fence?.[1]) {
+    const inside = fence[1].trim();
+    if (inside.startsWith("{") && inside.endsWith("}")) return inside;
+  }
+
+  const start = trimmed.indexOf("{");
+  if (start === -1) return null;
+
+  let depth = 0;
+  let inString = false;
+  let escape = false;
+  for (let i = start; i < trimmed.length; i++) {
+    const ch = trimmed[i];
+    if (escape) { escape = false; continue; }
+    if (inString) {
+      if (ch === "\\") escape = true;
+      else if (ch === '"') inString = false;
+      continue;
+    }
+    if (ch === '"') { inString = true; continue; }
+    if (ch === "{") depth++;
+    else if (ch === "}") {
+      depth--;
+      if (depth === 0) return trimmed.slice(start, i + 1);
+    }
+  }
+  return null;
+}
+
 async function readStdin(): Promise<string> {
   process.stdin.setEncoding("utf8");
   let raw = "";
@@ -152,11 +195,21 @@ async function main(): Promise<void> {
     fail(code, msg);
   }
 
+  const extracted = extractJsonObject(raw_output);
+  if (!extracted) {
+    fail(
+      "bad_output",
+      `Claude returned no parseable JSON object. First 300 chars: ${raw_output.slice(0, 300)}`,
+    );
+  }
   let post: GeneratedPost;
   try {
-    post = JSON.parse(raw_output);
+    post = JSON.parse(extracted) as GeneratedPost;
   } catch (e) {
-    fail("bad_output", `Claude returned unparseable output: ${(e as Error).message}. First 200 chars: ${raw_output.slice(0, 200)}`);
+    fail(
+      "bad_output",
+      `Extracted JSON substring did not parse: ${(e as Error).message}. First 200 chars: ${extracted.slice(0, 200)}`,
+    );
   }
 
   emit({
