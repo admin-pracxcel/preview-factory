@@ -8,11 +8,12 @@
  *
  * Human deploy note:
  *   1. Create a Stripe account (stripe.com).
- *   2. In test mode, go to Developers → API Keys → copy Secret key.
- *   3. Set STRIPE_SECRET_KEY=sk_test_... in your .env.local / Vercel env vars.
- *   4. Optionally set STRIPE_PRICE_ID to a pre-created recurring price (AUD, $49/mo).
+ *   2. Developers → API Keys → copy Secret key (test or live).
+ *   3. Set STRIPE_SECRET_KEY=sk_test_... (or sk_live_...) in Vercel env.
+ *   4. Set STRIPE_PRICE_<TIER>_<CYCLE> (six total) to the price ids you
+ *      created under your product. Falls back to inline price_data if unset.
  *   5. For webhooks: set STRIPE_WEBHOOK_SECRET (from Stripe CLI or dashboard).
- *   6. Set NEXT_PUBLIC_BASE_URL=https://yourapp.vercel.app (no trailing slash).
+ *   6. Set NEXT_PUBLIC_BASE_URL=https://launcharoo.online (no trailing slash).
  *   See strategy/_master/deployment-checklist.md section "Stripe".
  */
 
