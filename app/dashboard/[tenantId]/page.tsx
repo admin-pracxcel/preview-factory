@@ -37,6 +37,7 @@ import { SeoStatusCard } from "./SeoStatusCard";
 import { LogoutButton } from "@/app/components/LogoutButton";
 import { isAdminSession } from "@/lib/admin";
 import { listActiveAddonsForTenant } from "@/lib/addon-store";
+import { addonsEnabled } from "@/lib/feature-flags";
 
 /* ------------------------------------------------------------------ meta */
 
@@ -128,10 +129,13 @@ export default async function DashboardPage({
     ? `https://${tenant.slug}.launcharoo.online`
     : `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/preview/site/${tenantId}`;
 
+  const addonsOn = addonsEnabled();
+
   // Trigger the addon walkthrough exactly once, on the first dashboard load
   // after the custom domain is verified. Admins never see it — they'd trip
   // it repeatedly across tenants they don't own.
   const shouldShowAddonFunnel =
+    addonsOn &&
     !admin &&
     tenant.status === "published" &&
     !!tenant.customDomainVerifiedAt &&
@@ -219,10 +223,12 @@ export default async function DashboardPage({
         </section>
 
         {/* ── SEO blog status (visible when tenant has an active SEO addon) ── */}
-        {seoSub && <SeoStatusCard tenantId={tenantId} subscription={seoSub} />}
+        {addonsOn && seoSub && (
+          <SeoStatusCard tenantId={tenantId} subscription={seoSub} />
+        )}
 
         {/* ── grow your business (addons upsell — always visible) ── */}
-        {tenant.status === "published" && (
+        {addonsOn && tenant.status === "published" && (
           <GrowthServicesCard
             tenantId={tenantId}
             activeAddonKeys={activeAddonKeys}

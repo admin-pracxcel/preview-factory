@@ -31,6 +31,7 @@ import {
 } from "@/lib/addon-plans";
 import { assertOwnsTenant, type MutableCookies } from "@/lib/session";
 import { isAdminSession } from "@/lib/admin";
+import { addonsEnabled } from "@/lib/feature-flags";
 
 export const runtime = "nodejs";
 
@@ -44,6 +45,10 @@ function resolveBaseUrl(request: NextRequest): string {
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
+  if (!addonsEnabled()) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
   let body: { tenantId?: string; addonPlanKey?: string };
   try {
     body = (await request.json()) as {
