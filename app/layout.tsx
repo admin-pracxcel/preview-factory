@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Sora } from "next/font/google";
 import ClarityAnalytics from "@/app/components/ClarityAnalytics";
+import MetaPixel from "@/app/components/MetaPixel";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -41,6 +42,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {children}
         <ClarityAnalytics />
+        <MetaPixel />
       </body>
     </html>
   );
