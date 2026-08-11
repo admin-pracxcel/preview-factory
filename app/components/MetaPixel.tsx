@@ -28,8 +28,17 @@ import { usePathname } from "next/navigation";
 const PIXEL_ID = "1058897266852903";
 const MARKETING_HOST = "launcharoo.online";
 
+interface FbqFunction {
+  (...args: unknown[]): void;
+  callMethod?: (...args: unknown[]) => void;
+  queue: unknown[][];
+  loaded: boolean;
+  version: string;
+  push: unknown;
+}
+
 interface WindowWithFbq extends Window {
-  fbq?: (...args: unknown[]) => void;
+  fbq?: FbqFunction;
   _fbq?: unknown;
 }
 
@@ -119,18 +128,18 @@ export default function MetaPixel(): null {
     const w = window as WindowWithFbq;
 
     if (!pixelInitialized) {
-      // Meta's standard bootstrap, transliterated so it doesn't fight
-      // TypeScript. Sets up the fbq queue stub, injects fbevents.js,
-      // then fires init.
+      // Meta's standard bootstrap. The stub MUST delegate to callMethod
+      // once fbevents.js has loaded — otherwise post-load fbq() calls
+      // just pool in the queue and never dispatch. That was a real bug
+      // in an earlier version of this component: only the initial init
+      // + PageView fired, everything else went silently to the queue.
       const stub = function (...args: unknown[]) {
-        const q = (stub as unknown as { queue: unknown[][] }).queue;
-        q.push(args);
-      } as ((...args: unknown[]) => void) & {
-        queue: unknown[][];
-        loaded: boolean;
-        version: string;
-        push: unknown;
-      };
+        if (stub.callMethod) {
+          stub.callMethod.apply(stub, args);
+        } else {
+          stub.queue.push(args);
+        }
+      } as FbqFunction;
       stub.queue = [];
       stub.push = stub;
       stub.loaded = true;
