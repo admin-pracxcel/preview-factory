@@ -44,9 +44,13 @@ function isMarketingHost(): boolean {
 
 /**
  * Fire a Meta standard event, host-gated. Safe to call from any client
- * component — no-ops on tenant hosts, and no-ops if the pixel hasn't
- * initialised yet (shouldn't happen in practice; the layout mounts
- * MetaPixel above every page).
+ * component — no-ops on tenant hosts.
+ *
+ * Retries on a short delay if `window.fbq` isn't defined yet. React runs
+ * child effects before parent effects, so a page-level useEffect that
+ * calls trackPurchase can race ahead of MetaPixel's own useEffect that
+ * sets up the fbq stub. Up to 10 retries × 100ms = 1s window, which
+ * covers even the slowest cold mount.
  */
 function track(
   eventName: string,
@@ -54,13 +58,20 @@ function track(
   options?: { eventID?: string },
 ): void {
   if (!isMarketingHost()) return;
-  const w = window as WindowWithFbq;
-  if (typeof w.fbq !== "function") return;
-  if (options?.eventID) {
-    w.fbq("track", eventName, params ?? {}, { eventID: options.eventID });
-  } else {
-    w.fbq("track", eventName, params ?? {});
-  }
+  const attempt = (retriesLeft: number): void => {
+    const w = window as WindowWithFbq;
+    if (typeof w.fbq === "function") {
+      if (options?.eventID) {
+        w.fbq("track", eventName, params ?? {}, { eventID: options.eventID });
+      } else {
+        w.fbq("track", eventName, params ?? {});
+      }
+      return;
+    }
+    if (retriesLeft <= 0) return;
+    setTimeout(() => attempt(retriesLeft - 1), 100);
+  };
+  attempt(10);
 }
 
 /** Fired when the user clicks a plan in the pricing modal. */
