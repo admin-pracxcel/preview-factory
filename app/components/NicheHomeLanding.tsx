@@ -115,9 +115,27 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
             <source src={config.heroVideoSrc} type="video/webm" />
           </video>
         )}
-        {/* Dark overlay so headline stays legible over any video frame */}
+        {/*
+          Blended overlay stack when a video plays:
+            1. Vertical fade — solid #0A0F1E at very top + very bottom so
+               the video melts into the surrounding page (header above,
+               stats bar below). Middle sits at ~50% opacity so any video
+               frame reads as a moody backdrop, and the white headline +
+               form stay legible on top.
+            2. Soft radial vignette centred on the copy — darkens the
+               corners a touch, focuses attention on the middle.
+            3. Existing blue glow — brand tint layered last for cohesion.
+        */}
         {config.heroVideoSrc && (
-          <div className="absolute inset-0 bg-black/60 pointer-events-none" />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: [
+                "linear-gradient(180deg, rgba(10,15,30,1) 0%, rgba(10,15,30,0.55) 12%, rgba(10,15,30,0.45) 50%, rgba(10,15,30,0.7) 88%, rgba(10,15,30,1) 100%)",
+                "radial-gradient(ellipse 70% 55% at 50% 50%, transparent 0%, rgba(10,15,30,0.35) 100%)",
+              ].join(", "),
+            }}
+          />
         )}
         <div
           className="absolute inset-0 pointer-events-none"
