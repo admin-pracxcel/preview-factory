@@ -116,25 +116,15 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
           </video>
         )}
         {/*
-          Blended overlay stack when a video plays:
-            1. Vertical fade — solid #0A0F1E at very top + very bottom so
-               the video melts into the surrounding page (header above,
-               stats bar below). Middle sits at ~50% opacity so any video
-               frame reads as a moody backdrop, and the white headline +
-               form stay legible on top.
-            2. Soft radial vignette centred on the copy — darkens the
-               corners a touch, focuses attention on the middle.
-            3. Existing blue glow — brand tint layered last for cohesion.
+          When a video plays, cover it with the site background at 80%
+          opacity so 20% of the video peeks through. Then the existing
+          blue radial glow layers on top exactly as it does on the
+          homepage — visually identical style, just with motion behind.
         */}
         {config.heroVideoSrc && (
           <div
             className="absolute inset-0 pointer-events-none"
-            style={{
-              background: [
-                "linear-gradient(180deg, rgba(10,15,30,1) 0%, rgba(10,15,30,0.7) 12%, rgba(10,15,30,0.62) 50%, rgba(10,15,30,0.8) 88%, rgba(10,15,30,1) 100%)",
-                "radial-gradient(ellipse 70% 55% at 50% 50%, transparent 0%, rgba(10,15,30,0.5) 100%)",
-              ].join(", "),
-            }}
+            style={{ backgroundColor: "rgba(10,15,30,0.8)" }}
           />
         )}
         <div
