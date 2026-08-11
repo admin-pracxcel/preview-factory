@@ -1,13 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { cookies as nextCookies } from "next/headers";
 import { PenLine, Zap, Globe } from "lucide-react";
-import {
-  readSession,
-  findLatestTenantForSession,
-  type MutableCookies,
-} from "@/lib/session";
-import { isAdminSession } from "@/lib/admin";
+import MarketingHeader from "@/app/components/MarketingHeader";
+import MarketingFooter from "@/app/components/MarketingFooter";
 
 /* -------------------------------------------------------------------------- */
 /*  Category data                                                               */
@@ -136,71 +131,10 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  // Signed-in visitors (session cookie owns at least one tenant) get a
-  // "Dashboard" link instead of "Sign in" so they can hop straight to
-  // their sites list.
-  const cookieStore = (await nextCookies()) as unknown as MutableCookies;
-  const sessionId = readSession(cookieStore);
-  const [hasOwnedTenant, isAdmin] = await Promise.all([
-    sessionId
-      ? findLatestTenantForSession(sessionId).then((t) => t !== null)
-      : Promise.resolve(false),
-    isAdminSession(cookieStore),
-  ]);
-
   return (
     <div className="flex flex-col min-h-screen bg-[#0A0F1E] text-white">
 
-      {/* ------------------------------------------------------------------ */}
-      {/* Navigation — sticky dark glass                                       */}
-      {/* ------------------------------------------------------------------ */}
-      <header className="sticky top-0 z-30 bg-black/95 border-b border-white/5 backdrop-blur-md">
-        <div className="flex items-center justify-between px-6 py-4 max-w-6xl mx-auto w-full">
-          <Link href="/" aria-label="Launcharoo">
-            <img
-              src="/images/launcharoo-logo-white.webp"
-              alt="Launcharoo"
-              className="h-6 w-auto"
-            />
-          </Link>
-          <div className="flex items-center gap-6">
-            <a
-              href="#how-it-works"
-              className="hidden sm:block text-sm text-white/70 hover:text-white transition-colors"
-            >
-              How it works
-            </a>
-            {isAdmin ? (
-              <Link
-                href="/admin"
-                className="hidden sm:block text-sm text-white/70 hover:text-white transition-colors"
-              >
-                Admin Panel
-              </Link>
-            ) : hasOwnedTenant ? (
-              <Link
-                href="/dashboard"
-                className="hidden sm:block text-sm text-white/70 hover:text-white transition-colors"
-              >
-                Dashboard
-              </Link>
-            ) : (
-              <a
-                href="/login"
-                className="hidden sm:block text-sm text-white/70 hover:text-white transition-colors"
-              >
-                Sign in
-              </a>
-            )}
-            <a
-              href="#industries"
-              className="px-5 py-2 rounded-full bg-white text-black font-bold text-sm hover:bg-white/90 transition-colors"
-            >
-              Get started
-            </a>
-          </div>
-        </div>
-      </header>
+      <MarketingHeader />
 
       {/* ------------------------------------------------------------------ */}
       {/* Hero — dark, full-viewport                                           */}
@@ -490,41 +424,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ------------------------------------------------------------------ */}
-      {/* Footer                                                               */}
-      {/* ------------------------------------------------------------------ */}
-      <footer className="bg-[#040812] border-t border-white/10 py-10 px-6">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <img
-            src="/images/launcharoo-logo-white.webp"
-            alt="Launcharoo"
-            className="h-6 w-auto"
-          />
-          <div className="flex gap-6">
-            {CATEGORIES.map((cat) => (
-              <Link
-                key={cat.href}
-                href={cat.href}
-                className="text-white/40 hover:text-white/70 text-sm transition-colors"
-              >
-                {cat.label}
-              </Link>
-            ))}
-          </div>
-          <span className="text-white/30 text-sm">© {new Date().getFullYear()} Launcharoo</span>
-        </div>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-white/30">
-          <Link href="/privacy" className="hover:text-white/60 transition-colors">
-            Privacy Policy
-          </Link>
-          <span className="text-white/15">·</span>
-          <Link href="/terms" className="hover:text-white/60 transition-colors">
-            Terms of Service
-          </Link>
-          <span className="text-white/15">·</span>
-          <span>For Australian service businesses.</span>
-        </div>
-      </footer>
+      <MarketingFooter />
     </div>
   );
 }
