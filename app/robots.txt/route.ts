@@ -28,15 +28,28 @@ const VERCEL_ORIGIN = "preview-factory.vercel.app";
 // shared cache; browser can hold it briefly.
 const CACHE_HEADER = "private, max-age=300, must-revalidate";
 
+// Alphabetical for auditability. Each entry is a URL-prefix — Google
+// treats `/admin` as also blocking `/admin/foo`, so no trailing slashes.
+//
+// Deliberately NOT included:
+//   /_next, /static, /images, /uploads — Googlebot must fetch CSS + JS +
+//     images to render and score the page. Blocking these tanks rankings.
+//   /websites-for-* — those pages carry a `noindex` meta. Blocking them
+//     here would prevent the crawl that lets Google see the noindex, so
+//     any already-indexed URLs would linger.
+//   /favicon.ico, /apple-touch-icon.png — assets, must remain crawlable.
 const DISALLOWS = [
-  "/dashboard",
   "/admin",
-  "/login",
-  "/welcome",
-  "/expired",
-  "/building",
   "/api",
+  "/building",
+  "/dashboard",
+  "/expired",
+  "/login",
   "/monitoring",
+  "/preview",
+  "/recover",
+  "/status",
+  "/welcome",
 ];
 
 export async function GET(): Promise<Response> {
@@ -67,11 +80,13 @@ export async function GET(): Promise<Response> {
   const publicHost = host || MARKETING_HOST;
   const body = [
     "# Launcharoo robots policy.",
-    "# Owner pages, transactional flows, and API endpoints are not indexable.",
-    "# Everything else on this host is.",
+    "# Owner pages, transactional flows, per-tenant preview URLs, and API",
+    "# endpoints are not indexable. Everything else on this host is.",
+    "#",
+    "# Assets, CSS, JS and Next.js internals are intentionally left open —",
+    "# Googlebot must render pages to score them.",
     "",
     "User-agent: *",
-    "",
     ...DISALLOWS.map((path) => `Disallow: ${path}`),
     "",
     `Sitemap: https://${publicHost}/sitemap.xml`,
