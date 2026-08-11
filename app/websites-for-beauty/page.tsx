@@ -130,6 +130,7 @@ const CONFIG: NicheHomeLandingConfig = {
   ],
   ctaHeadline: "See your beauty website in minutes.",
   ctaSub: "No credit card. No commitment. Just your site, live, now.",
+  heroVideoSrc: "/videos/beauty-bg-video.webm",
 };
 
 export default function BeautyLandingPage() {

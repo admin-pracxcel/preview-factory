@@ -64,6 +64,12 @@ export interface NicheHomeLandingConfig {
   ctaHeadline: string;
   /** Bottom CTA band sub. */
   ctaSub: string;
+  /**
+   * Path to a WebM (or MP4) video used as the hero background. Muted,
+   * looped, autoplays. Optional — omit to fall back to the solid dark
+   * hero with the radial gradient only.
+   */
+  heroVideoSrc?: string;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -96,6 +102,23 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
 
       {/* ─── Hero ───────────────────────────────────────────────────────── */}
       <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#0A0F1E]">
+        {config.heroVideoSrc && (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover pointer-events-none"
+          >
+            <source src={config.heroVideoSrc} type="video/webm" />
+          </video>
+        )}
+        {/* Dark overlay so headline stays legible over any video frame */}
+        {config.heroVideoSrc && (
+          <div className="absolute inset-0 bg-black/60 pointer-events-none" />
+        )}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
