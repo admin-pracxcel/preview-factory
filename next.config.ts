@@ -59,7 +59,7 @@ const nextConfig: NextConfig = {
       //   clarity.ms            Microsoft Clarity loader
       //   connect.facebook.net  Meta Pixel loader
       //   google-analytics.com  GA4 (may be added via GTM later)
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://static.cloudflareinsights.com https://www.googletagmanager.com https://www.clarity.ms https://connect.facebook.net https://www.google-analytics.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://static.cloudflareinsights.com https://www.googletagmanager.com https://*.clarity.ms https://connect.facebook.net https://www.google-analytics.com",
       "style-src 'self' 'unsafe-inline'",
       // Fonts are self-hosted via next/font — no external font CDN needed.
       "font-src 'self' data:",
@@ -67,7 +67,7 @@ const nextConfig: NextConfig = {
       // data: covers Tailwind inline SVGs; blob: covers browser upload previews.
       // Analytics pixel beacons: facebook.com (Meta Pixel img tag),
       // google-analytics.com (GA4 img pixel), *.clarity.ms (Clarity beacon).
-      "img-src 'self' data: blob: https://*.unsplash.com https://*.cloudinary.com https://*.amazonaws.com https://*.googleusercontent.com https://images.pexels.com https://places.googleapis.com https://*.supabase.co https://www.facebook.com https://www.google-analytics.com https://*.clarity.ms",
+      "img-src 'self' data: blob: https://*.unsplash.com https://*.cloudinary.com https://*.amazonaws.com https://*.googleusercontent.com https://images.pexels.com https://places.googleapis.com https://*.supabase.co https://www.facebook.com https://www.google-analytics.com https://*.clarity.ms https://c.bing.com",
       // Same-origin covers Sentry via /monitoring tunnel. Direct-ingest hosts
       // are the fallback if the tunnel ever fails. Supabase for client-side
       // storage reads (Phase 6 upload flow uses signed URLs — same-origin —
