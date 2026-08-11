@@ -2,6 +2,7 @@ import Link from "next/link";
 import { PenLine, Zap, Globe, ExternalLink } from "lucide-react";
 import NicheForm from "./NicheForm";
 import DesktopPreviewFrame from "./DesktopPreviewFrame";
+import DemoVideoButton from "./DemoVideoButton";
 
 /* -------------------------------------------------------------------------- */
 /*  Types                                                                       */
@@ -65,11 +66,11 @@ export interface NicheHomeLandingConfig {
   /** Bottom CTA band sub. */
   ctaSub: string;
   /**
-   * Path to a WebM (or MP4) video used as the hero background. Muted,
-   * looped, autoplays. Optional — omit to fall back to the solid dark
-   * hero with the radial gradient only.
+   * Optional demo video shown in a modal when the "Live demo" button in
+   * the hero is clicked. WebM or MP4. Muted + looped + playsInline in the
+   * modal so autoplay works everywhere.
    */
-  heroVideoSrc?: string;
+  demoVideoSrc?: string;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -102,31 +103,6 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
 
       {/* ─── Hero ───────────────────────────────────────────────────────── */}
       <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-[#0A0F1E]">
-        {config.heroVideoSrc && (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-cover pointer-events-none"
-          >
-            <source src={config.heroVideoSrc} type="video/webm" />
-          </video>
-        )}
-        {/*
-          When a video plays, cover it with the site background at 80%
-          opacity so 20% of the video peeks through. Then the existing
-          blue radial glow layers on top exactly as it does on the
-          homepage — visually identical style, just with motion behind.
-        */}
-        {config.heroVideoSrc && (
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ backgroundColor: "rgba(10,15,30,0.8)" }}
-          />
-        )}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -167,6 +143,9 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
               See a live example
               <ExternalLink className="h-3.5 w-3.5" />
             </a>
+            {config.demoVideoSrc && (
+              <DemoVideoButton videoSrc={config.demoVideoSrc} label="Live demo" />
+            )}
           </div>
 
           <div className="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-white/40">

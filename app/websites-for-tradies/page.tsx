@@ -131,7 +131,7 @@ const CONFIG: NicheHomeLandingConfig = {
   ],
   ctaHeadline: "See your tradie website in minutes.",
   ctaSub: "No credit card. No commitment. Just your site, live, now.",
-  heroVideoSrc: "/videos/trades-bg-video.webm",
+  demoVideoSrc: "/videos/trades-bg-video.webm",
 };
 
 export default function TradiesLandingPage() {

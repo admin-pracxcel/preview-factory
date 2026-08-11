@@ -131,7 +131,7 @@ const CONFIG: NicheHomeLandingConfig = {
   ],
   ctaHeadline: "See your clinic website in minutes.",
   ctaSub: "No credit card. No commitment. Just your site, live, now.",
-  heroVideoSrc: "/videos/allied-health-bg-video.webm",
+  demoVideoSrc: "/videos/allied-health-bg-video.webm",
 };
 
 export default function AlliedHealthLandingPage() {

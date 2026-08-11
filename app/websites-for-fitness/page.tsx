@@ -131,7 +131,7 @@ const CONFIG: NicheHomeLandingConfig = {
   ],
   ctaHeadline: "See your fitness website in minutes.",
   ctaSub: "No credit card. No commitment. Just your site, live, now.",
-  heroVideoSrc: "/videos/fitness-bg-video.webm",
+  demoVideoSrc: "/videos/fitness-bg-video.webm",
 };
 
 export default function FitnessLandingPage() {
