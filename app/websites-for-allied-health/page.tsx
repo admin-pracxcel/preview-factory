@@ -5,6 +5,7 @@ export const metadata = {
   description:
     "A professional allied health website live in minutes, not months. Physios, chiros, massage, podiatry, psych. Online booking ready, AHPRA-compliant, built from your Google listing.",
   alternates: { canonical: "https://launcharoo.online/websites-for-allied-health" },
+  robots: { index: false, follow: false },
 };
 
 const CONFIG: NicheHomeLandingConfig = {

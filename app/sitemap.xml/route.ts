@@ -217,10 +217,6 @@ function marketingEntries(): SitemapEntry[] {
     entry("/for/allied-health", 0.9, "monthly"),
     entry("/for/beauty", 0.9, "monthly"),
     entry("/for/fitness", 0.9, "monthly"),
-    entry("/websites-for-tradies", 0.9, "monthly"),
-    entry("/websites-for-allied-health", 0.9, "monthly"),
-    entry("/websites-for-beauty", 0.9, "monthly"),
-    entry("/websites-for-fitness", 0.9, "monthly"),
     entry("/privacy", 0.3, "yearly"),
     entry("/terms", 0.3, "yearly"),
   ];

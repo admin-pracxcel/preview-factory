@@ -5,6 +5,7 @@ export const metadata = {
   description:
     "A pro fitness website live in minutes, not months. Personal trainers, CrossFit boxes, yoga, Pilates, martial arts. Class schedule, PT bios, free trial signups, built from your Google listing.",
   alternates: { canonical: "https://launcharoo.online/websites-for-fitness" },
+  robots: { index: false, follow: false },
 };
 
 const CONFIG: NicheHomeLandingConfig = {

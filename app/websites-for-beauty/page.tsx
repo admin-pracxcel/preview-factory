@@ -5,6 +5,7 @@ export const metadata = {
   description:
     "A gallery-forward beauty website live in minutes, not months. Hair, nails, brows, cosmetic clinics. Booking-ready, mobile-first, built from your Google listing.",
   alternates: { canonical: "https://launcharoo.online/websites-for-beauty" },
+  robots: { index: false, follow: false },
 };
 
 const CONFIG: NicheHomeLandingConfig = {

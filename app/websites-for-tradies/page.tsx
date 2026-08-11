@@ -5,6 +5,7 @@ export const metadata = {
   description:
     "A professional tradie website live in minutes, not months. Sparkies, plumbers, chippies, roofers, painters. Built from your Google Business Profile. No web designer needed.",
   alternates: { canonical: "https://launcharoo.online/websites-for-tradies" },
+  robots: { index: false, follow: false },
 };
 
 const CONFIG: NicheHomeLandingConfig = {
