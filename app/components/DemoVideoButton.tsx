@@ -48,7 +48,7 @@ export default function DemoVideoButton({
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-1.5 text-white/60 underline underline-offset-4 hover:text-white text-sm font-medium transition-colors cursor-pointer"
+        className="flex items-center justify-center gap-1.5 text-white/60 underline underline-offset-4 hover:text-white text-sm font-medium transition-colors cursor-pointer"
       >
         {label}
         <PlayCircle className="h-4 w-4" />
