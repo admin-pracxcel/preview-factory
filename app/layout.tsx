@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Sora } from "next/font/google";
 import ClarityAnalytics from "@/app/components/ClarityAnalytics";
 import MetaPixel from "@/app/components/MetaPixel";
+import GoogleTagManager from "@/app/components/GoogleTagManager";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -41,6 +42,7 @@ export default function RootLayout({
           React hydrates. It suppresses warnings on this element only. */}
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         {children}
+        <GoogleTagManager />
         <ClarityAnalytics />
         <MetaPixel />
       </body>
