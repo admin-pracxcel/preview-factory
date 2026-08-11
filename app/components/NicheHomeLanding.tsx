@@ -131,8 +131,8 @@ export default function NicheHomeLanding({ config }: { config: NicheHomeLandingC
             className="absolute inset-0 pointer-events-none"
             style={{
               background: [
-                "linear-gradient(180deg, rgba(10,15,30,1) 0%, rgba(10,15,30,0.55) 12%, rgba(10,15,30,0.45) 50%, rgba(10,15,30,0.7) 88%, rgba(10,15,30,1) 100%)",
-                "radial-gradient(ellipse 70% 55% at 50% 50%, transparent 0%, rgba(10,15,30,0.35) 100%)",
+                "linear-gradient(180deg, rgba(10,15,30,1) 0%, rgba(10,15,30,0.7) 12%, rgba(10,15,30,0.62) 50%, rgba(10,15,30,0.8) 88%, rgba(10,15,30,1) 100%)",
+                "radial-gradient(ellipse 70% 55% at 50% 50%, transparent 0%, rgba(10,15,30,0.5) 100%)",
               ].join(", "),
             }}
           />
