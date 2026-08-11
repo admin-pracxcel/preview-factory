@@ -17,6 +17,7 @@ export const runtime = "nodejs";
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const tenantId = request.nextUrl.searchParams.get("tenantId");
   const planKey = request.nextUrl.searchParams.get("planKey") ?? undefined;
+  const amt = request.nextUrl.searchParams.get("amt") ?? undefined;
 
   if (!tenantId) {
     return NextResponse.json({ error: "tenantId query param required" }, { status: 400 });
@@ -35,5 +36,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     );
   }
 
-  return NextResponse.redirect(new URL(`/welcome/${tenantId}`, request.url));
+  // Forward plan + amount to /welcome so Meta Pixel Purchase can fire.
+  // No sid in mock mode — the browser-side dedupe guard falls back to
+  // "mock-<tenantId>" so a page refresh doesn't double-fire.
+  const params = new URLSearchParams();
+  if (planKey) params.set("plan", planKey);
+  if (amt) params.set("amt", amt);
+  const qs = params.toString();
+  const target = `/welcome/${tenantId}${qs ? `?${qs}` : ""}`;
+  return NextResponse.redirect(new URL(target, request.url));
 }

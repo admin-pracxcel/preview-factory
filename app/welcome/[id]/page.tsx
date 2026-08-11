@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
+import { trackPurchase } from "@/app/components/MetaPixel";
 import {
   ExternalLink,
   Share2,
@@ -129,6 +130,36 @@ export default function WelcomePage() {
       : Array.isArray(params.id)
       ? params.id[0]
       : "unknown";
+
+  // Meta Pixel Purchase — fires once per checkout session on the fresh
+  // Stripe redirect. sessionStorage guard prevents double-firing on a
+  // page refresh (params stay in the URL until we strip them below).
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    const plan = searchParams.get("plan");
+    const amt = searchParams.get("amt");
+    const sid = searchParams.get("sid");
+    if (!plan || !amt) return;
+    const value = Number(amt);
+    if (!Number.isFinite(value) || value <= 0) return;
+    // Dedupe key: real Stripe session id in prod; "mock-<tenantId>" for
+    // the local mock flow which doesn't have a session id.
+    const dedupeKey = `fbq_purchase_${sid ?? `mock-${id}`}`;
+    try {
+      if (sessionStorage.getItem(dedupeKey)) return;
+      sessionStorage.setItem(dedupeKey, "1");
+    } catch {
+      // sessionStorage unavailable (private mode, etc.) — fire anyway.
+    }
+    trackPurchase({ value, planKey: plan, sessionId: sid ?? undefined });
+    // Strip the params so a share/refresh doesn't leak plan info and
+    // doesn't try to re-fire (belt + braces with the sessionStorage guard).
+    const url = new URL(window.location.href);
+    url.searchParams.delete("plan");
+    url.searchParams.delete("amt");
+    url.searchParams.delete("sid");
+    window.history.replaceState({}, "", url.toString());
+  }, [searchParams, id]);
 
   const [slug, setSlug] = useState<string | null>(null);
   useEffect(() => {

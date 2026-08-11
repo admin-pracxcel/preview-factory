@@ -128,6 +128,12 @@ export const metadata = {
   title: "Launcharoo — Your Australian business website, live in minutes",
   description:
     "Launcharoo builds professional websites for Australian service businesses using your Google Business Profile. Live in minutes, not months.",
+  // Meta Business Manager domain verification. Meta's crawler fetches
+  // https://launcharoo.online/ and looks for this exact tag in <head>.
+  // Required for iOS 14+ Aggregated Event Measurement (Purchase attribution).
+  other: {
+    "facebook-domain-verification": "xu5icztne3en7zs2iaoe74wrottr1b",
+  },
 };
 
 export default async function HomePage() {

@@ -36,6 +36,68 @@ interface WindowWithFbq extends Window {
 /** One-shot latch. Module-scope survives re-renders; the client boots once. */
 let pixelInitialized = false;
 
+function isMarketingHost(): boolean {
+  if (typeof window === "undefined") return false;
+  const host = window.location.hostname.replace(/^www\./, "");
+  return host === MARKETING_HOST;
+}
+
+/**
+ * Fire a Meta standard event, host-gated. Safe to call from any client
+ * component — no-ops on tenant hosts, and no-ops if the pixel hasn't
+ * initialised yet (shouldn't happen in practice; the layout mounts
+ * MetaPixel above every page).
+ */
+function track(
+  eventName: string,
+  params?: Record<string, unknown>,
+  options?: { eventID?: string },
+): void {
+  if (!isMarketingHost()) return;
+  const w = window as WindowWithFbq;
+  if (typeof w.fbq !== "function") return;
+  if (options?.eventID) {
+    w.fbq("track", eventName, params ?? {}, { eventID: options.eventID });
+  } else {
+    w.fbq("track", eventName, params ?? {});
+  }
+}
+
+/** Fired when the user clicks a plan in the pricing modal. */
+export function trackInitiateCheckout(input: {
+  /** Plan value in AUD dollars (not cents). */
+  value: number;
+  /** Plan key, e.g. "growth-monthly". */
+  planKey: string;
+}): void {
+  track("InitiateCheckout", {
+    value: input.value,
+    currency: "AUD",
+    content_name: input.planKey,
+  });
+}
+
+/** Fired on /welcome after Stripe redirects back. Deduped by sessionId. */
+export function trackPurchase(input: {
+  /** Plan value in AUD dollars (not cents). */
+  value: number;
+  /** Plan key, e.g. "growth-monthly". */
+  planKey: string;
+  /** Stripe checkout session id — used as event id so any future
+   *  server-side CAPI event with the same id dedupes cleanly. */
+  sessionId?: string;
+}): void {
+  track(
+    "Purchase",
+    {
+      value: input.value,
+      currency: "AUD",
+      content_name: input.planKey,
+    },
+    input.sessionId ? { eventID: input.sessionId } : undefined,
+  );
+}
+
 export default function MetaPixel(): null {
   const pathname = usePathname();
 

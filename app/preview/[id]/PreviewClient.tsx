@@ -9,7 +9,8 @@ import BusinessDetailsSection, { type BusinessDetailsInitial } from "@/app/compo
 import ImagePickerModal from "@/app/components/ImagePickerModal";
 import ChangeRequestsPanel from "./ChangeRequestsPanel";
 import PlanPicker from "./PlanPicker";
-import type { PlanKey } from "@/lib/plans";
+import { priceFor, type PlanKey } from "@/lib/plans";
+import { trackInitiateCheckout } from "@/app/components/MetaPixel";
 import { derivePrimary, deriveSecondary } from "@/lib/color";
 
 /* -------------------------------------------------------------------------- */
@@ -387,6 +388,12 @@ function PreviewPageInner() {
   async function handleChoosePlan(planKey: PlanKey) {
     if (busyPlan) return;
     setBusyPlan(planKey);
+    // Meta Pixel InitiateCheckout — host-gated inside the helper, so this
+    // is a no-op on tenant preview hosts. Value is in AUD dollars.
+    trackInitiateCheckout({
+      value: Math.round(priceFor(planKey).unitAmount / 100),
+      planKey,
+    });
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",

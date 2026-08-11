@@ -46,17 +46,29 @@ export async function createCheckoutSession(
 ): Promise<CheckoutResult> {
   const secretKey = process.env.STRIPE_SECRET_KEY;
 
+  const price = priceFor(planKey);
+  // Dollars (not cents) — Meta Pixel expects the main currency unit.
+  const valueDollars = Math.round(price.unitAmount / 100);
+
   if (!secretKey) {
     console.warn("[stripe-client] STRIPE_SECRET_KEY not set — mock checkout.");
     return {
-      url: `${baseUrl}/api/checkout/mock-success?tenantId=${encodeURIComponent(tenantId)}&planKey=${encodeURIComponent(planKey)}`,
+      url: `${baseUrl}/api/checkout/mock-success?tenantId=${encodeURIComponent(
+        tenantId,
+      )}&planKey=${encodeURIComponent(planKey)}&amt=${valueDollars}`,
       mock: true,
     };
   }
 
-  const successUrl = `${baseUrl}/welcome/${encodeURIComponent(tenantId)}`;
+  // {CHECKOUT_SESSION_ID} is a Stripe template variable — Stripe substitutes
+  // the real session id server-side before redirecting. Used as Meta's
+  // eventID for future CAPI dedupe.
+  const successUrl =
+    `${baseUrl}/welcome/${encodeURIComponent(tenantId)}` +
+    `?plan=${encodeURIComponent(planKey)}` +
+    `&amt=${valueDollars}` +
+    `&sid={CHECKOUT_SESSION_ID}`;
   const cancelUrl = `${baseUrl}/preview/${encodeURIComponent(tenantId)}`;
-  const price = priceFor(planKey);
 
   const params = new URLSearchParams();
   params.set("mode", "subscription");
