@@ -11,7 +11,6 @@ import {
   SiteShell,
   Breadcrumbs,
   PageHero,
-  TestimonialsSection,
   CtaBand,
   resolveIcon,
   href,
@@ -118,10 +117,6 @@ export function AboutPage({ site, basePath, showBlog = false }: { site: SiteProp
           </div>
         )}
       </section>
-
-      {site.home.testimonials?.length ? (
-        <TestimonialsSection items={site.home.testimonials} heading="What our patients say" />
-      ) : null}
 
       <CtaBand heading="Book an appointment" body="Speak with a registered physiotherapist today." cta={cta} />
     </SiteShell>

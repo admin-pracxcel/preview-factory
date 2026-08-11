@@ -16,7 +16,6 @@ import {
   FaqList,
   CtaBand,
   RelatedLinks,
-  TestimonialsSection,
   href,
   buildLocationJsonLd,
   buildBreadcrumbJsonLd,
@@ -78,16 +77,6 @@ export function LocationPage({
     .slice(0, 6)
     .map((l) => ({ label: l.suburb, href: href(basePath, "locations", l.slug) }));
 
-  // Testimonials: suburb-specific first, then site-wide fallback
-  const suburbLower = page.suburb.toLowerCase();
-  const allTestimonials = site.home.testimonials ?? [];
-  const localTestimonials = allTestimonials.filter(
-    (t) => t.location?.toLowerCase().includes(suburbLower),
-  );
-  const testimonialsToShow = localTestimonials.length > 0
-    ? localTestimonials
-    : allTestimonials.slice(0, 3);
-
   const cta = primaryCta(site, basePath);
   const title = page.headline ?? `${site.business.name} in ${page.suburb}`;
 
@@ -148,17 +137,6 @@ export function LocationPage({
 
       {areaPages.length > 0 && (
         <RelatedLinks heading={`Popular treatments in ${page.suburb}`} links={areaPages} />
-      )}
-
-      {testimonialsToShow.length > 0 && (
-        <TestimonialsSection
-          items={testimonialsToShow}
-          heading={
-            localTestimonials.length > 0
-              ? `What ${page.suburb} patients say`
-              : "What our patients say"
-          }
-        />
       )}
 
       {page.faqs.length > 0 && (

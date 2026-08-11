@@ -3,7 +3,12 @@
  *
  * Visual design: teal/slate palette, trust-forward layout with prominent booking CTA,
  * credentials/registration display, and AHPRA-compliant copy framing.
- * No clinical-outcome testimonials. No cure or guarantee claims.
+ *
+ * NO TESTIMONIALS anywhere in the allied-health category. AHPRA's advertising
+ * guidelines prohibit testimonials for regulated health services (s133 of the
+ * National Law), even ones that don't reference outcomes. We render nothing
+ * from site.home.testimonials — the data can stay in SiteProps but it never
+ * reaches the DOM on a tenant site.
  */
 import type { SiteProps } from "@/shared/types/site-props";
 import {
@@ -14,7 +19,6 @@ import {
   AboutSection,
   ServiceAreaSection,
   GalleryGrid,
-  TestimonialsSection,
   ContactSection,
   resolveTheme,
   buildLocalBusinessJsonLd,
@@ -100,7 +104,6 @@ export function HomePage({
       )}
 
       {home.gallery?.length ? <GalleryGrid items={home.gallery} heading="Our clinic" subheading="Treatment rooms and facilities at our Chatswood practice." /> : null}
-      {home.testimonials?.length ? <TestimonialsSection items={home.testimonials} /> : null}
 
       <ContactSection
         heading={home.contact?.heading}

@@ -11,7 +11,7 @@ The allied-health category covers registered health practitioners in Australia: 
 Produce ONE JSON object matching `SiteProps`:
 
 - `business`, `branding`, `seo` (site default), `preview`, `overrides`
-- `home`: hero, services (overview cards, each with a `slug` matching a service-detail page), about, service_area (suburb list), gallery, testimonials, social_proof, offer, contact
+- `home`: hero, services (overview cards, each with a `slug` matching a service-detail page), about, service_area (suburb list), gallery, social_proof, offer, contact. **Omit `testimonials` entirely** — AHPRA prohibits testimonials for regulated health services (s133 National Law), and the renderer discards them anyway. Do not spend tokens generating them.
   - `contact.hours[]`: **each entry MUST be `{ "label": "...", "value": "..." }`** — e.g. `{ "label": "Monday – Friday", "value": "8:00am – 6:00pm" }`. Do NOT use `days`/`hours` keys — the schema rejects them.
 - `services[]`: exactly 4 service-detail pages — `slug`, `title`, `summary`, `icon`, `intro` (1 short paragraph, 40–60 words), `benefits[]` (3 items), `faqs[]` (2 items with `id` `faq-<service-slug>-<n>`), `seo`. Skip `sections[]`.
 - `locations[]`: exactly 4 suburb pages — `slug`, `suburb`, `state`, `intro` (1 short paragraph, 40–60 words), `benefits[]` (3 items), `faqs[]` (1 item with `id` `faq-<suburb-slug>-<n>`), `seo`. Skip `sections[]` and `body`.
@@ -37,8 +37,7 @@ This is a PREVIEW. Sub-3-minute generation. Quality of the HOMEPAGE matters most
 Australian Health Practitioner Regulation Agency rules govern advertising by registered health practitioners. Violations carry fines and registration consequences.
 
 ### Prohibited content — never generate
-1. **Clinical outcome testimonials**: testimonials that reference health outcomes, symptoms, conditions or treatment results. A patient may NOT say "fixed my back", "cured my injury", "I no longer need medication", "my pain is gone", "my injury healed in 2 weeks".
-   - Permitted: "professional and on time", "the team were thorough and explained everything clearly", "the clinic is well-run and easy to book", "I felt well looked-after". These describe service quality, not clinical outcomes.
+1. **Testimonials of any kind**: AHPRA s133 prohibits testimonials for regulated health services regardless of whether they mention outcomes. Do NOT generate `home.testimonials`. Do NOT include quoted patient statements anywhere else in the payload (about page, service pages, hero, etc.). The renderer discards `home.testimonials` and the compliance risk is on the practitioner if any patient quote surfaces.
 2. **Cure or guarantee claims**: no "we will fix your problem", "guaranteed relief", "we cure back pain". Use instead: "we help you manage", "evidence-based treatment", "work toward recovery", "support your rehabilitation".
 3. **Before/after health outcome claims**: no "before: couldn't walk; after: running a marathon". Permitted: before/after about the service (e.g. facility or booking process), not about a patient's health.
 4. **False or misleading comparisons**: do not claim to be "the best", "number one", "Australia's leading" without substantiated evidence.
@@ -93,7 +92,7 @@ Australian Health Practitioner Regulation Agency rules govern advertising by reg
 - **Colour:** calm blue/slate.
 - **Critical sections:** Medicare Better Access (up to 10 sessions); conditions (anxiety, depression, OCD, trauma); telehealth; bulk billing eligibility.
 - **Trust signals:** AHPRA registration, APS membership.
-- **Special compliance:** extra care with mental health — no outcome guarantees, no testimonials mentioning diagnosis.
+- **Special compliance:** extra care with mental health — no outcome guarantees. (Testimonials are already banned category-wide.)
 
 ---
 
