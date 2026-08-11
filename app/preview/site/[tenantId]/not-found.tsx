@@ -66,8 +66,6 @@ export default async function TenantNotFound() {
     return <MinimalFallback />;
   }
 
-  const business = parsed.data.business.name;
-
   return (
     <SiteShell site={parsed.data} basePath="" showBlog={false}>
       <main className="mx-auto max-w-2xl px-6 py-24 text-center">
@@ -78,8 +76,7 @@ export default async function TenantNotFound() {
           We can&apos;t find that page.
         </h1>
         <p className="mt-4 text-lg text-zinc-600">
-          The link might be broken or the page has moved. Head back to the
-          {business ? ` ${business} ` : " "}home page.
+          The link might be broken or the page has moved.
         </p>
         <Link
           href="/"
