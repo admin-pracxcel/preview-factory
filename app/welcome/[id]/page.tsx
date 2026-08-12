@@ -12,6 +12,8 @@ import {
   Copy,
   Check,
   MessageSquare,
+  Globe,
+  ArrowRight,
 } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
@@ -94,8 +96,8 @@ function CopyButton({ text }: { text: string }) {
 const TIMELINE = [
   {
     period: "Today",
-    event: "Your site is live on your permanent URL",
-    sub: "Share it anywhere — Google, socials, business cards.",
+    event: "Your site is live on your Launcharoo address",
+    sub: "Share it anywhere. Connect your own domain whenever you're ready.",
     colour: "bg-green-400",
   },
   {
@@ -109,12 +111,6 @@ const TIMELINE = [
     event: "First organic rankings appear",
     sub: "Suburb-specific pages start ranking for local searches.",
     colour: "bg-indigo-400",
-  },
-  {
-    period: "Month 1",
-    event: "Monthly performance report in your inbox",
-    sub: "Plain-English breakdown of calls, clicks and rankings.",
-    colour: "bg-purple-400",
   },
 ];
 
@@ -227,14 +223,15 @@ export default function WelcomePage() {
               Your site is live.
             </h1>
             <p className="text-white/55 text-lg mt-2">
-              It is permanently published at the address below. Share it anywhere.
+              It is live now at your Launcharoo address. Share it anywhere — or
+              connect your own domain below.
             </p>
           </div>
 
           {/* URL card */}
           <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col gap-4">
             <p className="text-white/40 text-xs font-bold uppercase tracking-widest">
-              Your permanent web address
+              Your Launcharoo web address
             </p>
             <div className="bg-black/30 rounded-xl px-4 py-3 flex items-center gap-3">
               <span className="flex-1 text-blue-400 font-mono text-sm break-all">
@@ -242,16 +239,52 @@ export default function WelcomePage() {
               </span>
               <CopyButton text={siteUrl} />
             </div>
+            <p className="text-white/50 text-xs leading-relaxed">
+              This address stays yours forever — free, secure and always on.
+              Prefer your own <span className="text-white/70">yourbusiness.com.au</span>?
+              Connect it below at any time.
+            </p>
             <a
               href={siteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold text-sm transition-colors mt-4"
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold text-sm transition-colors mt-2"
             >
               <ExternalLink className="w-4 h-4" />
               Visit your site
             </a>
           </div>
+
+          {/* Connect your own domain — prominent upsell */}
+          <Link
+            href={`/dashboard/${id}#custom-domain`}
+            className="group relative overflow-hidden rounded-2xl border border-blue-400/30 bg-gradient-to-br from-blue-600/20 via-blue-500/10 to-indigo-600/20 p-6 flex flex-col gap-4 hover:border-blue-400/60 transition-colors"
+          >
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-blue-500/25 border border-blue-400/40 flex items-center justify-center shrink-0">
+                <Globe className="w-6 h-6 text-blue-300" />
+              </div>
+              <div className="flex-1 flex flex-col gap-1">
+                <h2 className="text-lg font-bold text-white">
+                  Use your own domain
+                </h2>
+                <p className="text-sm text-white/70 leading-relaxed">
+                  Point <span className="text-white font-semibold">yourbusiness.com.au</span>
+                  {" "}at your site in a few minutes. Already own one? Great. Need
+                  to buy one? We&rsquo;ll walk you through it.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center justify-between gap-3 pt-1">
+              <span className="text-xs text-white/50">
+                Free SSL &middot; No re-publishing &middot; Keeps your Launcharoo address as a backup
+              </span>
+              <span className="flex items-center gap-1.5 text-sm font-bold text-blue-300 group-hover:text-blue-200 shrink-0">
+                Connect domain
+                <ArrowRight className="w-4 h-4" />
+              </span>
+            </div>
+          </Link>
 
           {/* Action cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

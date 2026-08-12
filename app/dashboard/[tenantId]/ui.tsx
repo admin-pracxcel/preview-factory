@@ -675,7 +675,7 @@ export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardPro
   }
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+    <div id="custom-domain" className="scroll-mt-6 rounded-2xl border border-white/10 bg-white/5 p-6">
       <div className="mb-4 flex items-center gap-3">
         <Globe className="h-5 w-5 text-blue-400" />
         <h3 className="text-base font-bold text-white">Custom domain</h3>
@@ -683,6 +683,7 @@ export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardPro
 
       {status === null && (
         <ConnectDomainForm
+          tenantId={tenantId}
           onSubmit={handleSubmit}
           domainInput={domainInput}
           setDomainInput={setDomainInput}
@@ -733,7 +734,7 @@ export function CustomDomainCard({ tenantId, initialState }: CustomDomainCardPro
       {(status === "pending_ns" || status === "pending_ssl" || status === "active") &&
         state.snapshot && <PreservedRecordsPanel snapshot={state.snapshot} />}
 
-      <ConciergeHelp tenantId={tenantId} />
+      {status !== null && <ConciergeHelp tenantId={tenantId} />}
     </div>
   );
 }
@@ -984,6 +985,7 @@ function PreservedRecordsPanel({ snapshot }: { snapshot: SnapshotSummary }) {
 }
 
 function ConnectDomainForm(props: {
+  tenantId: string;
   onSubmit: (e: React.FormEvent) => void;
   domainInput: string;
   setDomainInput: (v: string) => void;
@@ -1035,6 +1037,32 @@ function ConnectDomainForm(props: {
         We will scan your current DNS records first so your email keeps
         working after the switch.
       </p>
+
+      <ConciergeHelp tenantId={props.tenantId} />
+
+      <div className="mt-2 flex items-center gap-3 text-[11px] font-bold uppercase tracking-widest text-white/30">
+        <span className="h-px flex-1 bg-white/10" />
+        Don&rsquo;t have a domain yet?
+        <span className="h-px flex-1 bg-white/10" />
+      </div>
+
+      <a
+        href="https://crazydomains.sjv.io/DyzZBG"
+        target="_blank"
+        rel="noopener noreferrer sponsored"
+        className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-black/20 px-4 py-3 hover:border-white/25 hover:bg-black/30 transition-colors"
+      >
+        <div className="flex flex-col gap-0.5">
+          <span className="text-sm font-semibold text-white">
+            Get a domain
+          </span>
+          <span className="text-xs text-white/50">
+            Grab one in a couple of minutes, then come back and connect it
+            here.
+          </span>
+        </div>
+        <ExternalLink className="h-4 w-4 shrink-0 text-white/50" />
+      </a>
     </form>
   );
 }
