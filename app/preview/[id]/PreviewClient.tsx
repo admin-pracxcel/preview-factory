@@ -445,10 +445,10 @@ function PreviewPageInner() {
               href={publicUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600/90 hover:bg-blue-500 active:bg-blue-700 text-white text-xs font-bold transition-colors shadow-sm shadow-blue-900/40"
+              className="flex items-center gap-1.5 px-2 py-1.5 text-blue-400 hover:text-blue-300 text-xs font-semibold whitespace-nowrap transition-colors"
             >
-              <ExternalLink className="w-3.5 h-3.5" />
               View site
+              <ExternalLink className="w-3.5 h-3.5" />
             </a>
           )}
           <button
