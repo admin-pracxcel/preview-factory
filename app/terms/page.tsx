@@ -4,20 +4,9 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Terms of Service — Launcharoo",
   description:
-    "The terms of your Launcharoo subscription, including cancellation, refunds under Australian Consumer Law, and acceptable use.",
+    "The terms that govern your use of Launcharoo.",
 };
 
-/**
- * Terms of Service
- *
- * Placeholder-safe: business name and ABN in [brackets]. Refund policy is
- * statutory-only (Australian Consumer Law); no promise beyond ACL rights.
- * Governing law: Victoria. Aligns with the founder's stated launch stance.
- *
- * This is a solid drafting starting point. A lawyer should review before
- * real customers arrive, especially clauses 6 (Refunds), 12 (Liability),
- * and 14 (Governing law).
- */
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-[#0A0F1E] text-white/85">
@@ -37,163 +26,324 @@ export default function TermsPage() {
         <h1 className="font-[family-name:var(--font-sora)] text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
           Terms of Service
         </h1>
-        <p className="mt-2 text-sm text-white/50">Last updated: 8 July 2026</p>
+        <p className="mt-4">
+          These Terms govern your use of Launcharoo. By creating an account,
+          publishing a site or paying a subscription fee, you agree to them.
+          If you do not agree, do not use the service.
+        </p>
+        <p className="mt-4">
+          In these Terms, &ldquo;we&rdquo;, &ldquo;us&rdquo; and &ldquo;our&rdquo;
+          mean that entity, and &ldquo;you&rdquo; means the person or business
+          using the service.
+        </p>
 
         <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">1. Agreement</h2>
+          <h2 className="text-xl font-bold text-white">1. What the service is</h2>
           <p>
-            These Terms of Service are an agreement between Launcharoo (&ldquo;we&rdquo;, &ldquo;us&rdquo;,
-            &ldquo;our&rdquo;) and you, the person who signs up for and uses the service (&ldquo;you&rdquo;,
-            &ldquo;your&rdquo;). By using Launcharoo you agree to these terms.
+            Launcharoo generates and hosts a website for your business using
+            information from publicly available sources, including your Google
+            Business Profile, together with information you provide.
+          </p>
+          <p>
+            We may add, change, or remove features at any time. Nothing in
+            these Terms guarantees any particular feature, page count, layout,
+            design, hosting arrangement, or level of availability.
+          </p>
+          <p>
+            We do not guarantee that the service will be uninterrupted, error
+            free, or available at any particular time.
           </p>
         </section>
 
         <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">2. The service</h2>
+          <h2 className="text-xl font-bold text-white">2. Eligibility</h2>
           <p>
-            Launcharoo generates and hosts a business website based on the information you provide.
-            You can customise the design, request plain-English changes to the content, and connect a
-            custom domain you already own.
+            You must be at least 18 years old and authorised to act for the
+            business you are creating a site for. You must not create a site
+            for a business you do not own or are not authorised to represent.
           </p>
         </section>
 
         <section className="mt-10 space-y-4">
           <h2 className="text-xl font-bold text-white">3. Your account</h2>
+          <p>
+            You are responsible for your account, for keeping your login
+            details secure, and for everything done through your account. Tell
+            us promptly at{" "}
+            <a
+              className="text-blue-400 underline"
+              href="mailto:hello@launcharoo.com.au"
+            >
+              hello@launcharoo.com.au
+            </a>{" "}
+            if you believe your account has been accessed without your
+            authorisation.
+          </p>
+        </section>
+
+        <section className="mt-10 space-y-4">
+          <h2 className="text-xl font-bold text-white">
+            4. Your content and your responsibility for it
+          </h2>
+          <p>
+            You are responsible for everything published on your site. This
+            includes content generated automatically from your Google Business
+            Profile or from information you supply, and any content you or
+            anyone acting for you adds, edits or requests.
+          </p>
+          <p>
+            You must review your site before it is published and monitor it
+            afterwards. You are responsible for confirming that everything on
+            it is accurate, current and lawful.
+          </p>
+          <p>You must not use the service to publish content that:</p>
           <ul className="list-disc space-y-1 pl-5">
-            <li>You sign in through a magic-link sent to your email — no password to lose</li>
-            <li>Keep your email account secure. Anyone with access to it can sign in to Launcharoo</li>
-            <li>You&rsquo;re responsible for activity on your account</li>
-            <li>Tell us promptly at <a className="text-blue-400 underline" href="mailto:hello@launcharoo.online">hello@launcharoo.online</a> if you suspect unauthorised access</li>
+            <li>is false, misleading, or deceptive</li>
+            <li>infringes anyone&rsquo;s intellectual property or other rights</li>
+            <li>
+              breaches any law, industry code, professional standard, or
+              regulatory requirement that applies to your business or
+              profession
+            </li>
+            <li>is unlawful, defamatory, offensive, or harmful</li>
+          </ul>
+          <p>
+            <span className="font-semibold text-white">Regulated industries.</span>{" "}
+            If your business is subject to advertising or professional conduct
+            rules, including but not limited to health practitioner
+            advertising requirements, financial services rules, or legal
+            practice rules, you are solely responsible for ensuring your site
+            complies with them. We do not review sites for regulatory
+            compliance and nothing about the service should be taken as advice
+            that any site complies with any law, code or standard.
+          </p>
+          <p>
+            You grant us a licence to host, display, store, reproduce, and
+            modify your content for the purpose of providing the service.
+          </p>
+        </section>
+
+        <section className="mt-10 space-y-4">
+          <h2 className="text-xl font-bold text-white">
+            5. Automatically generated content
+          </h2>
+          <p>
+            Sites are generated using automated processes, including
+            artificial intelligence, drawing on third-party data sources.
+          </p>
+          <p>
+            Automatically generated content may contain errors, omissions or
+            inaccuracies. It may reflect out of date or incorrect information
+            held by a third party. It is your responsibility to check it.
+          </p>
+          <p>
+            We do not warrant the accuracy, completeness, or suitability of
+            any generated content for any purpose.
+          </p>
+        </section>
+
+        <section className="mt-10 space-y-4">
+          <h2 className="text-xl font-bold text-white">
+            6. Fees, billing and cancellation
+          </h2>
+          <p>
+            Subscription fees are shown at checkout in Australian dollars.
+            Fees are billed in advance on a recurring basis until cancelled.
+          </p>
+          <p>
+            Payments are processed by a third-party payment provider. We do
+            not store your full card details.
+          </p>
+          <p>
+            We may change our fees. If we do, we will give you notice before
+            the change applies to your subscription, and the change will take
+            effect at your next billing date.
+          </p>
+          <p>You may cancel at any time through your billing portal. On cancellation:</p>
+          <ul className="list-disc space-y-1 pl-5">
+            <li>your subscription will not renew</li>
+            <li>
+              your site will remain available until the end of the period you
+              have paid for
+            </li>
+            <li>we may remove your site and associated data after that period ends</li>
+          </ul>
+          <p>
+            We may suspend or terminate your access if you breach these Terms,
+            if payment fails, or if we reasonably believe your use of the
+            service creates a legal or security risk.
+          </p>
+        </section>
+
+        <section className="mt-10 space-y-4">
+          <h2 className="text-xl font-bold text-white">7. Refunds</h2>
+          <p>Fees are not refundable, including for partial billing periods.</p>
+        </section>
+
+        <section className="mt-10 space-y-4">
+          <h2 className="text-xl font-bold text-white">8. Domains</h2>
+          <p>
+            If you connect a domain you own, you remain responsible for
+            registering, renewing and controlling it. We are not responsible
+            for a domain expiring, being transferred, or being suspended.
+          </p>
+          <p>
+            If your site is published on a domain or subdomain we provide,
+            that address remains ours and you have no right to it after your
+            subscription ends.
+          </p>
+        </section>
+
+        <section className="mt-10 space-y-4">
+          <h2 className="text-xl font-bold text-white">9. Intellectual property</h2>
+          <p>
+            We own the service, including its software, systems, templates,
+            designs and branding. Nothing in these Terms transfers ownership
+            of any of that to you.
+          </p>
+          <p>
+            While your subscription is active, you have a non-exclusive,
+            non-transferable right to use the site we host for you, for your
+            own business.
+          </p>
+          <p>
+            You retain ownership of content you own and supply. Third-party
+            content, including images sourced from external providers, remains
+            subject to the licence terms of its provider.
+          </p>
+          <p>
+            You must not copy, resell, sublicense, reverse engineer, or
+            attempt to extract the underlying software or systems.
+          </p>
+        </section>
+
+        <section className="mt-10 space-y-4">
+          <h2 className="text-xl font-bold text-white">
+            10. Third-party services and data
+          </h2>
+          <p>
+            The service relies on third-party providers and data sources,
+            including hosting, payment, communications and business listing
+            data.
+          </p>
+          <p>
+            We are not responsible for the acts, omissions, availability,
+            accuracy or content of any third party. Where a third-party source
+            contains incorrect information about your business, correcting it
+            with that provider is your responsibility.
+          </p>
+        </section>
+
+        <section className="mt-10 space-y-4">
+          <h2 className="text-xl font-bold text-white">
+            11. Australian Consumer Law
+          </h2>
+          <p>
+            Nothing in these Terms excludes, restricts or modifies any
+            consumer guarantee, right or remedy under the Australian Consumer
+            Law that cannot lawfully be excluded, restricted or modified.
+          </p>
+          <p>
+            Where we are permitted to limit our liability for a breach of a
+            consumer guarantee, our liability is limited, at our option, to
+            resupplying the service or paying the cost of having it
+            resupplied.
+          </p>
+        </section>
+
+        <section className="mt-10 space-y-4">
+          <h2 className="text-xl font-bold text-white">
+            12. Disclaimers and limitation of liability
+          </h2>
+          <p>Subject to clause 11 and to the extent permitted by law:</p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>
+              The service is provided on an &ldquo;as is&rdquo; and &ldquo;as
+              available&rdquo; basis, without warranties of any kind, whether
+              express or implied.
+            </li>
+            <li>
+              We make no representation that your site will achieve any
+              particular result, including any level of search ranking,
+              visibility, traffic, enquiries, calls, leads, conversions or
+              revenue.
+            </li>
+            <li>
+              We are not liable for any indirect, incidental, special or
+              consequential loss, or for loss of profit, revenue, business,
+              goodwill, data, or anticipated savings, however arising.
+            </li>
+            <li>
+              Our total aggregate liability to you arising out of or in
+              connection with the service, whether in contract, tort, statute
+              or otherwise, is limited to the total fees you paid us in the
+              three months immediately before the event giving rise to the
+              liability.
+            </li>
           </ul>
         </section>
 
         <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">4. Subscription and payment</h2>
+          <h2 className="text-xl font-bold text-white">13. Indemnity</h2>
+          <p>
+            To the extent permitted by law, you indemnify us against any
+            claim, loss, liability, cost or expense arising from:
+          </p>
           <ul className="list-disc space-y-1 pl-5">
-            <li>Launcharoo is a monthly subscription, charged on the day you sign up and every month after</li>
-            <li>Payments are processed by Stripe. Your card details are held by Stripe, not us</li>
-            <li>Prices are as shown at checkout. We can change prices with at least 30 days notice by email; changes apply to your next billing cycle</li>
-            <li>All amounts are in AUD unless stated otherwise. GST is included where applicable</li>
+            <li>content published on your site</li>
+            <li>your breach of these Terms</li>
+            <li>
+              your breach of any law, code, professional standard or
+              regulatory requirement
+            </li>
+            <li>
+              any claim by a third party relating to your business or your site
+            </li>
           </ul>
         </section>
 
         <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">5. Cancellation</h2>
+          <h2 className="text-xl font-bold text-white">14. Changes to these Terms</h2>
           <p>
-            You can cancel your subscription at any time from the billing portal linked in your dashboard.
-            Cancellation stops future charges. Your site stays live until the end of the billing period
-            you already paid for. After that period, the site is marked expired; content is retained for
-            30 days in case you change your mind, then permanently deleted.
+            We may update these Terms. The current version will always be
+            available at this address. Material changes will take effect at
+            your next billing date, or 30 days after we post them, whichever
+            is later. Continuing to use the service after that means you
+            accept the updated Terms.
           </p>
         </section>
 
         <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">6. Refunds</h2>
+          <h2 className="text-xl font-bold text-white">15. General</h2>
           <p>
-            Refunds are provided in accordance with your rights under the Australian Consumer Law (ACL).
-            Our services come with guarantees under the ACL that cannot be excluded. If we fail to meet a
-            consumer guarantee — for example, if the service has a major failure — you are entitled to a
-            replacement or refund and, where the failure amounts to a major failure, to compensation for
-            reasonably foreseeable loss or damage.
+            These Terms are governed by the laws of Victoria, Australia, and
+            you submit to the exclusive jurisdiction of the courts of that
+            State.
           </p>
           <p>
-            Outside those statutory rights, we do not offer general refunds for a change of mind. Cancel
-            anytime through your billing portal to avoid the next billing cycle.
+            If any provision is found to be unenforceable, it is severed and
+            the rest continues to apply.
           </p>
-        </section>
-
-        <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">7. Your content</h2>
-          <ul className="list-disc space-y-1 pl-5">
-            <li>You own the content you provide — business information, images, logos, edits</li>
-            <li>You grant us a non-exclusive licence to host, display, and process that content for the sole purpose of running the service</li>
-            <li>You warrant you have the right to use the content you upload, including any images and third-party content</li>
-            <li>You&rsquo;re responsible for the accuracy of information shown on your site</li>
-            <li>We may remove content that breaches these terms or applicable law</li>
-          </ul>
-        </section>
-
-        <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">8. Our content</h2>
+          <p>Our failure to enforce any provision is not a waiver of it.</p>
           <p>
-            We own the Launcharoo templates, code, design frameworks, and other intellectual property
-            behind the service. Your subscription lets you use them to run your website while you&rsquo;re
-            an active customer. You don&rsquo;t get a licence to resell, copy, or reuse our templates
-            elsewhere.
+            These Terms are the entire agreement between us about the service
+            and replace any earlier understanding.
+          </p>
+          <p>
+            You may not transfer your rights under these Terms without our
+            written consent. We may transfer ours.
           </p>
         </section>
 
         <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">9. Acceptable use</h2>
-          <p>Don&rsquo;t use Launcharoo for:</p>
-          <ul className="list-disc space-y-1 pl-5">
-            <li>Anything illegal under Australian law</li>
-            <li>Content that infringes copyright, trade marks, or other intellectual property</li>
-            <li>Spam, phishing, or misleading and deceptive conduct</li>
-            <li>Content that harasses, defames, or endangers others</li>
-            <li>Any activity that harms the service, our infrastructure, or other users</li>
-          </ul>
-          <p>We can suspend or terminate accounts that breach this clause.</p>
-        </section>
-
-        <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">10. Third-party services</h2>
+          <h2 className="text-xl font-bold text-white">16. Contact</h2>
           <p>
-            The service relies on sub-processors listed in our{" "}
-            <Link href="/privacy" className="text-blue-400 underline">Privacy Policy</Link>. Their own
-            terms apply to their part of the service. Interruptions or changes to those services can
-            affect Launcharoo; we&rsquo;ll work in good faith to minimise disruption but aren&rsquo;t
-            liable for issues caused by upstream providers.
-          </p>
-        </section>
-
-        <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">11. Availability</h2>
-          <p>
-            We aim for high availability but don&rsquo;t guarantee uninterrupted service. Planned
-            maintenance will be announced in advance where practical. Emergency maintenance may be
-            performed without notice.
-          </p>
-        </section>
-
-        <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">12. Limitation of liability</h2>
-          <p>
-            To the maximum extent permitted by law, we&rsquo;re not liable for indirect, incidental,
-            or consequential loss, or for loss of revenue, profits, goodwill, or data. Our total
-            aggregate liability to you in any 12-month period is limited to the total fees you paid
-            us in that period.
-          </p>
-          <p>
-            Nothing in these terms excludes, restricts, or modifies any right or remedy you have under
-            the Australian Consumer Law or any other law that cannot lawfully be excluded, restricted,
-            or modified.
-          </p>
-        </section>
-
-        <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">13. Changes to these terms</h2>
-          <p>
-            We can update these terms. We&rsquo;ll change the &ldquo;Last updated&rdquo; date at the top
-            and email active customers at least 30 days before material changes take effect. Continuing
-            to use Launcharoo after that period means you accept the updated terms.
-          </p>
-        </section>
-
-        <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">14. Governing law and jurisdiction</h2>
-          <p>
-            These terms are governed by the laws of Victoria, Australia. You and we submit to the
-            exclusive jurisdiction of the courts of Victoria for any dispute arising out of or in
-            connection with these terms.
-          </p>
-        </section>
-
-        <section className="mt-10 space-y-4">
-          <h2 className="text-xl font-bold text-white">15. Contact</h2>
-          <p>
-            Launcharoo<br />
-            Email: <a className="text-blue-400 underline" href="mailto:hello@launcharoo.online">hello@launcharoo.online</a>
+            <a
+              className="text-blue-400 underline"
+              href="mailto:hello@launcharoo.com.au"
+            >
+              hello@launcharoo.com.au
+            </a>
           </p>
         </section>
 
