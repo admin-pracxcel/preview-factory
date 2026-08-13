@@ -34,24 +34,35 @@ type RouteParams = { tenantId: string; slug?: string[] };
 
 /* -------------------------------------------------------------------- helpers */
 
+const MARKETING_APEX = "launcharoo.online";
+
 function basePath(tenantId: string): string {
   return `/preview/site/${tenantId}`;
 }
 
 /**
- * When the request came in via the Cloudflare Worker (either at
- * <slug>.launcharoo.online OR a customer's own custom domain), use an
- * empty basePath so all internal hrefs render as clean paths. The Worker
- * sets a custom X-Launcharoo-Host header on every proxied request; Vercel's
- * edge strips X-Forwarded-Host and rewrites it to the Vercel origin, so
- * that header is unreliable behind the two-hop proxy — the custom header
- * is what survives.
+ * When the request came in via the Cloudflare Worker on a TENANT host
+ * (either <slug>.launcharoo.online OR a customer's own custom domain),
+ * use an empty basePath so all internal hrefs render as clean paths. The
+ * Worker sets a custom X-Launcharoo-Host header on every proxied request;
+ * Vercel's edge strips X-Forwarded-Host and rewrites it to the Vercel
+ * origin, so that header is unreliable behind the two-hop proxy — the
+ * custom header is what survives.
+ *
+ * Exception: the marketing apex (launcharoo.online) is also proxied by
+ * the Worker but is NOT a tenant host. When the preview page there
+ * iframes `/preview/site/<id>`, the header carries `launcharoo.online`
+ * and we still need the /preview/site/<id> prefix on hrefs — otherwise
+ * clicks inside the iframe navigate the marketing apex to
+ * /services/... and 404.
  */
 async function effectiveBasePath(tenantId: string): Promise<string> {
   const h = await headers();
-  const launcharooHost = h.get("x-launcharoo-host") ?? "";
-  if (launcharooHost.trim().length > 0) return "";
-  return basePath(tenantId);
+  const raw = (h.get("x-launcharoo-host") ?? "").trim().toLowerCase();
+  if (!raw) return basePath(tenantId);
+  const bare = raw.startsWith("www.") ? raw.slice(4) : raw;
+  if (bare === MARKETING_APEX) return basePath(tenantId);
+  return "";
 }
 
 async function renderPage(

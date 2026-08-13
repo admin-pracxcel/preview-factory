@@ -12,12 +12,16 @@ interface PageProps {
   params: Promise<{ tenantId: string }>;
 }
 
-/** Mirrors the effectiveBasePath logic in the catchall page. */
+/** Mirrors the effectiveBasePath logic in the catchall page. Marketing
+ *  apex (launcharoo.online) is proxied but NOT a tenant host — keep the
+ *  /preview/site/<id> prefix so iframed clicks resolve. */
 async function resolveBasePath(tenantId: string): Promise<string> {
   const h = await headers();
-  const launcharooHost = h.get("x-launcharoo-host") ?? "";
-  if (launcharooHost.trim().length > 0) return "";
-  return `/preview/site/${tenantId}`;
+  const raw = (h.get("x-launcharoo-host") ?? "").trim().toLowerCase();
+  if (!raw) return `/preview/site/${tenantId}`;
+  const bare = raw.startsWith("www.") ? raw.slice(4) : raw;
+  if (bare === "launcharoo.online") return `/preview/site/${tenantId}`;
+  return "";
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

@@ -28,9 +28,11 @@ interface PageProps {
 
 async function resolveBasePath(tenantId: string): Promise<string> {
   const h = await headers();
-  const launcharooHost = h.get("x-launcharoo-host") ?? "";
-  if (launcharooHost.trim().length > 0) return "";
-  return `/preview/site/${tenantId}`;
+  const raw = (h.get("x-launcharoo-host") ?? "").trim().toLowerCase();
+  if (!raw) return `/preview/site/${tenantId}`;
+  const bare = raw.startsWith("www.") ? raw.slice(4) : raw;
+  if (bare === "launcharoo.online") return `/preview/site/${tenantId}`;
+  return "";
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

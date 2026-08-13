@@ -419,6 +419,8 @@ function PreviewPageInner() {
   const iframeSrc = `/preview/site/${id}`;
   const urgency = timeLeft < 30 * 60 * 1000;
 
+  const publicUrl = publicHost ? `https://${publicHost}` : null;
+
   /* ---------------------------------------------------------------------- */
   /*  Mobile layout                                                            */
   /* ---------------------------------------------------------------------- */
@@ -438,6 +440,17 @@ function PreviewPageInner() {
           </div>
         )}
         <div className="flex items-center gap-2">
+          {publicUrl && (
+            <a
+              href={publicUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600/90 hover:bg-blue-500 active:bg-blue-700 text-white text-xs font-bold transition-colors shadow-sm shadow-blue-900/40"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              View site
+            </a>
+          )}
           <button
             type="button"
             onClick={() => setPanelOpen(true)}
@@ -504,8 +517,6 @@ function PreviewPageInner() {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-|-$/g, "") + ".launcharoo.online"
     );
-  const publicUrl = publicHost ? `https://${publicHost}` : null;
-
   const viewSiteButton = publicUrl ? (
     <a
       href={publicUrl}
