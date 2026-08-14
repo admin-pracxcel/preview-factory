@@ -200,7 +200,13 @@ function BuildingPageInner() {
     if (!ready) return;
     setDesignProgress(100);
     const t = setTimeout(() => {
-      router.push(`/preview/${tenantId}`);
+      // ?generated=1 is the trigger for the Meta custom conversion
+      // ("URL contains generated=1"). Only appended here — the single
+      // post-generation redirect — so return visits from the dashboard,
+      // admin, share links, etc. stay clean and don't re-fire the event.
+      // The preview client strips the param from the address bar after
+      // the Pixel has fired.
+      router.push(`/preview/${tenantId}?generated=1`);
     }, 600);
     return () => clearTimeout(t);
   }, [animationReady, tenantId, tenantStatus, hasSiteProps, router]);

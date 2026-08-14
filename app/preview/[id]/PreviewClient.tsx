@@ -144,6 +144,29 @@ function PreviewPageInner() {
   const desktopIframeRef = useRef<HTMLIFrameElement>(null);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Strip ?generated=1 from the address bar after landing here from the
+  // post-generation redirect. The Meta Pixel custom conversion matches
+  // "URL contains generated=1" — we want it to fire exactly once, on the
+  // initial post-generation view, and never on refresh / bookmark / return.
+  //
+  // The delay lets MetaPixel (mounted in the root layout, a parent) run
+  // its PageView effect first. React fires child effects before parent
+  // effects, so without the timeout the strip would beat the pixel and
+  // Meta would capture the clean URL. 1500ms covers cold-loads of
+  // fbevents.js on slow networks (direct hits to this URL), not just
+  // the fast SPA-nav path from /building.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!window.location.search.includes("generated=1")) return;
+    const t = setTimeout(() => {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("generated");
+      const cleaned = url.pathname + (url.search || "") + url.hash;
+      window.history.replaceState(null, "", cleaned);
+    }, 1500);
+    return () => clearTimeout(t);
+  }, []);
+
   // Fetch initial customisation state on mount.
   useEffect(() => {
     if (!id || id === "unknown") return;
