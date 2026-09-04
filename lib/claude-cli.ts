@@ -52,8 +52,16 @@ export async function callClaudeCli(args: CallClaudeCliArgs): Promise<string> {
     ];
 
     // Structured output — guarantees parseable JSON matching the schema.
+    // Zod v4's z.toJSONSchema() emits `$schema: "https://json-schema.org/draft/2020-12/schema"`
+    // at the root of every produced schema. Recent Claude CLI versions
+    // validate that reference against their internal meta-schema registry
+    // and reject it ("no schema with key or ref ..."), failing before any
+    // generation runs. The schema itself is valid draft-2020-12; stripping
+    // the reference lets the CLI's validator fall back to its default draft.
     if (args.jsonSchema) {
-      cliArgs.push("--json-schema", JSON.stringify(args.jsonSchema));
+      const { $schema: _unused, ...schemaWithoutMeta } =
+        args.jsonSchema as Record<string, unknown>;
+      cliArgs.push("--json-schema", JSON.stringify(schemaWithoutMeta));
     }
 
     // Strip ANTHROPIC_API_KEY from the child env so the CLI authenticates via
