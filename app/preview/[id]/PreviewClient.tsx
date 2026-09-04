@@ -17,41 +17,47 @@ import { derivePrimary, deriveSecondary } from "@/lib/color";
 /*  Constants                                                                   */
 /* -------------------------------------------------------------------------- */
 
-const PREVIEW_DURATION_MS = 3 * 60 * 60 * 1000; // 3 hours
+const PREVIEW_DURATION_MS = 3 * 60 * 60 * 1000; // 3 hours — organic default
 
 /* -------------------------------------------------------------------------- */
 /*  Helpers                                                                     */
 /* -------------------------------------------------------------------------- */
 
-function getExpiryTimestamp(id: string): number {
-  const key = `preview_expiry_${id}`;
-  if (typeof window === "undefined") return Date.now() + PREVIEW_DURATION_MS;
-  const stored = localStorage.getItem(key);
-  if (stored) {
-    const parsed = parseInt(stored, 10);
-    if (!isNaN(parsed)) return parsed;
-  }
-  const expiry = Date.now() + PREVIEW_DURATION_MS;
-  localStorage.setItem(key, String(expiry));
-  return expiry;
+/**
+ * Countdown target for this tenant, in ms since epoch. Sourced from server
+ * truth — the props passed down from the server component:
+ *   - Campaign tenants (expiresAt set) → that timestamp verbatim.
+ *   - Organic tenants → createdAt + 3h, matching the server-side redirect.
+ *
+ * No localStorage. The earlier localStorage-based scheme drifted from the
+ * server (the timer said "2h left" even after the server had already
+ * redirected past 3h from creation) and had no way to honour an explicit
+ * expiresAt at all.
+ */
+function computeExpiryTimestamp(
+  expiresAt: string | null,
+  createdAt: string,
+): number {
+  if (expiresAt) return new Date(expiresAt).getTime();
+  return new Date(createdAt).getTime() + PREVIEW_DURATION_MS;
 }
 
+/**
+ * Human-readable countdown, format chosen by scale:
+ *   - ≥ 24h:  "29d 23h"
+ *   - 1h–24h: "23h 59m"
+ *   - < 1h:   "0:59:59" (H:MM:SS)
+ */
 function formatCountdown(ms: number): string {
   if (ms <= 0) return "0:00:00";
   const totalSeconds = Math.floor(ms / 1000);
-  const h = Math.floor(totalSeconds / 3600);
-  const m = Math.floor((totalSeconds % 3600) / 60);
-  const s = totalSeconds % 60;
-  return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-}
-
-function getBusinessName(): string {
-  if (typeof window === "undefined") return "Your Business";
-  try {
-    return localStorage.getItem("preview_business_name") ?? "Your Business";
-  } catch {
-    return "Your Business";
-  }
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  if (days > 0) return `${days}d ${hours}h`;
+  if (totalSeconds >= 3600) return `${hours}h ${String(minutes).padStart(2, "0")}m`;
+  return `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -106,7 +112,11 @@ function CountdownBox({ timeLeft, urgency }: { timeLeft: number; urgency: boolea
 /*  Inner component                                                             */
 /* -------------------------------------------------------------------------- */
 
-function PreviewPageInner() {
+function PreviewPageInner({
+  expiresAt = null,
+  createdAt,
+  businessName: initialBusinessName,
+}: PreviewClientProps) {
   const params = useParams();
   const id =
     typeof params.id === "string"
@@ -115,11 +125,18 @@ function PreviewPageInner() {
       ? params.id[0]
       : "unknown";
 
-  const expiryRef = useRef<number>(0);
-  const [timeLeft, setTimeLeft] = useState<number>(PREVIEW_DURATION_MS);
+  // Seed the countdown from server truth (props), not from Date.now(), so the
+  // first paint already shows the correct value — no "3h" flash before the
+  // real number appears.
+  const expiryRef = useRef<number>(computeExpiryTimestamp(expiresAt, createdAt));
+  const [timeLeft, setTimeLeft] = useState<number>(
+    Math.max(0, expiryRef.current - Date.now()),
+  );
   const [toast, setToast] = useState<string | null>(null);
   const [panelOpen, setPanelOpen] = useState(false);
-  const [businessName, setBusinessName] = useState("Your Business");
+  const [businessName, setBusinessName] = useState(
+    initialBusinessName ?? "Your Business",
+  );
   const [viewMode, setViewMode] = useState<"mobile" | "desktop">("desktop");
   /** When the tenant has already been claimed/published, hide the 3h
    *  countdown urgency + "Save my site" checkout button and show a
@@ -250,11 +267,10 @@ function PreviewPageInner() {
     scheduleSave({ logo_height_px: px });
   }, [broadcast, scheduleSave]);
 
-  useEffect(() => {
-    expiryRef.current = getExpiryTimestamp(id);
-    setTimeLeft(Math.max(0, expiryRef.current - Date.now()));
-    setBusinessName(getBusinessName());
-  }, [id]);
+  // expiryRef and businessName are seeded from server-truth props at mount
+  // (see PreviewPageInner top). The /status fetch below can still overwrite
+  // businessName with the freshest value if it has drifted, and the 1-second
+  // interval below drives the timer down from expiryRef.current.
 
   // Detect whether this tenant has already been published, and pick up the
   // real public host so the desktop browser chrome shows the actual URL.
@@ -851,7 +867,21 @@ function PreviewPageInner() {
 /*  Export                                                                      */
 /* -------------------------------------------------------------------------- */
 
-export default function PreviewClient() {
+interface PreviewClientProps {
+  /** Explicit soft-expiry timestamp (ISO 8601). Set for campaign-generated
+   *  previews via n8n; null for organic intake. When set, drives the
+   *  countdown target verbatim. */
+  expiresAt?: string | null;
+  /** Tenant createdAt (ISO 8601). Used as the countdown seed for organic
+   *  previews (createdAt + 3h) — matches the server-side redirect rule. */
+  createdAt: string;
+  /** Business name from the tenant row. Passed as a prop so email-campaign
+   *  visitors (who never went through /building and thus have no localStorage
+   *  seed) see the real name on first paint, not "Your Business". */
+  businessName?: string | null;
+}
+
+export default function PreviewClient(props: PreviewClientProps) {
   return (
     <Suspense
       fallback={
@@ -860,7 +890,7 @@ export default function PreviewClient() {
         </div>
       }
     >
-      <PreviewPageInner />
+      <PreviewPageInner {...props} />
     </Suspense>
   );
 }

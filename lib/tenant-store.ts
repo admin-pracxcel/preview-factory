@@ -98,6 +98,13 @@ export interface TenantRecord {
   /** True when the underlying DB status is 'expired' (Phase 8b reaper).
    *  Read-only, populated on load. Callers use it to redirect to /expired. */
   isExpired?: boolean;
+  /** Cohort tag for email-marketing-generated previews (Phase 12).
+   *  Free-form (e.g. "cold-email-2026-09-plumbers"). Null for organic intake. */
+  campaignSource?: string;
+  /** Explicit soft-expiry timestamp. When set, overrides the default
+   *  createdAt+3h rule in the preview page — expiry is measured from this
+   *  timestamp instead. Set by the n8n campaign workflow to createdAt+30d. */
+  expiresAt?: string;
   /** Public subdomain fragment: <slug>.launcharoo.online. Phase 10a. */
   slug?: string;
   /* -------------------- Custom domain fields (Phase 10b) -------------------- */
@@ -171,6 +178,8 @@ interface TenantRow {
   billing_customer_id: string | null;
   billing_subscription_id: string | null;
   cancelled_at: string | null;
+  campaign_source: string | null;
+  expires_at: string | null;
   slug: string | null;
   custom_domain: string | null;
   custom_domain_status: string | null;
@@ -208,6 +217,8 @@ function rowToRecord(row: TenantRow): TenantRecord {
     stripeSubscriptionId: row.billing_subscription_id ?? undefined,
     ownerEmail: row.owner_email ?? undefined,
     isExpired: row.status === "expired",
+    campaignSource: row.campaign_source ?? undefined,
+    expiresAt: row.expires_at ?? undefined,
     slug: row.slug ?? undefined,
     customDomain: row.custom_domain ?? undefined,
     customDomainStatus: row.custom_domain_status ?? undefined,
@@ -241,6 +252,8 @@ function recordToUpsert(record: TenantRecord): Record<string, unknown> {
     billing_customer_id: record.stripeCustomerId ?? null,
     billing_subscription_id: record.stripeSubscriptionId ?? null,
     owner_email: record.ownerEmail ?? null,
+    campaign_source: record.campaignSource ?? null,
+    expires_at: record.expiresAt ?? null,
     slug: record.slug ?? null,
     custom_domain: record.customDomain ?? null,
     custom_domain_status: record.customDomainStatus ?? null,

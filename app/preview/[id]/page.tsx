@@ -45,13 +45,20 @@ export default async function PreviewPage({
 
   // Expiry: same 3h soft-expiry rule as the public slug page, plus the
   // hard-expiry flag from the reaper. Everyone lands on /expired past the
-  // window, no auth required.
+  // window, no auth required. Campaign-generated previews (expiresAt set)
+  // use that timestamp instead of the default createdAt+3h.
   const admin = await isAdminSession(cookieStore);
   if (!admin) {
     if (tenant.isExpired) redirect(`/expired/${id}`);
     if (!tenant.publishedAt) {
-      const ageMs = Date.now() - new Date(tenant.createdAt).getTime();
-      if (ageMs > 3 * 3600_000) redirect(`/expired/${id}`);
+      if (tenant.expiresAt) {
+        if (new Date(tenant.expiresAt).getTime() < Date.now()) {
+          redirect(`/expired/${id}`);
+        }
+      } else {
+        const ageMs = Date.now() - new Date(tenant.createdAt).getTime();
+        if (ageMs > 3 * 3600_000) redirect(`/expired/${id}`);
+      }
     }
   }
 
@@ -76,5 +83,11 @@ export default async function PreviewPage({
   // still enforce session ownership, so cross-device visitors can view
   // and click Claim/Buy but can't mutate the site.
 
-  return <PreviewClient />;
+  return (
+    <PreviewClient
+      expiresAt={tenant.expiresAt ?? null}
+      createdAt={tenant.createdAt}
+      businessName={tenant.name}
+    />
+  );
 }

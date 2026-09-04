@@ -256,9 +256,17 @@ export default async function TenantPreviewPage({
   // request time (not by the reaper) so the customer sees /expired the
   // instant the window closes, not on the next daily reaper sweep. The
   // reaper still runs at 24h to blank site_props and free storage.
+  // Campaign-generated previews (expiresAt set) use that explicit timestamp
+  // instead of the default createdAt+3h.
   if (!tenant.publishedAt) {
-    const ageMs = Date.now() - new Date(tenant.createdAt).getTime();
-    if (ageMs > 3 * 3600_000) redirect(expiredUrl);
+    if (tenant.expiresAt) {
+      if (new Date(tenant.expiresAt).getTime() < Date.now()) {
+        redirect(expiredUrl);
+      }
+    } else {
+      const ageMs = Date.now() - new Date(tenant.createdAt).getTime();
+      if (ageMs > 3 * 3600_000) redirect(expiredUrl);
+    }
   }
 
   // Guard against rendering before generation has produced a site. Without

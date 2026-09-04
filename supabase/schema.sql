@@ -70,7 +70,16 @@ create table if not exists public.tenants (
   custom_domain_verified_at timestamptz,
   custom_domain_purchased_via text
                               check (custom_domain_purchased_via is null or custom_domain_purchased_via in
-                                ('existing','crazy_domains_affiliate'))
+                                ('existing','crazy_domains_affiliate')),
+
+  -- Campaign sourcing (email marketing generation, Phase 12). Both nullable
+  -- so organic intake keeps behaving exactly as today; only n8n's campaign
+  -- workflow sets these. campaign_source is a free-form cohort tag
+  -- (e.g. 'cold-email-2026-09-plumbers') for per-cohort conversion analysis.
+  -- expires_at overrides the default createdAt+3h soft-expiry rule in the
+  -- preview page; when set, expiry is measured from expires_at instead.
+  campaign_source           text,
+  expires_at                timestamptz
 );
 
 -- Retrofit missing columns on tenants when the table already exists from an
@@ -80,6 +89,8 @@ alter table public.tenants add column if not exists name text;
 alter table public.tenants add column if not exists niche text;
 alter table public.tenants add column if not exists place_id text;
 alter table public.tenants add column if not exists gbp_photos jsonb;
+alter table public.tenants add column if not exists campaign_source text;
+alter table public.tenants add column if not exists expires_at timestamptz;
 
 -- Widen the status check to include 'expired' (Phase 8b reaper). Drop-and-add
 -- is safe because the constraint is only enforced on writes and the values

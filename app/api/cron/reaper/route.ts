@@ -29,7 +29,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const result = await runReaper();
     console.log(
-      `[cron/reaper] unclaimed=${result.unclaimedExpired} cancelled=${result.cancelledExpired}`
+      `[cron/reaper] unclaimed=${result.unclaimedExpired} campaign=${result.campaignExpired} cancelled=${result.cancelledExpired}`
     );
     return NextResponse.json({ ok: true, ...result });
   } catch (err) {
