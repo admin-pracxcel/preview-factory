@@ -41,7 +41,18 @@ interface IntakeBody {
   /** Owner mobile captured in the intake confirm step. Persisted on the
    *  tenant row so we can SMS the preview link and reach out for edits. */
   phone?: string;
+  /** Campaign cohort tag (email marketing generation). When present, the
+   *  request is treated as server-triggered: session cookie is skipped and
+   *  the tenant is persisted with `campaign_source` + `expires_at` set.
+   *  Requires the `x-worker-secret` header to match WORKER_SHARED_SECRET. */
+  campaignSource?: string;
+  /** Days until the campaign-generated preview expires. Only honoured when
+   *  campaignSource is set. Defaults to 30. */
+  expiryDays?: number;
 }
+
+const CAMPAIGN_DEFAULT_EXPIRY_DAYS = 30;
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   let body: IntakeBody;
@@ -59,6 +70,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     suburb,
     category: formCategory,
     phone,
+    campaignSource,
+    expiryDays,
   } = body;
 
   if (!niche || typeof niche !== "string") {
@@ -69,6 +82,37 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       { error: "gbpData, placeId, or businessName is required" },
       { status: 400 },
     );
+  }
+
+  // Campaign-generated intake: gate the campaign fields on the shared worker
+  // secret. Without this a random visitor could set campaignSource to bypass
+  // the 3h expiry (giving themselves a 30-day preview) or salt the analytics
+  // cohorts with fake tags.
+  const isCampaign = Boolean(campaignSource);
+  if (isCampaign) {
+    const expectedSecret = process.env.WORKER_SHARED_SECRET;
+    const suppliedSecret = request.headers.get("x-worker-secret");
+    if (!expectedSecret || suppliedSecret !== expectedSecret) {
+      return NextResponse.json(
+        { error: "campaign intake requires x-worker-secret" },
+        { status: 401 },
+      );
+    }
+    if (typeof campaignSource !== "string" || !campaignSource.trim()) {
+      return NextResponse.json(
+        { error: "campaignSource must be a non-empty string" },
+        { status: 400 },
+      );
+    }
+    if (
+      expiryDays !== undefined &&
+      (typeof expiryDays !== "number" || expiryDays <= 0)
+    ) {
+      return NextResponse.json(
+        { error: "expiryDays must be a positive number" },
+        { status: 400 },
+      );
+    }
   }
 
   try {
@@ -90,12 +134,28 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       `[intake] resolved category="${category}" (niche="${niche}", form="${formCategory ?? "none"}")`,
     );
 
-    // 3. Session cookie — links this tenant to the visitor's browser for claim
-    const cookieStore = (await cookies()) as unknown as MutableCookies;
-    const sessionId = await ensureSession(cookieStore, {
-      ip: request.headers.get("x-forwarded-for") ?? undefined,
-      userAgent: request.headers.get("user-agent") ?? undefined,
-    });
+    // 3. Session cookie — links this tenant to the visitor's browser for claim.
+    // Campaign intake is server-triggered (n8n has no browser) so there's no
+    // session to link; skip and let session_id stay null. The customer who
+    // later clicks the email link gets their own session on first visit and
+    // can claim via the standard email-owner match path.
+    let sessionId: string | undefined;
+    if (!isCampaign) {
+      const cookieStore = (await cookies()) as unknown as MutableCookies;
+      sessionId = await ensureSession(cookieStore, {
+        ip: request.headers.get("x-forwarded-for") ?? undefined,
+        userAgent: request.headers.get("user-agent") ?? undefined,
+      });
+    }
+
+    // Campaign previews get an explicit expiry timestamp; organic flow leaves
+    // it null and falls through to the default createdAt+3h rule in the
+    // preview page.
+    const expiresAt = isCampaign
+      ? new Date(
+          Date.now() + (expiryDays ?? CAMPAIGN_DEFAULT_EXPIRY_DAYS) * DAY_MS,
+        ).toISOString()
+      : undefined;
 
     // 4. Create the tenant row in status=queued (no site_props yet).
     const tenantId = await createQueuedTenant({
@@ -106,6 +166,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       gbpPhotos: gbpData.photos ?? [],
       sessionId,
       phone: phone?.trim() || undefined,
+      campaignSource: isCampaign ? campaignSource!.trim() : undefined,
+      expiresAt,
     });
 
     // 4b. Reserve a public subdomain slug for <slug>.launcharoo.online. The
@@ -140,7 +202,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       console.warn("[intake] worker webhook fire-and-forget failed:", err);
     });
 
-    console.log(`[intake] tenant ${tenantId} queued (job ${jobId})`);
+    console.log(
+      `[intake] tenant ${tenantId} queued (job ${jobId})${isCampaign ? ` [campaign=${campaignSource!.trim()} expires=${expiresAt}]` : ""}`,
+    );
 
     return NextResponse.json({
       tenantId,
@@ -149,6 +213,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       category,
       previewUrl: `/preview/${tenantId}`,
       sitePreviewUrl: `/preview/site/${tenantId}`,
+      ...(isCampaign ? { campaignSource: campaignSource!.trim(), expiresAt } : {}),
     });
   } catch (err) {
     console.error("[intake] error:", err);

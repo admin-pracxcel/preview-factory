@@ -392,6 +392,12 @@ export interface CreateQueuedTenantInput {
    *  starts). Persisted so we can SMS the preview link on build complete
    *  and reach out for edits post-claim. */
   phone?: string;
+  /** Cohort tag for campaign-generated previews (email marketing). Null for
+   *  organic intake. See TenantRecord.campaignSource. */
+  campaignSource?: string;
+  /** Explicit soft-expiry timestamp (ISO 8601). Overrides the default
+   *  createdAt+3h rule in the preview page. See TenantRecord.expiresAt. */
+  expiresAt?: string;
 }
 
 export async function createQueuedTenant(
@@ -408,6 +414,8 @@ export async function createQueuedTenant(
       gbp_photos: input.gbpPhotos ?? null,
       session_id: input.sessionId ?? null,
       phone: input.phone ?? null,
+      campaign_source: input.campaignSource ?? null,
+      expires_at: input.expiresAt ?? null,
     })
     .select("id")
     .single();
