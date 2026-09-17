@@ -19,7 +19,7 @@
  */
 
 import { notFound, redirect } from "next/navigation";
-import { cookies as nextCookies } from "next/headers";
+import { cookies as nextCookies, headers as nextHeaders } from "next/headers";
 import {
   readSession,
   assertOwnsTenant,
@@ -27,7 +27,8 @@ import {
   type MutableCookies,
 } from "@/lib/session";
 import { isAdminSession } from "@/lib/admin";
-import { getTenant } from "@/lib/tenant-store";
+import { getTenant, markFirstView } from "@/lib/tenant-store";
+import { isLikelyBot } from "@/lib/bot-detection";
 import PreviewClient from "./PreviewClient";
 
 export const dynamic = "force-dynamic";
@@ -43,11 +44,30 @@ export default async function PreviewPage({
   const tenant = await getTenant(id);
   if (!tenant) notFound();
 
+  const admin = await isAdminSession(cookieStore);
+
+  // Click-to-start expiry (campaign tenants only). First non-bot,
+  // non-admin visitor flips first_viewed_at and shortens expires_at to
+  // NOW+5d. Everything downstream — the expiry redirect below, the
+  // countdown UI, the reaper — reads the updated timestamp so the render
+  // shows the real 5-day clock from first paint. markFirstView is a
+  // no-op for organic tenants (campaign_source IS NULL) and for repeat
+  // visits (first_viewed_at IS NOT NULL), enforced by the SQL WHERE.
+  if (!admin && tenant.campaignSource && !tenant.firstViewedAt) {
+    const ua = (await nextHeaders()).get("user-agent");
+    if (!isLikelyBot(ua)) {
+      const updated = await markFirstView(id);
+      if (updated) {
+        tenant.firstViewedAt = updated.firstViewedAt;
+        tenant.expiresAt = updated.expiresAt;
+      }
+    }
+  }
+
   // Expiry: same 3h soft-expiry rule as the public slug page, plus the
   // hard-expiry flag from the reaper. Everyone lands on /expired past the
   // window, no auth required. Campaign-generated previews (expiresAt set)
   // use that timestamp instead of the default createdAt+3h.
-  const admin = await isAdminSession(cookieStore);
   if (!admin) {
     if (tenant.isExpired) redirect(`/expired/${id}`);
     if (!tenant.publishedAt) {

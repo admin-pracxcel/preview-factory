@@ -51,7 +51,13 @@ interface IntakeBody {
   expiryDays?: number;
 }
 
-const CAMPAIGN_DEFAULT_EXPIRY_DAYS = 30;
+// Grace ceiling for campaign previews that never get clicked. The real
+// 5-day clock only starts on first non-bot view (see markFirstView in
+// lib/tenant-store.ts); this ceiling is the fallback "if nobody ever
+// opens it, drop the site anyway" cut-off — 60 days keeps Instantly's
+// staggered sending schedules comfortable while stopping the campaign
+// backlog from sitting in Supabase forever.
+const CAMPAIGN_DEFAULT_EXPIRY_DAYS = 60;
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 export async function POST(request: NextRequest): Promise<NextResponse> {

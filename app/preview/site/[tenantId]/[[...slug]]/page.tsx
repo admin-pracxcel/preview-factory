@@ -19,7 +19,8 @@
 import { notFound, redirect } from "next/navigation";
 import { headers } from "next/headers";
 import type { Metadata } from "next";
-import { getTenant, type GenerationStatus } from "@/lib/tenant-store";
+import { getTenant, markFirstView, type GenerationStatus } from "@/lib/tenant-store";
+import { isLikelyBot } from "@/lib/bot-detection";
 import { sitePropsSchema } from "@/shared/types/site-props";
 import type { SiteProps } from "@/shared/types/site-props";
 import { renderTradesPage, tradesPageMetadata } from "@/templates/categories/trades";
@@ -250,6 +251,21 @@ export default async function TenantPreviewPage({
   const expiredUrl = customerHost
     ? `https://launcharoo.online/expired/${tenantId}`
     : `/expired/${tenantId}`;
+
+  // Click-to-start expiry (campaign tenants only). First non-bot visitor
+  // flips first_viewed_at and shortens expires_at to NOW+5d, so the
+  // expiry check below reads the freshly-started 5-day clock instead of
+  // the intake-time grace ceiling. markFirstView is a no-op for organic
+  // tenants and repeat visits — SQL WHERE enforces both invariants.
+  if (tenant.campaignSource && !tenant.firstViewedAt) {
+    if (!isLikelyBot(requestHeaders.get("user-agent"))) {
+      const updated = await markFirstView(tenantId);
+      if (updated) {
+        tenant.firstViewedAt = updated.firstViewedAt;
+        tenant.expiresAt = updated.expiresAt;
+      }
+    }
+  }
 
   if (tenant.isExpired) redirect(expiredUrl);
   // Soft expiry: 3 hours from creation for unclaimed previews. Enforced at

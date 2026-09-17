@@ -105,6 +105,11 @@ export interface TenantRecord {
    *  createdAt+3h rule in the preview page — expiry is measured from this
    *  timestamp instead. Set by the n8n campaign workflow to createdAt+30d. */
   expiresAt?: string;
+  /** Click-to-start marker (Phase 12a). Null until a non-bot, non-admin
+   *  visitor first opens the preview URL; then set to NOW() and expires_at
+   *  is reset to NOW() + 5 days by the same transaction. Only meaningful
+   *  for campaign tenants. */
+  firstViewedAt?: string;
   /** Public subdomain fragment: <slug>.launcharoo.online. Phase 10a. */
   slug?: string;
   /* -------------------- Custom domain fields (Phase 10b) -------------------- */
@@ -180,6 +185,7 @@ interface TenantRow {
   cancelled_at: string | null;
   campaign_source: string | null;
   expires_at: string | null;
+  first_viewed_at: string | null;
   slug: string | null;
   custom_domain: string | null;
   custom_domain_status: string | null;
@@ -219,6 +225,7 @@ function rowToRecord(row: TenantRow): TenantRecord {
     isExpired: row.status === "expired",
     campaignSource: row.campaign_source ?? undefined,
     expiresAt: row.expires_at ?? undefined,
+    firstViewedAt: row.first_viewed_at ?? undefined,
     slug: row.slug ?? undefined,
     customDomain: row.custom_domain ?? undefined,
     customDomainStatus: row.custom_domain_status ?? undefined,
@@ -254,6 +261,7 @@ function recordToUpsert(record: TenantRecord): Record<string, unknown> {
     owner_email: record.ownerEmail ?? null,
     campaign_source: record.campaignSource ?? null,
     expires_at: record.expiresAt ?? null,
+    first_viewed_at: record.firstViewedAt ?? null,
     slug: record.slug ?? null,
     custom_domain: record.customDomain ?? null,
     custom_domain_status: record.customDomainStatus ?? null,
@@ -423,6 +431,48 @@ export async function createQueuedTenant(
     throw new Error(`createQueuedTenant failed: ${error?.message ?? "no row returned"}`);
   }
   return data.id as string;
+}
+
+/**
+ * Atomically start the click-to-start expiry clock for a campaign tenant
+ * (Phase 12a). One SQL statement, guarded by:
+ *   - campaign_source IS NOT NULL  (never affects organic tenants)
+ *   - first_viewed_at IS NULL      (idempotent — later views are no-ops)
+ *
+ * When it fires, expires_at is reset to NOW() + 5 days regardless of the
+ * grace ceiling set at intake. Returns the fresh timestamps so the caller
+ * can render the correct countdown on the same request without a re-fetch.
+ * Returns null if no row was updated (organic tenant, already viewed,
+ * or unknown id) — caller keeps the existing values.
+ *
+ * The two-concurrent-first-visits race is closed by Postgres's row lock
+ * on the UPDATE: only one wins; the other affects 0 rows and returns null.
+ */
+export async function markFirstView(
+  tenantId: string,
+): Promise<{ firstViewedAt: string; expiresAt: string } | null> {
+  const now = new Date();
+  const newExpiresAt = new Date(now.getTime() + 5 * 24 * 60 * 60 * 1000);
+  const { data, error } = await supabase()
+    .from(TABLE)
+    .update({
+      first_viewed_at: now.toISOString(),
+      expires_at: newExpiresAt.toISOString(),
+    })
+    .eq("id", tenantId)
+    .not("campaign_source", "is", null)
+    .is("first_viewed_at", null)
+    .select("first_viewed_at, expires_at")
+    .maybeSingle();
+  if (error) {
+    console.warn(`[tenant-store] markFirstView(${tenantId}) failed: ${error.message}`);
+    return null;
+  }
+  if (!data) return null;
+  return {
+    firstViewedAt: data.first_viewed_at as string,
+    expiresAt: data.expires_at as string,
+  };
 }
 
 /**

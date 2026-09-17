@@ -79,7 +79,13 @@ create table if not exists public.tenants (
   -- expires_at overrides the default createdAt+3h soft-expiry rule in the
   -- preview page; when set, expiry is measured from expires_at instead.
   campaign_source           text,
-  expires_at                timestamptz
+  expires_at                timestamptz,
+  -- Click-to-start expiry (Phase 12a). Null until a non-bot, non-admin
+  -- visitor first opens the preview URL; then set to NOW() and expires_at
+  -- is reset to NOW() + 5 days by the same transaction. Only meaningful
+  -- for campaign tenants — organic previews leave this null and continue
+  -- to use the createdAt+3h rule.
+  first_viewed_at           timestamptz
 );
 
 -- Retrofit missing columns on tenants when the table already exists from an
@@ -91,6 +97,7 @@ alter table public.tenants add column if not exists place_id text;
 alter table public.tenants add column if not exists gbp_photos jsonb;
 alter table public.tenants add column if not exists campaign_source text;
 alter table public.tenants add column if not exists expires_at timestamptz;
+alter table public.tenants add column if not exists first_viewed_at timestamptz;
 
 -- Widen the status check to include 'expired' (Phase 8b reaper). Drop-and-add
 -- is safe because the constraint is only enforced on writes and the values
