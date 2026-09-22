@@ -464,6 +464,13 @@ function isTransientClaudeError(err: unknown): boolean {
   if (/overloaded/i.test(message)) return true;
   if (/rate.?limit/i.test(message) && !/subscription.+rate.?limit/i.test(message)) return true;
   if (/timed out/i.test(message)) return true;
+  // Claude Code subscription sometimes returns "Prompt is too long" as a
+  // misleading label for concurrency / rate-limit throttling — proven
+  // transient in the 100-lead batch on 2026-09-22 where 87 rows failed
+  // under 6-way concurrency and later succeeded unchanged. Retry once
+  // with the standard 2s pause. A genuine prompt-bloat case will fail
+  // the retry the same way and surface normally.
+  if (/prompt is too long/i.test(message)) return true;
   return false;
 }
 
